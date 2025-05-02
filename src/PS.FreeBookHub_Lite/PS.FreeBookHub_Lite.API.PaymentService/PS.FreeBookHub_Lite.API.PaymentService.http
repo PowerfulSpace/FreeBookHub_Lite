@@ -1,6 +1,0 @@
-@PS.FreeBookHub_Lite.API.PaymentService_HostAddress = http://localhost:5156
-
-GET {{PS.FreeBookHub_Lite.API.PaymentService_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

@@ -1,0 +1,6 @@
+@PS.FreeBookHub_Lite.OrderService.API_HostAddress = http://localhost:5127
+
+GET {{PS.FreeBookHub_Lite.OrderService.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PS.FreeBookHub_Lite.CatalogService.Application\PS.FreeBookHub_Lite.CatalogService.Application.csproj" />
+  </ItemGroup>
+
 </Project>

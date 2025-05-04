@@ -13,5 +13,12 @@ namespace PS.FreeBookHub_Lite.CatalogService.Infrastructure.Persistence
 
         public DbSet<Book> Books => Set<Book>();
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder
+                .ApplyConfigurationsFromAssembly(typeof(CatalogDbContext).Assembly);
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

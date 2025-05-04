@@ -4,11 +4,11 @@ using PS.FreeBookHub_Lite.CatalogService.Domain.Entities;
 
 namespace PS.FreeBookHub_Lite.CatalogService.Infrastructure.Persistence.Repositories
 {
-    public class EfBookRepository : IBookRepository
+    public class BookRepository : IBookRepository
     {
         private readonly CatalogDbContext _context;
 
-        public EfBookRepository(CatalogDbContext context)
+        public BookRepository(CatalogDbContext context)
         {
             _context = context;
         }
@@ -20,12 +20,12 @@ namespace PS.FreeBookHub_Lite.CatalogService.Infrastructure.Persistence.Reposito
 
         public async Task<Book?> GetByIdAsync(Guid id)
         {
-            return await _context.Books.FindAsync(id);
+            return await _context.Books.FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task AddAsync(Book book)
         {
-            _context.Books.Add(book);
+            await _context.Books.AddAsync(book);
             await _context.SaveChangesAsync();
         }
 
@@ -37,12 +37,10 @@ namespace PS.FreeBookHub_Lite.CatalogService.Infrastructure.Persistence.Reposito
 
         public async Task DeleteAsync(Guid id)
         {
-            var book = await _context.Books.FindAsync(id);
-            if (book is not null)
-            {
-                _context.Books.Remove(book);
-                await _context.SaveChangesAsync();
-            }
+            var book = new Book { Id = id };
+            _context.Books.Attach(book);
+            _context.Entry(book).State = EntityState.Deleted;
+            await _context.SaveChangesAsync();
         }
     }
 }

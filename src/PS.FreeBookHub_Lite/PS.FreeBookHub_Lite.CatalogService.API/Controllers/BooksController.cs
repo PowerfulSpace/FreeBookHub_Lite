@@ -15,35 +15,35 @@ namespace PS.FreeBookHub_Lite.CatalogService.API.Controllers
             _bookService = bookService;
         }
 
-        [HttpGet]
+        [HttpGet(Name = "GetBooksAll")]
         public async Task<IActionResult> GetAll()
         {
             var books = await _bookService.GetAllBooksAsync();
             return Ok(books);
         }
 
-        [HttpGet("{id:guid}")]
+        [HttpGet("{id:guid}",Name = "GetBookById")]
         public async Task<IActionResult> GetById(Guid id)
         {
             var book = await _bookService.GetBookByIdAsync(id);
             return book is not null ? Ok(book) : NotFound();
         }
 
-        [HttpPost]
+        [HttpPost(Name = "CreateBook")]
         public async Task<IActionResult> Create(CreateBookRequest request)
         {
             var result = await _bookService.CreateBookAsync(request);
             return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
         }
 
-        [HttpPut("{id:guid}")]
+        [HttpPut("{id:guid}", Name = "UpdateBook")]
         public async Task<IActionResult> Update(Guid id, CreateBookRequest request)
         {
             var updated = await _bookService.UpdateBookAsync(id, request);
             return updated ? NoContent() : NotFound();
         }
 
-        [HttpDelete("{id:guid}")]
+        [HttpDelete("{id:guid}", Name = "DeleteBook")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var deleted = await _bookService.DeleteBookAsync(id);

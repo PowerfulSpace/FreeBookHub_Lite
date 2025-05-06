@@ -2,20 +2,21 @@
 using FluentValidation.AspNetCore;
 using Mapster;
 using Microsoft.Extensions.DependencyInjection;
-using PS.FreeBookHub_Lite.CatalogService.Application.Mapping;
-using PS.FreeBookHub_Lite.CatalogService.Application.Services;
-using PS.FreeBookHub_Lite.CatalogService.Application.Services.Interfaces;
-using PS.FreeBookHub_Lite.CatalogService.Application.Validators;
+using PS.FreeBookHub_Lite.CartService.Application.Mapping;
+using PS.FreeBookHub_Lite.CartService.Application.Services;
+using PS.FreeBookHub_Lite.CartService.Application.Services.Interfaces;
+using PS.FreeBookHub_Lite.CartService.Application.Validators;
 
-namespace PS.FreeBookHub_Lite.CatalogService.Application
+namespace PS.FreeBookHub_Lite.CartService.Application
 {
     public static class DependencyInjection
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddScoped<IBookService, BookService>();
+            services.AddScoped<ICartBookService, CartBookService>();
 
-            services.AddValidatorsFromAssemblyContaining<CreateBookRequestValidator>();
+            services.AddValidatorsFromAssemblyContaining<AddItemRequestValidator>();
+            services.AddValidatorsFromAssemblyContaining<UpdateItemQuantityRequestValidator>();
 
             //Отключает встроенную валидацию DataAnnotations
             //Оставляет только FluentValidation (чтобы не было дублирования)
@@ -25,7 +26,7 @@ namespace PS.FreeBookHub_Lite.CatalogService.Application
             });
 
             // Регистрация всех маппингов, реализующих IRegister
-            TypeAdapterConfig.GlobalSettings.Scan(typeof(BookMappingConfig).Assembly);
+            TypeAdapterConfig.GlobalSettings.Scan(typeof(CartMappingConfig).Assembly);
 
             return services;
         }

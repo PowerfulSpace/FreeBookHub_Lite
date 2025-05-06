@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PS.FreeBookHub_Lite.CartService.Application\PS.FreeBookHub_Lite.CartService.Application.csproj" />
+  </ItemGroup>
+
 </Project>

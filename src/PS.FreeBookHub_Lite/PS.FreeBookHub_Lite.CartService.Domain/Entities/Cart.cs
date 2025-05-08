@@ -2,40 +2,51 @@
 {
     public class Cart
     {
-        public Guid UserId { get; set; }
+        public Guid Id { get; private set; }
+        public Guid UserId { get; private set; }
 
-        public List<CartItem> Items { get; set; } = new();
+        private readonly List<CartItem> _items = new();
+        public IReadOnlyCollection<CartItem> Items => _items.AsReadOnly();
 
-        public void AddItem(Guid bookId, int quantity)
+        protected Cart() { }
+        public Cart(Guid userId)
         {
-            var item = Items.FirstOrDefault(i => i.BookId == bookId);
-            if (item is not null)
+            Id = Guid.NewGuid();
+            UserId = userId;
+        }
+
+        public void AddItem(Guid bookId, int quantity, decimal unitPrice)
+        {
+            if (quantity <= 0)
+                throw new ArgumentException("Quantity must be greater than zero.");
+
+            var existingItem = _items.FirstOrDefault(i => i.BookId == bookId);
+            if (existingItem is not null)
             {
-                item.Quantity += quantity;
+                existingItem.UpdateQuantity(existingItem.Quantity + quantity);
             }
             else
             {
-                Items.Add(new CartItem(bookId, quantity));
+                _items.Add(new CartItem(bookId, quantity, unitPrice));
             }
         }
 
         public void RemoveItem(Guid bookId)
         {
-            Items.RemoveAll(i => i.BookId == bookId);
+            _items.RemoveAll(i => i.BookId == bookId);
         }
 
         public void UpdateQuantity(Guid bookId, int quantity)
         {
-            var item = Items.FirstOrDefault(i => i.BookId == bookId);
-            if (item is not null)
-            {
-                item.Quantity = quantity;
-            }
+            var item = _items.FirstOrDefault(i => i.BookId == bookId);
+            item?.UpdateQuantity(quantity);
         }
+
+        public decimal TotalPrice => _items.Sum(i => i.TotalPrice);
 
         public void Clear()
         {
-            Items.Clear();
+            _items.Clear();
         }
     }
 }

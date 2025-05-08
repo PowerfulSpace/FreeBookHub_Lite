@@ -14,6 +14,7 @@ namespace PS.FreeBookHub_Lite.CartService.Application
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddScoped<ICartBookService, CartBookService>();
+            services.AddScoped<IBookCatalogClient, BookCatalogClientStub>();
 
             services.AddValidatorsFromAssemblyContaining<AddItemRequestValidator>();
             services.AddValidatorsFromAssemblyContaining<UpdateItemQuantityRequestValidator>();

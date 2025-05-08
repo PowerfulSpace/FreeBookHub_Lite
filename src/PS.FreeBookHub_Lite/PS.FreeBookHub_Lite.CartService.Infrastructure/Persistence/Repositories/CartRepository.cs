@@ -20,66 +20,28 @@ namespace PS.FreeBookHub_Lite.CartService.Infrastructure.Persistence.Repositorie
                 .FirstOrDefaultAsync(c => c.UserId == userId);
         }
 
-        public async Task AddOrUpdateItemAsync(Guid userId, Guid bookId, int quantity, decimal price)
+        public async Task AddAsync(Cart cart)
+        {
+            await _context.Carts.AddAsync(cart);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(Cart cart)
+        {
+            _context.Carts.Update(cart);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(Guid userId)
         {
             var cart = await _context.Carts
-                .Include(c => c.Items)
                 .FirstOrDefaultAsync(c => c.UserId == userId);
 
-            if (cart is null)
+            if (cart != null)
             {
-                cart = new Cart(userId);
-                _context.Carts.Add(cart);
+                _context.Carts.Remove(cart);
+                await _context.SaveChangesAsync();
             }
-
-            cart.AddItem(bookId, quantity, price);
-
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task RemoveItemAsync(Guid userId, Guid bookId)
-        {
-            var cart = await _context.Carts
-                .Include(c => c.Items)
-                .FirstOrDefaultAsync(c => c.UserId == userId);
-
-            if (cart is null)
-                return;
-
-            cart.RemoveItem(bookId);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task ClearCartAsync(Guid userId)
-        {
-            var cart = await _context.Carts
-                .Include(c => c.Items)
-                .FirstOrDefaultAsync(c => c.UserId == userId);
-
-            if (cart is null)
-                return;
-
-            cart.Clear();
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task UpdateQuantityAsync(Guid userId, Guid bookId, int quantity)
-        {
-            var cart = await _context.Carts
-                .Include(c => c.Items)
-                .FirstOrDefaultAsync(c => c.UserId == userId);
-
-            if (cart is null)
-                throw new InvalidOperationException("Cart not found");
-
-            var item = cart.Items.FirstOrDefault(i => i.BookId == bookId);
-
-            if (item is null)
-                throw new InvalidOperationException("Item not found in cart");
-
-            item.Quantity = quantity;
-
-            await _context.SaveChangesAsync();
         }
     }
 }

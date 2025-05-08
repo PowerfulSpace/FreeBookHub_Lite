@@ -17,7 +17,7 @@ var app = builder.Build();
         app.UseSwagger();
         app.UseSwaggerUI(options =>
         {
-            options.SwaggerEndpoint("/swagger/v1/swagger.json", "Fluxly Shortener API v1");
+            options.SwaggerEndpoint("/swagger/v1/swagger.json", "FreeBookHub Catalog API v1");
             options.RoutePrefix = string.Empty;
         });
     }

@@ -10,11 +10,14 @@ namespace PS.FreeBookHub_Lite.CartService.Infrastructure.Persistence.Configurati
         {
             builder.ToTable("Carts");
 
-            builder.HasKey(c => c.UserId);
+            builder.HasKey(c => c.Id);
+
+            builder.Property(c => c.UserId)
+                   .IsRequired();
 
             builder.HasMany(c => c.Items)
                    .WithOne(i => i.Cart)
-                   .HasForeignKey(i => i.CartUserId)
+                   .HasForeignKey(i => i.CartId)
                    .OnDelete(DeleteBehavior.Cascade);
         }
     }

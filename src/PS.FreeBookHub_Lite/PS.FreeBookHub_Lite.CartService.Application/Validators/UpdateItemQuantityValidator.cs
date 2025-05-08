@@ -7,8 +7,12 @@ namespace PS.FreeBookHub_Lite.CartService.Application.Validators
     {
         public UpdateItemQuantityRequestValidator()
         {
-            RuleFor(x => x.BookId).NotEmpty();
-            RuleFor(x => x.Quantity).GreaterThanOrEqualTo(0);
+            RuleFor(x => x.BookId)
+                .NotEmpty();
+
+            RuleFor(x => x.Quantity)
+                .GreaterThanOrEqualTo(0)
+                .LessThanOrEqualTo(1000);
         }
     }
 }

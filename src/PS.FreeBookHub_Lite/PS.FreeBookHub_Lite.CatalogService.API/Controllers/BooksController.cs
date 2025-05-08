@@ -30,14 +30,14 @@ namespace PS.FreeBookHub_Lite.CatalogService.API.Controllers
         }
 
         [HttpPost(Name = "CreateBook")]
-        public async Task<IActionResult> Create(CreateBookRequest request)
+        public async Task<IActionResult> Create([FromBody] CreateBookRequest request)
         {
             var result = await _bookService.CreateBookAsync(request);
             return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
         }
 
         [HttpPut("{id:guid}", Name = "UpdateBook")]
-        public async Task<IActionResult> Update(Guid id, CreateBookRequest request)
+        public async Task<IActionResult> Update(Guid id, [FromBody] CreateBookRequest request)
         {
             var updated = await _bookService.UpdateBookAsync(id, request);
             return updated ? NoContent() : NotFound();

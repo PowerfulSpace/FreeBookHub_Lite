@@ -10,13 +10,23 @@ namespace PS.FreeBookHub_Lite.CartService.Infrastructure.Persistence.Configurati
         {
             builder.ToTable("CartItems");
 
-            builder.HasKey(i => new { i.BookId, i.CartUserId }); // Композитный ключ
+            builder.HasKey(i => new { i.CartId, i.BookId }); // Композитный ключ
 
             builder.Property(ci => ci.BookId)
                    .IsRequired();
 
             builder.Property(ci => ci.Quantity)
                    .IsRequired();
+
+            builder.Property(i => i.UnitPrice)
+                  .IsRequired()
+                  .HasColumnType("decimal(18,2)");
+
+            builder.HasOne(i => i.Cart)
+                .WithMany(i => i.Items)
+                .HasForeignKey(i => i.CartId);
+
+            builder.Ignore(i => i.TotalPrice); // Вычисляемое, не сохраняемое
         }
     }
 }

@@ -24,39 +24,55 @@ namespace PS.FreeBookHub_Lite.CartService.Application.Services
         public async Task<CartDto> GetCartAsync(Guid userId)
         {
             var cart = await _cartRepository.GetCartAsync(userId)
-                       ?? new Cart(userId);
+                      ?? new Cart(userId);
 
             return cart.Adapt<CartDto>();
         }
 
         public async Task AddItemAsync(Guid userId, AddItemRequest request)
         {
-
-            var cart = await _cartRepository.GetCartAsync(userId)
-                   ?? new Cart(userId);
+            var existingCart = await _cartRepository.GetCartAsync(userId);
+            var cart = existingCart ?? new Cart(userId);
 
             var price = await _bookCatalogClient.GetBookPriceAsync(request.BookId);
             if (price is null)
-                throw new InvalidOperationException("Book not found or price unavailable.");
+                throw new Exception("Book not found or price unavailable.");
 
             cart.AddItem(request.BookId, request.Quantity, price.Value);
 
-            await _cartRepository.AddOrUpdateItemAsync(userId, request.BookId, request.Quantity);
+            if (existingCart is null)
+                await _cartRepository.AddAsync(cart);
+            else
+                await _cartRepository.UpdateAsync(cart);
         }
 
         public async Task UpdateItemQuantityAsync(Guid userId, UpdateItemQuantityRequest request)
         {
-            await _cartRepository.UpdateQuantityAsync(userId, request.BookId, request.Quantity);
+            var cart = await _cartRepository.GetCartAsync(userId)
+                       ?? throw new Exception("Cart not found.");
+
+            cart.UpdateQuantity(request.BookId, request.Quantity);
+
+            await _cartRepository.UpdateAsync(cart);
         }
 
         public async Task RemoveItemAsync(Guid userId, Guid bookId)
         {
-            await _cartRepository.RemoveItemAsync(userId, bookId);
+            var cart = await _cartRepository.GetCartAsync(userId)
+                      ?? throw new Exception("Cart not found.");
+
+            cart.RemoveItem(bookId);
+
+            await _cartRepository.UpdateAsync(cart);
         }
 
         public async Task ClearCartAsync(Guid userId)
         {
-            await _cartRepository.ClearCartAsync(userId);
+            var cart = await _cartRepository.GetCartAsync(userId)
+                      ?? throw new Exception("Cart not found.");
+
+            cart.Clear();
+            await _cartRepository.UpdateAsync(cart);
         }
     }
 }

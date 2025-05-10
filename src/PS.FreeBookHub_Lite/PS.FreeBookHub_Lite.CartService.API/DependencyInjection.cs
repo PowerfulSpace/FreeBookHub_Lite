@@ -1,11 +1,13 @@
-﻿namespace PS.FreeBookHub_Lite.CartService.API
+﻿using Microsoft.Extensions.Options;
+
+namespace PS.FreeBookHub_Lite.CartService.API
 {
     public static class DependencyInjection
     {
         public static IServiceCollection AddPresentation(this IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(options => options.EnableAnnotations());
             return services;
         }
     }

@@ -13,11 +13,16 @@ namespace PS.FreeBookHub_Lite.CartService.Infrastructure.Persistence.Repositorie
             _context = context;
         }
 
-        public async Task<Cart?> GetCartAsync(Guid userId)
+        public async Task<Cart?> GetCartAsync(Guid userId, bool asNoTracking = false)
         {
-            return await _context.Carts
-                .Include(c => c.Items)
-                .FirstOrDefaultAsync(c => c.UserId == userId);
+            var carts = _context.Carts.Include(c => c.Items);
+
+            if (asNoTracking)
+            {
+                carts.AsNoTracking();
+            }
+
+            return await carts.FirstOrDefaultAsync(c => c.UserId == userId);
         }
 
         public async Task AddAsync(Cart cart)

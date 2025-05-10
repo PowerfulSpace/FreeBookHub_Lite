@@ -23,7 +23,7 @@ namespace PS.FreeBookHub_Lite.CartService.Application.Services
 
         public async Task<CartDto> GetCartAsync(Guid userId)
         {
-            var cart = await _cartRepository.GetCartAsync(userId)
+            var cart = await _cartRepository.GetCartAsync(userId, true)
                       ?? new Cart(userId);
 
             return cart.Adapt<CartDto>();

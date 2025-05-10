@@ -17,7 +17,6 @@ namespace PS.FreeBookHub_Lite.CartService.Infrastructure.Persistence.Repositorie
         {
             return await _context.Carts
                 .Include(c => c.Items)
-                .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.UserId == userId);
         }
 

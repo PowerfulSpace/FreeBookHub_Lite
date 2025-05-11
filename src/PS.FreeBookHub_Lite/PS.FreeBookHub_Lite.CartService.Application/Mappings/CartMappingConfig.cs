@@ -2,7 +2,7 @@
 using PS.FreeBookHub_Lite.CartService.Application.DTOs;
 using PS.FreeBookHub_Lite.CartService.Domain.Entities;
 
-namespace PS.FreeBookHub_Lite.CartService.Application.Mapping
+namespace PS.FreeBookHub_Lite.CartService.Application.Mappings
 {
     public class CartMappingConfig : IRegister
     {

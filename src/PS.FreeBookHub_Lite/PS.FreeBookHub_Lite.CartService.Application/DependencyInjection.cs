@@ -2,7 +2,7 @@
 using FluentValidation.AspNetCore;
 using Mapster;
 using Microsoft.Extensions.DependencyInjection;
-using PS.FreeBookHub_Lite.CartService.Application.Mapping;
+using PS.FreeBookHub_Lite.CartService.Application.Mappings;
 using PS.FreeBookHub_Lite.CartService.Application.Services;
 using PS.FreeBookHub_Lite.CartService.Application.Services.Interfaces;
 using PS.FreeBookHub_Lite.CartService.Application.Validators;

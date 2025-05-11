@@ -14,4 +14,8 @@
     <Folder Include="Validators\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PS.FreeBookHub_Lite.OrderService.Domain\PS.FreeBookHub_Lite.OrderService.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

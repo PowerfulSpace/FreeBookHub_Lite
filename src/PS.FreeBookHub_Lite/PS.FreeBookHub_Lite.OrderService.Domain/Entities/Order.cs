@@ -1,0 +1,76 @@
+﻿using PS.FreeBookHub_Lite.OrderService.Domain.Enums;
+
+namespace PS.FreeBookHub_Lite.OrderService.Domain.Entities
+{
+    public class Order
+    {
+        public Guid Id { get; private  set; }
+        public Guid UserId { get; private set; }
+        
+        public string ShippingAddress { get; private set; } = string.Empty;
+        public OrderStatus Status { get; private set; }
+        public DateTime CreatedAt { get; private set; }
+
+
+        private readonly List<OrderItem> _items = new();
+        public IReadOnlyCollection<OrderItem> Items => _items.AsReadOnly();
+
+
+        public decimal TotalPrice => Items.Sum(i => i.UnitPrice * i.Quantity);
+
+        protected Order()
+        { 
+        }
+
+        public Order(Guid userId, string shippingAddress)
+        {
+            Id = Guid.NewGuid();
+            UserId = userId;
+            CreatedAt = DateTime.UtcNow;
+            Status = OrderStatus.New;
+            ShippingAddress = shippingAddress;
+        }
+
+        public void AddItem(Guid bookId, decimal price, int quantity)
+        {
+            if (quantity <= 0)
+                throw new ArgumentException("Quantity must be positive.");
+
+            var existingItem = _items.FirstOrDefault(item => item.BookId == bookId);
+
+            if (existingItem != null)
+            {
+                existingItem.UpdateQuantity(existingItem.Quantity + quantity);
+            }
+            else
+            {
+                _items.Add(new OrderItem(bookId, price, quantity));
+            }
+        }
+
+        public void RemoveItem(Guid bookId)
+        {
+            var item = _items.FirstOrDefault(item => item.BookId == bookId);
+            if (item != null)
+            {
+                _items.Remove(item);
+            }
+        }
+        public void Cancel()
+        {
+            if (Status == OrderStatus.Shipped || Status == OrderStatus.Delivered)
+                throw new InvalidOperationException("Cannot cancel shipped or delivered orders.");
+
+            Status = OrderStatus.Cancelled;
+        }
+
+        public void MarkAsPaid()
+        {
+            if (Status != OrderStatus.New)
+                throw new InvalidOperationException("Only new orders can be paid.");
+
+            Status = OrderStatus.Paid;
+        }
+
+    }
+}

@@ -9,7 +9,7 @@
         public decimal TotalPrice => UnitPrice * Quantity;
 
         public Guid OrderId { get; set; }
-        public required Order Order { get; set; }
+        public Order? Order { get; set; }
 
 
         protected OrderItem()

@@ -15,11 +15,11 @@ namespace PS.FreeBookHub_Lite.CartService.Infrastructure.Persistence.Repositorie
 
         public async Task<Cart?> GetCartAsync(Guid userId, bool asNoTracking = false)
         {
-            var carts = _context.Carts.Include(c => c.Items);
+            IQueryable<Cart> carts = _context.Carts.Include(c => c.Items);
 
             if (asNoTracking)
             {
-                carts.AsNoTracking();
+                carts = carts.AsNoTracking();
             }
 
             return await carts.FirstOrDefaultAsync(c => c.UserId == userId);

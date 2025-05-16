@@ -4,7 +4,7 @@ using PS.FreeBookHub_Lite.CatalogService.Domain.Entities;
 
 namespace PS.FreeBookHub_Lite.CatalogService.Infrastructure.Persistence.Configurations
 {
-    public class BookConfigurations : IEntityTypeConfiguration<Book>
+    public class BookConfiguration : IEntityTypeConfiguration<Book>
     {
         public void Configure(EntityTypeBuilder<Book> builder)
         {

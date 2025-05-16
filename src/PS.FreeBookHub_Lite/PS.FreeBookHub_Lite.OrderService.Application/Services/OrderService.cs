@@ -35,9 +35,9 @@ namespace PS.FreeBookHub_Lite.OrderService.Application.Services
             return orders.Adapt<IEnumerable<OrderDto>>();
         }
 
-        public async Task<OrderDto?> GetByIdAsync(Guid orderId)
+        public async Task<OrderDto?> GetOrderByIdAsync(Guid orderId)
         {
-            var order = await _orderRepository.GetByIdAsync(orderId);
+            var order = await _orderRepository.GetByIdAsync(orderId, true);
             return order?.Adapt<OrderDto>();
         }
 

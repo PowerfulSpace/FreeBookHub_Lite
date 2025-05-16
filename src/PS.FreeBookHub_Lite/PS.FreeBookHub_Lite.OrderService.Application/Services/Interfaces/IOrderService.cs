@@ -6,7 +6,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Application.Services.Interfaces
     {
         Task<OrderDto> CreateOrderAsync(CreateOrderRequest request);
         Task<IEnumerable<OrderDto>> GetAllOrdersByUserIdAsync(Guid userId);
-        Task<OrderDto?> GetByIdAsync(Guid orderId);
+        Task<OrderDto?> GetOrderByIdAsync(Guid orderId);
         Task CancelOrderAsync(Guid orderId);
     }
 }

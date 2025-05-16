@@ -34,14 +34,20 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Persistence.Repositori
             return await _dbContext.Orders
                 .Include(o => o.Items)
                 .Where(o => o.UserId == userId)
+                .AsNoTracking()
                 .ToListAsync();
         }
 
-        public async Task<Order?> GetByIdAsync(Guid id)
+        public async Task<Order?> GetByIdAsync(Guid id, bool asNoTracking = false)
         {
-            return await _dbContext.Orders
-                .Include(o => o.Items)
-                .FirstOrDefaultAsync(o => o.Id == id);
+            IQueryable<Order> orders = _dbContext.Orders.Include(o => o.Items);
+
+            if (asNoTracking)
+            {
+                orders = orders.AsNoTracking();
+            }
+
+            return await orders.FirstOrDefaultAsync(o => o.Id == id);
         }
 
         public async Task UpdateAsync(Order order)

@@ -58,7 +58,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Domain.Entities
         }
         public void Cancel()
         {
-            if (Status == OrderStatus.Shipped || Status == OrderStatus.Delivered)
+            if (Status == OrderStatus.Shipped || Status == OrderStatus.Delivered || Status == OrderStatus.Cancelled)
                 throw new InvalidOperationException("Cannot cancel shipped or delivered orders.");
 
             Status = OrderStatus.Cancelled;

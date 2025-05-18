@@ -8,9 +8,9 @@ namespace PS.FreeBookHub_Lite.OrderService.API.Controllers
     [Route("api/[controller]")]
     public class OrdersController : ControllerBase
     {
-        private readonly IOrderService _orderService;
+        private readonly IOrderProcessingService _orderService;
 
-        public OrdersController(IOrderService orderService)
+        public OrdersController(IOrderProcessingService orderService)
         {
             _orderService = orderService;
         }

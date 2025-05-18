@@ -6,11 +6,11 @@ using PS.FreeBookHub_Lite.OrderService.Domain.Entities;
 
 namespace PS.FreeBookHub_Lite.OrderService.Application.Services
 {
-    public class OrderService : IOrderService
+    public class OrderProcessingService : IOrderProcessingService
     {
         private readonly IOrderRepository _orderRepository;
 
-        public OrderService(IOrderRepository orderRepository)
+        public OrderProcessingService(IOrderRepository orderRepository)
         {
             _orderRepository = orderRepository;
         }

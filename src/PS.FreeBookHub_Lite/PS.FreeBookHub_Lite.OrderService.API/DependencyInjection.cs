@@ -1,4 +1,4 @@
-﻿namespace PS.FreeBookHub_Lite.CartService.API
+﻿namespace PS.FreeBookHub_Lite.OrderService.API
 {
     public static class DependencyInjection
     {

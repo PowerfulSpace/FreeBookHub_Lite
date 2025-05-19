@@ -1,0 +1,47 @@
+﻿using Mapster;
+using PS.FreeBookHub_Lite.PaymentService.Application.DTOs;
+using PS.FreeBookHub_Lite.PaymentService.Application.Interfaces;
+using PS.FreeBookHub_Lite.PaymentService.Application.Services.Interfaces;
+using PS.FreeBookHub_Lite.PaymentService.Domain.Entities;
+
+namespace PS.FreeBookHub_Lite.PaymentService.Application.Services
+{
+    public class PaymentService : IPaymentService
+    {
+        private readonly IPaymentRepository _paymentRepository;
+
+        public PaymentService(IPaymentRepository paymentRepository)
+        {
+            _paymentRepository = paymentRepository;
+        }
+
+        public async Task<PaymentResponse> ProcessPaymentAsync(CreatePaymentRequest request)
+        {
+            var mockUserId = Guid.NewGuid();
+
+            var payment = new Payment(request.OrderId, mockUserId, request.Amount);
+
+            payment.MarkAsCompleted();
+
+            await _paymentRepository.AddAsync(payment);
+
+            return payment.Adapt<PaymentResponse>();
+        }
+
+        public async Task<PaymentResponse?> GetPaymentByIdAsync(Guid id)
+        {
+            var payment = await _paymentRepository.GetByIdAsync(id);
+            if (payment is null) return null;
+
+            return payment.Adapt<PaymentResponse>();
+        }
+
+        public async Task<IEnumerable<PaymentResponse>> GetPaymentsByOrderIdAsync(Guid orderId)
+        {
+            var payments = await _paymentRepository.GetByOrderIdAsync(orderId);
+            return payments
+                .Select(p => p.Adapt<PaymentResponse>())
+                .ToList();
+        }
+    }
+}

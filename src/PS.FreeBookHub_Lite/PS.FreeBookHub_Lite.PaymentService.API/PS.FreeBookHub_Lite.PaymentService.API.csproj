@@ -17,10 +17,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Controllers\" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <ProjectReference Include="..\PS.FreeBookHub_Lite.PaymentService.Application\PS.FreeBookHub_Lite.PaymentService.Application.csproj" />
 	  <ProjectReference Include="..\PS.FreeBookHub_Lite.PaymentService.Infrastructure\PS.FreeBookHub_Lite.PaymentService.Infrastructure.csproj" />
 	</ItemGroup>

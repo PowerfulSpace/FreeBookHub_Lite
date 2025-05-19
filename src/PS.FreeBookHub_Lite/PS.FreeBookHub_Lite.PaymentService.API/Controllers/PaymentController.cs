@@ -8,9 +8,9 @@ namespace PS.FreeBookHub_Lite.PaymentService.API.Controllers
     [Route("api/[controller]")]
     public class PaymentController : ControllerBase
     {
-        private readonly IPaymentService _paymentService;
+        private readonly IPaymentProcessingService _paymentService;
 
-        public PaymentController(IPaymentService paymentService)
+        public PaymentController(IPaymentProcessingService paymentService)
         {
             _paymentService = paymentService;
         }

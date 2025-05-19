@@ -6,11 +6,11 @@ using PS.FreeBookHub_Lite.PaymentService.Domain.Entities;
 
 namespace PS.FreeBookHub_Lite.PaymentService.Application.Services
 {
-    public class PaymentService : IPaymentService
+    public class PaymentProcessingService : IPaymentProcessingService
     {
         private readonly IPaymentRepository _paymentRepository;
 
-        public PaymentService(IPaymentRepository paymentRepository)
+        public PaymentProcessingService(IPaymentRepository paymentRepository)
         {
             _paymentRepository = paymentRepository;
         }

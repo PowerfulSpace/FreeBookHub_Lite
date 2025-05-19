@@ -1,0 +1,42 @@
+﻿using Microsoft.EntityFrameworkCore;
+using PS.FreeBookHub_Lite.PaymentService.Application.Interfaces;
+using PS.FreeBookHub_Lite.PaymentService.Domain.Entities;
+
+namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Persistence.Repositories
+{
+    public class PaymentRepository : IPaymentRepository
+    {
+        private readonly PaymentDbContext _context;
+
+        public PaymentRepository(PaymentDbContext context)
+        {
+            _context = context;
+        }
+
+        public async Task AddAsync(Payment payment)
+        {
+            await _context.Payments.AddAsync(payment);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<Payment?> GetByIdAsync(Guid id, bool asNoTracking = false)
+        {
+            IQueryable<Payment> payments = _context.Payments;
+
+            if(asNoTracking)
+            {
+                payments = payments.AsNoTracking();
+            }
+
+            return await payments.FirstOrDefaultAsync(p => p.Id == id);
+        }
+
+        public async Task<IEnumerable<Payment>> GetByOrderIdAsync(Guid orderId)
+        {
+            return await _context.Payments
+                .AsNoTracking()
+                .Where(p => p.OrderId == orderId)
+                .ToListAsync();
+        }
+    }
+}

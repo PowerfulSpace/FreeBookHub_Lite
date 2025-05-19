@@ -30,7 +30,7 @@ namespace PS.FreeBookHub_Lite.PaymentService.Application.Services
 
         public async Task<PaymentResponse?> GetPaymentByIdAsync(Guid id)
         {
-            var payment = await _paymentRepository.GetByIdAsync(id);
+            var payment = await _paymentRepository.GetByIdAsync(id, true);
             if (payment is null) return null;
 
             return payment.Adapt<PaymentResponse>();

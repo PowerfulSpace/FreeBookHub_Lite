@@ -30,8 +30,6 @@ namespace PS.FreeBookHub_Lite.OrderService.Application.Services
 
             await _orderRepository.AddAsync(order);
 
-
-            // Вызываем PaymentService
             var paymentRequest = new CreatePaymentRequest()
             {
                 OrderId = order.Id,

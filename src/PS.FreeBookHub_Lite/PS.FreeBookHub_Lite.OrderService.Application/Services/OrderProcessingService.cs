@@ -1,18 +1,22 @@
 ﻿using Mapster;
+using PS.FreeBookHub_Lite.OrderService.Application.Clients;
 using PS.FreeBookHub_Lite.OrderService.Application.DTOs;
 using PS.FreeBookHub_Lite.OrderService.Application.Interfaces;
 using PS.FreeBookHub_Lite.OrderService.Application.Services.Interfaces;
 using PS.FreeBookHub_Lite.OrderService.Domain.Entities;
+using PS.FreeBookHub_Lite.OrderService.Domain.Exceptions;
 
 namespace PS.FreeBookHub_Lite.OrderService.Application.Services
 {
     public class OrderProcessingService : IOrderProcessingService
     {
         private readonly IOrderRepository _orderRepository;
+        private readonly IPaymentServiceClient _paymentClient;
 
-        public OrderProcessingService(IOrderRepository orderRepository)
+        public OrderProcessingService(IOrderRepository orderRepository, IPaymentServiceClient paymentClient)
         {
             _orderRepository = orderRepository;
+            _paymentClient = paymentClient;
         }
 
         public async Task<OrderDto> CreateOrderAsync(CreateOrderRequest request)
@@ -25,6 +29,22 @@ namespace PS.FreeBookHub_Lite.OrderService.Application.Services
             }
 
             await _orderRepository.AddAsync(order);
+
+
+            // Вызываем PaymentService
+            var paymentRequest = new CreatePaymentRequest()
+            {
+                OrderId = order.Id,
+                Amount = order.TotalPrice
+            };
+
+            var paymentResult = await _paymentClient.CreatePaymentAsync(paymentRequest);
+
+            if (!paymentResult)
+                throw new PaymentFailedException(order.Id);
+
+            order.MarkAsPaid();
+            await _orderRepository.UpdateAsync(order);
 
             return order.Adapt<OrderDto>();
         }

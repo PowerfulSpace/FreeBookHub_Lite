@@ -17,6 +17,7 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Persistence.Configur
                 .HasColumnType("decimal(18,2)");
 
             builder.Property(p => p.Status)
+                .HasConversion<string>()
                 .IsRequired();
 
             builder.Property(p => p.CreatedAt)

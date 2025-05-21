@@ -15,7 +15,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Persistence.Clients
 
         public async Task<bool> CreatePaymentAsync(CreatePaymentRequest request)
         {
-            var response = await _httpClient.PostAsJsonAsync("/api/payments", request);
+            var response = await _httpClient.PostAsJsonAsync("/api/payment", request);
 
             if (!response.IsSuccessStatusCode)
             {

@@ -9,5 +9,7 @@ namespace PS.FreeBookHub_Lite.CartService.Application.Services.Interfaces
         Task UpdateItemQuantityAsync(Guid userId, UpdateItemQuantityRequest request);
         Task RemoveItemAsync(Guid userId, Guid bookId);
         Task ClearCartAsync(Guid userId);
+
+        Task<OrderDto> CheckoutAsync(Guid userId, string shippingAddress);
     }
 }

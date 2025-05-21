@@ -49,5 +49,12 @@ namespace PS.FreeBookHub_Lite.CatalogService.API.Controllers
             var deleted = await _bookService.DeleteBookAsync(id);
             return deleted ? NoContent() : NotFound();
         }
+
+        [HttpGet("{id:guid}/price")]
+        public async Task<IActionResult> GetPrice(Guid id)
+        {
+            var price = await _bookService.GetBookPriceAsync(id);
+            return price.HasValue ? Ok(price.Value) : NotFound();
+        }
     }
 }

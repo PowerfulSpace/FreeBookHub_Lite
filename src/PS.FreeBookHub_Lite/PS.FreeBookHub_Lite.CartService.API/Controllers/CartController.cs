@@ -55,5 +55,13 @@ namespace PS.FreeBookHub_Lite.CartService.API.Controllers
             await _cartService.ClearCartAsync(userId);
             return NoContent();
         }
+
+        [HttpPost("checkout")]
+        public async Task<IActionResult> Checkout([FromBody] CheckoutRequest request)
+        {
+            var order = await _cartService.CheckoutAsync(request.UserId, request.ShippingAddress);
+            return Ok(order);
+        }
+
     }
 }

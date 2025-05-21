@@ -9,5 +9,6 @@ namespace PS.FreeBookHub_Lite.CatalogService.Application.Services.Interfaces
         Task<BookDto> CreateBookAsync(CreateBookRequest request);
         Task<bool> DeleteBookAsync(Guid id);
         Task<bool> UpdateBookAsync(Guid id, CreateBookRequest request);
+        Task<decimal?> GetBookPriceAsync(Guid id);
     }
 }

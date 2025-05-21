@@ -1,4 +1,5 @@
 ﻿using Mapster;
+using PS.FreeBookHub_Lite.CartService.Application.Clients;
 using PS.FreeBookHub_Lite.CartService.Application.DTOs;
 using PS.FreeBookHub_Lite.CartService.Application.Interfaces;
 using PS.FreeBookHub_Lite.CartService.Application.Services.Interfaces;
@@ -11,14 +12,17 @@ namespace PS.FreeBookHub_Lite.CartService.Application.Services
 
         private readonly ICartRepository _cartRepository;
         private readonly IBookCatalogClient _bookCatalogClient;
+        private readonly IOrderServiceClient _orderServiceClient;
 
         public CartBookService(
             ICartRepository cartRepository,
-            IBookCatalogClient bookCatalogClient
+            IBookCatalogClient bookCatalogClient,
+            IOrderServiceClient orderServiceClient
             )
         {
             _cartRepository = cartRepository;
             _bookCatalogClient = bookCatalogClient;
+            _orderServiceClient = orderServiceClient;
         }
 
         public async Task<CartDto> GetCartAsync(Guid userId)
@@ -73,6 +77,33 @@ namespace PS.FreeBookHub_Lite.CartService.Application.Services
 
             cart.Clear();
             await _cartRepository.UpdateAsync(cart);
+        }
+
+        public async Task<OrderDto> CheckoutAsync(Guid userId, string shippingAddress)
+        {
+            var cart = await _cartRepository.GetCartAsync(userId)
+                       ?? throw new Exception("Cart is empty");
+
+            // Подготовка запроса для OrderService
+            var orderRequest = new CreateOrderRequest
+            (
+                UserId: userId,
+                ShippingAddress: shippingAddress,
+                Items: cart.Items.Select(i => new OrderItemDto
+                (
+                    BookId: i.BookId,
+                    Quantity: i.Quantity,
+                    UnitPrice: i.UnitPrice // Берём цену из корзины (уже проверенную через CatalogService)
+                )).ToList()
+            );
+
+            // Создание заказа
+            var order = await _orderServiceClient.CreateOrderAsync(orderRequest);
+
+            // Очистка корзины после успешного оформления
+            await ClearCartAsync(userId);
+
+            return order;
         }
     }
 }

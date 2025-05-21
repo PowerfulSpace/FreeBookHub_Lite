@@ -53,5 +53,11 @@ namespace PS.FreeBookHub_Lite.CatalogService.Application.Services
 
             return true;
         }
+
+        public async Task<decimal?> GetBookPriceAsync(Guid id)
+        {
+            var book = await _repository.GetByIdAsync(id);
+            return book?.Price;
+        }
     }
 }

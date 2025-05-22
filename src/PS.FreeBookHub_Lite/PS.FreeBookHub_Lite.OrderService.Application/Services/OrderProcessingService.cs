@@ -33,6 +33,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Application.Services
             var paymentRequest = new CreatePaymentRequest()
             {
                 OrderId = order.Id,
+                UserId = order.UserId,
                 Amount = order.TotalPrice
             };
 

@@ -17,9 +17,7 @@ namespace PS.FreeBookHub_Lite.PaymentService.Application.Services
 
         public async Task<PaymentResponse> ProcessPaymentAsync(CreatePaymentRequest request)
         {
-            var mockUserId = Guid.NewGuid();
-
-            var payment = new Payment(request.OrderId, mockUserId, request.Amount);
+            var payment = new Payment(request.OrderId, request.UserId, request.Amount);
 
             payment.MarkAsCompleted();
 

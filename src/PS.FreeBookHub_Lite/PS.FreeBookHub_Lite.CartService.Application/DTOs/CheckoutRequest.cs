@@ -1,4 +1,8 @@
 ﻿namespace PS.FreeBookHub_Lite.CartService.Application.DTOs
 {
-    public record CheckoutRequest(Guid UserId, string ShippingAddress);
+    public class CheckoutRequest
+    {
+        public Guid UserId { get; set; }
+        public string ShippingAddress { get; set; } = string.Empty;
+    }
 }

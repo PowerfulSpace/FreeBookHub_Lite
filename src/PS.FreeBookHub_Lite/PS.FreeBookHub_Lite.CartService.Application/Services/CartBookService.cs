@@ -86,16 +86,16 @@ namespace PS.FreeBookHub_Lite.CartService.Application.Services
 
             // Подготовка запроса для OrderService
             var orderRequest = new CreateOrderRequest
-            (
-                UserId: userId,
-                ShippingAddress: shippingAddress,
-                Items: cart.Items.Select(i => new OrderItemDto
-                (
-                    BookId: i.BookId,
-                    Quantity: i.Quantity,
-                    UnitPrice: i.UnitPrice // Берём цену из корзины (уже проверенную через CatalogService)
-                )).ToList()
-            );
+            {
+                UserId = userId,
+                ShippingAddress = shippingAddress,
+                Items = cart.Items.Select(i => new OrderItemDto
+                {
+                    BookId = i.BookId,
+                    Quantity = i.Quantity,
+                    UnitPrice = i.UnitPrice // Берём цену из корзины (уже проверенную через CatalogService)
+                }).ToList()
+            };
 
             // Создание заказа
             var order = await _orderServiceClient.CreateOrderAsync(orderRequest);

@@ -18,31 +18,31 @@ namespace PS.FreeBookHub_Lite.CartService.API.Controllers
 
         [HttpGet("{userId:guid}")]
         [SwaggerOperation(Summary = "Получение корзины пользователя", Description = "Возвращает содержимое корзины по UserId")]
-        public async Task<IActionResult> GetCart(Guid userId)
+        public async Task<IActionResult> Get(Guid userId)
         {
             var cart = await _cartService.GetCartAsync(userId);
             return Ok(cart);
         }
 
-        [HttpPost("{userId:guid}/items")]
+        [HttpPost("{userId:guid}/books")]
         [SwaggerOperation(Summary = "Добавление товара в корзину", Description = "Добавляет книгу в корзину пользователя")]
-        public async Task<IActionResult> AddItem(Guid userId, [FromBody] AddItemRequest request)
+        public async Task<IActionResult> AddBook(Guid userId, [FromBody] AddItemRequest request)
         {
             await _cartService.AddItemAsync(userId, request);
             return NoContent();
         }
 
-        [HttpPut("{userId:guid}/items")]
+        [HttpPatch("{userId:guid}/items")]
         [SwaggerOperation(Summary = "Обновление количества товара", Description = "Изменяет количество книги в корзине пользователя")]
-        public async Task<IActionResult> UpdateItem(Guid userId, [FromBody] UpdateItemQuantityRequest request)
+        public async Task<IActionResult> UpdateBookQuantity(Guid userId, [FromBody] UpdateItemQuantityRequest request)
         {
             await _cartService.UpdateItemQuantityAsync(userId, request);
             return NoContent();
         }
 
-        [HttpPatch("{userId:guid}/items/{bookId:guid}")]
+        [HttpDelete("{userId:guid}/items/{bookId:guid}")]
         [SwaggerOperation(Summary = "Удаление товара из корзины", Description = "Удаляет указанный товар из корзины пользователя")]
-        public async Task<IActionResult> RemoveItem(Guid userId, Guid bookId)
+        public async Task<IActionResult> RemoveBook(Guid userId, Guid bookId)
         {
             await _cartService.RemoveItemAsync(userId, bookId);
             return NoContent();

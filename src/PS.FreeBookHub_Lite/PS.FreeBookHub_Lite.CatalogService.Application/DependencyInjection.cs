@@ -16,6 +16,7 @@ namespace PS.FreeBookHub_Lite.CatalogService.Application
             services.AddScoped<IBookService, BookService>();
 
             services.AddValidatorsFromAssemblyContaining<CreateBookRequestValidator>();
+            services.AddValidatorsFromAssemblyContaining<UpdateBookRequestValidator>();
 
             //Отключает встроенную валидацию DataAnnotations
             //Оставляет только FluentValidation (чтобы не было дублирования)

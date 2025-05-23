@@ -10,6 +10,7 @@ namespace PS.FreeBookHub_Lite.CatalogService.Application.Mapping
         {
             config.NewConfig<Book, BookDto>();
             config.NewConfig<CreateBookRequest, Book>();
+            config.NewConfig<UpdateBookRequest, Book>();
         }
     }
 }

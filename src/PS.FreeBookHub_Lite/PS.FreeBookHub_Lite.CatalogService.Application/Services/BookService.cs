@@ -43,7 +43,7 @@ namespace PS.FreeBookHub_Lite.CatalogService.Application.Services
             return true;
         }
 
-        public async Task<bool> UpdateBookAsync(Guid id, CreateBookRequest request)
+        public async Task<bool> UpdateBookAsync(Guid id, UpdateBookRequest request)
         {
             var existing = await _repository.GetByIdAsync(id);
             if (existing == null) return false;

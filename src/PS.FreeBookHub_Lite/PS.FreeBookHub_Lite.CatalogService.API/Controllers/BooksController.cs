@@ -42,7 +42,7 @@ namespace PS.FreeBookHub_Lite.CatalogService.API.Controllers
 
         [HttpPut("{id:guid}", Name = "UpdateBook")]
         [SwaggerOperation(Summary = "Обновление информации о книге", Description = "Обновляет информацию о существующей книге в каталоге")]
-        public async Task<IActionResult> Update(Guid id, [FromBody] CreateBookRequest request)
+        public async Task<IActionResult> Update(Guid id, [FromBody] UpdateBookRequest request)
         {
             var updated = await _bookService.UpdateBookAsync(id, request);
             return updated ? NoContent() : NotFound();

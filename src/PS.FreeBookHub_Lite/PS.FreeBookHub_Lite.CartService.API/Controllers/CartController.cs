@@ -57,6 +57,7 @@ namespace PS.FreeBookHub_Lite.CartService.API.Controllers
         }
 
         [HttpPost("checkout")]
+        [SwaggerOperation(Summary = "Оформление заказа из корзины", Description = "Выполняет оформление заказа на основе содержимого корзины пользователя с указанием адреса доставки")]
         public async Task<IActionResult> Checkout([FromBody] CheckoutRequest request)
         {
             var order = await _cartService.CheckoutAsync(request.UserId, request.ShippingAddress);

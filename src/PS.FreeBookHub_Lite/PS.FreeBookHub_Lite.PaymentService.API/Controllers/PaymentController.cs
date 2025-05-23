@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PS.FreeBookHub_Lite.PaymentService.Application.DTOs;
 using PS.FreeBookHub_Lite.PaymentService.Application.Services.Interfaces;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace PS.FreeBookHub_Lite.PaymentService.API.Controllers
 {
@@ -16,6 +17,7 @@ namespace PS.FreeBookHub_Lite.PaymentService.API.Controllers
         }
 
         [HttpPost]
+        [SwaggerOperation(Summary = "Создание платежа", Description = "Обрабатывает и создает новый платеж")]
         public async Task<IActionResult> CreatePayment([FromBody] CreatePaymentRequest request)
         {
             var result = await _paymentService.ProcessPaymentAsync(request);
@@ -23,6 +25,7 @@ namespace PS.FreeBookHub_Lite.PaymentService.API.Controllers
         }
 
         [HttpGet("{id:guid}")]
+        [SwaggerOperation(Summary = "Получение платежа по ID", Description = "Возвращает информацию о платеже по его идентификатору")]
         public async Task<IActionResult> GetPaymentById(Guid id)
         {
             var result = await _paymentService.GetPaymentByIdAsync(id);
@@ -33,6 +36,7 @@ namespace PS.FreeBookHub_Lite.PaymentService.API.Controllers
         }
 
         [HttpGet("by-order/{orderId:guid}")]
+        [SwaggerOperation(Summary = "Получение платежей по заказу", Description = "Возвращает все платежи, связанные с указанным заказом")]
         public async Task<IActionResult> GetPaymentsByOrderId(Guid orderId)
         {
             var results = await _paymentService.GetPaymentsByOrderIdAsync(orderId);

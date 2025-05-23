@@ -6,7 +6,7 @@
         {
             services.AddControllers();
 
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(options => options.EnableAnnotations());
 
             return services;
         }

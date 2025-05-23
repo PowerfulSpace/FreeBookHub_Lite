@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PS.FreeBookHub_Lite.OrderService.Application.DTOs;
 using PS.FreeBookHub_Lite.OrderService.Application.Services.Interfaces;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace PS.FreeBookHub_Lite.OrderService.API.Controllers
 {
@@ -16,6 +17,7 @@ namespace PS.FreeBookHub_Lite.OrderService.API.Controllers
         }
 
         [HttpPost]
+        [SwaggerOperation(Summary = "Создание нового заказа", Description = "Создает новый заказ на основе переданных данных")]
         public async Task<IActionResult> Create([FromBody] CreateOrderRequest request)
         {
             var order = await _orderService.CreateOrderAsync(request);
@@ -23,6 +25,7 @@ namespace PS.FreeBookHub_Lite.OrderService.API.Controllers
         }
 
         [HttpGet("{orderId:guid}")]
+        [SwaggerOperation(Summary = "Получение заказа по ID", Description = "Возвращает детали заказа по его идентификатору")]
         public async Task<IActionResult> GetById(Guid orderId)
         {
             var order = await _orderService.GetOrderByIdAsync(orderId);
@@ -33,6 +36,7 @@ namespace PS.FreeBookHub_Lite.OrderService.API.Controllers
         }
 
         [HttpGet("user/{userId:guid}")]
+        [SwaggerOperation(Summary = "Получение заказов пользователя", Description = "Возвращает список всех заказов, принадлежащих указанному пользователю")]
         public async Task<IActionResult> GetAllByUserId(Guid userId)
         {
             var orders = await _orderService.GetAllOrdersByUserIdAsync(userId);
@@ -40,6 +44,7 @@ namespace PS.FreeBookHub_Lite.OrderService.API.Controllers
         }
 
         [HttpPost("{orderId:guid}/cancel")]
+        [SwaggerOperation(Summary = "Отмена заказа", Description = "Отменяет заказ, если это возможно (например, если он еще не обработан)")]
         public async Task<IActionResult> Cancel(Guid orderId)
         {
             try

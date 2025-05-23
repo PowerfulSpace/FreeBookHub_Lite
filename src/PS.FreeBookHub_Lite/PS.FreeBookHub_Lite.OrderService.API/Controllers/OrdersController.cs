@@ -43,7 +43,7 @@ namespace PS.FreeBookHub_Lite.OrderService.API.Controllers
             return Ok(orders);
         }
 
-        [HttpPost("{orderId:guid}/cancel")]
+        [HttpDelete("{orderId:guid}/cancel")]
         [SwaggerOperation(Summary = "Отмена заказа", Description = "Отменяет заказ, если это возможно (например, если он еще не обработан)")]
         public async Task<IActionResult> Cancel(Guid orderId)
         {

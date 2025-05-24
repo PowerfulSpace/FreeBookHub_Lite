@@ -18,17 +18,17 @@ namespace PS.FreeBookHub_Lite.OrderService.API.Controllers
 
         [HttpPost]
         [SwaggerOperation(Summary = "Создание нового заказа", Description = "Создает новый заказ на основе переданных данных")]
-        public async Task<IActionResult> Create([FromBody] CreateOrderRequest request)
+        public async Task<IActionResult> Create([FromBody] CreateOrderRequest request, CancellationToken cancellationToken)
         {
-            var order = await _orderService.CreateOrderAsync(request);
+            var order = await _orderService.CreateOrderAsync(request, cancellationToken);
             return CreatedAtAction(nameof(GetById), new { orderId = order.Id }, order);
         }
 
         [HttpGet("{orderId:guid}")]
         [SwaggerOperation(Summary = "Получение заказа по ID", Description = "Возвращает детали заказа по его идентификатору")]
-        public async Task<IActionResult> GetById(Guid orderId)
+        public async Task<IActionResult> GetById(Guid orderId, CancellationToken cancellationToken)
         {
-            var order = await _orderService.GetOrderByIdAsync(orderId);
+            var order = await _orderService.GetOrderByIdAsync(orderId, cancellationToken);
             if (order == null)
                 return NotFound();
 
@@ -37,19 +37,19 @@ namespace PS.FreeBookHub_Lite.OrderService.API.Controllers
 
         [HttpGet("user/{userId:guid}")]
         [SwaggerOperation(Summary = "Получение заказов пользователя", Description = "Возвращает список всех заказов, принадлежащих указанному пользователю")]
-        public async Task<IActionResult> GetAllByUserId(Guid userId)
+        public async Task<IActionResult> GetAllByUserId(Guid userId, CancellationToken cancellationToken)
         {
-            var orders = await _orderService.GetAllOrdersByUserIdAsync(userId);
+            var orders = await _orderService.GetAllOrdersByUserIdAsync(userId, cancellationToken);
             return Ok(orders);
         }
 
         [HttpDelete("{orderId:guid}/cancel")]
         [SwaggerOperation(Summary = "Отмена заказа", Description = "Отменяет заказ, если это возможно (например, если он еще не обработан)")]
-        public async Task<IActionResult> Cancel(Guid orderId)
+        public async Task<IActionResult> Cancel(Guid orderId, CancellationToken cancellationToken)
         {
             try
             {
-                await _orderService.CancelOrderAsync(orderId);
+                await _orderService.CancelOrderAsync(orderId, cancellationToken);
                 return NoContent();
             }
             catch (KeyNotFoundException)

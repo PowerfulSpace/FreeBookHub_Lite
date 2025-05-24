@@ -4,9 +4,9 @@ namespace PS.FreeBookHub_Lite.OrderService.Application.Services.Interfaces
 {
     public interface IOrderBookService
     {
-        Task<OrderResponse> CreateOrderAsync(CreateOrderRequest request);
-        Task<IEnumerable<OrderResponse>> GetAllOrdersByUserIdAsync(Guid userId);
-        Task<OrderResponse?> GetOrderByIdAsync(Guid orderId);
-        Task CancelOrderAsync(Guid orderId);
+        Task<OrderResponse> CreateOrderAsync(CreateOrderRequest request, CancellationToken cancellationToken);
+        Task<IEnumerable<OrderResponse>> GetAllOrdersByUserIdAsync(Guid userId, CancellationToken cancellationToken);
+        Task<OrderResponse?> GetOrderByIdAsync(Guid orderId, CancellationToken cancellationToken);
+        Task CancelOrderAsync(Guid orderId, CancellationToken cancellationToken);
     }
 }

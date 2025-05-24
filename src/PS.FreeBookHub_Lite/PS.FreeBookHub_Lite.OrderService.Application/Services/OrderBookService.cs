@@ -19,7 +19,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Application.Services
             _paymentClient = paymentClient;
         }
 
-        public async Task<OrderResponse> CreateOrderAsync(CreateOrderRequest request)
+        public async Task<OrderResponse> CreateOrderAsync(CreateOrderRequest request, CancellationToken cancellationToken)
         {
             var order = new Order(request.UserId, request.ShippingAddress);
 
@@ -28,7 +28,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Application.Services
                 order.AddItem(item.BookId, item.UnitPrice, item.Quantity);
             }
 
-            await _orderRepository.AddAsync(order);
+            await _orderRepository.AddAsync(order, cancellationToken);
 
             var paymentRequest = new CreatePaymentRequest()
             {
@@ -37,37 +37,37 @@ namespace PS.FreeBookHub_Lite.OrderService.Application.Services
                 Amount = order.TotalPrice
             };
 
-            var paymentResult = await _paymentClient.CreatePaymentAsync(paymentRequest);
+            var paymentResult = await _paymentClient.CreatePaymentAsync(paymentRequest, cancellationToken);
 
             if (!paymentResult)
                 throw new PaymentFailedException(order.Id);
 
             order.MarkAsPaid();
-            await _orderRepository.UpdateAsync(order);
+            await _orderRepository.UpdateAsync(order, cancellationToken);
 
             return order.Adapt<OrderResponse>();
         }
 
-        public async Task<IEnumerable<OrderResponse>> GetAllOrdersByUserIdAsync(Guid userId)
+        public async Task<IEnumerable<OrderResponse>> GetAllOrdersByUserIdAsync(Guid userId, CancellationToken cancellationToken)
         {
-            var orders = await _orderRepository.GetAllByUserIdAsync(userId);
+            var orders = await _orderRepository.GetAllByUserIdAsync(userId, cancellationToken);
             return orders.Adapt<IEnumerable<OrderResponse>>();
         }
 
-        public async Task<OrderResponse?> GetOrderByIdAsync(Guid orderId)
+        public async Task<OrderResponse?> GetOrderByIdAsync(Guid orderId, CancellationToken cancellationToken)
         {
-            var order = await _orderRepository.GetByIdAsync(orderId, true);
+            var order = await _orderRepository.GetByIdAsync(orderId, cancellationToken, true);
             return order?.Adapt<OrderResponse>();
         }
 
-        public async Task CancelOrderAsync(Guid orderId)
+        public async Task CancelOrderAsync(Guid orderId, CancellationToken cancellationToken)
         {
-            var order = await _orderRepository.GetByIdAsync(orderId);
+            var order = await _orderRepository.GetByIdAsync(orderId, cancellationToken);
             if (order == null)
                 throw new KeyNotFoundException("Order not found");
 
             order.Cancel();
-            await _orderRepository.UpdateAsync(order);
+            await _orderRepository.UpdateAsync(order, cancellationToken);
         }
     }
 }

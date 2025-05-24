@@ -4,6 +4,6 @@ namespace PS.FreeBookHub_Lite.OrderService.Application.Clients
 {
     public interface IPaymentServiceClient
     {
-        Task<bool> CreatePaymentAsync(CreatePaymentRequest request);
+        Task<bool> CreatePaymentAsync(CreatePaymentRequest request, CancellationToken cancellationToken);
     }
 }

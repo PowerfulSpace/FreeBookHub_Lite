@@ -13,32 +13,32 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Persistence.Repositori
             _dbContext = dbContext;
         }
 
-        public async Task AddAsync(Order order)
+        public async Task AddAsync(Order order, CancellationToken cancellationToken)
         {
-            await _dbContext.Orders.AddAsync(order);
-            await _dbContext.SaveChangesAsync();
+            await _dbContext.Orders.AddAsync(order, cancellationToken);
+            await _dbContext.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
         {
-            var order = await _dbContext.Orders.FindAsync(id);
+            var order = await _dbContext.Orders.FindAsync(id, cancellationToken);
             if (order != null)
             {
                 _dbContext.Orders.Remove(order);
-                await _dbContext.SaveChangesAsync();
+                await _dbContext.SaveChangesAsync(cancellationToken);
             }
         }
 
-        public async Task<IEnumerable<Order>> GetAllByUserIdAsync(Guid userId)
+        public async Task<IEnumerable<Order>> GetAllByUserIdAsync(Guid userId, CancellationToken cancellationToken)
         {
             return await _dbContext.Orders
                 .Include(o => o.Items)
                 .Where(o => o.UserId == userId)
                 .AsNoTracking()
-                .ToListAsync();
+                .ToListAsync(cancellationToken);
         }
 
-        public async Task<Order?> GetByIdAsync(Guid id, bool asNoTracking = false)
+        public async Task<Order?> GetByIdAsync(Guid id, CancellationToken cancellationToken, bool asNoTracking = false)
         {
             IQueryable<Order> orders = _dbContext.Orders.Include(o => o.Items);
 
@@ -47,13 +47,13 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Persistence.Repositori
                 orders = orders.AsNoTracking();
             }
 
-            return await orders.FirstOrDefaultAsync(o => o.Id == id);
+            return await orders.FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
         }
 
-        public async Task UpdateAsync(Order order)
+        public async Task UpdateAsync(Order order, CancellationToken cancellationToken)
         {
             _dbContext.Orders.Update(order);
-            await _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync(cancellationToken);
         }
     }
 }

@@ -13,13 +13,13 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Persistence.Clients
             _httpClient = httpClient;
         }
 
-        public async Task<bool> CreatePaymentAsync(CreatePaymentRequest request)
+        public async Task<bool> CreatePaymentAsync(CreatePaymentRequest request, CancellationToken cancellationToken)
         {
-            var response = await _httpClient.PostAsJsonAsync("/api/payment", request);
+            var response = await _httpClient.PostAsJsonAsync("/api/payment", request, cancellationToken);
 
             if (!response.IsSuccessStatusCode)
             {
-                var error = await response.Content.ReadAsStringAsync();
+                var error = await response.Content.ReadAsStringAsync(cancellationToken);
                 // логируем
                 throw new ApplicationException($"Payment creation failed. Status: {response.StatusCode}, Error: {error}");
             }

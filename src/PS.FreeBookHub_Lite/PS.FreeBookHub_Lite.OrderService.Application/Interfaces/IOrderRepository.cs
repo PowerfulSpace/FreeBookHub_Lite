@@ -4,10 +4,10 @@ namespace PS.FreeBookHub_Lite.OrderService.Application.Interfaces
 {
     public interface IOrderRepository
     {
-        Task<Order?> GetByIdAsync(Guid id, bool asNoTracking = false);
-        Task<IEnumerable<Order>> GetAllByUserIdAsync(Guid userId);
-        Task AddAsync(Order order);
-        Task UpdateAsync(Order order);
-        Task DeleteAsync(Guid id);
+        Task<Order?> GetByIdAsync(Guid id, CancellationToken cancellationToken, bool asNoTracking = false);
+        Task<IEnumerable<Order>> GetAllByUserIdAsync(Guid userId, CancellationToken cancellationToken);
+        Task AddAsync(Order order, CancellationToken cancellationToken);
+        Task UpdateAsync(Order order, CancellationToken cancellationToken);
+        Task DeleteAsync(Guid id, CancellationToken cancellationToken);
     }
 }

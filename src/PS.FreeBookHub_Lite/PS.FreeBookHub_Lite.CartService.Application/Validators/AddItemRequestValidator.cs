@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using PS.FreeBookHub_Lite.CartService.Application.DTOs;
+using PS.FreeBookHub_Lite.CartService.Application.DTOs.Cart;
 
 namespace PS.FreeBookHub_Lite.CartService.Application.Validators
 {

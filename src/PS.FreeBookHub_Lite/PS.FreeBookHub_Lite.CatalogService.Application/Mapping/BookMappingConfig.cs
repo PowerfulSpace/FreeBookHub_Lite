@@ -8,7 +8,7 @@ namespace PS.FreeBookHub_Lite.CatalogService.Application.Mapping
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Book, BookDto>();
+            config.NewConfig<Book, BookResponse>();
             config.NewConfig<CreateBookRequest, Book>();
             config.NewConfig<UpdateBookRequest, Book>();
         }

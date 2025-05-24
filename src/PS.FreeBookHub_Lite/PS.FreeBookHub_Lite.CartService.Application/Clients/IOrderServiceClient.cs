@@ -1,9 +1,9 @@
-﻿using PS.FreeBookHub_Lite.CartService.Application.DTOs;
+﻿using PS.FreeBookHub_Lite.CartService.Application.DTOs.Order;
 
 namespace PS.FreeBookHub_Lite.CartService.Application.Clients
 {
     public interface IOrderServiceClient
     {
-        Task<OrderDto> CreateOrderAsync(CreateOrderRequest request);
+        Task<OrderResponse> CreateOrderAsync(CreateOrderRequest request);
     }
 }

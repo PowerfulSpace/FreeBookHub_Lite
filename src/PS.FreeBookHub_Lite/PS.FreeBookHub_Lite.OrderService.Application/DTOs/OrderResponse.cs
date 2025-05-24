@@ -2,7 +2,7 @@
 
 namespace PS.FreeBookHub_Lite.OrderService.Application.DTOs
 {
-    public class OrderDto
+    public class OrderResponse
     {
         public Guid Id { get; set; }
         public Guid UserId { get; set; }

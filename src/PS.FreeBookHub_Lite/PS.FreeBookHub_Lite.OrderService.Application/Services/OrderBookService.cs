@@ -19,7 +19,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Application.Services
             _paymentClient = paymentClient;
         }
 
-        public async Task<OrderDto> CreateOrderAsync(CreateOrderRequest request)
+        public async Task<OrderResponse> CreateOrderAsync(CreateOrderRequest request)
         {
             var order = new Order(request.UserId, request.ShippingAddress);
 
@@ -45,19 +45,19 @@ namespace PS.FreeBookHub_Lite.OrderService.Application.Services
             order.MarkAsPaid();
             await _orderRepository.UpdateAsync(order);
 
-            return order.Adapt<OrderDto>();
+            return order.Adapt<OrderResponse>();
         }
 
-        public async Task<IEnumerable<OrderDto>> GetAllOrdersByUserIdAsync(Guid userId)
+        public async Task<IEnumerable<OrderResponse>> GetAllOrdersByUserIdAsync(Guid userId)
         {
             var orders = await _orderRepository.GetAllByUserIdAsync(userId);
-            return orders.Adapt<IEnumerable<OrderDto>>();
+            return orders.Adapt<IEnumerable<OrderResponse>>();
         }
 
-        public async Task<OrderDto?> GetOrderByIdAsync(Guid orderId)
+        public async Task<OrderResponse?> GetOrderByIdAsync(Guid orderId)
         {
             var order = await _orderRepository.GetByIdAsync(orderId, true);
-            return order?.Adapt<OrderDto>();
+            return order?.Adapt<OrderResponse>();
         }
 
         public async Task CancelOrderAsync(Guid orderId)

@@ -1,5 +1,5 @@
 ﻿using Mapster;
-using PS.FreeBookHub_Lite.CartService.Application.DTOs;
+using PS.FreeBookHub_Lite.CartService.Application.DTOs.Cart;
 using PS.FreeBookHub_Lite.CartService.Domain.Entities;
 
 namespace PS.FreeBookHub_Lite.CartService.Application.Mappings
@@ -8,7 +8,7 @@ namespace PS.FreeBookHub_Lite.CartService.Application.Mappings
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Cart, CartDto>();
+            config.NewConfig<Cart, CartResponse>();
             config.NewConfig<CartItem, CartItemDto>();
         }
     }

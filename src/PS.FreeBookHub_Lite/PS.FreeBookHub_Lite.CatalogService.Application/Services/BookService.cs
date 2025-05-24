@@ -15,23 +15,23 @@ namespace PS.FreeBookHub_Lite.CatalogService.Application.Services
             _repository = repository;
         }
 
-        public async Task<IEnumerable<BookDto>> GetAllBooksAsync()
+        public async Task<IEnumerable<BookResponse>> GetAllBooksAsync()
         {
             var books = await _repository.GetAllAsync();
-            return books.Adapt<IEnumerable<BookDto>>();
+            return books.Adapt<IEnumerable<BookResponse>>();
         }
 
-        public async Task<BookDto?> GetBookByIdAsync(Guid id)
+        public async Task<BookResponse?> GetBookByIdAsync(Guid id)
         {
             var book = await _repository.GetByIdAsync(id);
-            return book?.Adapt<BookDto>();
+            return book?.Adapt<BookResponse>();
         }
 
-        public async Task<BookDto> CreateBookAsync(CreateBookRequest request)
+        public async Task<BookResponse> CreateBookAsync(CreateBookRequest request)
         {
             var book = request.Adapt<Book>();
             await _repository.AddAsync(book);
-            return book.Adapt<BookDto>();
+            return book.Adapt<BookResponse>();
         }
 
         public async Task<bool> DeleteBookAsync(Guid id)

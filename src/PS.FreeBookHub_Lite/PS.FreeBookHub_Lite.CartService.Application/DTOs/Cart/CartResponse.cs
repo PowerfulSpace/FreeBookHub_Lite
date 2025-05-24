@@ -1,6 +1,6 @@
-﻿namespace PS.FreeBookHub_Lite.CartService.Application.DTOs
+﻿namespace PS.FreeBookHub_Lite.CartService.Application.DTOs.Cart
 {
-    public class CartDto
+    public class CartResponse
     {
         public Guid UserId { get; set; }
         public List<CartItemDto> Items { get; set; } = new();

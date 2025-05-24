@@ -1,6 +1,6 @@
-﻿namespace PS.FreeBookHub_Lite.CartService.Application.DTOs
+﻿namespace PS.FreeBookHub_Lite.CartService.Application.DTOs.Order
 {
-    public class OrderDto
+    public class OrderResponse
     {
         public Guid Id { get; set; }
         public Guid UserId { get; set; }

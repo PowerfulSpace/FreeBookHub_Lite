@@ -1,6 +1,6 @@
 ﻿namespace PS.FreeBookHub_Lite.CatalogService.Application.DTOs
 {
-    public class BookDto
+    public class BookResponse
     {
         public Guid Id { get; set; }
         public string Title { get; set; } = default!;

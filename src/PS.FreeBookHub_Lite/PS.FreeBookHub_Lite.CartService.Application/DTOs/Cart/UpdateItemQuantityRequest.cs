@@ -1,4 +1,4 @@
-﻿namespace PS.FreeBookHub_Lite.CartService.Application.DTOs
+﻿namespace PS.FreeBookHub_Lite.CartService.Application.DTOs.Cart
 {
     public class UpdateItemQuantityRequest
     {

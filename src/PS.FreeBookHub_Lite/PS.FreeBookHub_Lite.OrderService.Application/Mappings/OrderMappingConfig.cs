@@ -7,7 +7,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Application.Mappings
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<CreateOrderRequest, OrderDto>();
+            config.NewConfig<CreateOrderRequest, OrderResponse>();
             config.NewConfig<CreateOrderItemRequest, OrderItemDto>();
         }
     }

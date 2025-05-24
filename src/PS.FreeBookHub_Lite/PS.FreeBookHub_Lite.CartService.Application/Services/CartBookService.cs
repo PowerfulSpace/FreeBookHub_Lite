@@ -1,6 +1,8 @@
 ﻿using Mapster;
 using PS.FreeBookHub_Lite.CartService.Application.Clients;
 using PS.FreeBookHub_Lite.CartService.Application.DTOs;
+using PS.FreeBookHub_Lite.CartService.Application.DTOs.Cart;
+using PS.FreeBookHub_Lite.CartService.Application.DTOs.Order;
 using PS.FreeBookHub_Lite.CartService.Application.Interfaces;
 using PS.FreeBookHub_Lite.CartService.Application.Services.Interfaces;
 using PS.FreeBookHub_Lite.CartService.Domain.Entities;
@@ -25,12 +27,12 @@ namespace PS.FreeBookHub_Lite.CartService.Application.Services
             _orderServiceClient = orderServiceClient;
         }
 
-        public async Task<CartDto> GetCartAsync(Guid userId)
+        public async Task<CartResponse> GetCartAsync(Guid userId)
         {
             var cart = await _cartRepository.GetCartAsync(userId, true)
                       ?? new Cart(userId);
 
-            return cart.Adapt<CartDto>();
+            return cart.Adapt<CartResponse>();
         }
 
         public async Task AddItemAsync(Guid userId, AddItemRequest request)
@@ -79,7 +81,7 @@ namespace PS.FreeBookHub_Lite.CartService.Application.Services
             await _cartRepository.UpdateAsync(cart);
         }
 
-        public async Task<OrderDto> CheckoutAsync(Guid userId, string shippingAddress)
+        public async Task<OrderResponse> CheckoutAsync(Guid userId, string shippingAddress)
         {
             var cart = await _cartRepository.GetCartAsync(userId)
                        ?? throw new Exception("Cart is empty");

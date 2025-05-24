@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using PS.FreeBookHub_Lite.CartService.Application.Clients;
-using PS.FreeBookHub_Lite.CartService.Application.DTOs;
+using PS.FreeBookHub_Lite.CartService.Application.DTOs.Order;
 using System.Net.Http.Json;
 
 namespace PS.FreeBookHub_Lite.CartService.Infrastructure.Persistence.Clients
@@ -16,7 +16,7 @@ namespace PS.FreeBookHub_Lite.CartService.Infrastructure.Persistence.Clients
             _logger = logger;
         }
 
-        public async Task<OrderDto> CreateOrderAsync(CreateOrderRequest request)
+        public async Task<OrderResponse> CreateOrderAsync(CreateOrderRequest request)
         {
             try
             {
@@ -26,7 +26,7 @@ namespace PS.FreeBookHub_Lite.CartService.Infrastructure.Persistence.Clients
                 );
 
                 response.EnsureSuccessStatusCode();
-                return await response.Content.ReadFromJsonAsync<OrderDto>();
+                return await response.Content.ReadFromJsonAsync<OrderResponse>();
             }
             catch (Exception ex)
             {

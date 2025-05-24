@@ -13,7 +13,7 @@ namespace PS.FreeBookHub_Lite.PaymentService.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddScoped<IPaymentProcessingService, PaymentProcessingService>();
+            services.AddScoped<IPaymentBookService, PaymentBookService>();
 
             services.AddValidatorsFromAssemblyContaining<CreatePaymentRequestValidator>();
 

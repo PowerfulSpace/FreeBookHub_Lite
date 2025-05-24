@@ -2,7 +2,7 @@
 
 namespace PS.FreeBookHub_Lite.OrderService.Application.Services.Interfaces
 {
-    public interface IOrderProcessingService
+    public interface IOrderBookService
     {
         Task<OrderDto> CreateOrderAsync(CreateOrderRequest request);
         Task<IEnumerable<OrderDto>> GetAllOrdersByUserIdAsync(Guid userId);

@@ -2,7 +2,7 @@
 
 namespace PS.FreeBookHub_Lite.PaymentService.Application.Services.Interfaces
 {
-    public interface IPaymentProcessingService
+    public interface IPaymentBookService
     {
         Task<PaymentResponse> ProcessPaymentAsync(CreatePaymentRequest request);
         Task<PaymentResponse?> GetPaymentByIdAsync(Guid id);

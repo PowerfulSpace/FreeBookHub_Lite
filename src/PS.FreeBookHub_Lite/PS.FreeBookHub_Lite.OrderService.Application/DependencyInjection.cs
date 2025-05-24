@@ -13,7 +13,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddScoped<IOrderProcessingService, OrderProcessingService>();
+            services.AddScoped<IOrderBookService, OrderBookService>();
 
             services.AddValidatorsFromAssemblyContaining<CreateOrderItemRequestValidator>();
             services.AddValidatorsFromAssemblyContaining<CreateOrderRequestValidator>();

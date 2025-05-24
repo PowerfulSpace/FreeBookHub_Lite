@@ -8,12 +8,12 @@ using PS.FreeBookHub_Lite.OrderService.Domain.Exceptions;
 
 namespace PS.FreeBookHub_Lite.OrderService.Application.Services
 {
-    public class OrderProcessingService : IOrderProcessingService
+    public class OrderBookService : IOrderBookService
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IPaymentServiceClient _paymentClient;
 
-        public OrderProcessingService(IOrderRepository orderRepository, IPaymentServiceClient paymentClient)
+        public OrderBookService(IOrderRepository orderRepository, IPaymentServiceClient paymentClient)
         {
             _orderRepository = orderRepository;
             _paymentClient = paymentClient;

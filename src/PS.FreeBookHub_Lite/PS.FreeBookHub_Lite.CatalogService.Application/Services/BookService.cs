@@ -15,48 +15,48 @@ namespace PS.FreeBookHub_Lite.CatalogService.Application.Services
             _repository = repository;
         }
 
-        public async Task<IEnumerable<BookResponse>> GetAllBooksAsync()
+        public async Task<IEnumerable<BookResponse>> GetAllBooksAsync(CancellationToken cancellationToken)
         {
-            var books = await _repository.GetAllAsync();
+            var books = await _repository.GetAllAsync(cancellationToken);
             return books.Adapt<IEnumerable<BookResponse>>();
         }
 
-        public async Task<BookResponse?> GetBookByIdAsync(Guid id)
+        public async Task<BookResponse?> GetBookByIdAsync(Guid id, CancellationToken cancellationToken)
         {
-            var book = await _repository.GetByIdAsync(id);
+            var book = await _repository.GetByIdAsync(id, cancellationToken);
             return book?.Adapt<BookResponse>();
         }
 
-        public async Task<BookResponse> CreateBookAsync(CreateBookRequest request)
+        public async Task<BookResponse> CreateBookAsync(CreateBookRequest request, CancellationToken cancellationToken)
         {
             var book = request.Adapt<Book>();
-            await _repository.AddAsync(book);
+            await _repository.AddAsync(book, cancellationToken);
             return book.Adapt<BookResponse>();
         }
 
-        public async Task<bool> DeleteBookAsync(Guid id)
+        public async Task<bool> DeleteBookAsync(Guid id, CancellationToken cancellationToken)
         {
-            var book = await _repository.GetByIdAsync(id);
+            var book = await _repository.GetByIdAsync(id, cancellationToken);
             if (book == null) return false;
 
-            await _repository.DeleteAsync(id);
+            await _repository.DeleteAsync(id, cancellationToken);
             return true;
         }
 
-        public async Task<bool> UpdateBookAsync(Guid id, UpdateBookRequest request)
+        public async Task<bool> UpdateBookAsync(Guid id, UpdateBookRequest request, CancellationToken cancellationToken)
         {
-            var existing = await _repository.GetByIdAsync(id);
+            var existing = await _repository.GetByIdAsync(id, cancellationToken);
             if (existing == null) return false;
 
             request.Adapt(existing);
-            await _repository.UpdateAsync(existing);
+            await _repository.UpdateAsync(existing, cancellationToken);
 
             return true;
         }
 
-        public async Task<decimal?> GetBookPriceAsync(Guid id)
+        public async Task<decimal?> GetBookPriceAsync(Guid id, CancellationToken cancellationToken)
         {
-            var book = await _repository.GetByIdAsync(id);
+            var book = await _repository.GetByIdAsync(id, cancellationToken);
             return book?.Price;
         }
     }

@@ -4,10 +4,10 @@ namespace PS.FreeBookHub_Lite.CatalogService.Application.Interfaces
 {
     public interface IBookRepository
     {
-        Task<IEnumerable<Book>> GetAllAsync();
-        Task<Book?> GetByIdAsync(Guid id);
-        Task AddAsync(Book book);
-        Task UpdateAsync(Book book);
-        Task DeleteAsync(Guid id);
+        Task<IEnumerable<Book>> GetAllAsync(CancellationToken cancellationToken);
+        Task<Book?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+        Task AddAsync(Book book, CancellationToken cancellationToken);
+        Task UpdateAsync(Book book, CancellationToken cancellationToken);
+        Task DeleteAsync(Guid id, CancellationToken cancellationToken);
     }
 }

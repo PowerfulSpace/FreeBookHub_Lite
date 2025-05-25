@@ -16,17 +16,18 @@ namespace PS.FreeBookHub_Lite.CartService.Infrastructure.Persistence.Clients
             _logger = logger;
         }
 
-        public async Task<OrderResponse> CreateOrderAsync(CreateOrderRequest request)
+        public async Task<OrderResponse> CreateOrderAsync(CreateOrderRequest request, CancellationToken cancellationToken)
         {
             try
             {
                 var response = await _httpClient.PostAsJsonAsync(
                     "/api/orders",
-                    request
+                    request,
+                    cancellationToken
                 );
 
                 response.EnsureSuccessStatusCode();
-                return await response.Content.ReadFromJsonAsync<OrderResponse>();
+                return await response.Content.ReadFromJsonAsync<OrderResponse>(cancellationToken);
             }
             catch (Exception ex)
             {

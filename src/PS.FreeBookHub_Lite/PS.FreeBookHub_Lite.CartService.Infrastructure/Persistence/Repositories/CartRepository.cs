@@ -13,7 +13,7 @@ namespace PS.FreeBookHub_Lite.CartService.Infrastructure.Persistence.Repositorie
             _context = context;
         }
 
-        public async Task<Cart?> GetCartAsync(Guid userId, bool asNoTracking = false)
+        public async Task<Cart?> GetCartAsync(Guid userId, CancellationToken cancellationToken, bool asNoTracking = false)
         {
             IQueryable<Cart> carts = _context.Carts.Include(c => c.Items);
 
@@ -22,30 +22,30 @@ namespace PS.FreeBookHub_Lite.CartService.Infrastructure.Persistence.Repositorie
                 carts = carts.AsNoTracking();
             }
 
-            return await carts.FirstOrDefaultAsync(c => c.UserId == userId);
+            return await carts.FirstOrDefaultAsync(c => c.UserId == userId, cancellationToken);
         }
 
-        public async Task AddAsync(Cart cart)
+        public async Task AddAsync(Cart cart, CancellationToken cancellationToken)
         {
-            await _context.Carts.AddAsync(cart);
-            await _context.SaveChangesAsync();
+            await _context.Carts.AddAsync(cart, cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task UpdateAsync(Cart cart)
+        public async Task UpdateAsync(Cart cart, CancellationToken cancellationToken)
         {
             _context.Carts.Update(cart);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task DeleteAsync(Guid userId)
+        public async Task DeleteAsync(Guid userId, CancellationToken cancellationToken)
         {
             var cart = await _context.Carts
-                .FirstOrDefaultAsync(c => c.UserId == userId);
+                .FirstOrDefaultAsync(c => c.UserId == userId, cancellationToken);
 
             if (cart != null)
             {
                 _context.Carts.Remove(cart);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(cancellationToken);
             }
         }
     }

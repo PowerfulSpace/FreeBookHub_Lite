@@ -2,6 +2,6 @@
 {
     public interface IBookCatalogClient
     {
-        Task<decimal?> GetBookPriceAsync(Guid bookId);
+        Task<decimal?> GetBookPriceAsync(Guid bookId, CancellationToken cancellationToken);
     }
 }

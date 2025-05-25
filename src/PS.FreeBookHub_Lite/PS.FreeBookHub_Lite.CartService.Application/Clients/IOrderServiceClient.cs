@@ -4,6 +4,6 @@ namespace PS.FreeBookHub_Lite.CartService.Application.Clients
 {
     public interface IOrderServiceClient
     {
-        Task<OrderResponse> CreateOrderAsync(CreateOrderRequest request);
+        Task<OrderResponse> CreateOrderAsync(CreateOrderRequest request, CancellationToken cancellationToken);
     }
 }

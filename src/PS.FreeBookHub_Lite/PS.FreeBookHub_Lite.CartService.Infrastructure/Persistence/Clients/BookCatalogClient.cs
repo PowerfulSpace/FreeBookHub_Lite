@@ -15,11 +15,11 @@ namespace PS.FreeBookHub_Lite.CartService.Application.Services
             _logger = logger;
         }
 
-        public async Task<decimal?> GetBookPriceAsync(Guid bookId)
+        public async Task<decimal?> GetBookPriceAsync(Guid bookId, CancellationToken cancellationToken)
         {
-            var response = await _httpClient.GetAsync($"/api/books/{bookId}/price");
+            var response = await _httpClient.GetAsync($"/api/books/{bookId}/price", cancellationToken);
             return response.IsSuccessStatusCode
-                ? await response.Content.ReadFromJsonAsync<decimal>()
+                ? await response.Content.ReadFromJsonAsync<decimal>(cancellationToken)
                 : null;
         }
     }

@@ -18,17 +18,17 @@ namespace PS.FreeBookHub_Lite.PaymentService.API.Controllers
 
         [HttpPost]
         [SwaggerOperation(Summary = "Создание платежа", Description = "Обрабатывает и создает новый платеж")]
-        public async Task<IActionResult> CreatePayment([FromBody] CreatePaymentRequest request)
+        public async Task<IActionResult> CreatePayment([FromBody] CreatePaymentRequest request, CancellationToken cancellationToken)
         {
-            var result = await _paymentService.ProcessPaymentAsync(request);
+            var result = await _paymentService.ProcessPaymentAsync(request, cancellationToken);
             return CreatedAtAction(nameof(GetPaymentById), new { id = result.Id }, result);
         }
 
         [HttpGet("{id:guid}")]
         [SwaggerOperation(Summary = "Получение платежа по ID", Description = "Возвращает информацию о платеже по его идентификатору")]
-        public async Task<IActionResult> GetPaymentById(Guid id)
+        public async Task<IActionResult> GetPaymentById(Guid id, CancellationToken cancellationToken)
         {
-            var result = await _paymentService.GetPaymentByIdAsync(id);
+            var result = await _paymentService.GetPaymentByIdAsync(id, cancellationToken);
             if (result is null)
                 return NotFound();
 
@@ -37,9 +37,9 @@ namespace PS.FreeBookHub_Lite.PaymentService.API.Controllers
 
         [HttpGet("by-order/{orderId:guid}")]
         [SwaggerOperation(Summary = "Получение платежей по заказу", Description = "Возвращает все платежи, связанные с указанным заказом")]
-        public async Task<IActionResult> GetPaymentsByOrderId(Guid orderId)
+        public async Task<IActionResult> GetPaymentsByOrderId(Guid orderId, CancellationToken cancellationToken)
         {
-            var results = await _paymentService.GetPaymentsByOrderIdAsync(orderId);
+            var results = await _paymentService.GetPaymentsByOrderIdAsync(orderId, cancellationToken);
             return Ok(results);
         }
     }

@@ -1,4 +1,5 @@
 using PS.FreeBookHub_Lite.CatalogService.API;
+using PS.FreeBookHub_Lite.CatalogService.API.Middleware;
 using PS.FreeBookHub_Lite.CatalogService.Application;
 using PS.FreeBookHub_Lite.CatalogService.Infrastructure;
 
@@ -21,6 +22,8 @@ var app = builder.Build();
             options.RoutePrefix = string.Empty;
         });
     }
+
+    app.UseMiddleware<ExceptionHandlingMiddleware>();
 
     app.UseHttpsRedirection();
 

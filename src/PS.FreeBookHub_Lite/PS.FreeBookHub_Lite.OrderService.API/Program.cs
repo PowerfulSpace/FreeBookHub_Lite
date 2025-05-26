@@ -1,4 +1,5 @@
 using PS.FreeBookHub_Lite.OrderService.API;
+using PS.FreeBookHub_Lite.OrderService.API.Middleware;
 using PS.FreeBookHub_Lite.OrderService.Application;
 using PS.FreeBookHub_Lite.OrderService.Infrastructure;
 
@@ -20,6 +21,8 @@ var app = builder.Build();
             options.RoutePrefix = string.Empty;
         });
     }
+
+    app.UseMiddleware<ExceptionHandlingMiddleware>();
 
     app.UseHttpsRedirection();
 

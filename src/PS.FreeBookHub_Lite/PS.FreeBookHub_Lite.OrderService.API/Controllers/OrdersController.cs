@@ -47,19 +47,8 @@ namespace PS.FreeBookHub_Lite.OrderService.API.Controllers
         [SwaggerOperation(Summary = "Отмена заказа", Description = "Отменяет заказ, если это возможно (например, если он еще не обработан)")]
         public async Task<IActionResult> Cancel(Guid orderId, CancellationToken cancellationToken)
         {
-            try
-            {
-                await _orderService.CancelOrderAsync(orderId, cancellationToken);
-                return NoContent();
-            }
-            catch (KeyNotFoundException)
-            {
-                return NotFound();
-            }
-            catch (InvalidOperationException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            await _orderService.CancelOrderAsync(orderId, cancellationToken);
+            return NoContent();
         }
     }
 }

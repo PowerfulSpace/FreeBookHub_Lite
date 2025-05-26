@@ -1,4 +1,5 @@
 using PS.FreeBookHub_Lite.PaymentService.API;
+using PS.FreeBookHub_Lite.PaymentService.API.Middleware;
 using PS.FreeBookHub_Lite.PaymentService.Application;
 using PS.FreeBookHub_Lite.PaymentService.Infrastructure;
 
@@ -21,6 +22,8 @@ var app = builder.Build();
             options.RoutePrefix = string.Empty;
         });
     }
+
+    app.UseMiddleware<ExceptionHandlingMiddleware>();
 
     app.UseHttpsRedirection();
 

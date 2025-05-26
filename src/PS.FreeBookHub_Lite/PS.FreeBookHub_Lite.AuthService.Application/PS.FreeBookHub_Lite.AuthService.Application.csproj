@@ -17,4 +17,11 @@
 		<ProjectReference Include="..\PS.FreeBookHub_Lite.AuthService.Domain\PS.FreeBookHub_Lite.AuthService.Domain.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Interfaces\" />
+	  <Folder Include="Mappings\" />
+	  <Folder Include="Services\" />
+	  <Folder Include="Validators\" />
+	</ItemGroup>
+
 </Project>

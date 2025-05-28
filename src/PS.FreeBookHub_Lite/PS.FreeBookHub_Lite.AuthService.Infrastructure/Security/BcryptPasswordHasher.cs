@@ -4,14 +4,14 @@ namespace PS.FreeBookHub_Lite.AuthService.Infrastructure.Security
 {
     public class BcryptPasswordHasher : IPasswordHasher
     {
-        public Task<string> Hash(string password)
+        public string Hash(string password)
         {
-            throw new NotImplementedException();
+            return BCrypt.Net.BCrypt.HashPassword(password);
         }
 
-        public Task<bool> Verify(string password, string hash)
+        public bool Verify(string password, string hash)
         {
-            throw new NotImplementedException();
+            return BCrypt.Net.BCrypt.Verify(password, hash);
         }
     }
 }

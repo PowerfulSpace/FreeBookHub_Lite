@@ -35,7 +35,7 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.Services
             if (existingUser is not null)
                 throw new InvalidOperationException("User with this email already exists.");
 
-            var passwordHash = await _passwordHasher.Hash(request.Password);
+            var passwordHash = _passwordHasher.Hash(request.Password);
 
             var role = Enum.TryParse<UserRole>(request.Role, true, out var parsedRole)
                 ? parsedRole
@@ -47,7 +47,7 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.Services
             var accessToken = _tokenService.GenerateAccessToken(newUser);
             var refreshTokenStr = _tokenService.GenerateRefreshToken();
 
-            int refreshTokenExpiryDays = int.Parse(_configuration["Auth:RefreshTokenExpiryDays"] ?? "7");
+            int refreshTokenExpiryDays = int.Parse(_configuration["Auth:JwtSettings:RefreshTokenExpiryDays"] ?? "7");
             var refreshToken = new RefreshToken(
                 userId: newUser.Id,
                 token: refreshTokenStr,
@@ -61,7 +61,7 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.Services
                 AccessToken = accessToken,
                 RefreshToken = refreshTokenStr,
                 ExpiresAt = DateTime.UtcNow.AddMinutes(
-                    int.Parse(_configuration["Auth:AccessTokenExpiryMinutes"] ?? "15")
+                    int.Parse(_configuration["Auth:JwtSettings:AccessTokenExpiryMinutes"] ?? "15")
                 )
             };
         }
@@ -75,14 +75,14 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.Services
             if (!user.IsActive)
                 throw new InvalidOperationException("User account is deactivated.");
 
-            var isPasswordValid = await _passwordHasher.Verify(request.Password, user.PasswordHash);
+            var isPasswordValid = _passwordHasher.Verify(request.Password, user.PasswordHash);
             if (!isPasswordValid)
                 throw new InvalidOperationException("Invalid email or password.");
 
             var accessToken = _tokenService.GenerateAccessToken(user);
             var refreshTokenStr = _tokenService.GenerateRefreshToken();
 
-            int refreshTokenExpiryDays = int.Parse(_configuration["Auth:RefreshTokenExpiryDays"] ?? "7");
+            int refreshTokenExpiryDays = int.Parse(_configuration["Auth:JwtSettings:RefreshTokenExpiryDays"] ?? "7");
             var refreshToken = new RefreshToken(
                 userId: user.Id,
                 token: refreshTokenStr,
@@ -117,7 +117,7 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.Services
 
             // Создать новый
             var newRefreshTokenStr = _tokenService.GenerateRefreshToken();
-            int refreshTokenExpiryDays = int.Parse(_configuration["Auth:RefreshTokenExpiryDays"] ?? "7");
+            int refreshTokenExpiryDays = int.Parse(_configuration["Auth:JwtSettings:RefreshTokenExpiryDays"] ?? "7");
 
             var newRefreshToken = new RefreshToken(
                 userId: user.Id,
@@ -128,7 +128,7 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.Services
             await _refreshTokenRepository.AddAsync(newRefreshToken, ct);
 
             var accessToken = _tokenService.GenerateAccessToken(user);
-            int accessTokenExpiryMinutes = int.Parse(_configuration["Auth:AccessTokenExpiryMinutes"] ?? "15");
+            int accessTokenExpiryMinutes = int.Parse(_configuration["Auth:JwtSettings:AccessTokenExpiryMinutes"] ?? "15");
 
             return new AuthResponse
             {

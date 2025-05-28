@@ -2,7 +2,7 @@
 {
     public interface IPasswordHasher
     {
-        Task<string> Hash(string password);
-        Task<bool> Verify(string password, string hash);
+        string Hash(string password);
+        bool Verify(string password, string hash);
     }
 }

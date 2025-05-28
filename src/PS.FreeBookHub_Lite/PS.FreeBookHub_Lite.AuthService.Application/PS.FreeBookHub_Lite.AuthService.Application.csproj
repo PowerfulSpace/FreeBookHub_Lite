@@ -17,8 +17,4 @@
 		<ProjectReference Include="..\PS.FreeBookHub_Lite.AuthService.Domain\PS.FreeBookHub_Lite.AuthService.Domain.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Mappings\" />
-	</ItemGroup>
-
 </Project>

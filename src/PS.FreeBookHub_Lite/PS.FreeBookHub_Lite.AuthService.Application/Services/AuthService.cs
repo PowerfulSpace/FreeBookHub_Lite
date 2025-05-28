@@ -47,7 +47,7 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.Services
             var accessToken = _tokenService.GenerateAccessToken(newUser);
             var refreshTokenStr = _tokenService.GenerateRefreshToken();
 
-            var refreshTokenExpiryDays = int.Parse(_configuration["Auth:RefreshTokenExpiryDays"] ?? "7");
+            int refreshTokenExpiryDays = int.Parse(_configuration["Auth:RefreshTokenExpiryDays"] ?? "7");
             var refreshToken = new RefreshToken(
                 userId: newUser.Id,
                 token: refreshTokenStr,
@@ -64,8 +64,8 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.Services
                     int.Parse(_configuration["Auth:AccessTokenExpiryMinutes"] ?? "15")
                 )
             };
-
         }
+
         public async Task<AuthResponse> LoginAsync(LoginRequest request, CancellationToken ct)
         {
             var user = await _userRepository.GetByEmailAsync(request.Email, ct);
@@ -82,7 +82,7 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.Services
             var accessToken = _tokenService.GenerateAccessToken(user);
             var refreshTokenStr = _tokenService.GenerateRefreshToken();
 
-            var refreshTokenExpiryDays = int.Parse(_configuration["Auth:RefreshTokenExpiryDays"] ?? "7");
+            int refreshTokenExpiryDays = int.Parse(_configuration["Auth:RefreshTokenExpiryDays"] ?? "7");
             var refreshToken = new RefreshToken(
                 userId: user.Id,
                 token: refreshTokenStr,
@@ -117,7 +117,7 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.Services
 
             // Создать новый
             var newRefreshTokenStr = _tokenService.GenerateRefreshToken();
-            var refreshTokenExpiryDays = int.Parse(_configuration["Auth:RefreshTokenExpiryDays"] ?? "7");
+            int refreshTokenExpiryDays = int.Parse(_configuration["Auth:RefreshTokenExpiryDays"] ?? "7");
 
             var newRefreshToken = new RefreshToken(
                 userId: user.Id,
@@ -128,7 +128,7 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.Services
             await _refreshTokenRepository.AddAsync(newRefreshToken, ct);
 
             var accessToken = _tokenService.GenerateAccessToken(user);
-            var accessTokenExpiryMinutes = int.Parse(_configuration["Auth:AccessTokenExpiryMinutes"] ?? "15");
+            int accessTokenExpiryMinutes = int.Parse(_configuration["Auth:AccessTokenExpiryMinutes"] ?? "15");
 
             return new AuthResponse
             {

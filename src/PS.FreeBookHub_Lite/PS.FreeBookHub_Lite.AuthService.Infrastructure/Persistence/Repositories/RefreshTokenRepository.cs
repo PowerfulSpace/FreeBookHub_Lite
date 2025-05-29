@@ -31,7 +31,8 @@ namespace PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence.Repositorie
 
         public async Task UpdateAsync(RefreshToken token, CancellationToken ct)
         {
-            _context.RefreshTokens.Update(token);
+            _context.Attach(token);
+            _context.Entry(token).State = EntityState.Modified;
             await _context.SaveChangesAsync(ct);
         }
 
@@ -45,6 +46,16 @@ namespace PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence.Repositorie
                 tokens = tokens.AsNoTracking();
 
             return await tokens.ToListAsync(ct);
+        }
+
+
+        public async Task RevokeAllTokensForUserAsync(Guid userId, CancellationToken ct)
+        {
+            await _context.RefreshTokens
+                .Where(rt => rt.UserId == userId && rt.IsActive())
+                .ExecuteUpdateAsync(setters =>
+                    setters.SetProperty(rt => rt.IsRevoked, true),
+                ct);
         }
     }
 }

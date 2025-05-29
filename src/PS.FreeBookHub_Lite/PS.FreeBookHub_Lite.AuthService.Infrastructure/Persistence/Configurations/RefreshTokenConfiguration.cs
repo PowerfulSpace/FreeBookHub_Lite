@@ -37,6 +37,7 @@ namespace PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence.Configurati
                .IsUnique();
             builder.HasIndex(t => t.UserId);
             builder.HasIndex(t => t.ExpiresAt);
+            builder.HasIndex(rt => new { rt.UserId, rt.IsRevoked, rt.ExpiresAt });
         }
     }
 }

@@ -140,15 +140,7 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.Services
 
         public async Task LogoutAllSessionsAsync(Guid userId, CancellationToken ct)
         {
-            var activeTokens = await _refreshTokenRepository.GetActiveTokensByUserIdAsync(userId, ct);
-            if (activeTokens.Count == 0)
-                return;
-
-            foreach (var token in activeTokens)
-            {
-                token.Revoke();
-                await _refreshTokenRepository.UpdateAsync(token, ct);
-            }
+            await _refreshTokenRepository.RevokeAllTokensForUserAsync(userId, ct);
         }
 
         public async Task LogoutCurrentSessionAsync(LogoutRequest request, CancellationToken ct)

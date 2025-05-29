@@ -13,10 +13,14 @@ namespace PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence.Repositorie
             _context = context;
         }
 
-        public async Task<RefreshToken?> GetByTokenAsync(string token, CancellationToken ct)
+        public async Task<RefreshToken?> GetByTokenAsync(string token, CancellationToken ct, bool asNoTracking = false)
         {
-            return await _context.RefreshTokens
-                .FirstOrDefaultAsync(rt => rt.Token == token, ct);
+            IQueryable<RefreshToken> tokens = _context.RefreshTokens;
+
+            if (asNoTracking)
+                tokens = tokens.AsNoTracking();
+
+            return await tokens.FirstOrDefaultAsync(rt => rt.Token == token, ct);
         }
 
         public async Task AddAsync(RefreshToken token, CancellationToken ct)
@@ -31,11 +35,16 @@ namespace PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence.Repositorie
             await _context.SaveChangesAsync(ct);
         }
 
-        public async Task<List<RefreshToken>> GetActiveTokensByUserIdAsync(Guid userId, CancellationToken ct)
+        public async Task<List<RefreshToken>> GetActiveTokensByUserIdAsync(Guid userId, CancellationToken ct, bool asNoTracking = false)
         {
-            return await _context.RefreshTokens
-                .Where(rt => rt.UserId == userId && rt.IsActive())
-                .ToListAsync(ct);
+
+            IQueryable<RefreshToken> tokens = _context.RefreshTokens
+                .Where(rt => rt.UserId == userId && rt.IsActive());
+
+            if (asNoTracking)
+                tokens = tokens.AsNoTracking();
+
+            return await tokens.ToListAsync(ct);
         }
     }
 }

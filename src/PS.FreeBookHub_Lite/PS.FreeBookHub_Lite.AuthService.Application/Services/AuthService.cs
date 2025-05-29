@@ -31,7 +31,7 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.Services
 
         public async Task<AuthResponse> RegisterAsync(RegisterUserRequest request, CancellationToken ct)
         {
-            var existingUser = await _userRepository.GetByEmailAsync(request.Email, ct);
+            var existingUser = await _userRepository.GetByEmailAsync(request.Email, ct, asNoTracking: true);
             if (existingUser is not null)
                 throw new InvalidOperationException("User with this email already exists.");
 
@@ -68,7 +68,7 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.Services
 
         public async Task<AuthResponse> LoginAsync(LoginRequest request, CancellationToken ct)
         {
-            var user = await _userRepository.GetByEmailAsync(request.Email, ct);
+            var user = await _userRepository.GetByEmailAsync(request.Email, ct, asNoTracking: true);
             if (user is null)
                 throw new InvalidOperationException("Invalid email or password.");
 
@@ -107,7 +107,7 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.Services
             if (existingToken is null || !existingToken.IsActive())
                 throw new InvalidOperationException("Invalid or expired refresh token.");
 
-            var user = await _userRepository.GetByIdAsync(existingToken.UserId, ct);
+            var user = await _userRepository.GetByIdAsync(existingToken.UserId, ct, asNoTracking: true);
             if (user is null || !user.IsActive)
                 throw new InvalidOperationException("User not found or inactive.");
 

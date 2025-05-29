@@ -13,14 +13,24 @@ namespace PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence.Repositorie
             _context = context;
         }
 
-        public async Task<User?> GetByIdAsync(Guid id, CancellationToken ct)
+        public async Task<User?> GetByIdAsync(Guid id, CancellationToken ct, bool asNoTracking = false)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Id == id, ct);
+            IQueryable<User> users = _context.Users;
+
+            if (asNoTracking)
+                users = users.AsNoTracking();
+
+            return await users.FirstOrDefaultAsync(u => u.Id == id, ct);
         }
 
-        public async Task<User?> GetByEmailAsync(string email, CancellationToken ct)
+        public async Task<User?> GetByEmailAsync(string email, CancellationToken ct, bool asNoTracking = false)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email, ct);
+            IQueryable<User> users = _context.Users;
+
+            if (asNoTracking)
+                users = users.AsNoTracking();
+
+            return await users.FirstOrDefaultAsync(u => u.Email == email, ct);
         }
 
         public async Task AddAsync(User user, CancellationToken ct)

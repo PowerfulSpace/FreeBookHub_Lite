@@ -13,10 +13,9 @@ namespace PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence.Configurati
             builder.HasKey(t => t.Id);
 
             builder.Property(t => t.Token)
-                .IsRequired();
-
-            builder.HasIndex(t => t.Token)
-                .IsUnique();
+                .IsRequired()
+                .HasMaxLength(512)
+                .IsUnicode(false);
 
             builder.Property(t => t.UserId)
                 .IsRequired();
@@ -33,6 +32,9 @@ namespace PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence.Configurati
                 .HasForeignKey(t => t.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+
+            builder.HasIndex(t => t.Token)
+               .IsUnique();
             builder.HasIndex(t => t.UserId);
             builder.HasIndex(t => t.ExpiresAt);
         }

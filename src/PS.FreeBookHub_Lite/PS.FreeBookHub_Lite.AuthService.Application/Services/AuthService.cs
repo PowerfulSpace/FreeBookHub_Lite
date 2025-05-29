@@ -151,9 +151,9 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.Services
             }
         }
 
-        public async Task LogoutCurrentSessionAsync(string refreshToken, CancellationToken ct)
+        public async Task LogoutCurrentSessionAsync(LogoutRequest request, CancellationToken ct)
         {
-            var token = await _refreshTokenRepository.GetByTokenAsync(refreshToken, ct);
+            var token = await _refreshTokenRepository.GetByTokenAsync(request.RefreshToken, ct);
             if (token is null || !token.IsActive())
                 return;
 

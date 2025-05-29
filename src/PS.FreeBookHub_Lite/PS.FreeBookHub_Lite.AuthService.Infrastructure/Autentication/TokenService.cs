@@ -4,6 +4,7 @@ using PS.FreeBookHub_Lite.AuthService.Application.Services.Interfaces;
 using PS.FreeBookHub_Lite.AuthService.Domain.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace PS.FreeBookHub_Lite.AuthService.Infrastructure.Autentication
@@ -43,7 +44,10 @@ namespace PS.FreeBookHub_Lite.AuthService.Infrastructure.Autentication
 
         public string GenerateRefreshToken()
         {
-            return Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+            var randomBytes = new byte[32];
+            using var rng = RandomNumberGenerator.Create();
+            rng.GetBytes(randomBytes);
+            return Base64UrlEncoder.Encode(randomBytes);
         }
     }
 }

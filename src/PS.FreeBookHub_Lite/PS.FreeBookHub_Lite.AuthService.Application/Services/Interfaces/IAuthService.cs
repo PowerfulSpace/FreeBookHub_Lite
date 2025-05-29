@@ -8,6 +8,6 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.Services.Interfaces
         Task<AuthResponse> LoginAsync(LoginRequest request, CancellationToken ct);
         Task<AuthResponse> RefreshTokenAsync(RefreshTokenRequest request, CancellationToken ct);
         Task LogoutAllSessionsAsync(Guid userId, CancellationToken ct);
-        Task LogoutCurrentSessionAsync(string refreshToken, CancellationToken ct);
+        Task LogoutCurrentSessionAsync(LogoutRequest request, CancellationToken ct);
     }
 }

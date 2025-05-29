@@ -31,18 +31,16 @@ namespace PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence.Repositorie
 
         public async Task UpdateAsync(User user, CancellationToken ct)
         {
-            _context.Users.Update(user);
+            _context.Attach(user);
+            _context.Entry(user).State = EntityState.Modified;
             await _context.SaveChangesAsync(ct);
         }
 
         public async Task DeleteAsync(Guid id, CancellationToken ct)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id, ct);
-            if (user is not null)
-            {
-                _context.Users.Remove(user);
-                await _context.SaveChangesAsync(ct);
-            }
+            await _context.Users
+                .Where(u => u.Id == id)
+                .ExecuteDeleteAsync(ct);
         }
     }
 }

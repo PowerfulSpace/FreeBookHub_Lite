@@ -41,7 +41,7 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Controllers
         }
 
         [HttpPost("logout")]
-        [Authorize]
+        [Authorize(Policy = "User")]
         public async Task<IActionResult> Logout([FromBody] LogoutRequest request, CancellationToken ct)
         {
             await _authService.LogoutCurrentSessionAsync(request, ct);
@@ -49,7 +49,7 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Controllers
         }
 
         [HttpPost("logout-all")]
-        [Authorize]
+        [Authorize(Policy = "User")]
         public async Task<IActionResult> LogoutAll(CancellationToken ct)
         {
             var userId = GetUserIdFromClaimsOrThrow();

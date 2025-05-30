@@ -49,27 +49,26 @@ namespace PS.FreeBookHub_Lite.AuthService.API
         {
             services.AddAuthorization(options =>
             {
-                // Базовая политика для аутентифицированных пользователей
-                options.AddPolicy("Authenticated", policy =>
-                    policy.RequireAuthenticatedUser());
-
                 // Политика для обычных пользователей
                 options.AddPolicy("User", policy =>
-                    policy.RequireRole(UserRole.User.ToString()));
+                    policy.RequireRole(
+                        UserRole.User.ToString(),
+                        UserRole.Moderator.ToString(),
+                        UserRole.Admin.ToString())
+                    );
 
                 // Политика для модераторов
                 options.AddPolicy("Moderator", policy =>
-                    policy.RequireRole(UserRole.Moderator.ToString(), UserRole.Admin.ToString()));
+                    policy.RequireRole(
+                        UserRole.Moderator.ToString(),
+                        UserRole.Admin.ToString())
+                    );
 
                 // Политика только для админов
                 options.AddPolicy("Admin", policy =>
-                    policy.RequireRole(UserRole.Admin.ToString()));
-
-                // Комбинированные политики
-                options.AddPolicy("ContentManagement", policy =>
-                    policy.RequireAssertion(context =>
-                        context.User.IsInRole(UserRole.Moderator.ToString()) ||
-                        context.User.IsInRole(UserRole.Admin.ToString())));
+                    policy.RequireRole(
+                        UserRole.Admin.ToString())
+                    );
             });
 
             return services;

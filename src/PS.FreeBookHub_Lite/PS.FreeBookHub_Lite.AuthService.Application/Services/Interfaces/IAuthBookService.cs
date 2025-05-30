@@ -2,7 +2,7 @@
 
 namespace PS.FreeBookHub_Lite.AuthService.Application.Services.Interfaces
 {
-    public interface IAuthService
+    public interface IAuthBookService
     {
         Task<AuthResponse> RegisterAsync(RegisterUserRequest request, CancellationToken ct);
         Task<AuthResponse> LoginAsync(LoginRequest request, CancellationToken ct);

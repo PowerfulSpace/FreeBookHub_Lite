@@ -16,7 +16,7 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.Validators
                 .MinimumLength(6).WithMessage("Password must be at least 6 characters long");
 
             RuleFor(x => x.Role)
-                .Must(role => string.IsNullOrEmpty(role) || role is "User" or "Admin")
+                .Must(role => string.IsNullOrEmpty(role) || role is "User")
                 .WithMessage("Invalid role");
         }
     }

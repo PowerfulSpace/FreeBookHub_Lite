@@ -7,7 +7,7 @@ using PS.FreeBookHub_Lite.AuthService.Domain.Enums;
 
 namespace PS.FreeBookHub_Lite.AuthService.Application.Services
 {
-    public class AuthService : IAuthService
+    public class AuthBookService : IAuthBookService
     {
         private readonly IUserRepository _userRepository;
         private readonly ITokenService _tokenService;
@@ -15,7 +15,7 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.Services
         private readonly IRefreshTokenRepository _refreshTokenRepository;
         private readonly IPasswordHasher _passwordHasher;
 
-        public AuthService(
+        public AuthBookService(
             IUserRepository userRepository,
             ITokenService tokenService,
             IConfiguration configuration,

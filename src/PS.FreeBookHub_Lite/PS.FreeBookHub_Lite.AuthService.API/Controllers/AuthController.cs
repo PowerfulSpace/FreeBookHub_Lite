@@ -9,9 +9,9 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Controllers
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
-        private readonly IAuthService _authService;
+        private readonly IAuthBookService _authService;
 
-        public AuthController(IAuthService authService)
+        public AuthController(IAuthBookService authService)
         {
             _authService = authService;
         }
@@ -52,12 +52,19 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Controllers
         [Authorize]
         public async Task<IActionResult> LogoutAll(CancellationToken ct)
         {
-            var userIdClaim = User.FindFirst("sub")?.Value ?? User.FindFirst("id")?.Value;
-            if (userIdClaim is null || !Guid.TryParse(userIdClaim, out var userId))
-                return Unauthorized();
+            var userId = GetUserIdFromClaimsOrThrow();
 
             await _authService.LogoutAllSessionsAsync(userId, ct);
             return NoContent();
+        }
+
+        private Guid GetUserIdFromClaimsOrThrow()
+        {
+            var userIdClaim = User.FindFirst("sub")?.Value ?? User.FindFirst("id")?.Value;
+            if (!Guid.TryParse(userIdClaim, out var userId))
+                throw new UnauthorizedAccessException("Invalid or missing user ID in token.");
+
+            return userId;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using PS.FreeBookHub_Lite.AuthService.API.Filters;
 using PS.FreeBookHub_Lite.AuthService.Domain.Enums;
 using PS.FreeBookHub_Lite.AuthService.Infrastructure.Autentication;
 using System.Text;
@@ -76,11 +77,20 @@ namespace PS.FreeBookHub_Lite.AuthService.API
 
         private static IServiceCollection AddSwagerSetting(this IServiceCollection services)
         {
+            services.AddEndpointsApiExplorer(); // Обязательно
+
             services.AddSwaggerGen(options =>
             {
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "FreeBookHub Auth API",
+                    Version = "v1",
+                    Description = "API для аутентификации пользователей"
+                });
+
                 options.EnableAnnotations();
 
-                // Добавляем схему безопасности
+                // JWT авторизация
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Name = "Authorization",
@@ -88,10 +98,9 @@ namespace PS.FreeBookHub_Lite.AuthService.API
                     Scheme = "bearer",
                     BearerFormat = "JWT",
                     In = ParameterLocation.Header,
-                    Description = "Введите токен в формате: Bearer {ваш токен}"
+                    Description = "Введите JWT токен в формате: Bearer {ваш токен}"
                 });
 
-                // Применяем схему ко всем методам
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {
@@ -106,7 +115,10 @@ namespace PS.FreeBookHub_Lite.AuthService.API
                         Array.Empty<string>()
                     }
                 });
+
+                options.OperationFilter<AuthorizeCheckOperationFilter>();
             });
+
 
             return services;
         }

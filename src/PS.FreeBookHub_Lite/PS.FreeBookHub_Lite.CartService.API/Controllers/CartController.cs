@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PS.FreeBookHub_Lite.CartService.Application.DTOs.Cart;
 using PS.FreeBookHub_Lite.CartService.Application.DTOs.Order;
 using PS.FreeBookHub_Lite.CartService.Application.Services.Interfaces;
@@ -6,6 +7,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace PS.FreeBookHub_Lite.CartService.API.Controllers
 {
+    [Authorize(Policy = "User")]
     [ApiController]
     [Route("api/[controller]")]
     public class CartController : ControllerBase

@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PS.FreeBookHub_Lite.PaymentService.Application.DTOs;
 using PS.FreeBookHub_Lite.PaymentService.Application.Services.Interfaces;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace PS.FreeBookHub_Lite.PaymentService.API.Controllers
 {
+    [Authorize(Policy = "User")]
     [ApiController]
     [Route("api/[controller]")]
     public class PaymentController : ControllerBase

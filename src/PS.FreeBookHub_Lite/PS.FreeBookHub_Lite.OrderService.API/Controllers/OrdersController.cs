@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PS.FreeBookHub_Lite.OrderService.Application.DTOs;
 using PS.FreeBookHub_Lite.OrderService.Application.Services.Interfaces;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace PS.FreeBookHub_Lite.OrderService.API.Controllers
 {
+    [Authorize(Policy = "User")]
     [ApiController]
     [Route("api/[controller]")]
     public class OrdersController : ControllerBase

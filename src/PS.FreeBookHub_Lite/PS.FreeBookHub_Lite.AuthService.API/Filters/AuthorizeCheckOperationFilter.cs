@@ -9,11 +9,8 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Filters
     {
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
-            var hasAuthorize =
-                context.MethodInfo.DeclaringType?.GetCustomAttribute<AuthorizeAttribute>() != null
-                || context.MethodInfo.GetCustomAttribute<AuthorizeAttribute>() != null;
-
-            Console.WriteLine($"[SwaggerFilter] Method: {context.MethodInfo.Name}, RequiresAuth: {hasAuthorize}");
+            var hasAuthorize = context.MethodInfo.GetCustomAttributes<AuthorizeAttribute>().Any()
+                || context.MethodInfo.DeclaringType?.GetCustomAttributes<AuthorizeAttribute>().Any() == true;
 
             if (hasAuthorize)
             {
@@ -21,22 +18,19 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Filters
                 operation.Responses.TryAdd("403", new OpenApiResponse { Description = "Forbidden" });
 
                 operation.Security = new List<OpenApiSecurityRequirement>
+            {
+                new OpenApiSecurityRequirement
                 {
-                    new OpenApiSecurityRequirement
+                    [new OpenApiSecurityScheme
                     {
+                        Reference = new OpenApiReference
                         {
-                            new OpenApiSecurityScheme
-                            {
-                                Reference = new OpenApiReference
-                                {
-                                    Type = ReferenceType.SecurityScheme,
-                                    Id = "Bearer"
-                                }
-                            },
-                            Array.Empty<string>()
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
                         }
-                    }
-                };
+                    }] = new List<string>()
+                }
+            };
             }
         }
     }

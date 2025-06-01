@@ -25,7 +25,8 @@ namespace PS.FreeBookHub_Lite.AuthService.Infrastructure.Autentication
 
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                //new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                new Claim("nameidentifier", user.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 new Claim(ClaimTypes.Role, user.Role.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())

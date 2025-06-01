@@ -145,9 +145,19 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.Services
 
         public async Task LogoutCurrentSessionAsync(LogoutRequest request, CancellationToken ct)
         {
+            ArgumentNullException.ThrowIfNull(request);
+
             var token = await _refreshTokenRepository.GetByTokenAsync(request.RefreshToken, ct);
-            if (token is null || !token.IsActive())
-                return;
+
+            if (token is null)
+            {
+                throw new InvalidOperationException("Refresh token not found");
+            }
+
+            if (!token.IsActive())
+            {
+                throw new InvalidOperationException("Refresh token is already revoked or expired");
+            }
 
             token.Revoke();
             await _refreshTokenRepository.UpdateAsync(token, ct);

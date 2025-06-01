@@ -25,6 +25,8 @@
                 context.Response.StatusCode = ex switch
                 {
                     KeyNotFoundException => StatusCodes.Status404NotFound,
+                    InvalidOperationException when ex.Message.Contains("not found") => StatusCodes.Status404NotFound,
+                    InvalidOperationException when ex.Message.Contains("already revoked") => StatusCodes.Status409Conflict,
                     InvalidOperationException => StatusCodes.Status400BadRequest,
                     _ => StatusCodes.Status500InternalServerError
                 };

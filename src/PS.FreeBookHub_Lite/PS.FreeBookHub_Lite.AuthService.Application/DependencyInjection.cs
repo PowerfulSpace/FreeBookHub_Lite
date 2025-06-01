@@ -18,6 +18,7 @@ namespace PS.FreeBookHub_Lite.AuthService.Application
             services.AddValidatorsFromAssemblyContaining<LoginRequestValidator>();
             services.AddValidatorsFromAssemblyContaining<RefreshTokenRequestValidator>();
             services.AddValidatorsFromAssemblyContaining<RegisterUserRequestValidator>();
+            services.AddValidatorsFromAssemblyContaining<LogoutRequestValidator>();
 
             services.AddFluentValidationAutoValidation(options =>
             {

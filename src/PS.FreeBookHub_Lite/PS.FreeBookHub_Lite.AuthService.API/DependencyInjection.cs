@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using PS.FreeBookHub_Lite.AuthService.API.Filters;
 using PS.FreeBookHub_Lite.AuthService.Domain.Enums;
 using PS.FreeBookHub_Lite.AuthService.Infrastructure.Autentication;
 using System.Text;
@@ -26,22 +25,24 @@ namespace PS.FreeBookHub_Lite.AuthService.API
 
         private static IServiceCollection AddAuthenticationBearer(this IServiceCollection services, ConfigurationManager configuration)
         {
-
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    var jwtSettings = configuration.GetSection("Auth:JwtSettings").Get<JwtSettings>();
-                    options.TokenValidationParameters = new TokenValidationParameters
+                    .AddJwtBearer(options =>
                     {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        ValidIssuer = jwtSettings!.Issuer,
-                        ValidAudience = jwtSettings.Audience,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecretKey))
-                    };
-                });
+                        var jwtSettings = configuration.GetSection("Auth:JwtSettings").Get<JwtSettings>();
+                        options.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateIssuer = true,
+                            ValidateAudience = true,
+                            ValidateLifetime = true,
+                            ValidateIssuerSigningKey = true,
+                            ValidIssuer = jwtSettings!.Issuer,
+                            ValidAudience = jwtSettings.Audience,
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecretKey)),
+
+                            //NameClaimType = "sub",
+                            //RoleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+                        };
+                    });
 
             return services;
         }
@@ -116,7 +117,7 @@ namespace PS.FreeBookHub_Lite.AuthService.API
                     }
                 });
 
-                options.OperationFilter<AuthorizeCheckOperationFilter>();
+                //options.OperationFilter<AuthorizeCheckOperationFilter>();
             });
 
 

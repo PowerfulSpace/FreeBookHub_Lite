@@ -61,15 +61,6 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Controllers
 
         private Guid GetUserIdFromClaimsOrThrow()
         {
-
-            //var userId = User.FindFirst("sub")?.Value
-            // ?? throw new UnauthorizedAccessException("'sub' claim not found");
-
-            //if (!Guid.TryParse(userId, out var result))
-            //    throw new UnauthorizedAccessException("Invalid user ID format");
-
-            //return result;
-
             var userId = User.FindFirst("sub")?.Value
               ?? User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -77,21 +68,6 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Controllers
                 throw new UnauthorizedAccessException("Invalid user ID format");
 
             return result;
-
-            //// Ищем по всем возможным вариантам claim'ов для ID
-            //var userIdClaim = User.FindFirst(claim =>
-            //    claim.Type == "sub" ||
-            //    claim.Type == ClaimTypes.NameIdentifier || // Соответствует nameidentifier
-            //    claim.Type == "id")?.Value;
-
-            //if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
-            //{
-            //    var availableClaims = User.Claims.Select(c => $"{c.Type}={c.Value}");
-            //    throw new UnauthorizedAccessException(
-            //        $"User ID claim not found. Available claims: {string.Join(", ", availableClaims)}");
-            //}
-
-            //return userId;
         }
     }
 }

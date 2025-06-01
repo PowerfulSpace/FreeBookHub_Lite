@@ -38,9 +38,6 @@ namespace PS.FreeBookHub_Lite.AuthService.API
                             ValidIssuer = jwtSettings!.Issuer,
                             ValidAudience = jwtSettings.Audience,
                             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecretKey)),
-
-                            //NameClaimType = "sub",
-                            //RoleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
                         };
                     });
 
@@ -78,7 +75,7 @@ namespace PS.FreeBookHub_Lite.AuthService.API
 
         private static IServiceCollection AddSwagerSetting(this IServiceCollection services)
         {
-            services.AddEndpointsApiExplorer(); // Обязательно
+            services.AddEndpointsApiExplorer();
 
             services.AddSwaggerGen(options =>
             {
@@ -116,8 +113,6 @@ namespace PS.FreeBookHub_Lite.AuthService.API
                         Array.Empty<string>()
                     }
                 });
-
-                //options.OperationFilter<AuthorizeCheckOperationFilter>();
             });
 
 

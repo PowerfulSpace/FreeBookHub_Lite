@@ -51,12 +51,6 @@ namespace PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence.Repositorie
 
         public async Task RevokeAllTokensForUserAsync(Guid userId, CancellationToken ct)
         {
-            //await _context.RefreshTokens
-            //    .Where(rt => rt.UserId == userId && rt.IsActive())
-            //    .ExecuteUpdateAsync(setters =>
-            //        setters.SetProperty(rt => rt.IsRevoked, true),
-            //    ct);
-
             await _context.RefreshTokens
             .Where(rt => rt.UserId == userId && !rt.IsRevoked && rt.ExpiresAt > DateTime.UtcNow)
             .ExecuteUpdateAsync(setters =>

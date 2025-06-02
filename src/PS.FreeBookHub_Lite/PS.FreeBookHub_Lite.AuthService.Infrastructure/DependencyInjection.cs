@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using PS.FreeBookHub_Lite.AuthService.Application.Interfaces;
 using PS.FreeBookHub_Lite.AuthService.Application.Services.Interfaces;
 using PS.FreeBookHub_Lite.AuthService.Infrastructure.Autentication;

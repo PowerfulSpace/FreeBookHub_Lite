@@ -26,17 +26,23 @@ namespace PS.FreeBookHub_Lite.PaymentService.Application.Services
             return payment.Adapt<PaymentResponse>();
         }
 
-        public async Task<PaymentResponse?> GetPaymentByIdAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<PaymentResponse?> GetPaymentByIdAsync(Guid id, Guid currentUserId, CancellationToken cancellationToken)
         {
             var payment = await _paymentRepository.GetByIdAsync(id, cancellationToken, true);
-            if (payment is null) return null;
+
+            if (payment is null || payment.UserId != currentUserId)
+                return null;
 
             return payment.Adapt<PaymentResponse>();
         }
 
-        public async Task<IEnumerable<PaymentResponse>> GetPaymentsByOrderIdAsync(Guid orderId, CancellationToken cancellationToken)
+        public async Task<IEnumerable<PaymentResponse>> GetPaymentsByOrderIdAsync(Guid orderId, Guid currentUserId, CancellationToken cancellationToken)
         {
             var payments = await _paymentRepository.GetByOrderIdAsync(orderId, cancellationToken);
+
+            if (payments.Any(p => p.UserId != currentUserId))
+                return Enumerable.Empty<PaymentResponse>();
+
             return payments
                 .Select(p => p.Adapt<PaymentResponse>())
                 .ToList();

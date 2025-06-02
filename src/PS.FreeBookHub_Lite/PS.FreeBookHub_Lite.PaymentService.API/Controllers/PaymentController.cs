@@ -34,7 +34,9 @@ namespace PS.FreeBookHub_Lite.PaymentService.API.Controllers
         [SwaggerOperation(Summary = "Получение платежа по ID", Description = "Возвращает информацию о платеже по его идентификатору")]
         public async Task<IActionResult> GetPaymentById(Guid id, CancellationToken cancellationToken)
         {
-            var result = await _paymentService.GetPaymentByIdAsync(id, cancellationToken);
+            var userId = GetUserIdFromClaimsOrThrow();
+
+            var result = await _paymentService.GetPaymentByIdAsync(id, userId, cancellationToken);
             if (result is null)
                 return NotFound();
 
@@ -45,7 +47,9 @@ namespace PS.FreeBookHub_Lite.PaymentService.API.Controllers
         [SwaggerOperation(Summary = "Получение платежей по заказу", Description = "Возвращает все платежи, связанные с указанным заказом")]
         public async Task<IActionResult> GetPaymentsByOrderId(Guid orderId, CancellationToken cancellationToken)
         {
-            var results = await _paymentService.GetPaymentsByOrderIdAsync(orderId, cancellationToken);
+            var userId = GetUserIdFromClaimsOrThrow();
+
+            var results = await _paymentService.GetPaymentsByOrderIdAsync(orderId, userId, cancellationToken);
             return Ok(results);
         }
 

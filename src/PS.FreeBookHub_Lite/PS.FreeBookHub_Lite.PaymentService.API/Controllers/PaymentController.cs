@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PS.FreeBookHub_Lite.PaymentService.Application.DTOs;
 using PS.FreeBookHub_Lite.PaymentService.Application.Services.Interfaces;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Security.Claims;
 
 namespace PS.FreeBookHub_Lite.PaymentService.API.Controllers
 {
@@ -22,6 +23,9 @@ namespace PS.FreeBookHub_Lite.PaymentService.API.Controllers
         [SwaggerOperation(Summary = "Создание платежа", Description = "Обрабатывает и создает новый платеж")]
         public async Task<IActionResult> CreatePayment([FromBody] CreatePaymentRequest request, CancellationToken cancellationToken)
         {
+            var userId = GetUserIdFromClaimsOrThrow();
+            request.UserId = userId;
+
             var result = await _paymentService.ProcessPaymentAsync(request, cancellationToken);
             return CreatedAtAction(nameof(GetPaymentById), new { id = result.Id }, result);
         }
@@ -43,6 +47,17 @@ namespace PS.FreeBookHub_Lite.PaymentService.API.Controllers
         {
             var results = await _paymentService.GetPaymentsByOrderIdAsync(orderId, cancellationToken);
             return Ok(results);
+        }
+
+        private Guid GetUserIdFromClaimsOrThrow()
+        {
+            var userId = User.FindFirst("sub")?.Value
+                      ?? User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (!Guid.TryParse(userId, out var result))
+                throw new UnauthorizedAccessException("Invalid user ID format");
+
+            return result;
         }
     }
 }

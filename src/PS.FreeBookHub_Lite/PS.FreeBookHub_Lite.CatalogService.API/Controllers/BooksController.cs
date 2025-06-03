@@ -6,7 +6,6 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace PS.FreeBookHub_Lite.CatalogService.API.Controllers
 {
-    [Authorize(Policy = "User")]
     [ApiController]
     [Route("api/[controller]")]
     public class BooksController : ControllerBase
@@ -34,6 +33,7 @@ namespace PS.FreeBookHub_Lite.CatalogService.API.Controllers
             return book is not null ? Ok(book) : NotFound();
         }
 
+        [Authorize(Policy = "Moderator")]
         [HttpPost(Name = "CreateBook")]
         [SwaggerOperation(Summary = "Создание новой книги", Description = "Добавляет новую книгу в каталог")]
         public async Task<IActionResult> Create([FromBody] CreateBookRequest request, CancellationToken cancellationToken)
@@ -42,6 +42,7 @@ namespace PS.FreeBookHub_Lite.CatalogService.API.Controllers
             return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
         }
 
+        [Authorize(Policy = "Moderator")]
         [HttpPut("{id:guid}", Name = "UpdateBook")]
         [SwaggerOperation(Summary = "Обновление информации о книге", Description = "Обновляет информацию о существующей книге в каталоге")]
         public async Task<IActionResult> Update(Guid id, [FromBody] UpdateBookRequest request, CancellationToken cancellationToken)
@@ -50,6 +51,7 @@ namespace PS.FreeBookHub_Lite.CatalogService.API.Controllers
             return updated ? NoContent() : NotFound();
         }
 
+        [Authorize(Policy = "Moderator")]
         [HttpDelete("{id:guid}", Name = "DeleteBook")]
         [SwaggerOperation(Summary = "Удаление книги", Description = "Удаляет книгу из каталога по её идентификатору")]
         public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)

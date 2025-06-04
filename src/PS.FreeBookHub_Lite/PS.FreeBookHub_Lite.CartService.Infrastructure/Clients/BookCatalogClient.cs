@@ -4,7 +4,7 @@ using PS.FreeBookHub_Lite.CartService.Application.Clients;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 
-namespace PS.FreeBookHub_Lite.CartService.Application.Services
+namespace PS.FreeBookHub_Lite.CartService.Infrastructure.Clients
 {
     public class BookCatalogClient : IBookCatalogClient
     {

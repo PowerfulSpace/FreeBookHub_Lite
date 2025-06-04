@@ -3,10 +3,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PS.FreeBookHub_Lite.CartService.Application.Clients;
 using PS.FreeBookHub_Lite.CartService.Application.Interfaces;
-using PS.FreeBookHub_Lite.CartService.Application.Services;
+using PS.FreeBookHub_Lite.CartService.Application.Security;
+using PS.FreeBookHub_Lite.CartService.Infrastructure.Clients;
+using PS.FreeBookHub_Lite.CartService.Infrastructure.Http.Handlers;
 using PS.FreeBookHub_Lite.CartService.Infrastructure.Persistence;
-using PS.FreeBookHub_Lite.CartService.Infrastructure.Persistence.Clients;
 using PS.FreeBookHub_Lite.CartService.Infrastructure.Persistence.Repositories;
+using PS.FreeBookHub_Lite.CartService.Infrastructure.Security;
 
 namespace PS.FreeBookHub_Lite.CartService.Infrastructure
 {
@@ -18,7 +20,7 @@ namespace PS.FreeBookHub_Lite.CartService.Infrastructure
                 .AddPersistance(configuration)
                 .AddHttpClients(configuration);
 
-            services.AddHttpContextAccessor();
+            services.AddScoped<IAccessTokenProvider, HttpContextAccessTokenProvider>();
 
             return services;
         }
@@ -38,12 +40,14 @@ namespace PS.FreeBookHub_Lite.CartService.Infrastructure
             services.AddHttpClient<IOrderServiceClient, OrderServiceClient>(client =>
             {
                 client.BaseAddress = new Uri(configuration["OrderService:BaseUrl"] ?? "https://localhost:7176");
-            });
+            })
+            .AddHttpMessageHandler<AccessTokenHandler>();
 
             services.AddHttpClient<IBookCatalogClient, BookCatalogClient>(client =>
             {
                 client.BaseAddress = new Uri(configuration["CatalogService:BaseUrl"] ?? "https://localhost:7159");
-            });
+            })
+            .AddHttpMessageHandler<AccessTokenHandler>();
 
             return services;
         }

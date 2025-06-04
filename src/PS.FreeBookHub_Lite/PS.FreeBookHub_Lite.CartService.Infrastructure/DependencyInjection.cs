@@ -18,6 +18,8 @@ namespace PS.FreeBookHub_Lite.CartService.Infrastructure
                 .AddPersistance(configuration)
                 .AddHttpClients(configuration);
 
+            services.AddHttpContextAccessor();
+
             return services;
         }
 

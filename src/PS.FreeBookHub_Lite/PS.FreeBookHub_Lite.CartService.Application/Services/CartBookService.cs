@@ -85,6 +85,9 @@ namespace PS.FreeBookHub_Lite.CartService.Application.Services
             var cart = await _cartRepository.GetCartAsync(userId, cancellationToken)
                        ?? throw new Exception("Cart is empty");
 
+            if (!cart.Items.Any())
+                throw new InvalidOperationException("Unable to place an order: cart is empty");
+
             // Подготовка запроса для OrderService
             var orderRequest = new CreateOrderRequest
             {

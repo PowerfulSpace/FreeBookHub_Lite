@@ -17,6 +17,8 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure
                 .AddPersistance(configuration)
                 .AddHttpClients(configuration);
 
+            services.AddHttpContextAccessor();
+
             return services;
         }
 

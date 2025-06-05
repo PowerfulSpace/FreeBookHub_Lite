@@ -3,9 +3,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PS.FreeBookHub_Lite.OrderService.Application.Clients;
 using PS.FreeBookHub_Lite.OrderService.Application.Interfaces;
+using PS.FreeBookHub_Lite.OrderService.Application.Security;
+using PS.FreeBookHub_Lite.OrderService.Infrastructure.Clients;
+using PS.FreeBookHub_Lite.OrderService.Infrastructure.Http.Handlers;
 using PS.FreeBookHub_Lite.OrderService.Infrastructure.Persistence;
-using PS.FreeBookHub_Lite.OrderService.Infrastructure.Persistence.Clients;
 using PS.FreeBookHub_Lite.OrderService.Infrastructure.Persistence.Repositories;
+using PS.FreeBookHub_Lite.OrderService.Infrastructure.Security;
 
 namespace PS.FreeBookHub_Lite.OrderService.Infrastructure
 {
@@ -18,6 +21,10 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure
                 .AddHttpClients(configuration);
 
             services.AddHttpContextAccessor();
+
+            services.AddScoped<IAccessTokenProvider, HttpContextAccessTokenProvider>();
+
+            services.AddTransient<AccessTokenHandler>();
 
             return services;
         }
@@ -37,7 +44,8 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure
             services.AddHttpClient<IPaymentServiceClient, PaymentServiceClient>(client =>
             {
                 client.BaseAddress = new Uri(configuration["PaymentService:BaseUrl"] ?? "https://localhost:7177");
-            });
+            })
+            .AddHttpMessageHandler<AccessTokenHandler>();
 
             return services;
         }

@@ -20,6 +20,8 @@ namespace PS.FreeBookHub_Lite.CartService.Infrastructure
                 .AddPersistance(configuration)
                 .AddHttpClients(configuration);
 
+            services.AddHttpContextAccessor();
+
             services.AddScoped<IAccessTokenProvider, HttpContextAccessTokenProvider>();
 
             return services;
@@ -31,6 +33,8 @@ namespace PS.FreeBookHub_Lite.CartService.Infrastructure
                 options.UseSqlServer(configuration.GetConnectionString("CartDb")));
 
             services.AddScoped<ICartRepository, CartRepository>();
+
+            services.AddTransient<AccessTokenHandler>();
 
             return services;
         }

@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using PS.FreeBookHub_Lite.OrderService.Application.DTOs;
 using PS.FreeBookHub_Lite.OrderService.Application.Services.Interfaces;
 using Swashbuckle.AspNetCore.Annotations;
-using System.Security.Claims;
 
 namespace PS.FreeBookHub_Lite.OrderService.API.Controllers
 {

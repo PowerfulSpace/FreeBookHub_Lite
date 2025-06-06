@@ -9,13 +9,11 @@ namespace PS.FreeBookHub_Lite.CartService.Infrastructure.Clients
     {
         private readonly HttpClient _httpClient;
         private readonly ILogger<BookCatalogClient> _logger;
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public BookCatalogClient(HttpClient httpClient, ILogger<BookCatalogClient> logger, IHttpContextAccessor httpContextAccessor)
+        public BookCatalogClient(HttpClient httpClient, ILogger<BookCatalogClient> logger)
         {
             _httpClient = httpClient;
             _logger = logger;
-            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<decimal?> GetBookPriceAsync(Guid bookId, CancellationToken cancellationToken)

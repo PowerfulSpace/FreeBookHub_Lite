@@ -22,6 +22,9 @@ namespace PS.FreeBookHub_Lite.CartService.Infrastructure
 
             services.AddHttpContextAccessor();
 
+            services.AddTransient<AccessTokenHandler>();
+            services.AddTransient<InternalAuthHandler>();
+
             services.AddScoped<IAccessTokenProvider, HttpContextAccessTokenProvider>();
 
             return services;
@@ -34,8 +37,6 @@ namespace PS.FreeBookHub_Lite.CartService.Infrastructure
 
             services.AddScoped<ICartRepository, CartRepository>();
 
-            services.AddTransient<AccessTokenHandler>();
-
             return services;
         }
 
@@ -45,7 +46,8 @@ namespace PS.FreeBookHub_Lite.CartService.Infrastructure
             {
                 client.BaseAddress = new Uri(configuration["OrderService:BaseUrl"] ?? "https://localhost:7176");
             })
-            .AddHttpMessageHandler<AccessTokenHandler>();
+            .AddHttpMessageHandler<AccessTokenHandler>()
+            .AddHttpMessageHandler<InternalAuthHandler>();
 
             services.AddHttpClient<IBookCatalogClient, BookCatalogClient>(client =>
             {

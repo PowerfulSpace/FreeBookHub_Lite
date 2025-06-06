@@ -18,6 +18,7 @@ namespace PS.FreeBookHub_Lite.OrderService.API.Controllers
             _orderService = orderService;
         }
 
+        [Authorize(Policy = "InternalOnly")]
         [HttpPost]
         [SwaggerOperation(Summary = "Создание нового заказа", Description = "Создает новый заказ от текущего пользователя")]
         public async Task<IActionResult> Create([FromBody] CreateOrderRequest request, CancellationToken cancellationToken)

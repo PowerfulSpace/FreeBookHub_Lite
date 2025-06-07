@@ -11,10 +11,12 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthBookService _authService;
+        private readonly ILogger<AuthController> _logger;
 
-        public AuthController(IAuthBookService authService)
+        public AuthController(IAuthBookService authService, ILogger<AuthController> logger)
         {
             _authService = authService;
+            _logger = logger;
         }
 
         [HttpPost("register")]
@@ -22,7 +24,12 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Controllers
         [SwaggerOperation(Summary = "Регистрация нового пользователя", Description = "Создает новую учетную запись пользователя")]
         public async Task<IActionResult> Register([FromBody] RegisterUserRequest request, CancellationToken ct)
         {
+            _logger.LogInformation("Попытка регистрации пользователя с Email: {Email}", request.Email);
+
             var result = await _authService.RegisterAsync(request, ct);
+
+            _logger.LogInformation("Пользователь с Email {Email} успешно зарегистрирован", request.Email);
+
             return Ok(result);
         }
 
@@ -31,7 +38,11 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Controllers
         [SwaggerOperation(Summary = "Аутентификация пользователя", Description = "Выполняет вход пользователя и возвращает токены доступа")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request, CancellationToken ct)
         {
+            _logger.LogInformation("Попытка входа пользователя с Email: {Email}", request.Email);
+
             var result = await _authService.LoginAsync(request, ct);
+
+            _logger.LogInformation("Пользователь с Email {Email} успешно вошёл", request.Email);
             return Ok(result);
         }
 
@@ -40,7 +51,11 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Controllers
         [SwaggerOperation(Summary = "Обновление токена", Description = "Обновляет access token с помощью refresh token")]
         public async Task<IActionResult> Refresh([FromBody] RefreshTokenRequest request, CancellationToken ct)
         {
+            _logger.LogInformation("Попытка обновления токена");
+
             var result = await _authService.RefreshTokenAsync(request, ct);
+
+            _logger.LogInformation("Токен успешно обновлён для пользователя");
             return Ok(result);
         }
 
@@ -49,7 +64,12 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Controllers
         [SwaggerOperation(Summary = "Выход из текущей сессии", Description = "Завершает текущую сессию пользователя")]
         public async Task<IActionResult> Logout([FromBody] LogoutRequest request, CancellationToken ct)
         {
+            var userId = GetUserIdFromClaimsOrThrow();
+            _logger.LogInformation("Пользователь {UserId} выходит из текущей сессии", userId);
+
             await _authService.LogoutCurrentSessionAsync(request, ct);
+
+            _logger.LogInformation("Пользователь {UserId} успешно вышел", userId);
             return NoContent();
         }
 
@@ -59,8 +79,11 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Controllers
         public async Task<IActionResult> LogoutAll(CancellationToken ct)
         {
             var userId = GetUserIdFromClaimsOrThrow();
+            _logger.LogInformation("Пользователь {UserId} выходит из всех сессий", userId);
 
             await _authService.LogoutAllSessionsAsync(userId, ct);
+
+            _logger.LogInformation("Пользователь {UserId} успешно вышел из всех сессий", userId);
             return NoContent();
         }
 
@@ -73,7 +96,12 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Controllers
             // ?? User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (!Guid.TryParse(userId, out var result))
+            {
+                _logger.LogWarning("Некорректный формат userId в claims: {ClaimValue}", userId);
+
                 throw new UnauthorizedAccessException("Invalid user ID format");
+            }
+                
 
             return result;
         }

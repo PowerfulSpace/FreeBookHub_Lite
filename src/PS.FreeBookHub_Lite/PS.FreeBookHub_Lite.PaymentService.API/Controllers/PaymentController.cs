@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using PS.FreeBookHub_Lite.PaymentService.Application.DTOs;
 using PS.FreeBookHub_Lite.PaymentService.Application.Services.Interfaces;
 using Swashbuckle.AspNetCore.Annotations;
-using System.Security.Claims;
 
 namespace PS.FreeBookHub_Lite.PaymentService.API.Controllers
 {
@@ -19,6 +18,7 @@ namespace PS.FreeBookHub_Lite.PaymentService.API.Controllers
             _paymentService = paymentService;
         }
 
+        [Authorize(Policy = "InternalOnly")]
         [HttpPost]
         [SwaggerOperation(Summary = "Создание платежа", Description = "Обрабатывает и создает новый платеж")]
         public async Task<IActionResult> CreatePayment([FromBody] CreatePaymentRequest request, CancellationToken cancellationToken)

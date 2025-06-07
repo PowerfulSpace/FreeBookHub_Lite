@@ -25,6 +25,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure
             services.AddScoped<IAccessTokenProvider, HttpContextAccessTokenProvider>();
 
             services.AddTransient<AccessTokenHandler>();
+            services.AddTransient<InternalAuthHandler>();
 
             return services;
         }
@@ -45,7 +46,8 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure
             {
                 client.BaseAddress = new Uri(configuration["PaymentService:BaseUrl"] ?? "https://localhost:7177");
             })
-            .AddHttpMessageHandler<AccessTokenHandler>();
+            .AddHttpMessageHandler<AccessTokenHandler>()
+            .AddHttpMessageHandler<InternalAuthHandler>();
 
             return services;
         }

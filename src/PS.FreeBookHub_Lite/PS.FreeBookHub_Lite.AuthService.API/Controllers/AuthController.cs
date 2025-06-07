@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PS.FreeBookHub_Lite.AuthService.Application.DTOs;
 using PS.FreeBookHub_Lite.AuthService.Application.Services.Interfaces;
-using System.Security.Claims;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace PS.FreeBookHub_Lite.AuthService.API.Controllers
 {
@@ -19,6 +19,7 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Controllers
 
         [HttpPost("register")]
         [AllowAnonymous]
+        [SwaggerOperation(Summary = "Регистрация нового пользователя", Description = "Создает новую учетную запись пользователя")]
         public async Task<IActionResult> Register([FromBody] RegisterUserRequest request, CancellationToken ct)
         {
             var result = await _authService.RegisterAsync(request, ct);
@@ -27,6 +28,7 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Controllers
 
         [HttpPost("login")]
         [AllowAnonymous]
+        [SwaggerOperation(Summary = "Аутентификация пользователя", Description = "Выполняет вход пользователя и возвращает токены доступа")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request, CancellationToken ct)
         {
             var result = await _authService.LoginAsync(request, ct);
@@ -35,6 +37,7 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Controllers
 
         [HttpPost("refresh")]
         [AllowAnonymous]
+        [SwaggerOperation(Summary = "Обновление токена", Description = "Обновляет access token с помощью refresh token")]
         public async Task<IActionResult> Refresh([FromBody] RefreshTokenRequest request, CancellationToken ct)
         {
             var result = await _authService.RefreshTokenAsync(request, ct);
@@ -43,6 +46,7 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Controllers
 
         [HttpPost("logout")]
         [Authorize(Policy = "User")]
+        [SwaggerOperation(Summary = "Выход из текущей сессии", Description = "Завершает текущую сессию пользователя")]
         public async Task<IActionResult> Logout([FromBody] LogoutRequest request, CancellationToken ct)
         {
             await _authService.LogoutCurrentSessionAsync(request, ct);
@@ -51,6 +55,7 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Controllers
 
         [HttpPost("logout-all")]
         [Authorize(Policy = "User")]
+        [SwaggerOperation(Summary = "Выход из всех сессий", Description = "Завершает все активные сессии пользователя")]
         public async Task<IActionResult> LogoutAll(CancellationToken ct)
         {
             var userId = GetUserIdFromClaimsOrThrow();

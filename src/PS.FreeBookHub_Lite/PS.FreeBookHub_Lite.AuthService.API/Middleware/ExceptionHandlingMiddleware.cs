@@ -1,4 +1,4 @@
-﻿using PS.FreeBookHub_Lite.AuthService.API.Logging;
+﻿using PS.FreeBookHub_Lite.AuthService.Common.Logging;
 
 namespace PS.FreeBookHub_Lite.AuthService.API.Middleware
 {

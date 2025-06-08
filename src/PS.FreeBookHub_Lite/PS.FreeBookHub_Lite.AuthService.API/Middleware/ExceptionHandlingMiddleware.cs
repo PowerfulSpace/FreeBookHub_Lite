@@ -1,4 +1,6 @@
-﻿namespace PS.FreeBookHub_Lite.AuthService.API.Middleware
+﻿using PS.FreeBookHub_Lite.AuthService.API.Logging;
+
+namespace PS.FreeBookHub_Lite.AuthService.API.Middleware
 {
     public class ExceptionHandlingMiddleware
     {
@@ -19,7 +21,10 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Unhandled exception occurred");
+                _logger.LogError(ex,
+                   LoggerMessages.UnhandledException,
+                   context.Request?.Method,
+                   context.Request?.Path);
 
                 context.Response.ContentType = "application/json";
                 context.Response.StatusCode = ex switch

@@ -57,5 +57,16 @@
 
         public const string UserIdExtractionFailed =
             "Failed to extract valid user ID from claims: {ClaimValue}";
+
+
+        // AuthBookService
+        public const string RegistrationStarted =
+            "Registration started — Email: {Email}";
+
+        public const string RegistrationUserAlreadyExists =
+            "Registration failed — user with email {Email} already exists";
+
+        public const string RegistrationSuccess =
+            "Registration successful — Email: {Email}, UserId: {UserId}";
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PS.FreeBookHub_Lite.AuthService.Application.DTOs;
 using PS.FreeBookHub_Lite.AuthService.Application.Services.Interfaces;
+using PS.FreeBookHub_Lite.AuthService.Common.Logging;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace PS.FreeBookHub_Lite.AuthService.API.Controllers
@@ -24,11 +25,11 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Controllers
         [SwaggerOperation(Summary = "Регистрация нового пользователя", Description = "Создает новую учетную запись пользователя")]
         public async Task<IActionResult> Register([FromBody] RegisterUserRequest request, CancellationToken ct)
         {
-            _logger.LogInformation("Попытка регистрации пользователя с Email: {Email}", request.Email);
+            _logger.LogInformation(LoggerMessages.UserRegistrationStarted, request.Email);
 
             var result = await _authService.RegisterAsync(request, ct);
 
-            _logger.LogInformation("Пользователь с Email {Email} успешно зарегистрирован", request.Email);
+            _logger.LogInformation(LoggerMessages.UserRegistrationCompleted, request.Email);
 
             return Ok(result);
         }
@@ -38,11 +39,12 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Controllers
         [SwaggerOperation(Summary = "Аутентификация пользователя", Description = "Выполняет вход пользователя и возвращает токены доступа")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request, CancellationToken ct)
         {
-            _logger.LogInformation("Попытка входа пользователя с Email: {Email}", request.Email);
+            _logger.LogInformation(LoggerMessages.UserLoginAttempt, request.Email);
 
             var result = await _authService.LoginAsync(request, ct);
 
-            _logger.LogInformation("Пользователь с Email {Email} успешно вошёл", request.Email);
+            _logger.LogInformation(LoggerMessages.UserLoginSuccess, request.Email);
+
             return Ok(result);
         }
 
@@ -51,11 +53,14 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Controllers
         [SwaggerOperation(Summary = "Обновление токена", Description = "Обновляет access token с помощью refresh token")]
         public async Task<IActionResult> Refresh([FromBody] RefreshTokenRequest request, CancellationToken ct)
         {
-            _logger.LogInformation("Попытка обновления токена");
+            var userId = GetUserIdFromClaimsOrThrow();
 
+            _logger.LogInformation(LoggerMessages.TokenRefreshAttempt, userId);
+            
             var result = await _authService.RefreshTokenAsync(request, ct);
 
-            _logger.LogInformation("Токен успешно обновлён для пользователя");
+            _logger.LogInformation(LoggerMessages.TokenRefreshSuccess, userId);
+
             return Ok(result);
         }
 
@@ -65,11 +70,13 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Controllers
         public async Task<IActionResult> Logout([FromBody] LogoutRequest request, CancellationToken ct)
         {
             var userId = GetUserIdFromClaimsOrThrow();
-            _logger.LogInformation("Пользователь {UserId} выходит из текущей сессии", userId);
 
+            _logger.LogInformation(LoggerMessages.UserLogoutAttempt, userId);
+            
             await _authService.LogoutCurrentSessionAsync(request, ct);
 
-            _logger.LogInformation("Пользователь {UserId} успешно вышел", userId);
+            _logger.LogInformation(LoggerMessages.UserLogoutSuccess, userId);
+
             return NoContent();
         }
 
@@ -79,29 +86,29 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Controllers
         public async Task<IActionResult> LogoutAll(CancellationToken ct)
         {
             var userId = GetUserIdFromClaimsOrThrow();
-            _logger.LogInformation("Пользователь {UserId} выходит из всех сессий", userId);
+            _logger.LogInformation(LoggerMessages.UserLogoutAllAttempt, userId);
 
             await _authService.LogoutAllSessionsAsync(userId, ct);
 
-            _logger.LogInformation("Пользователь {UserId} успешно вышел из всех сессий", userId);
+            _logger.LogInformation(LoggerMessages.UserLogoutAllSuccess, userId);
+
             return NoContent();
         }
 
         private Guid GetUserIdFromClaimsOrThrow()
         {
+            _logger.LogInformation(LoggerMessages.UserIdExtractionAttempt);
+
             var userId = User.FindFirst("sub")?.Value
               ?? User.FindFirst("nameidentifier")?.Value;
 
-            //var userId = User.FindFirst("sub")?.Value
-            // ?? User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
             if (!Guid.TryParse(userId, out var result))
             {
-                _logger.LogWarning("Некорректный формат userId в claims: {ClaimValue}", userId);
-
+                _logger.LogWarning(LoggerMessages.UserIdExtractionFailed, userId);
                 throw new UnauthorizedAccessException("Invalid user ID format");
             }
-                
+
+            _logger.LogInformation(LoggerMessages.UserIdExtractionSuccess, result);
 
             return result;
         }

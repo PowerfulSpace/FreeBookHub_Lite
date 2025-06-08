@@ -13,25 +13,49 @@
             "Invalid token received during authentication";
 
         // AuthController
+        //                  --- Register
         public const string UserRegistrationStarted =
             "Starting registration for email: {Email}";
 
         public const string UserRegistrationCompleted =
-            "User successfully registered: {UserId}";
+            "User successfully registered: {Email}";
 
+        //                  --- Login
         public const string UserLoginAttempt =
             "Login attempt with email: {Email}";
 
         public const string UserLoginSuccess =
-            "User logged in successfully: {UserId}";
+            "User logged in successfully: {Email}";
 
-        public const string UserLogout =
-            "User {UserId} logged out";
+        //                  --- Logout
+        public const string UserLogoutAttempt =
+            "User {UserId} attempting to log out";
 
-        public const string UserLoggedOutAll =
-            "User {UserId} logged out from all sessions";
+        public const string UserLogoutSuccess =
+            "User {UserId} logged out successfully";
 
-        public const string TokenRefreshed =
-            "Token refreshed for user: {UserId}";
+        //                  --- LogoutAll
+        public const string UserLogoutAllAttempt =
+            "User {UserId} attempting to log out from all sessions";
+
+        public const string UserLogoutAllSuccess =
+            "User {UserId} logged out from all sessions successfully";
+
+        //                  --- Refresh
+        public const string TokenRefreshAttempt =
+            "Attempting token refresh for user: {UserId}";
+
+        public const string TokenRefreshSuccess =
+            "Token successfully refreshed for user: {UserId}";
+
+        //                  --- GetUserIdFromClaimsOrThrow
+        public const string UserIdExtractionAttempt =
+            "Attempting to extract user ID from claims";
+
+        public const string UserIdExtractionSuccess =
+            "Successfully extracted user ID from claims: {UserId}";
+
+        public const string UserIdExtractionFailed =
+            "Failed to extract valid user ID from claims: {ClaimValue}";
     }
 }

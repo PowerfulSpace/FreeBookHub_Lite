@@ -42,7 +42,6 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.Services
             var existingUser = await _userRepository.GetByEmailAsync(request.Email, ct, asNoTracking: true);
             if (existingUser is not null)
             {
-                _logger.LogWarning(LoggerMessages.RegistrationUserAlreadyExists, request.Email);
                 throw new InvalidOperationException("User with this email already exists.");
             }
                 
@@ -85,20 +84,17 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.Services
             var user = await _userRepository.GetByEmailAsync(request.Email, ct, asNoTracking: true);
             if (user is null)
             {
-                _logger.LogWarning(LoggerMessages.LoginUserNotFound, request.Email);
                 throw new InvalidOperationException("Invalid email or password.");
             }
                 
             if (!user.IsActive)
             {
-                _logger.LogWarning(LoggerMessages.LoginUserInactive, request.Email);
                 throw new InvalidOperationException("User account is deactivated.");
             }
 
             var isPasswordValid = _passwordHasher.Verify(request.Password, user.PasswordHash);
             if (!isPasswordValid)
             {
-                _logger.LogWarning(LoggerMessages.LoginInvalidPassword, request.Email);
                 throw new InvalidOperationException("Invalid email or password.");
             }
 
@@ -121,7 +117,7 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.Services
                 AccessToken = accessToken,
                 RefreshToken = refreshTokenStr,
                 ExpiresAt = DateTime.UtcNow.AddMinutes(
-                    int.Parse(_configuration["Auth:AccessTokenExpiryMinutes"] ?? "15")
+                    int.Parse(_configuration["Auth:JwtSettings:AccessTokenExpiryMinutes"] ?? "15")
                 )
             };
         }
@@ -132,14 +128,12 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.Services
             var existingToken = await _refreshTokenRepository.GetByTokenAsync(request.RefreshToken, ct);
             if (existingToken is null || !existingToken.IsActive())
             {
-                _logger.LogWarning(LoggerMessages.RefreshTokenInvalidOrExpired, request.RefreshToken);
                 throw new InvalidOperationException("Invalid or expired refresh token.");
             }
 
             var user = await _userRepository.GetByIdAsync(existingToken.UserId, ct, asNoTracking: true);
             if (user is null || !user.IsActive)
             {
-                _logger.LogWarning(LoggerMessages.RefreshUserNotFoundOrInactive, existingToken.UserId);
                 throw new InvalidOperationException("User not found or inactive.");
             }
 
@@ -193,13 +187,11 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.Services
 
             if (token is null)
             {
-                _logger.LogWarning(LoggerMessages.LogoutTokenNotFound, request.RefreshToken);
                 throw new InvalidOperationException("Refresh token not found");
             }
 
             if (!token.IsActive())
             {
-                _logger.LogWarning(LoggerMessages.LogoutTokenAlreadyRevoked, request.RefreshToken);
                 throw new InvalidOperationException("Refresh token is already revoked or expired");
             }
 

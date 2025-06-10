@@ -1,4 +1,5 @@
 ﻿using PS.FreeBookHub_Lite.AuthService.Domain.Enums;
+using PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.Role;
 
 namespace PS.FreeBookHub_Lite.AuthService.Domain.Entities
 {
@@ -31,10 +32,10 @@ namespace PS.FreeBookHub_Lite.AuthService.Domain.Entities
         public void PromoteTo(UserRole newRole)
         {
             if (Role == newRole)
-                throw new InvalidOperationException($"The user already has a role {newRole}");
+                throw new RoleAssignmentException($"The user already has a role {newRole}");
 
             if (newRole == UserRole.Admin && Role != UserRole.Moderator)
-                throw new InvalidOperationException("Only a moderator can be promoted to administrator.");
+                throw new InvalidRolePromotionException("Only a moderator can be promoted to administrator.");
 
             Role = newRole;
         }

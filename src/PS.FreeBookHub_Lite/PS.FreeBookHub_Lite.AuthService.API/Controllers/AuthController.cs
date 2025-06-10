@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PS.FreeBookHub_Lite.AuthService.Application.DTOs;
 using PS.FreeBookHub_Lite.AuthService.Application.Services.Interfaces;
+using PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.User;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace PS.FreeBookHub_Lite.AuthService.API.Controllers
@@ -78,7 +79,7 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Controllers
 
             if (!Guid.TryParse(userId, out var result))
             {
-                throw new UnauthorizedAccessException("Invalid user ID format");
+                throw new InvalidUserIdentifierException(userId ?? "null");
             }
 
             return result;

@@ -1,4 +1,6 @@
-﻿namespace PS.FreeBookHub_Lite.AuthService.Domain.Entities
+﻿using PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.Token;
+
+namespace PS.FreeBookHub_Lite.AuthService.Domain.Entities
 {
     public class RefreshToken
     {
@@ -22,7 +24,7 @@
         public void Revoke()
         {
             if (IsRevoked)
-                throw new InvalidOperationException("The token has already been revoked.");
+                throw new RevokedTokenException(Token);
             IsRevoked = true;
         }
 

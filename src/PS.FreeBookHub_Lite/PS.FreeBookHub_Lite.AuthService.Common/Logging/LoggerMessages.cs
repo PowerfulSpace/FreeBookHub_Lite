@@ -2,17 +2,21 @@
 {
     public static class LoggerMessages
     {
+
         // Общие ошибки
-        public const string UnhandledException =
-            "Unhandled exception occurred while processing {Method} {Path}";
+        public const string UnhandledException = "Unhandled exception occurred while processing {Method} {Path} - {Message}";
+        public const string UnauthorizedAccess = "Unauthorized access attempt by user";
+        public const string InvalidToken = "Invalid token received during authentication";
 
-        public const string UnauthorizedAccess =
-            "Unauthorized access attempt by user";
+        // Ресурсы
+        public const string ResourceNotFound = "Resource not found: {Path}";
+        // Токены
+        public const string TokenAlreadyRevoked = "Token already revoked";
+        // Операции
+        public const string InvalidOperation = "Invalid operation: {Message}";
 
-        public const string InvalidToken =
-            "Invalid token received during authentication";
 
-       
+
         // AuthBookService
         //                  --- RegisterAsync
         public const string RegistrationStarted = "Registration started — Email: {Email}";

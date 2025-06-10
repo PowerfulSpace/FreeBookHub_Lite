@@ -136,7 +136,7 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.Services
             var user = await _userRepository.GetByIdAsync(existingToken.UserId, ct, asNoTracking: true);
             if (user is null || !user.IsActive)
             {
-                throw new UserNotFoundException(existingToken.UserId);
+                throw new UserByIdNotFoundException(existingToken.UserId);
             }
 
             // Отозвать старый токен

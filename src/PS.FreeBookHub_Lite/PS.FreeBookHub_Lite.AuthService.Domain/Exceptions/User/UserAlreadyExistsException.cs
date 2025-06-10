@@ -1,8 +1,8 @@
-﻿using PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.Base;
+﻿using PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.User.Base;
 
 namespace PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.User
 {
-    public class UserAlreadyExistsException : AuthServiceException
+    public class UserAlreadyExistsException : UserException
     {
         public string Email { get; }
 

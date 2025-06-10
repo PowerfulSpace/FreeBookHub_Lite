@@ -51,7 +51,7 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Middleware
                         context.Response.StatusCode = StatusCodes.Status400BadRequest;
                         break;
 
-                    case UserNotFoundException notFoundEx:
+                    case UserByIdNotFoundException notFoundEx:
                         _logger.LogWarning(
                             "User not found: {UserId}",
                             notFoundEx.UserId);

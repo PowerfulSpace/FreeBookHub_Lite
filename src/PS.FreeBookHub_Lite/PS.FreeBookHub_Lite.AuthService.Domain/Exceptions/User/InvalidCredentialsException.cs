@@ -1,8 +1,8 @@
-﻿using PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.Base;
+﻿using PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.User.Base;
 
 namespace PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.User
 {
-    public class InvalidCredentialsException : AuthServiceException
+    public class InvalidCredentialsException : UserException
     {
         public InvalidCredentialsException()
             : base("Invalid email or password") { }

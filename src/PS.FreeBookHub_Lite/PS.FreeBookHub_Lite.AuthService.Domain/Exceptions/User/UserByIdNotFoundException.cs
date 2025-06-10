@@ -2,12 +2,12 @@
 
 namespace PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.User
 {
-    public class DeactivatedUserException : UserException
+    public class UserByIdNotFoundException : UserException
     {
         public Guid UserId { get; }
 
-        public DeactivatedUserException(Guid userId)
-            : base($"User account (ID: {userId}) is deactivated")
+        public UserByIdNotFoundException(Guid userId)
+            : base($"User not found (ID: {userId})")
         {
             UserId = userId;
         }

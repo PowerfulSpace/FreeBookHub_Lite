@@ -1,8 +1,8 @@
-﻿using PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.Base;
+﻿using PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.User.Base;
 
 namespace PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.User
 {
-    public class InvalidUserIdentifierException : AuthServiceException
+    public class InvalidUserIdentifierException : UserException
     {
         public string InvalidId { get; }
 

@@ -1,4 +1,5 @@
-﻿using PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.Role;
+﻿using PS.FreeBookHub_Lite.AuthService.Common.Logging;
+using PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.Role;
 using PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.Token;
 using PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.User;
 
@@ -81,61 +82,61 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Middleware
 
         private void HandleInvalidUserIdentifier(HttpContext context)
         {
-            _logger.LogWarning("Invalid user ID format | Method: {Method} | Path: {Path}", context.Request.Method, context.Request.Path);
+            _logger.LogWarning(LoggerMessages.InvalidUserIdentifier, context.Request.Method, context.Request.Path);
             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
         }
 
         private void HandleInvalidCredentials(HttpContext context)
         {
-            _logger.LogWarning("Invalid login attempt | Method: {Method} | Path: {Path}", context.Request.Method, context.Request.Path);
+            _logger.LogWarning(LoggerMessages.InvalidCredentials, context.Request.Method, context.Request.Path);
             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
         }
 
         private void HandleDeactivatedUser(HttpContext context, DeactivatedUserException ex)
         {
-            _logger.LogWarning("Attempt to access deactivated account: {UserId} | Method: {Method} | Path: {Path}", ex.UserId, context.Request.Method, context.Request.Path);
+            _logger.LogWarning(LoggerMessages.DeactivatedUser, ex.UserId, context.Request.Method, context.Request.Path);
             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
         }
 
         private void HandleUserAlreadyExists(HttpContext context, UserAlreadyExistsException ex)
         {
-            _logger.LogWarning("Attempt to register existing email: {Email} | Method: {Method} | Path: {Path}", ex.Email, context.Request.Method, context.Request.Path);
+            _logger.LogWarning(LoggerMessages.UserAlreadyExists, ex.Email, context.Request.Method, context.Request.Path);
             context.Response.StatusCode = StatusCodes.Status400BadRequest;
         }
 
         private void HandleUserNotFound(HttpContext context, UserByIdNotFoundException ex)
         {
-            _logger.LogWarning("User not found: {UserId} | Method: {Method} | Path: {Path}", ex.UserId, context.Request.Method, context.Request.Path);
+            _logger.LogWarning(LoggerMessages.UserNotFound, ex.UserId, context.Request.Method, context.Request.Path);
             context.Response.StatusCode = StatusCodes.Status404NotFound;
         }
 
         private void HandleTokenNotFound(HttpContext context, TokenNotFoundException ex)
         {
-            _logger.LogWarning("Refresh token not found: {Token} | Method: {Method} | Path: {Path}", ex.Token, context.Request.Method, context.Request.Path);
+            _logger.LogWarning(LoggerMessages.TokenNotFound, ex.Token, context.Request.Method, context.Request.Path);
             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
         }
 
         private void HandleInvalidToken(HttpContext context, InvalidTokenException ex)
         {
-            _logger.LogWarning("Invalid refresh token: {Token} | Method: {Method} | Path: {Path}", ex.Token, context.Request.Method, context.Request.Path);
+            _logger.LogWarning(LoggerMessages.InvalidToken, ex.Token, context.Request.Method, context.Request.Path);
             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
         }
 
         private void HandleRevokedToken(HttpContext context, RevokedTokenException ex)
         {
-            _logger.LogWarning("Attempt to use revoked token: {Token} | Method: {Method} | Path: {Path}", ex.Token, context.Request.Method, context.Request.Path);
+            _logger.LogWarning(LoggerMessages.RevokedToken, ex.Token, context.Request.Method, context.Request.Path);
             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
         }
 
         private void HandleRoleManagementError(HttpContext context)
         {
-            _logger.LogWarning("Role management error | Method: {Method} | Path: {Path}", context.Request.Method, context.Request.Path);
+            _logger.LogWarning(LoggerMessages.RoleManagementError, context.Request.Method, context.Request.Path);
             context.Response.StatusCode = StatusCodes.Status400BadRequest;
         }
 
         private void HandleUnhandledException(HttpContext context, Exception ex)
         {
-            _logger.LogError(ex, "Unhandled exception: {Message} | Method: {Method} | Path: {Path}", ex.Message, context.Request.Method, context.Request.Path);
+            _logger.LogError(ex, LoggerMessages.UnhandledException, ex.Message, context.Request.Method, context.Request.Path);
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
         }
     }

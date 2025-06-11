@@ -3,17 +3,26 @@
     public static class LoggerMessages
     {
 
-        // Общие ошибки
-        public const string UnhandledException = "Unhandled exception occurred while processing {Method} {Path} - {Message}";
-        public const string UnauthorizedAccess = "Unauthorized access attempt by user";
-        public const string InvalidToken = "Invalid token received during authentication";
+        // ExceptionHandlingMiddleware
+        //                  --- User Authentication Errors
+        public const string InvalidUserIdentifier = "Invalid user ID format | Method: {Method} | Path: {Path}";
+        public const string InvalidCredentials = "Invalid login attempt | Method: {Method} | Path: {Path}";
+        public const string DeactivatedUser = "Attempt to access deactivated account — UserId: {UserId} | Method: {Method} | Path: {Path}";
+        public const string UserAlreadyExists = "Attempt to register existing email — Email: {Email} | Method: {Method} | Path: {Path}";
+        public const string UserNotFound = "User not found — UserId: {UserId} | Method: {Method} | Path: {Path}";
 
-        // Ресурсы
-        public const string ResourceNotFound = "Resource not found: {Path}";
-        // Токены
-        public const string TokenAlreadyRevoked = "Token already revoked";
-        // Операции
-        public const string InvalidOperation = "Invalid operation: {Message}";
+        //                  --- Token Management Errors
+        public const string TokenNotFound = "Refresh token not found — Token: {Token} | Method: {Method} | Path: {Path}";
+        public const string InvalidToken = "Invalid refresh token — Token: {Token} | Method: {Method} | Path: {Path}";
+        public const string RevokedToken = "Attempt to use revoked token — Token: {Token} | Method: {Method} | Path: {Path}";
+
+        //                  --- Role Management Errors
+        public const string RoleManagementError = "Role management error | Method: {Method} | Path: {Path}";
+
+        //                  --- General Error Handling
+        public const string UnhandledException = "Unhandled exception — Message: {Message} | Method: {Method} | Path: {Path}";
+
+
 
 
 

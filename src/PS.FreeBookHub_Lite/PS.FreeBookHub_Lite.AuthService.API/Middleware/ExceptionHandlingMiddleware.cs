@@ -25,97 +25,45 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Middleware
             {
                 switch (ex)
                 {
-                    // Авторизация
                     case InvalidUserIdentifierException:
-                        _logger.LogWarning(
-                            "Invalid user ID format | Method: {Method} | Path: {Path}",
-                            context.Request.Method,
-                            context.Request.Path);
-                        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                        HandleInvalidUserIdentifier(context);
                         break;
 
                     case InvalidCredentialsException:
-                        _logger.LogWarning(
-                            "Invalid login attempt | Method: {Method} | Path: {Path}",
-                            context.Request.Method,
-                            context.Request.Path);
-                        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                        HandleInvalidCredentials(context);
                         break;
 
                     case DeactivatedUserException deactivatedEx:
-                        _logger.LogWarning(
-                            "Attempt to access deactivated account: {UserId} | Method: {Method} | Path: {Path}",
-                            deactivatedEx.UserId,
-                            context.Request.Method,
-                            context.Request.Path);
-                        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                        HandleDeactivatedUser(context, deactivatedEx);
                         break;
 
-                    // Пользователи
                     case UserAlreadyExistsException existsEx:
-                        _logger.LogWarning(
-                            "Attempt to register existing email: {Email} | Method: {Method} | Path: {Path}",
-                            existsEx.Email,
-                            context.Request.Method,
-                            context.Request.Path);
-                        context.Response.StatusCode = StatusCodes.Status400BadRequest;
+                        HandleUserAlreadyExists(context, existsEx);
                         break;
 
                     case UserByIdNotFoundException notFoundEx:
-                        _logger.LogWarning(
-                            "User not found: {UserId} | Method: {Method} | Path: {Path}",
-                            notFoundEx.UserId,
-                            context.Request.Method,
-                            context.Request.Path);
-                        context.Response.StatusCode = StatusCodes.Status404NotFound;
+                        HandleUserNotFound(context, notFoundEx);
                         break;
 
-                    // Токены
                     case TokenNotFoundException tokenNotFoundEx:
-                        _logger.LogWarning(
-                            "Refresh token not found: {Token} | Method: {Method} | Path: {Path}",
-                            tokenNotFoundEx.Token,
-                            context.Request.Method,
-                            context.Request.Path);
-                        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                        HandleTokenNotFound(context, tokenNotFoundEx);
                         break;
 
                     case InvalidTokenException invalidTokenEx:
-                        _logger.LogWarning(
-                            "Invalid refresh token: {Token} | Method: {Method} | Path: {Path}",
-                            invalidTokenEx.Token,
-                            context.Request.Method,
-                            context.Request.Path);
-                        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                        HandleInvalidToken(context, invalidTokenEx);
                         break;
 
                     case RevokedTokenException revokedEx:
-                        _logger.LogWarning(
-                            "Attempt to use revoked token: {Token} | Method: {Method} | Path: {Path}",
-                            revokedEx.Token,
-                            context.Request.Method,
-                            context.Request.Path);
-                        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                        HandleRevokedToken(context, revokedEx);
                         break;
 
-                    // Роли
                     case InvalidRolePromotionException:
                     case RoleAssignmentException:
-                        _logger.LogWarning(
-                            "Role management error | Method: {Method} | Path: {Path}",
-                            context.Request.Method,
-                            context.Request.Path);
-                        context.Response.StatusCode = StatusCodes.Status400BadRequest;
+                        HandleRoleManagementError(context);
                         break;
 
-                    // Необработанные исключения
                     default:
-                        _logger.LogError(
-                            ex,
-                            "Unhandled exception: {Method} {Path}",
-                            context.Request.Method,
-                            context.Request.Path);
-                        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                        HandleUnhandledException(context, ex);
                         break;
                 }
 
@@ -129,6 +77,66 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Middleware
 
                 await context.Response.WriteAsJsonAsync(response);
             }
+        }
+
+        private void HandleInvalidUserIdentifier(HttpContext context)
+        {
+            _logger.LogWarning("Invalid user ID format | Method: {Method} | Path: {Path}", context.Request.Method, context.Request.Path);
+            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+        }
+
+        private void HandleInvalidCredentials(HttpContext context)
+        {
+            _logger.LogWarning("Invalid login attempt | Method: {Method} | Path: {Path}", context.Request.Method, context.Request.Path);
+            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+        }
+
+        private void HandleDeactivatedUser(HttpContext context, DeactivatedUserException ex)
+        {
+            _logger.LogWarning("Attempt to access deactivated account: {UserId} | Method: {Method} | Path: {Path}", ex.UserId, context.Request.Method, context.Request.Path);
+            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+        }
+
+        private void HandleUserAlreadyExists(HttpContext context, UserAlreadyExistsException ex)
+        {
+            _logger.LogWarning("Attempt to register existing email: {Email} | Method: {Method} | Path: {Path}", ex.Email, context.Request.Method, context.Request.Path);
+            context.Response.StatusCode = StatusCodes.Status400BadRequest;
+        }
+
+        private void HandleUserNotFound(HttpContext context, UserByIdNotFoundException ex)
+        {
+            _logger.LogWarning("User not found: {UserId} | Method: {Method} | Path: {Path}", ex.UserId, context.Request.Method, context.Request.Path);
+            context.Response.StatusCode = StatusCodes.Status404NotFound;
+        }
+
+        private void HandleTokenNotFound(HttpContext context, TokenNotFoundException ex)
+        {
+            _logger.LogWarning("Refresh token not found: {Token} | Method: {Method} | Path: {Path}", ex.Token, context.Request.Method, context.Request.Path);
+            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+        }
+
+        private void HandleInvalidToken(HttpContext context, InvalidTokenException ex)
+        {
+            _logger.LogWarning("Invalid refresh token: {Token} | Method: {Method} | Path: {Path}", ex.Token, context.Request.Method, context.Request.Path);
+            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+        }
+
+        private void HandleRevokedToken(HttpContext context, RevokedTokenException ex)
+        {
+            _logger.LogWarning("Attempt to use revoked token: {Token} | Method: {Method} | Path: {Path}", ex.Token, context.Request.Method, context.Request.Path);
+            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+        }
+
+        private void HandleRoleManagementError(HttpContext context)
+        {
+            _logger.LogWarning("Role management error | Method: {Method} | Path: {Path}", context.Request.Method, context.Request.Path);
+            context.Response.StatusCode = StatusCodes.Status400BadRequest;
+        }
+
+        private void HandleUnhandledException(HttpContext context, Exception ex)
+        {
+            _logger.LogError(ex, "Unhandled exception: {Message} | Method: {Method} | Path: {Path}", ex.Message, context.Request.Method, context.Request.Path);
+            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
         }
     }
 }

@@ -80,9 +80,6 @@ namespace PS.FreeBookHub_Lite.CartService.API.Controllers
             var userId = User.FindFirst("sub")?.Value
               ?? User.FindFirst("nameidentifier")?.Value;
 
-            //var userId = User.FindFirst("sub")?.Value
-            //          ?? User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
             if (!Guid.TryParse(userId, out var result))
                 throw new UnauthorizedAccessException("Invalid user ID format");
 

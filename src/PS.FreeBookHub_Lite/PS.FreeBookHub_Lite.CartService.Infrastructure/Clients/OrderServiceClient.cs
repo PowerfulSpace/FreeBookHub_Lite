@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using PS.FreeBookHub_Lite.CartService.Application.Clients;
 using PS.FreeBookHub_Lite.CartService.Application.DTOs.Order;
+using PS.FreeBookHub_Lite.CartService.Common;
 using System.Net.Http.Json;
 
 namespace PS.FreeBookHub_Lite.CartService.Infrastructure.Clients
@@ -19,22 +20,15 @@ namespace PS.FreeBookHub_Lite.CartService.Infrastructure.Clients
 
         public async Task<OrderResponse> CreateOrderAsync(CreateOrderRequest request, CancellationToken cancellationToken)
         {
-            try
-            {
-                var response = await _httpClient.PostAsJsonAsync(
-                    "/api/orders",
-                    request,
-                    cancellationToken
-                );
+            _logger.LogInformation(LoggerMessages.CreateOrderStarted, request.UserId);
 
-                response.EnsureSuccessStatusCode();
-                return await response.Content.ReadFromJsonAsync<OrderResponse>(cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Failed to create order for user {UserId}", request.UserId);
-                throw;
-            }
+            var response = await _httpClient.PostAsJsonAsync("/api/orders", request, cancellationToken);
+            response.EnsureSuccessStatusCode(); // Выбросит исключение при ошибке
+
+            var order = await response.Content.ReadFromJsonAsync<OrderResponse>(cancellationToken);
+            _logger.LogInformation(LoggerMessages.CreateOrderSuccess, request.UserId, order.Id);
+
+            return order;
         }
     }
 }

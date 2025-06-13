@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PS.FreeBookHub_Lite.CartService.Application.DTOs.Cart;
 using PS.FreeBookHub_Lite.CartService.Application.DTOs.Order;
 using PS.FreeBookHub_Lite.CartService.Application.Services.Interfaces;
+using PS.FreeBookHub_Lite.CartService.Domain.Exceptions.User;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace PS.FreeBookHub_Lite.CartService.API.Controllers
@@ -80,7 +81,7 @@ namespace PS.FreeBookHub_Lite.CartService.API.Controllers
               ?? User.FindFirst("nameidentifier")?.Value;
 
             if (!Guid.TryParse(userId, out var result))
-                throw new UnauthorizedAccessException("Invalid user ID format");
+                throw new InvalidUserIdentifierException(userId ?? "null");
 
             return result;
         }

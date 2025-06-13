@@ -1,6 +1,6 @@
-﻿using PS.FreeBookHub_Lite.CartService.Domain.Exceptions.Base;
+﻿using PS.FreeBookHub_Lite.CartService.Domain.Exceptions.Cart.Base;
 
-namespace PS.FreeBookHub_Lite.CartService.Domain.Exceptions
+namespace PS.FreeBookHub_Lite.CartService.Domain.Exceptions.Cart
 {
     public class BookNotFoundException : CartServiceException
     {

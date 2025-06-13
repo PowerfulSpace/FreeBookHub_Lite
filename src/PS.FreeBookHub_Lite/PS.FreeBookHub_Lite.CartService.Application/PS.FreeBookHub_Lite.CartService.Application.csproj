@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PS.FreeBookHub_Lite.CartService.Common\PS.FreeBookHub_Lite.CartService.Common.csproj" />
     <ProjectReference Include="..\PS.FreeBookHub_Lite.CartService.Domain\PS.FreeBookHub_Lite.CartService.Domain.csproj" />
   </ItemGroup>
 

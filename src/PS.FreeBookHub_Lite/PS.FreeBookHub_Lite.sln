@@ -111,6 +111,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{70BF59
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.AuthService.Common", "PS.FreeBookHub_Lite.AuthService.Common\PS.FreeBookHub_Lite.AuthService.Common.csproj", "{98EB8D5F-F88D-4EDE-8083-C5BE86BF9B6C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{3D6EECE3-EDF9-4A60-A10C-A786F6F55D46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.CartService.Common", "PS.FreeBookHub_Lite.CartService.Common\PS.FreeBookHub_Lite.CartService.Common.csproj", "{825075E0-EEEE-4B21-A562-F5B729089736}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -209,6 +213,10 @@ Global
 		{98EB8D5F-F88D-4EDE-8083-C5BE86BF9B6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98EB8D5F-F88D-4EDE-8083-C5BE86BF9B6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{98EB8D5F-F88D-4EDE-8083-C5BE86BF9B6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{825075E0-EEEE-4B21-A562-F5B729089736}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{825075E0-EEEE-4B21-A562-F5B729089736}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{825075E0-EEEE-4B21-A562-F5B729089736}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{825075E0-EEEE-4B21-A562-F5B729089736}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -266,5 +274,7 @@ Global
 		{D4C42FC8-F879-4917-BCCA-57DF6CFB2CA7} = {4343CF34-F0EE-476E-A0F1-7D04440AC8E0}
 		{70BF59E7-50AB-4DDC-A60F-FADC5499502F} = {6E26491D-631E-4C0A-B968-A5B870DE0B66}
 		{98EB8D5F-F88D-4EDE-8083-C5BE86BF9B6C} = {70BF59E7-50AB-4DDC-A60F-FADC5499502F}
+		{3D6EECE3-EDF9-4A60-A10C-A786F6F55D46} = {9770E99F-1FD1-46CC-8A6B-0894C7AFFA6F}
+		{825075E0-EEEE-4B21-A562-F5B729089736} = {3D6EECE3-EDF9-4A60-A10C-A786F6F55D46}
 	EndGlobalSection
 EndGlobal

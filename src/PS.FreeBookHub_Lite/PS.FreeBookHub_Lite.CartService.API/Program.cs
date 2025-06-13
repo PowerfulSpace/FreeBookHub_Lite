@@ -1,38 +1,59 @@
 using PS.FreeBookHub_Lite.CartService.API;
+using PS.FreeBookHub_Lite.CartService.API.Logging;
 using PS.FreeBookHub_Lite.CartService.API.Middleware;
 using PS.FreeBookHub_Lite.CartService.Application;
 using PS.FreeBookHub_Lite.CartService.Infrastructure;
-
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Services
-    .AddPresentation(builder.Configuration)
-    .AddInfrastructure(builder.Configuration)
-    .AddApplication();
+using Serilog;
 
 
-var app = builder.Build();
+
+SerilogBootstrapper.ConfigureSerilog();
+
+try
 {
-    if (app.Environment.IsDevelopment())
+    Log.Information("Starting up...");
+
+    var builder = WebApplication.CreateBuilder(args);
+
+    builder.Services
+        .AddPresentation(builder.Configuration)
+        .AddInfrastructure(builder.Configuration)
+        .AddApplication();
+
+
+    var app = builder.Build();
     {
-        app.UseSwagger();
-        app.UseSwaggerUI(options =>
+        if (app.Environment.IsDevelopment())
         {
-            options.SwaggerEndpoint("/swagger/v1/swagger.json", "FreeBookHub Cart API v1");
-            options.RoutePrefix = string.Empty;
-        });
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "FreeBookHub Cart API v1");
+                options.RoutePrefix = string.Empty;
+            });
+        }
+
+        app.UseMiddleware<ExceptionHandlingMiddleware>();
+
+        app.UseHttpsRedirection();
+
+        app.UseAuthentication();
+        app.UseAuthorization();
+
+        app.MapControllers();
+
+        app.Run();
     }
 
-    app.UseMiddleware<ExceptionHandlingMiddleware>();
-
-    app.UseHttpsRedirection();
-
-    app.UseAuthentication();
-    app.UseAuthorization();
-
-    app.MapControllers();
-
-    app.Run();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Application terminated unexpectedly");
+}
+finally
+{
+    Log.Information("Shut down complete.");
+    Log.CloseAndFlush();
 }
 
 

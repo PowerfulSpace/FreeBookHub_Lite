@@ -4,7 +4,6 @@ using PS.FreeBookHub_Lite.CartService.Application.DTOs.Cart;
 using PS.FreeBookHub_Lite.CartService.Application.DTOs.Order;
 using PS.FreeBookHub_Lite.CartService.Application.Services.Interfaces;
 using Swashbuckle.AspNetCore.Annotations;
-using System.Security.Claims;
 
 namespace PS.FreeBookHub_Lite.CartService.API.Controllers
 {

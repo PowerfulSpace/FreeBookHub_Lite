@@ -68,15 +68,19 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Middleware
                         break;
                 }
 
-                context.Response.ContentType = "application/json";
-
-                var response = new
+                if (!context.Response.HasStarted)
                 {
-                    status = context.Response.StatusCode,
-                    error = ex.Message
-                };
+                    context.Response.ContentType = "application/json";
 
-                await context.Response.WriteAsJsonAsync(response);
+                    var response = new
+                    {
+                        status = context.Response.StatusCode,
+                        error = ex.Message
+                    };
+
+                    await context.Response.WriteAsJsonAsync(response);
+                }
+                
             }
         }
 

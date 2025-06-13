@@ -2,6 +2,15 @@
 {
     public static class LoggerMessages
     {
+        // Warnings
+        public const string BookNotFound = "Book not found | BookId: {BookId} | Method: {Method} | Path: {Path}";
+        public const string CartNotFound = "Cart not found | UserId: {UserId} | Method: {Method} | Path: {Path}";
+        public const string EmptyCart = "Empty cart | UserId: {UserId} | Method: {Method} | Path: {Path}";
+
+        public const string UnhandledException = "Unhandled exception — Message: {Message} | Method: {Method} | Path: {Path}";
+
+
+
         // Cart operations
         public const string GetCartStarted = "Cart retrieval started | UserId: {UserId}";
         public const string GetCartSuccess = "Cart successfully retrieved | UserId: {UserId}";
@@ -21,10 +30,5 @@
 
         public const string CheckoutStarted = "Checkout started | UserId: {UserId}";
         public const string CheckoutSuccess = "Checkout successful | UserId: {UserId}, OrderId: {OrderId}";
-
-        // Warnings
-        public const string BookNotFound = "Book not found | BookId: {BookId}";
-        public const string ItemNotFoundInCart = "Item not found in cart | UserId: {UserId}, BookId: {BookId}";
-        public const string EmptyCartCheckout = "Attempt to checkout an empty cart | UserId: {UserId}";
     }
 }

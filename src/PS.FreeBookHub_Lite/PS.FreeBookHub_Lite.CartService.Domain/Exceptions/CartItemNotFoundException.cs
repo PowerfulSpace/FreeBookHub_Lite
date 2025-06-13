@@ -8,7 +8,7 @@ namespace PS.FreeBookHub_Lite.CartService.Domain.Exceptions
         public Guid UserId { get; }
 
         public CartItemNotFoundException(Guid userId, Guid bookId)
-            : base($"Товар с ID {bookId} не найден в корзине пользователя {userId}")
+            : base($"Item with ID {bookId} not found in user {userId}'s cart")
         {
             UserId = userId;
             BookId = bookId;

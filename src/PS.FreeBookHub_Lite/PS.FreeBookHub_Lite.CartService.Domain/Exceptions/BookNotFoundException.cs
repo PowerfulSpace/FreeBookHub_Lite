@@ -7,7 +7,7 @@ namespace PS.FreeBookHub_Lite.CartService.Domain.Exceptions
         public Guid BookId { get; }
 
         public BookNotFoundException(Guid bookId)
-            : base($"Книга с ID {bookId} не найдена или цена недоступна")
+             : base($"Book with ID {bookId} not found or price unavailable")
         {
             BookId = bookId;
         }

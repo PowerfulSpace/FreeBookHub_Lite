@@ -15,6 +15,8 @@ try
 
     var builder = WebApplication.CreateBuilder(args);
 
+    builder.Host.UseSerilog();
+
     builder.Services
         .AddPresentation(builder.Configuration)
         .AddInfrastructure(builder.Configuration)

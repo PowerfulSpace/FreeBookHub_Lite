@@ -1,4 +1,5 @@
 ﻿using Mapster;
+using Microsoft.Extensions.Logging;
 using PS.FreeBookHub_Lite.CatalogService.Application.DTOs;
 using PS.FreeBookHub_Lite.CatalogService.Application.Interfaces;
 using PS.FreeBookHub_Lite.CatalogService.Application.Services.Interfaces;
@@ -9,10 +10,12 @@ namespace PS.FreeBookHub_Lite.CatalogService.Application.Services
     public class BookService : IBookService
     {
         private readonly IBookRepository _repository;
+        private readonly ILogger<BookService> _logger;
 
-        public BookService(IBookRepository repository)
+        public BookService(IBookRepository repository, ILogger<BookService> logger)
         {
             _repository = repository;
+            _logger = logger;
         }
 
         public async Task<IEnumerable<BookResponse>> GetAllBooksAsync(CancellationToken cancellationToken)

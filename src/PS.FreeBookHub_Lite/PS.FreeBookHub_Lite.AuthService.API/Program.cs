@@ -11,7 +11,7 @@ SerilogBootstrapper.ConfigureSerilog();
 
 try
 {
-    Log.Information("Starting up...");
+    Log.Information("Starting up [AuthService]...");
     var builder = WebApplication.CreateBuilder(args);
 
     builder.Host.UseSerilog();
@@ -48,11 +48,11 @@ try
 }
 catch (Exception ex)
 {
-    Log.Fatal(ex, "Application terminated unexpectedly");
+    Log.Fatal(ex, "Application terminated unexpectedly [AuthService]");
 }
 finally
 {
-    Log.Information("Shut down complete.");
+    Log.Information("Shut down complete.[AuthService]");
     Log.CloseAndFlush();
 }
 

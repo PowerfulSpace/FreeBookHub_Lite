@@ -11,7 +11,7 @@ SerilogBootstrapper.ConfigureSerilog();
 
 try
 {
-    Log.Information("Starting up...");
+    Log.Information("Starting up [CartService]...");
 
     var builder = WebApplication.CreateBuilder(args);
 
@@ -48,11 +48,11 @@ try
 }
 catch (Exception ex)
 {
-    Log.Fatal(ex, "Application terminated unexpectedly");
+    Log.Fatal(ex, "Application terminated unexpectedly [CartService]");
 }
 finally
 {
-    Log.Information("Shut down complete.");
+    Log.Information("Shut down complete.[CartService]");
     Log.CloseAndFlush();
 }
 

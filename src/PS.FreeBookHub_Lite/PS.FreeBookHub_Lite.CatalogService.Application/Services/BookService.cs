@@ -41,7 +41,6 @@ namespace PS.FreeBookHub_Lite.CatalogService.Application.Services
 
             if (book == null)
             {
-                _logger.LogWarning(LoggerMessages.GetBookByIdNotFound, id);
                 throw new BookNotFoundException(id);
             }
 
@@ -69,7 +68,6 @@ namespace PS.FreeBookHub_Lite.CatalogService.Application.Services
             var book = await _repository.GetByIdAsync(id, cancellationToken);
             if (book == null)
             {
-                _logger.LogWarning(LoggerMessages.DeleteBookNotFound, id);
                 throw new BookNotFoundException(id);
             }
 
@@ -88,7 +86,6 @@ namespace PS.FreeBookHub_Lite.CatalogService.Application.Services
 
             if (existing == null)
             {
-                _logger.LogWarning(LoggerMessages.UpdateBookNotFound, id);
                 throw new BookNotFoundException(id);
             }
 
@@ -108,7 +105,6 @@ namespace PS.FreeBookHub_Lite.CatalogService.Application.Services
 
             if (book == null)
             {
-                _logger.LogWarning(LoggerMessages.GetBookPriceNotFound, id);
                 throw new BookNotFoundException(id);
             }
 

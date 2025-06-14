@@ -1,4 +1,7 @@
-﻿namespace PS.FreeBookHub_Lite.CatalogService.API.Middleware
+﻿using PS.FreeBookHub_Lite.CatalogService.Common;
+using PS.FreeBookHub_Lite.CatalogService.Domain.Exceptions.Book;
+
+namespace PS.FreeBookHub_Lite.CatalogService.API.Middleware
 {
     public class ExceptionHandlingMiddleware
     {
@@ -19,24 +22,49 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Unhandled exception occurred");
-
-                context.Response.ContentType = "application/json";
-                context.Response.StatusCode = ex switch
+                switch (ex)
                 {
-                    KeyNotFoundException => StatusCodes.Status404NotFound,
-                    InvalidOperationException => StatusCodes.Status400BadRequest,
-                    _ => StatusCodes.Status500InternalServerError
-                };
+                    case BookNotFoundException bookEx:
+                        HandleBookNotFound(context, bookEx);
+                        break;
 
-                var response = new
+                    case BookAlreadyExistsException bookExistsEx:
+                        HandleBookAlreadyExists(context, bookExistsEx);
+                        break;
+
+                    default:
+                        HandleUnhandledException(context, ex);
+                        break;
+                }
+
+                if (!context.Response.HasStarted)
                 {
-                    status = context.Response.StatusCode,
-                    error = ex.Message
-                };
-
-                await context.Response.WriteAsJsonAsync(response);
+                    context.Response.ContentType = "application/json";
+                    await context.Response.WriteAsJsonAsync(new
+                    {
+                        status = context.Response.StatusCode,
+                        error = ex.Message
+                    });
+                }
             }
+        }
+
+        private void HandleBookNotFound(HttpContext context, BookNotFoundException ex)
+        {
+            _logger.LogWarning(LoggerMessages.GetBookByIdNotFound, ex.BookId, context.Request.Method, context.Request.Path);
+            context.Response.StatusCode = StatusCodes.Status404NotFound;
+        }
+
+        private void HandleBookAlreadyExists(HttpContext context, BookAlreadyExistsException ex)
+        {
+            _logger.LogWarning(LoggerMessages.CreateBookAlreadyExists, ex.Title, context.Request.Method, context.Request.Path);
+            context.Response.StatusCode = StatusCodes.Status409Conflict;
+        }
+
+        private void HandleUnhandledException(HttpContext context, Exception ex)
+        {
+            _logger.LogError(ex, LoggerMessages.UnhandledException, ex.Message, context.Request.Method, context.Request.Path);
+            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
         }
     }
 }

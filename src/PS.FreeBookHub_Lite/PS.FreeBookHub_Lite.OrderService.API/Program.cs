@@ -1,37 +1,59 @@
 using PS.FreeBookHub_Lite.OrderService.API;
+using PS.FreeBookHub_Lite.OrderService.API.Logging;
 using PS.FreeBookHub_Lite.OrderService.API.Middleware;
 using PS.FreeBookHub_Lite.OrderService.Application;
 using PS.FreeBookHub_Lite.OrderService.Infrastructure;
+using Serilog;
 
-var builder = WebApplication.CreateBuilder(args);
 
-builder.Services
-    .AddPresentation(builder.Configuration)
-    .AddInfrastructure(builder.Configuration)
-    .AddApplication();
+SerilogBootstrapper.ConfigureSerilog();
 
-var app = builder.Build();
+try
 {
-    if (app.Environment.IsDevelopment())
+    Log.Information("Starting up [OrderService]...");
+
+    var builder = WebApplication.CreateBuilder(args);
+
+    builder.Host.UseSerilog();
+
+    builder.Services
+        .AddPresentation(builder.Configuration)
+        .AddInfrastructure(builder.Configuration)
+        .AddApplication();
+
+    var app = builder.Build();
     {
-        app.UseSwagger();
-        app.UseSwaggerUI(options =>
+        if (app.Environment.IsDevelopment())
         {
-            options.SwaggerEndpoint("/swagger/v1/swagger.json", "FreeBookHub Order API v1");
-            options.RoutePrefix = string.Empty;
-        });
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "FreeBookHub Order API v1");
+                options.RoutePrefix = string.Empty;
+            });
+        }
+
+        app.UseMiddleware<ExceptionHandlingMiddleware>();
+
+        app.UseHttpsRedirection();
+
+        app.UseAuthentication();
+        app.UseAuthorization();
+
+        app.MapControllers();
+
+        app.Run();
     }
-
-    app.UseMiddleware<ExceptionHandlingMiddleware>();
-
-    app.UseHttpsRedirection();
-
-    app.UseAuthentication();
-    app.UseAuthorization();
-
-    app.MapControllers();
-
-    app.Run();
 }
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Application terminated unexpectedly [OrderService]");
+}
+finally
+{
+    Log.Information("Shut down complete.[OrderService]");
+    Log.CloseAndFlush();
+}
+
 
 

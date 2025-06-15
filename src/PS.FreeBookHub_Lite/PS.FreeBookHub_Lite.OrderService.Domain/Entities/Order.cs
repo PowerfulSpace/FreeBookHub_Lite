@@ -1,4 +1,5 @@
 ﻿using PS.FreeBookHub_Lite.OrderService.Domain.Enums;
+using PS.FreeBookHub_Lite.OrderService.Domain.Exceptions;
 
 namespace PS.FreeBookHub_Lite.OrderService.Domain.Entities
 {
@@ -34,7 +35,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Domain.Entities
         public void AddItem(Guid bookId, decimal price, int quantity)
         {
             if (quantity <= 0)
-                throw new ArgumentException("Quantity must be positive.");
+                throw new InvalidOrderQuantityException(quantity);
 
             var existingItem = _items.FirstOrDefault(item => item.BookId == bookId);
 
@@ -59,7 +60,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Domain.Entities
         public void Cancel()
         {
             if (Status == OrderStatus.Shipped || Status == OrderStatus.Delivered || Status == OrderStatus.Cancelled)
-                throw new InvalidOperationException("Cannot cancel shipped or delivered orders.");
+                throw new CannotCancelOrderException(Id, Status);
 
             Status = OrderStatus.Cancelled;
         }
@@ -67,7 +68,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Domain.Entities
         public void MarkAsPaid()
         {
             if (Status != OrderStatus.New)
-                throw new InvalidOperationException("Only new orders can be paid.");
+                throw new InvalidOrderPaymentStateException(Id, Status);
 
             Status = OrderStatus.Paid;
         }

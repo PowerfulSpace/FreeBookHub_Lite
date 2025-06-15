@@ -1,4 +1,6 @@
-﻿namespace PS.FreeBookHub_Lite.OrderService.Domain.Entities
+﻿using PS.FreeBookHub_Lite.OrderService.Domain.Exceptions;
+
+namespace PS.FreeBookHub_Lite.OrderService.Domain.Entities
 {
     public class OrderItem
     {
@@ -26,7 +28,7 @@
         public void UpdateQuantity(int newQuantity)
         {
             if (newQuantity <= 0)
-                throw new ArgumentException("Quantity must be positive.");
+                throw new InvalidOrderQuantityException(newQuantity);
 
             Quantity = newQuantity;
         }

@@ -1,4 +1,8 @@
-﻿namespace PS.FreeBookHub_Lite.OrderService.API.Middleware
+﻿using PS.FreeBookHub_Lite.OrderService.Common;
+using PS.FreeBookHub_Lite.OrderService.Domain.Exceptions.Order;
+using PS.FreeBookHub_Lite.OrderService.Domain.Exceptions.Payment;
+
+namespace PS.FreeBookHub_Lite.OrderService.API.Middleware
 {
     public class ExceptionHandlingMiddleware
     {
@@ -19,24 +23,87 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Unhandled exception occurred");
-
-                context.Response.ContentType = "application/json";
-                context.Response.StatusCode = ex switch
+                switch (ex)
                 {
-                    KeyNotFoundException => StatusCodes.Status404NotFound,
-                    InvalidOperationException => StatusCodes.Status400BadRequest,
-                    _ => StatusCodes.Status500InternalServerError
-                };
+                    case OrderNotFoundException orderEx:
+                        HandleOrderNotFound(context, orderEx);
+                        break;
 
-                var response = new
+                    case PaymentFailedException paymentEx:
+                        HandlePaymentFailed(context, paymentEx);
+                        break;
+
+                    case InvalidOrderOperationException invalidOpEx:
+                        HandleInvalidOperation(context, invalidOpEx);
+                        break;
+
+                    case CannotCancelOrderException cancelEx:
+                        HandleCannotCancelOrder(context, cancelEx);
+                        break;
+
+                    case InvalidOrderPaymentStateException paymentStateEx:
+                        HandleInvalidPaymentState(context, paymentStateEx);
+                        break;
+
+                    case InvalidOrderQuantityException quantityEx:
+                        HandleInvalidQuantity(context, quantityEx);
+                        break;
+
+                    default:
+                        HandleUnhandledException(context, ex);
+                        break;
+                }
+
+                if (!context.Response.HasStarted)
                 {
-                    status = context.Response.StatusCode,
-                    error = ex.Message
-                };
-
-                await context.Response.WriteAsJsonAsync(response);
+                    context.Response.ContentType = "application/json";
+                    await context.Response.WriteAsJsonAsync(new
+                    {
+                        status = context.Response.StatusCode,
+                        error = ex.Message
+                    });
+                }
             }
+        }
+        private void HandleOrderNotFound(HttpContext context, OrderNotFoundException ex)
+        {
+            _logger.LogWarning(LoggerMessages.OrderNotFound, ex.OrderId, context.Request.Method, context.Request.Path);
+            context.Response.StatusCode = StatusCodes.Status404NotFound;
+        }
+
+        private void HandlePaymentFailed(HttpContext context, PaymentFailedException ex)
+        {
+            _logger.LogError(LoggerMessages.PaymentFailedLog, ex.OrderId, context.Request.Method, context.Request.Path);
+            context.Response.StatusCode = StatusCodes.Status402PaymentRequired; // Или 400
+        }
+
+        private void HandleInvalidOperation(HttpContext context, InvalidOrderOperationException ex)
+        {
+            _logger.LogWarning(LoggerMessages.InvalidOrderOperation, ex.Message, context.Request.Method, context.Request.Path);
+            context.Response.StatusCode = StatusCodes.Status400BadRequest;
+        }
+
+        private void HandleCannotCancelOrder(HttpContext context, CannotCancelOrderException ex)
+        {
+            _logger.LogWarning(LoggerMessages.CannotCancelOrder, ex.OrderId, ex.CurrentStatus, context.Request.Method, context.Request.Path);
+            context.Response.StatusCode = StatusCodes.Status400BadRequest;
+        }
+
+        private void HandleInvalidPaymentState(HttpContext context, InvalidOrderPaymentStateException ex)
+        {
+            _logger.LogWarning(LoggerMessages.InvalidPaymentState, ex.OrderId, ex.CurrentStatus, context.Request.Method, context.Request.Path);
+            context.Response.StatusCode = StatusCodes.Status400BadRequest;
+        }
+
+        private void HandleInvalidQuantity(HttpContext context, InvalidOrderQuantityException ex)
+        {
+            _logger.LogWarning(LoggerMessages.InvalidQuantity, ex.ProvidedQuantity, context.Request.Method, context.Request.Path);
+            context.Response.StatusCode = StatusCodes.Status400BadRequest;
+        }
+        private void HandleUnhandledException(HttpContext context, Exception ex)
+        {
+            _logger.LogError(ex, LoggerMessages.UnhandledException, ex.Message, context.Request.Method, context.Request.Path);
+            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
         }
     }
 }

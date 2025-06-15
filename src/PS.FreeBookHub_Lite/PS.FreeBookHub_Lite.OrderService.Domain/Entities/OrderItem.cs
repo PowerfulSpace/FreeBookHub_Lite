@@ -1,4 +1,4 @@
-﻿using PS.FreeBookHub_Lite.OrderService.Domain.Exceptions;
+﻿using PS.FreeBookHub_Lite.OrderService.Domain.Exceptions.Order;
 
 namespace PS.FreeBookHub_Lite.OrderService.Domain.Entities
 {

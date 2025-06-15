@@ -26,7 +26,7 @@ namespace PS.FreeBookHub_Lite.CartService.Infrastructure.Clients
             response.EnsureSuccessStatusCode(); // Выбросит исключение при ошибке
 
             var order = await response.Content.ReadFromJsonAsync<OrderResponse>(cancellationToken);
-            _logger.LogInformation(LoggerMessages.CreateOrderSuccess, request.UserId, order.Id);
+            _logger.LogInformation(LoggerMessages.CreateOrderSuccess, request.UserId, order!.Id);
 
             return order;
         }

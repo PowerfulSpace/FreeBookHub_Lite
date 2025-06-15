@@ -1,4 +1,6 @@
-﻿namespace PS.FreeBookHub_Lite.CartService.Domain.Entities
+﻿using PS.FreeBookHub_Lite.CartService.Domain.Exceptions.Cart;
+
+namespace PS.FreeBookHub_Lite.CartService.Domain.Entities
 {
     public class Cart
     {
@@ -18,7 +20,7 @@
         public void AddItem(Guid bookId, int quantity, decimal unitPrice)
         {
             if (quantity <= 0)
-                throw new ArgumentException("Quantity must be greater than zero.");
+                throw new InvalidCartItemQuantityException(quantity);
 
             var existingItem = _items.FirstOrDefault(i => i.BookId == bookId);
             if (existingItem is not null)
@@ -39,6 +41,10 @@
         public void UpdateQuantity(Guid bookId, int quantity)
         {
             var item = _items.FirstOrDefault(i => i.BookId == bookId);
+
+            if (item is null)
+                throw new CartItemNotFoundException(UserId, bookId);
+
             item?.UpdateQuantity(quantity);
         }
 

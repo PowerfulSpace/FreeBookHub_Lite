@@ -1,4 +1,6 @@
-﻿namespace PS.FreeBookHub_Lite.CartService.Domain.Entities
+﻿using PS.FreeBookHub_Lite.CartService.Domain.Exceptions.Cart;
+
+namespace PS.FreeBookHub_Lite.CartService.Domain.Entities
 {
     public class CartItem
     {
@@ -24,7 +26,7 @@
         public void UpdateQuantity(int quantity)
         {
             if (quantity <= 0)
-                throw new ArgumentException("Quantity must be greater than zero.");
+                throw new InvalidCartItemQuantityException(quantity);
 
             Quantity = quantity;
         }

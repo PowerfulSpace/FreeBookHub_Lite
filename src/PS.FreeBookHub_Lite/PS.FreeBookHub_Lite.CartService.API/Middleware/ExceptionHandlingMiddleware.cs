@@ -36,6 +36,14 @@ namespace PS.FreeBookHub_Lite.CartService.API.Middleware
                         HandleEmptyCart(context, emptyEx);
                         break;
 
+                    case InvalidCartItemQuantityException invalidQuantityEx:
+                        HandleInvalidQuantity(context, invalidQuantityEx);
+                        break;
+
+                    case CartItemNotFoundException itemNotFoundEx:
+                        HandleCartItemNotFound(context, itemNotFoundEx);
+                        break;
+
                     default:
                         HandleUnhandledException(context, ex);
                         break;
@@ -69,6 +77,18 @@ namespace PS.FreeBookHub_Lite.CartService.API.Middleware
         {
             _logger.LogWarning(LoggerMessages.EmptyCart, ex.UserId, context.Request.Method, context.Request.Path);
             context.Response.StatusCode = StatusCodes.Status400BadRequest;
+        }
+
+        private void HandleInvalidQuantity(HttpContext context, InvalidCartItemQuantityException ex)
+        {
+            _logger.LogWarning(LoggerMessages.InvalidCartItemQuantity, ex.Quantity, context.Request.Method, context.Request.Path);
+            context.Response.StatusCode = StatusCodes.Status400BadRequest;
+        }
+
+        private void HandleCartItemNotFound(HttpContext context, CartItemNotFoundException ex)
+        {
+            _logger.LogWarning(LoggerMessages.CartItemNotFound, ex.UserId, ex.BookId, context.Request.Method, context.Request.Path);
+            context.Response.StatusCode = StatusCodes.Status404NotFound;
         }
 
         private void HandleUnhandledException(HttpContext context, Exception ex)

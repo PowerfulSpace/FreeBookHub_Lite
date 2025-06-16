@@ -1,4 +1,5 @@
 ﻿using PS.FreeBookHub_Lite.PaymentService.Domain.Enums;
+using PS.FreeBookHub_Lite.PaymentService.Domain.Exceptions.Payment;
 
 namespace PS.FreeBookHub_Lite.PaymentService.Domain.Entities
 {
@@ -31,7 +32,7 @@ namespace PS.FreeBookHub_Lite.PaymentService.Domain.Entities
         public void MarkAsCompleted()
         {
             if (Status != PaymentStatus.Pending)
-                throw new InvalidOperationException("Only pending payments can be completed.");
+                throw new InvalidPaymentStatusException(Status, PaymentStatus.Pending);
 
             Status = PaymentStatus.Completed;
         }
@@ -39,7 +40,7 @@ namespace PS.FreeBookHub_Lite.PaymentService.Domain.Entities
         public void MarkAsFailed()
         {
             if (Status != PaymentStatus.Pending)
-                throw new InvalidOperationException("Only pending payments can be marked as failed.");
+                throw new InvalidPaymentStatusException(Status, PaymentStatus.Pending);
 
             Status = PaymentStatus.Failed;
         }

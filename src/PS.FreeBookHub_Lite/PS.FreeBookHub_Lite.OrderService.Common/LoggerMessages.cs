@@ -7,6 +7,7 @@
         public const string OrderNotFound = "Order not found — OrderId: {OrderId} | Method: {Method} | Path: {Path}";
         public const string PaymentFailedLog = "Payment failed — OrderId: {OrderId} | Method: {Method} | Path: {Path}";
         public const string InvalidOrderOperation = "Invalid order operation — Message: {Message} | Method: {Method} | Path: {Path}";
+        public const string InvalidUserIdentifier = "Invalid user identifier — InvalidId: {InvalidId} | Method: {Method} | Path: {Path}";
 
         //                  --- General Error Handling
         public const string UnhandledException = "Unhandled exception — Message: {Message} | Method: {Method} | Path: {Path}";

@@ -1,6 +1,7 @@
 ﻿using PS.FreeBookHub_Lite.OrderService.Common;
 using PS.FreeBookHub_Lite.OrderService.Domain.Exceptions.Order;
 using PS.FreeBookHub_Lite.OrderService.Domain.Exceptions.Payment;
+using PS.FreeBookHub_Lite.OrderService.Domain.Exceptions.User;
 
 namespace PS.FreeBookHub_Lite.OrderService.API.Middleware
 {
@@ -47,6 +48,10 @@ namespace PS.FreeBookHub_Lite.OrderService.API.Middleware
 
                     case InvalidOrderQuantityException quantityEx:
                         HandleInvalidQuantity(context, quantityEx);
+                        break;
+
+                    case InvalidUserIdentifierException userEx:
+                        HandleInvalidUserIdentifier(context, userEx);
                         break;
 
                     default:
@@ -100,6 +105,14 @@ namespace PS.FreeBookHub_Lite.OrderService.API.Middleware
             _logger.LogWarning(LoggerMessages.InvalidQuantity, ex.ProvidedQuantity, context.Request.Method, context.Request.Path);
             context.Response.StatusCode = StatusCodes.Status400BadRequest;
         }
+
+        private void HandleInvalidUserIdentifier(HttpContext context, InvalidUserIdentifierException ex)
+        {
+            _logger.LogWarning(LoggerMessages.InvalidUserIdentifier,
+                ex.InvalidId, context.Request.Method, context.Request.Path);
+            context.Response.StatusCode = StatusCodes.Status401Unauthorized; // 401 - Unauthorized
+        }
+
         private void HandleUnhandledException(HttpContext context, Exception ex)
         {
             _logger.LogError(ex, LoggerMessages.UnhandledException, ex.Message, context.Request.Method, context.Request.Path);

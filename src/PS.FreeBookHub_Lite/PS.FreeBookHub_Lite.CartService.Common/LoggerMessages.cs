@@ -9,6 +9,7 @@
         public const string EmptyCart = "Empty cart | UserId: {UserId} | Method: {Method} | Path: {Path}";
         public const string InvalidCartItemQuantity = "Invalid quantity in cart item | Quantity: {Quantity} | Method: {Method} | Path: {Path}";
         public const string CartItemNotFound = "Cart item not found | UserId: {UserId}, BookId: {BookId} | Method: {Method} | Path: {Path}";
+        public const string InvalidUserIdentifier = "Invalid user identifier — InvalidId: {InvalidId} | Method: {Method} | Path: {Path}";
 
 
         //                  --- OrderServiceClient Errors

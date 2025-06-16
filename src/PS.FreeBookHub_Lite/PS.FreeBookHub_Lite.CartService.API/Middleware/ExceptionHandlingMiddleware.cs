@@ -1,5 +1,6 @@
 ﻿using PS.FreeBookHub_Lite.CartService.Common;
 using PS.FreeBookHub_Lite.CartService.Domain.Exceptions.Cart;
+using PS.FreeBookHub_Lite.CartService.Domain.Exceptions.User;
 
 namespace PS.FreeBookHub_Lite.CartService.API.Middleware
 {
@@ -42,6 +43,10 @@ namespace PS.FreeBookHub_Lite.CartService.API.Middleware
 
                     case CartItemNotFoundException itemNotFoundEx:
                         HandleCartItemNotFound(context, itemNotFoundEx);
+                        break;
+
+                    case InvalidUserIdentifierException userEx:
+                        HandleInvalidUserIdentifier(context, userEx);
                         break;
 
                     default:
@@ -91,6 +96,12 @@ namespace PS.FreeBookHub_Lite.CartService.API.Middleware
             context.Response.StatusCode = StatusCodes.Status404NotFound;
         }
 
+        private void HandleInvalidUserIdentifier(HttpContext context, InvalidUserIdentifierException ex)
+        {
+            _logger.LogWarning(LoggerMessages.InvalidUserIdentifier,
+                ex.InvalidId, context.Request.Method, context.Request.Path);
+            context.Response.StatusCode = StatusCodes.Status401Unauthorized; // 401 - Unauthorized
+        }
         private void HandleUnhandledException(HttpContext context, Exception ex)
         {
             _logger.LogError(ex, LoggerMessages.UnhandledException, ex.Message, context.Request.Method, context.Request.Path);

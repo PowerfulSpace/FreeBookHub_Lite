@@ -37,7 +37,7 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Controllers
         }
 
         [HttpPost("refresh")]
-        [AllowAnonymous]
+        [Authorize(Policy = "User")]
         [SwaggerOperation(Summary = "Обновление токена", Description = "Обновляет access token с помощью refresh token")]
         public async Task<IActionResult> Refresh([FromBody] RefreshTokenRequest request, CancellationToken ct)
         {

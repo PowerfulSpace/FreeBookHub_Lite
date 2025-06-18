@@ -13,27 +13,27 @@
 
         // BookService
         //                  --- GetAllBooksAsync
-        public const string GetAllBooksStarted = "Fetching all books";
-        public const string GetAllBooksSuccess = "Retrieved {Count} books";
+        public const string GetAllBooksStarted = "[BOOK] GET_ALL started";
+        public const string GetAllBooksSuccess = "[BOOK] GET_ALL success | Count:{Count}";
 
         //                  --- GetBookByIdAsync
-        public const string GetBookByIdStarted = "Fetching book by ID: {BookId}";
-        public const string GetBookByIdSuccess = "Book retrieved — ID: {BookId}";
+        public const string GetBookByIdStarted = "[BOOK] GET_BY_ID started | BookId:{BookId}";
+        public const string GetBookByIdSuccess = "[BOOK] GET_BY_ID success | BookId:{BookId}";
 
         //                  --- CreateBookAsync
-        public const string CreateBookStarted = "Creating book — Title: {Title}";
-        public const string CreateBookSuccess = "Book created — ID: {BookId}, Title: {Title}";
+        public const string CreateBookStarted = "[BOOK] CREATE started | Title:{Title}";
+        public const string CreateBookSuccess = "[BOOK] CREATE success | BookId:{BookId} | Title:{Title}";
 
         //                  --- DeleteBookAsync
-        public const string DeleteBookStarted = "Deleting book — ID: {BookId}";
-        public const string DeleteBookSuccess = "Book deleted — ID: {BookId}";
+        public const string DeleteBookStarted = "[BOOK] DELETE started | BookId:{BookId}";
+        public const string DeleteBookSuccess = "[BOOK] DELETE success | BookId:{BookId}";
 
         //                  --- UpdateBookAsync
-        public const string UpdateBookStarted = "Updating book — ID: {BookId}";
-        public const string UpdateBookSuccess = "Book updated — ID: {BookId}";
+        public const string UpdateBookStarted = "[BOOK] UPDATE started | BookId:{BookId}";
+        public const string UpdateBookSuccess = "[BOOK] UPDATE success | BookId:{BookId}";
 
         //                  --- GetBookPriceAsync
-        public const string GetBookPriceStarted = "Fetching price for book — ID: {BookId}";
-        public const string GetBookPriceSuccess = "Price retrieved — ID: {BookId}, Price: {Price}";
+        public const string GetBookPriceStarted = "[BOOK] GET_PRICE started | BookId:{BookId}";
+        public const string GetBookPriceSuccess = "[BOOK] GET_PRICE success | BookId:{BookId} | Price:{Price}";
     }
 }

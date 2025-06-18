@@ -28,24 +28,24 @@
 
         // AuthBookService
         //                  --- RegisterAsync
-        public const string RegistrationStarted = "Registration started — Email: {Email}";
-        public const string RegistrationSuccess = "Registration successful — Email: {Email}, UserId: {UserId}";
+        public const string RegistrationStarted = "[AUTH] REGISTER started | Email:{Email}";
+        public const string RegistrationSuccess = "[AUTH] REGISTER success | Email:{Email} | UserId:{UserId}";
 
         //                  --- LoginAsync
-        public const string LoginStarted = "Login started — Email: {Email}";
-        public const string LoginSuccess = "Login successful — Email: {Email}, UserId: {UserId}";
+        public const string LoginStarted = "[AUTH] LOGIN started | Email:{Email}";
+        public const string LoginSuccess = "[AUTH] LOGIN success | Email:{Email} | UserId:{UserId}";
 
         //                  --- RefreshTokenAsync
-        public const string RefreshStarted = "Refresh token process started — Token: {RefreshToken}";
-        public const string RefreshOldTokenRevoked = "Old refresh token revoked — Token: {RefreshToken}";
-        public const string RefreshNewTokenIssued = "New tokens issued — UserId: {UserId}";
+        public const string RefreshStarted = "[AUTH] REFRESH started | Token:{RefreshToken}";
+        public const string RefreshOldTokenRevoked = "[AUTH] REFRESH old_token_revoked | Token:{RefreshToken}";
+        public const string RefreshNewTokenIssued = "[AUTH] REFRESH new_tokens_issued | UserId:{UserId}";
 
         //                  --- LogoutCurrentSessionAsync
-        public const string LogoutSessionStarted = "User attempting to logout current session — RefreshToken: {RefreshToken}";
-        public const string LogoutTokenRevoked = "Logout successful: refresh token revoked — Token: {RefreshToken}";
+        public const string LogoutSessionStarted = "[AUTH] LOGOUT_SESSION started | Token:{RefreshToken}";
+        public const string LogoutTokenRevoked = "[AUTH] LOGOUT_SESSION success | Token:{RefreshToken}";
 
         //                  --- LogoutAllSessionsAsync
-        public const string LogoutAllSessionsStarted = "User {UserId} requested logout from all sessions";
-        public const string LogoutAllSessionsCompleted = "All refresh tokens revoked for user {UserId}";
+        public const string LogoutAllSessionsStarted = "[AUTH] LOGOUT_ALL started | UserId:{UserId}";
+        public const string LogoutAllSessionsCompleted = "[AUTH] LOGOUT_ALL success | UserId:{UserId}";
     }
 }

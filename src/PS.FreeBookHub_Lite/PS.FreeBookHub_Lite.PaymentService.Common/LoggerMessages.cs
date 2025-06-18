@@ -16,16 +16,16 @@
 
         // PaymentBookService
         //                  --- ProcessPaymentAsync
-        public const string ProcessPaymentStarted = "Processing payment — OrderId: {OrderId}, UserId: {UserId}";
-        public const string ProcessPaymentSuccess = "Payment processed — PaymentId: {PaymentId}, OrderId: {OrderId}";
+        public const string ProcessPaymentStarted = "[PAYMENT] PROCESS started | OrderId:{OrderId} | UserId:{UserId}";
+        public const string ProcessPaymentSuccess = "[PAYMENT] PROCESS success | PaymentId:{PaymentId} | OrderId:{OrderId}";
 
         //                  --- GetPaymentByIdAsync
-        public const string GetPaymentByIdStarted = "Fetching payment — PaymentId: {PaymentId}";
-        public const string GetPaymentByIdSuccess = "Payment retrieved — PaymentId: {PaymentId}";
+        public const string GetPaymentByIdStarted = "[PAYMENT] GET_BY_ID started | PaymentId:{PaymentId}";
+        public const string GetPaymentByIdSuccess = "[PAYMENT] GET_BY_ID success | PaymentId:{PaymentId}";
 
         //                  --- GetPaymentsByOrderIdAsync
-        public const string GetPaymentsByOrderStarted = "Fetching payments — OrderId: {OrderId}";
-        public const string GetPaymentsByOrderSuccess = "Payments retrieved — OrderId: {OrderId}, Count: {Count}";
+        public const string GetPaymentsByOrderStarted = "[PAYMENT] GET_BY_ORDER started | OrderId:{OrderId}";
+        public const string GetPaymentsByOrderSuccess = "[PAYMENT] GET_BY_ORDER success | OrderId:{OrderId} | Count:{Count}";
     }
 
 }

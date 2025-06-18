@@ -22,38 +22,37 @@
 
         // CartBookService
         //                  --- GetCartAsync
-        public const string GetCartStarted = "Cart retrieval started | UserId: {UserId}";
-        public const string GetCartSuccess = "Cart successfully retrieved | UserId: {UserId}";
+        public const string GetCartStarted = "[Cart] GET started | UserId:{UserId}";
+        public const string GetCartSuccess = "[Cart] GET success | UserId:{UserId}";
 
         //                  --- AddItemAsync
-        public const string AddItemStarted = "Adding item to cart | UserId: {UserId}, BookId: {BookId}, Quantity: {Quantity}";
-        public const string AddItemSuccess = "Item successfully added to cart | UserId: {UserId}, BookId: {BookId}";
-        public const string CartCreated = "New cart created | UserId: {UserId}";
+        public const string AddItemStarted = "[Cart] ADD started | UserId:{UserId} | BookId:{BookId} | Qty:{Quantity}";
+        public const string AddItemSuccess = "[Cart] ADD success | UserId:{UserId} | BookId:{BookId}";
+        public const string CartCreated = "[Cart] CREATED | UserId:{UserId}";
 
         //                  --- UpdateItemQuantityAsync
-        public const string UpdateQuantityStarted = "Updating item quantity | UserId: {UserId}, BookId: {BookId}, NewQuantity: {Quantity}";
-        public const string UpdateQuantitySuccess = "Item quantity updated | UserId: {UserId}, BookId: {BookId}";
+        public const string UpdateQuantityStarted = "[Cart] UPDATE started | UserId:{UserId} | BookId:{BookId} | Qty:{Quantity}";
+        public const string UpdateQuantitySuccess = "[Cart] UPDATE success | UserId:{UserId} | BookId:{BookId}";
 
         //                  --- RemoveItemAsync
-        public const string RemoveItemStarted = "Removing item from cart | UserId: {UserId}, BookId: {BookId}";
-        public const string RemoveItemSuccess = "Item removed from cart | UserId: {UserId}, BookId: {BookId}";
+        public const string RemoveItemStarted = "[Cart] REMOVE started | UserId:{UserId} | BookId:{BookId}";
+        public const string RemoveItemSuccess = "[Cart] REMOVE success | UserId:{UserId} | BookId:{BookId}";
 
         //                  --- ClearCartAsync
-        public const string ClearCartStarted = "Clearing cart | UserId: {UserId}";
-        public const string ClearCartSuccess = "Cart cleared | UserId: {UserId}";
+        public const string ClearCartStarted = "[Cart] CLEAR started | UserId:{UserId}";
+        public const string ClearCartSuccess = "[Cart] CLEAR success | UserId:{UserId}";
 
         //                  --- CheckoutAsync
-        public const string CheckoutStarted = "Checkout started | UserId: {UserId}";
-        public const string CheckoutSuccess = "Checkout successful | UserId: {UserId}, OrderId: {OrderId}";
-
+        public const string CheckoutStarted = "[Cart] CHECKOUT started | UserId:{UserId}";
+        public const string CheckoutSuccess = "[Cart] CHECKOUT success | UserId:{UserId} | OrderId:{OrderId}";
 
         // BookCatalogClient
-        public const string GetBookPriceStarted = "Getting book price | BookId: {BookId}";
-        public const string GetBookPriceSuccess = "Book price received | BookId: {BookId}";
+        public const string GetBookPriceStarted = "[Catalog] GET_PRICE started | BookId:{BookId}";
+        public const string GetBookPriceSuccess = "[Catalog] GET_PRICE success | BookId:{BookId}";
 
         // OrderServiceClient
-        public const string CreateOrderStarted = "Creating order | UserId: {UserId}";
-        public const string CreateOrderSuccess = "Order created | UserId: {UserId}, OrderId: {OrderId}";
-        
+        public const string CreateOrderStarted = "[Order] CREATE started | UserId:{UserId}";
+        public const string CreateOrderSuccess = "[Order] CREATE success | UserId:{UserId} | OrderId:{OrderId}";
+
     }
 }

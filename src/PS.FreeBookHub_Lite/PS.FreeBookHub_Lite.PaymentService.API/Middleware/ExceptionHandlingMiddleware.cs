@@ -1,4 +1,4 @@
-﻿using PS.FreeBookHub_Lite.PaymentService.Common;
+﻿using PS.FreeBookHub_Lite.PaymentService.Common.Logging;
 using PS.FreeBookHub_Lite.PaymentService.Domain.Exceptions.Payment;
 using PS.FreeBookHub_Lite.PaymentService.Domain.Exceptions.User;
 

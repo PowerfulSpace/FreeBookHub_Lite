@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using PS.FreeBookHub_Lite.PaymentService.Application.DTOs;
 using PS.FreeBookHub_Lite.PaymentService.Application.Interfaces;
 using PS.FreeBookHub_Lite.PaymentService.Application.Services.Interfaces;
-using PS.FreeBookHub_Lite.PaymentService.Common;
+using PS.FreeBookHub_Lite.PaymentService.Common.Logging;
 using PS.FreeBookHub_Lite.PaymentService.Domain.Entities;
 using PS.FreeBookHub_Lite.PaymentService.Domain.Enums;
 using PS.FreeBookHub_Lite.PaymentService.Domain.Exceptions.Payment;

@@ -1,4 +1,4 @@
-﻿namespace PS.FreeBookHub_Lite.PaymentService.Common
+﻿namespace PS.FreeBookHub_Lite.PaymentService.Common.Logging
 {
     public static class LoggerMessages
     {

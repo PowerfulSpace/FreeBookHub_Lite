@@ -1,4 +1,4 @@
-﻿using PS.FreeBookHub_Lite.OrderService.Common;
+﻿using PS.FreeBookHub_Lite.OrderService.Common.Logging;
 using PS.FreeBookHub_Lite.OrderService.Domain.Exceptions.Order;
 using PS.FreeBookHub_Lite.OrderService.Domain.Exceptions.Payment;
 using PS.FreeBookHub_Lite.OrderService.Domain.Exceptions.User;

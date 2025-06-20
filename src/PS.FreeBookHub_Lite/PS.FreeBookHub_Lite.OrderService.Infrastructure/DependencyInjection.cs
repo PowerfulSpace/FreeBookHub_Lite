@@ -4,8 +4,11 @@ using Microsoft.Extensions.DependencyInjection;
 using PS.FreeBookHub_Lite.OrderService.Application.Clients;
 using PS.FreeBookHub_Lite.OrderService.Application.Interfaces;
 using PS.FreeBookHub_Lite.OrderService.Application.Security;
+using PS.FreeBookHub_Lite.OrderService.Common.Events.Interfaces;
 using PS.FreeBookHub_Lite.OrderService.Infrastructure.Clients;
 using PS.FreeBookHub_Lite.OrderService.Infrastructure.Http.Handlers;
+using PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging;
+using PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers;
 using PS.FreeBookHub_Lite.OrderService.Infrastructure.Persistence;
 using PS.FreeBookHub_Lite.OrderService.Infrastructure.Persistence.Repositories;
 using PS.FreeBookHub_Lite.OrderService.Infrastructure.Security;
@@ -26,6 +29,10 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure
 
             services.AddTransient<AccessTokenHandler>();
             services.AddTransient<InternalAuthHandler>();
+
+            services.AddSingleton<IEventPublisher, RabbitMqEventPublisher>();
+
+            services.AddHostedService<PaymentCompletedConsumer>();
 
             return services;
         }

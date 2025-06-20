@@ -4,6 +4,8 @@ using PS.FreeBookHub_Lite.OrderService.Application.Clients;
 using PS.FreeBookHub_Lite.OrderService.Application.DTOs;
 using PS.FreeBookHub_Lite.OrderService.Application.Interfaces;
 using PS.FreeBookHub_Lite.OrderService.Application.Services.Interfaces;
+using PS.FreeBookHub_Lite.OrderService.Common.Events;
+using PS.FreeBookHub_Lite.OrderService.Common.Events.Interfaces;
 using PS.FreeBookHub_Lite.OrderService.Common.Logging;
 using PS.FreeBookHub_Lite.OrderService.Domain.Entities;
 using PS.FreeBookHub_Lite.OrderService.Domain.Exceptions.Order;
@@ -15,15 +17,18 @@ namespace PS.FreeBookHub_Lite.OrderService.Application.Services
         private readonly IOrderRepository _orderRepository;
         private readonly IPaymentServiceClient _paymentClient;
         private readonly ILogger<OrderBookService> _logger;
+        private readonly IEventPublisher _eventPublisher;
 
         public OrderBookService(
             IOrderRepository orderRepository,
             IPaymentServiceClient paymentClient,
-            ILogger<OrderBookService> logger)
+            ILogger<OrderBookService> logger,
+            IEventPublisher eventPublisher)
         {
             _orderRepository = orderRepository;
             _paymentClient = paymentClient;
             _logger = logger;
+            _eventPublisher = eventPublisher;
         }
 
         public async Task<OrderResponse> CreateOrderAsync(CreateOrderRequest request, CancellationToken cancellationToken)
@@ -39,17 +44,27 @@ namespace PS.FreeBookHub_Lite.OrderService.Application.Services
 
             await _orderRepository.AddAsync(order, cancellationToken);
 
-            var paymentRequest = new CreatePaymentRequest()
-            {
-                OrderId = order.Id,
-                UserId = order.UserId,
-                Amount = order.TotalPrice
-            };
+            //var paymentRequest = new CreatePaymentRequest()
+            //{
+            //    OrderId = order.Id,
+            //    UserId = order.UserId,
+            //    Amount = order.TotalPrice
+            //};
 
-            await _paymentClient.CreatePaymentAsync(paymentRequest, cancellationToken);
+            //await _paymentClient.CreatePaymentAsync(paymentRequest, cancellationToken);
 
-            order.MarkAsPaid();
-            await _orderRepository.UpdateAsync(order, cancellationToken);
+            var orderCreatedEvent = new OrderCreatedEvent(
+                OrderId: order.Id,
+                UserId: order.UserId,
+                Amount: order.TotalPrice,
+                CreatedAt: DateTime.UtcNow
+            );
+
+            await _eventPublisher.PublishAsync(orderCreatedEvent, routingKey: "order.created", cancellationToken);
+
+
+            //order.MarkAsPaid();
+            //await _orderRepository.UpdateAsync(order, cancellationToken);
 
             _logger.LogInformation(LoggerMessages.CreateOrderSuccess, order.Id, order.UserId);
 

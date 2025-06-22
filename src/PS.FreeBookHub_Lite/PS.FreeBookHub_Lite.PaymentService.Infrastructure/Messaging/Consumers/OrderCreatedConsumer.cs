@@ -29,6 +29,7 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
             _channel = _connection.CreateModel();
 
             _channel.QueueDeclare(queue: "order.created", durable: true, exclusive: false, autoDelete: false);
+            _channel.QueueBind(queue: "order.created", exchange: "bookhub.exchange", routingKey: "order.created");
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)

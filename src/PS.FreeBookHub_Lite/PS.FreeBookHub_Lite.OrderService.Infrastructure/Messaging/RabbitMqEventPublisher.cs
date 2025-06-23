@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging
 {
-    public class RabbitMqEventPublisher : IEventPublisher
+    public class RabbitMqEventPublisher : IEventPublisher, IDisposable
     {
         private readonly IConnection _connection;
         private readonly IModel _channel;
@@ -42,6 +42,12 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging
             );
 
             return Task.CompletedTask;
+        }
+
+        public void Dispose()
+        {
+            _channel?.Close();
+            _connection?.Close();
         }
     }
 }

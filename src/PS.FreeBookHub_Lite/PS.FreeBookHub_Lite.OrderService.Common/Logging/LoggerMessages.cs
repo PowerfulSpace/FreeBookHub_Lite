@@ -40,7 +40,8 @@
         public const string PaymentCreationSuccess = "[PAYMENT] CREATE success | OrderId:{OrderId}";
 
 
-        // PaymentCompletedConsumer
+        // RabbitMQ Consumer Logs
+        //                  --- OrderCreatedConsumer
         public const string PaymentConsumerStarted = "[RABBITMQ] PAYMENT_CONSUMER started listening queue: {Queue}";
         public const string PaymentConsumerStopped = "[RABBITMQ] PAYMENT_CONSUMER stopped listening queue: {Queue}";
         public const string PaymentMessageReceived = "[RABBITMQ] PAYMENT_MESSAGE received | OrderId:{OrderId} | PaymentId:{PaymentId}";
@@ -50,5 +51,10 @@
         public const string PaymentMessageProcessed = "[RABBITMQ] PAYMENT_MESSAGE processed | OrderId:{OrderId} | Duration:{ElapsedMs}ms";
         public const string PaymentMessageDeserializeError = "[RABBITMQ] PAYMENT_MESSAGE deserialize error | Body:{MessageBody}";
         public const string PaymentProcessingError = "[RABBITMQ] PAYMENT_PROCESSING error | OrderId:{OrderId} | Error:{ErrorMessage}";
+
+        //                  --- EventPublisher
+        public const string EventPublisherCreated = "[RABBITMQ] EVENT_PUBLISHER created | Exchange:{Exchange}";
+        public const string OrderEventPublished = "[RABBITMQ] ORDER_EVENT published | Type:{EventType} | RoutingKey:{RoutingKey}";
+        public const string OrderEventPublishError = "[RABBITMQ] ORDER_EVENT publish error | Type:{EventType} | Error:{ErrorMessage}";
     }
 }

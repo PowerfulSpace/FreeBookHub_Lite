@@ -15,7 +15,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging
 
         private const string ExchangeName = "bookhub.exchange";
 
-        public RabbitMqEventPublisher(Logger<RabbitMqEventPublisher> logger)
+        public RabbitMqEventPublisher(ILogger<RabbitMqEventPublisher> logger)
         {
             _logger = logger;
 

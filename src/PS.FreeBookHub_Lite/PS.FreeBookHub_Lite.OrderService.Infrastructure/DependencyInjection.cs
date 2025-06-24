@@ -21,7 +21,8 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure
         {
             services
                 .AddPersistance(configuration)
-                .AddHttpClients(configuration);
+                .AddHttpClients(configuration)
+                .AddRabbitMqIntegration();
 
             services.AddHttpContextAccessor();
 
@@ -29,10 +30,6 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure
 
             services.AddTransient<AccessTokenHandler>();
             services.AddTransient<InternalAuthHandler>();
-
-            services.AddSingleton<IEventPublisher, RabbitMqEventPublisher>();
-
-            services.AddHostedService<PaymentCompletedConsumer>();
 
             return services;
         }
@@ -55,6 +52,14 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure
             })
             .AddHttpMessageHandler<AccessTokenHandler>()
             .AddHttpMessageHandler<InternalAuthHandler>();
+
+            return services;
+        }
+
+        private static IServiceCollection AddRabbitMqIntegration(this IServiceCollection services)
+        {
+            services.AddSingleton<IEventPublisher, RabbitMqEventPublisher>();
+            services.AddHostedService<PaymentCompletedConsumer>();
 
             return services;
         }

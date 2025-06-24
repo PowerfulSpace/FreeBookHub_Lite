@@ -15,10 +15,8 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, ConfigurationManager configuration)
         {
             services
-                .AddPersistance(configuration);
-
-            services.AddSingleton<IEventPublisher, RabbitMqEventPublisher>();
-            services.AddHostedService<OrderCreatedConsumer>();
+                .AddPersistance(configuration)
+                .AddRabbitMqIntegration();
 
             return services;
         }
@@ -29,6 +27,14 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure
                 options.UseSqlServer(configuration.GetConnectionString("PaymentDb")));
 
             services.AddScoped<IPaymentRepository, PaymentRepository>();
+
+            return services;
+        }
+
+        private static IServiceCollection AddRabbitMqIntegration(this IServiceCollection services)
+        {
+            services.AddSingleton<IEventPublisher, RabbitMqEventPublisher>();
+            services.AddHostedService<OrderCreatedConsumer>();
 
             return services;
         }

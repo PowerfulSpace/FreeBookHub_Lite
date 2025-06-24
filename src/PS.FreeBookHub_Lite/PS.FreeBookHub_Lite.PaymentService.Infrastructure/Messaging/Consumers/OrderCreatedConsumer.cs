@@ -20,6 +20,8 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
         private readonly IModel _channel;
         private readonly IConnection _connection;
 
+        private const string ExchangeName = "bookhub.exchange";
+
         public OrderCreatedConsumer(ILogger<OrderCreatedConsumer> logger, IServiceScopeFactory scopeFactory)
         {
             _logger = logger;
@@ -28,6 +30,8 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
             var factory = new ConnectionFactory() { HostName = "localhost" }; // Или из конфига
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();
+
+            _channel.ExchangeDeclare(ExchangeName, ExchangeType.Topic, durable: true);
 
             _channel.QueueDeclare(queue: "order.created", durable: true, exclusive: false, autoDelete: false);
             _channel.QueueBind(queue: "order.created", exchange: "bookhub.exchange", routingKey: "order.created");

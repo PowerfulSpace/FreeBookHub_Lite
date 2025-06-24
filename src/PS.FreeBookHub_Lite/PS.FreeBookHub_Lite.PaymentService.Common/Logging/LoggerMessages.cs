@@ -26,6 +26,25 @@
         //                  --- GetPaymentsByOrderIdAsync
         public const string GetPaymentsByOrderStarted = "[PAYMENT] GET_BY_ORDER started | OrderId:{OrderId}";
         public const string GetPaymentsByOrderSuccess = "[PAYMENT] GET_BY_ORDER success | OrderId:{OrderId} | Count:{Count}";
+
+
+        // RabbitMQ Consumer Logs
+        //                  --- OrderCreatedConsumer
+        public const string OrderConsumerStarted = "[RABBITMQ] ORDER_CONSUMER started listening queue: {Queue}";
+        public const string OrderConsumerStopped = "[RABBITMQ] ORDER_CONSUMER stopped listening queue: {Queue}";
+        public const string OrderMessageReceived = "[RABBITMQ] ORDER_MESSAGE received | OrderId:{OrderId} | UserId:{UserId} | Amount:{Amount}";
+        public const string OrderProcessingStarted = "[RABBITMQ] ORDER_PROCESSING started | OrderId:{OrderId}";
+        public const string PaymentProcessingStarted = "[RABBITMQ] PAYMENT_PROCESSING started | OrderId:{OrderId}";
+        public const string PaymentProcessed = "[RABBITMQ] PAYMENT_PROCESSED | PaymentId:{PaymentId} | OrderId:{OrderId}";
+        public const string PaymentEventPublished = "[RABBITMQ] PAYMENT_EVENT published | OrderId:{OrderId} | PaymentId:{PaymentId}";
+        public const string OrderMessageProcessed = "[RABBITMQ] ORDER_MESSAGE processed | OrderId:{OrderId} | Duration:{ElapsedMs}ms";
+        public const string OrderMessageDeserializeError = "[RABBITMQ] ORDER_MESSAGE deserialize error | Body:{MessageBody}";
+        public const string OrderProcessingError = "[RABBITMQ] ORDER_PROCESSING error | OrderId:{OrderId} | Error:{ErrorMessage}";
+
+        //                  --- EventPublisher
+        public const string EventPublisherCreated = "[RABBITMQ] EVENT_PUBLISHER created | Exchange:{Exchange}";
+        public const string EventPublished = "[RABBITMQ] EVENT published | Type:{EventType} | RoutingKey:{RoutingKey}";
+        public const string EventPublishError = "[RABBITMQ] EVENT publish error | Type:{EventType} | Error:{ErrorMessage}";
     }
 
 }

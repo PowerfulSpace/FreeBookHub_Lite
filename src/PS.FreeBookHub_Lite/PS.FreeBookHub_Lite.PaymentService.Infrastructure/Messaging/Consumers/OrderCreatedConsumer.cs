@@ -5,6 +5,7 @@ using PS.FreeBookHub_Lite.PaymentService.Application.DTOs;
 using PS.FreeBookHub_Lite.PaymentService.Application.Services.Interfaces;
 using PS.FreeBookHub_Lite.PaymentService.Common.Events;
 using PS.FreeBookHub_Lite.PaymentService.Common.Events.Interfaces;
+using PS.FreeBookHub_Lite.PaymentService.Common.Logging;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
@@ -30,6 +31,8 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
 
             _channel.QueueDeclare(queue: "order.created", durable: true, exclusive: false, autoDelete: false);
             _channel.QueueBind(queue: "order.created", exchange: "bookhub.exchange", routingKey: "order.created");
+
+            _logger.LogInformation(LoggerMessages.OrderConsumerStarted, "order.created");
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -37,6 +40,9 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
             var consumer = new EventingBasicConsumer(_channel);
             consumer.Received += async (model, ea) =>
             {
+                var startTime = DateTime.UtcNow;
+                Guid? orderId = null;
+
                 try
                 {
                     var body = ea.Body.ToArray();
@@ -45,13 +51,22 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
                     var orderCreated = JsonSerializer.Deserialize<OrderCreatedEvent>(message);
 
                     if (orderCreated == null)
+                    {
+                        _logger.LogWarning(LoggerMessages.OrderMessageDeserializeError, message);
                         return;
+                    }
 
-                    _logger.LogInformation("Получено событие OrderCreated: OrderId={OrderId}", orderCreated.OrderId);
+                    orderId = orderCreated.OrderId;
+                    _logger.LogInformation(LoggerMessages.OrderMessageReceived, orderCreated.OrderId, orderCreated.UserId, orderCreated.Amount);
+
+
+                    _logger.LogInformation(LoggerMessages.OrderProcessingStarted, orderCreated.OrderId);
 
                     using var scope = _scopeFactory.CreateScope();
                     var paymentService = scope.ServiceProvider.GetRequiredService<IPaymentBookService>();
                     var publisher = scope.ServiceProvider.GetRequiredService<IEventPublisher>();
+
+                    _logger.LogInformation(LoggerMessages.PaymentProcessingStarted, orderCreated.OrderId);
 
                     var paymentResponse = await paymentService.ProcessPaymentAsync(new CreatePaymentRequest
                     {
@@ -59,6 +74,9 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
                         UserId = orderCreated.UserId,
                         Amount = orderCreated.Amount
                     }, stoppingToken);
+
+                    _logger.LogInformation(LoggerMessages.PaymentProcessed, paymentResponse.Id, paymentResponse.OrderId);
+
 
                     var paymentCompleted = new PaymentCompletedEvent(
                         OrderId: paymentResponse.OrderId,
@@ -68,11 +86,16 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
 
                     await publisher.PublishAsync(paymentCompleted, "payment.completed", stoppingToken);
 
-                    _logger.LogInformation("Платеж обработан и событие отправлено: PaymentId={PaymentId}", paymentResponse.Id);
+                    _logger.LogInformation(LoggerMessages.PaymentEventPublished, paymentResponse.OrderId, paymentResponse.Id);
+
+                    var elapsedMs = (DateTime.UtcNow - startTime).TotalMilliseconds;
+                    _logger.LogInformation(LoggerMessages.OrderMessageProcessed,
+                        orderCreated.OrderId, elapsedMs);
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Ошибка при обработке OrderCreatedEvent");
+                    _logger.LogError(ex, LoggerMessages.OrderProcessingError,
+                        orderId?.ToString() ?? "unknown", ex.Message);
                 }
             };
 
@@ -85,6 +108,7 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
             _channel.Close();
             _connection.Close();
             base.Dispose();
+            _logger.LogInformation(LoggerMessages.OrderConsumerStopped, "order.created");
         }
     }
 }

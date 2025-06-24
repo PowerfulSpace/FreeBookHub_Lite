@@ -38,5 +38,17 @@
         // PaymentServiceClient
         public const string PaymentCreationStarted = "[PAYMENT] CREATE started | OrderId:{OrderId}";
         public const string PaymentCreationSuccess = "[PAYMENT] CREATE success | OrderId:{OrderId}";
+
+
+        // PaymentCompletedConsumer
+        public const string PaymentConsumerStarted = "[RABBITMQ] PAYMENT_CONSUMER started listening queue: {Queue}";
+        public const string PaymentConsumerStopped = "[RABBITMQ] PAYMENT_CONSUMER stopped listening queue: {Queue}";
+        public const string PaymentMessageReceived = "[RABBITMQ] PAYMENT_MESSAGE received | OrderId:{OrderId} | PaymentId:{PaymentId}";
+        public const string PaymentMessageProcessing = "[RABBITMQ] PAYMENT_MESSAGE processing | OrderId:{OrderId}";
+        public const string PaymentOrderNotFound = "[RABBITMQ] PAYMENT_ORDER not found | OrderId:{OrderId}";
+        public const string PaymentOrderMarkedAsPaid = "[RABBITMQ] PAYMENT_ORDER marked as paid | OrderId:{OrderId}";
+        public const string PaymentMessageProcessed = "[RABBITMQ] PAYMENT_MESSAGE processed | OrderId:{OrderId} | Duration:{ElapsedMs}ms";
+        public const string PaymentMessageDeserializeError = "[RABBITMQ] PAYMENT_MESSAGE deserialize error | Body:{MessageBody}";
+        public const string PaymentProcessingError = "[RABBITMQ] PAYMENT_PROCESSING error | OrderId:{OrderId} | Error:{ErrorMessage}";
     }
 }

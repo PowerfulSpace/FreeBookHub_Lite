@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using PS.FreeBookHub_Lite.OrderService.Application.Interfaces;
 using PS.FreeBookHub_Lite.OrderService.Common.Events;
+using PS.FreeBookHub_Lite.OrderService.Common.Logging;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
@@ -28,6 +29,8 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
 
             _channel.QueueDeclare(queue: "payment.completed", durable: true, exclusive: false, autoDelete: false);
             _channel.QueueBind("payment.completed", "bookhub.exchange", "payment.completed");
+
+            _logger.LogInformation(LoggerMessages.PaymentConsumerStarted, "payment.completed");
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -35,6 +38,9 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
             var consumer = new EventingBasicConsumer(_channel);
             consumer.Received += async (model, ea) =>
             {
+                var startTime = DateTime.UtcNow;
+                Guid? orderId = null;
+
                 try
                 {
                     var body = ea.Body.ToArray();
@@ -42,28 +48,45 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
 
                     var paymentCompleted = JsonSerializer.Deserialize<PaymentCompletedEvent>(message);
                     if (paymentCompleted is null)
+                    {
+                        _logger.LogWarning(LoggerMessages.PaymentMessageDeserializeError, message);
                         return;
+                    }
 
-                    _logger.LogInformation("Получено событие PaymentCompleted: OrderId={OrderId}", paymentCompleted.OrderId);
+                    orderId = paymentCompleted.OrderId;
+                    _logger.LogInformation(LoggerMessages.PaymentMessageReceived, paymentCompleted.OrderId, paymentCompleted.PaymentId);
+
 
                     using var scope = _scopeFactory.CreateScope();
                     var orderRepository = scope.ServiceProvider.GetRequiredService<IOrderRepository>();
 
+                    _logger.LogInformation(LoggerMessages.PaymentMessageProcessing, paymentCompleted.OrderId);
+
                     var order = await orderRepository.GetByIdAsync(paymentCompleted.OrderId, stoppingToken);
                     if (order == null)
                     {
-                        _logger.LogWarning("Заказ не найден: {OrderId}", paymentCompleted.OrderId);
+                        _logger.LogWarning(LoggerMessages.PaymentOrderNotFound, paymentCompleted.OrderId);
                         return;
                     }
 
                     order.MarkAsPaid();
                     await orderRepository.UpdateAsync(order, stoppingToken);
 
-                    _logger.LogInformation("Заказ помечен как оплаченный: OrderId={OrderId}", order.Id);
+                    _logger.LogInformation(LoggerMessages.PaymentOrderMarkedAsPaid, order.Id);
+
+                    var elapsedMs = (DateTime.UtcNow - startTime).TotalMilliseconds;
+                    _logger.LogInformation(LoggerMessages.PaymentMessageProcessed, paymentCompleted.OrderId, elapsedMs);
+
+                }
+                catch (JsonException jsonEx)
+                {
+                    _logger.LogError(jsonEx, LoggerMessages.PaymentMessageDeserializeError,
+                        Encoding.UTF8.GetString(ea.Body.ToArray()));
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Ошибка при обработке PaymentCompletedEvent");
+                    _logger.LogError(ex, LoggerMessages.PaymentProcessingError,
+                        orderId?.ToString() ?? "unknown", ex.Message);
                 }
             };
 
@@ -76,6 +99,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
             _channel.Close();
             _connection.Close();
             base.Dispose();
+            _logger.LogInformation(LoggerMessages.PaymentConsumerStopped, "payment.completed");
         }
     }
 }

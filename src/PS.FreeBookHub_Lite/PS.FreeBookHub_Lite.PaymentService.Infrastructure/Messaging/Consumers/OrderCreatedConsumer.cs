@@ -1,8 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using PS.FreeBookHub_Lite.PaymentService.Application.DTOs;
 using PS.FreeBookHub_Lite.PaymentService.Application.Services.Interfaces;
+using PS.FreeBookHub_Lite.PaymentService.Common.Configuration;
 using PS.FreeBookHub_Lite.PaymentService.Common.Events;
 using PS.FreeBookHub_Lite.PaymentService.Common.Events.Interfaces;
 using PS.FreeBookHub_Lite.PaymentService.Common.Logging;
@@ -19,24 +21,28 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly IModel _channel;
         private readonly IConnection _connection;
+        private readonly RabbitMqConfig _config;
 
-        private const string ExchangeName = "bookhub.exchange";
 
-        public OrderCreatedConsumer(ILogger<OrderCreatedConsumer> logger, IServiceScopeFactory scopeFactory)
+        public OrderCreatedConsumer(
+            ILogger<OrderCreatedConsumer> logger,
+            IServiceScopeFactory scopeFactory,
+            IOptions<RabbitMqConfig> config)
         {
             _logger = logger;
             _scopeFactory = scopeFactory;
+            _config = config.Value;
 
-            var factory = new ConnectionFactory() { HostName = "localhost" }; // Или из конфига
+            var factory = new ConnectionFactory() { HostName = _config.HostName };
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();
 
-            _channel.ExchangeDeclare(ExchangeName, ExchangeType.Topic, durable: true);
+            _channel.ExchangeDeclare(exchange: _config.ExchangeName, ExchangeType.Topic, durable: true);
 
-            _channel.QueueDeclare(queue: "order.created", durable: true, exclusive: false, autoDelete: false);
-            _channel.QueueBind(queue: "order.created", exchange: "bookhub.exchange", routingKey: "order.created");
+            _channel.QueueDeclare(_config.OrderCreatedQueue, durable: true, exclusive: false, autoDelete: false);
+            _channel.QueueBind(queue: _config.OrderCreatedQueue, exchange: _config.ExchangeName, routingKey: _config.OrderCreatedRoutingKey);
 
-            _logger.LogInformation(LoggerMessages.OrderConsumerStarted, "order.created");
+            _logger.LogInformation(LoggerMessages.OrderConsumerStarted, _config.OrderCreatedQueue);
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -88,7 +94,7 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
                         CompletedAt: DateTime.UtcNow
                     );
 
-                    await publisher.PublishAsync(paymentCompleted, "payment.completed", stoppingToken);
+                    await publisher.PublishAsync(paymentCompleted, _config.PaymentCompletedRoutingKey, stoppingToken);
 
                     _logger.LogInformation(LoggerMessages.PaymentEventPublished, paymentResponse.OrderId, paymentResponse.Id);
 
@@ -103,7 +109,7 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
                 }
             };
 
-            _channel.BasicConsume(queue: "order.created", autoAck: true, consumer: consumer);
+            _channel.BasicConsume(queue: _config.OrderCreatedQueue, autoAck: true, consumer: consumer);
             return Task.CompletedTask;
         }
 
@@ -112,7 +118,7 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
             _channel.Close();
             _connection.Close();
             base.Dispose();
-            _logger.LogInformation(LoggerMessages.OrderConsumerStopped, "order.created");
+            _logger.LogInformation(LoggerMessages.OrderConsumerStopped, _config.OrderCreatedQueue);
         }
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PS.FreeBookHub_Lite.PaymentService.Application.Interfaces;
+using PS.FreeBookHub_Lite.PaymentService.Common.Configuration;
 using PS.FreeBookHub_Lite.PaymentService.Common.Events.Interfaces;
 using PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging;
 using PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers;
@@ -16,7 +17,7 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure
         {
             services
                 .AddPersistance(configuration)
-                .AddRabbitMqIntegration();
+                .AddRabbitMqIntegration(configuration);
 
             return services;
         }
@@ -31,8 +32,10 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure
             return services;
         }
 
-        private static IServiceCollection AddRabbitMqIntegration(this IServiceCollection services)
+        private static IServiceCollection AddRabbitMqIntegration(this IServiceCollection services, ConfigurationManager configuration)
         {
+            services.Configure<RabbitMqConfig>(configuration.GetSection("RabbitMQ"));
+
             services.AddSingleton<IEventPublisher, RabbitMqEventPublisher>();
             services.AddHostedService<OrderCreatedConsumer>();
 

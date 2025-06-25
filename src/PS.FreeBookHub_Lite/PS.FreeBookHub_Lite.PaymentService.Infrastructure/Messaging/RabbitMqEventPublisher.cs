@@ -4,6 +4,8 @@ using System.Text.Json;
 using System.Text;
 using Microsoft.Extensions.Logging;
 using PS.FreeBookHub_Lite.PaymentService.Common.Logging;
+using PS.FreeBookHub_Lite.PaymentService.Common.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging
 {
@@ -12,25 +14,26 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging
         private readonly ILogger<RabbitMqEventPublisher> _logger;
         private readonly IConnection _connection;
         private readonly IModel _channel;
+        private readonly RabbitMqConfig _config;
 
-        private const string ExchangeName = "bookhub.exchange";
 
-        public RabbitMqEventPublisher(ILogger<RabbitMqEventPublisher> logger)
+        public RabbitMqEventPublisher(ILogger<RabbitMqEventPublisher> logger, IOptions<RabbitMqConfig> config)
         {
             _logger = logger;
+            _config = config.Value;
 
             var factory = new ConnectionFactory
             {
-                HostName = "localhost",
+                HostName = _config.HostName,
                 DispatchConsumersAsync = true
             };
 
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();
 
-            _channel.ExchangeDeclare(ExchangeName, ExchangeType.Topic, durable: true);
+            _channel.ExchangeDeclare(_config.ExchangeName, ExchangeType.Topic, durable: true);
 
-            _logger.LogInformation(LoggerMessages.EventPublisherCreated, ExchangeName);
+            _logger.LogInformation(LoggerMessages.EventPublisherCreated, _config.ExchangeName);
         }
 
         public Task PublishAsync<TEvent>(TEvent @event, string routingKey, CancellationToken cancellationToken = default)
@@ -44,7 +47,7 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging
                 properties.Persistent = true;
 
                 _channel.BasicPublish(
-                    exchange: ExchangeName,
+                    exchange: _config.ExchangeName,
                     routingKey: routingKey,
                     basicProperties: properties,
                     body: body

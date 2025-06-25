@@ -1,5 +1,6 @@
 ﻿using Mapster;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using PS.FreeBookHub_Lite.OrderService.Application.Clients;
 using PS.FreeBookHub_Lite.OrderService.Application.DTOs;
 using PS.FreeBookHub_Lite.OrderService.Application.Interfaces;
@@ -7,6 +8,7 @@ using PS.FreeBookHub_Lite.OrderService.Application.Services.Interfaces;
 using PS.FreeBookHub_Lite.OrderService.Common.Events;
 using PS.FreeBookHub_Lite.OrderService.Common.Events.Interfaces;
 using PS.FreeBookHub_Lite.OrderService.Common.Logging;
+using PS.FreeBookHub_Lite.OrderService.Common.Options;
 using PS.FreeBookHub_Lite.OrderService.Domain.Entities;
 using PS.FreeBookHub_Lite.OrderService.Domain.Exceptions.Order;
 
@@ -18,17 +20,20 @@ namespace PS.FreeBookHub_Lite.OrderService.Application.Services
         private readonly IPaymentServiceClient _paymentClient;
         private readonly ILogger<OrderBookService> _logger;
         private readonly IEventPublisher _eventPublisher;
+        private readonly RabbitMqConfig _config;
 
         public OrderBookService(
             IOrderRepository orderRepository,
             IPaymentServiceClient paymentClient,
             ILogger<OrderBookService> logger,
-            IEventPublisher eventPublisher)
+            IEventPublisher eventPublisher,
+            IOptions<RabbitMqConfig> config)
         {
             _orderRepository = orderRepository;
             _paymentClient = paymentClient;
             _logger = logger;
             _eventPublisher = eventPublisher;
+            _config = config.Value;
         }
 
         public async Task<OrderResponse> CreateOrderAsync(CreateOrderRequest request, CancellationToken cancellationToken)
@@ -60,7 +65,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Application.Services
                 CreatedAt: DateTime.UtcNow
             );
 
-            await _eventPublisher.PublishAsync(orderCreatedEvent, routingKey: "order.created", cancellationToken);
+            await _eventPublisher.PublishAsync(orderCreatedEvent, routingKey: _config.OrderCreatedRoutingKey, cancellationToken);
 
 
             //order.MarkAsPaid();

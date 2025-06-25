@@ -5,6 +5,7 @@ using PS.FreeBookHub_Lite.OrderService.Application.Clients;
 using PS.FreeBookHub_Lite.OrderService.Application.Interfaces;
 using PS.FreeBookHub_Lite.OrderService.Application.Security;
 using PS.FreeBookHub_Lite.OrderService.Common.Events.Interfaces;
+using PS.FreeBookHub_Lite.OrderService.Common.Options;
 using PS.FreeBookHub_Lite.OrderService.Infrastructure.Clients;
 using PS.FreeBookHub_Lite.OrderService.Infrastructure.Http.Handlers;
 using PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging;
@@ -22,7 +23,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure
             services
                 .AddPersistance(configuration)
                 .AddHttpClients(configuration)
-                .AddRabbitMqIntegration();
+                .AddRabbitMqIntegration(configuration);
 
             services.AddHttpContextAccessor();
 
@@ -56,8 +57,10 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure
             return services;
         }
 
-        private static IServiceCollection AddRabbitMqIntegration(this IServiceCollection services)
+        private static IServiceCollection AddRabbitMqIntegration(this IServiceCollection services, ConfigurationManager configuration)
         {
+            services.Configure<RabbitMqConfig>(configuration.GetSection("RabbitMQ"));
+
             services.AddSingleton<IEventPublisher, RabbitMqEventPublisher>();
             services.AddHostedService<PaymentCompletedConsumer>();
 

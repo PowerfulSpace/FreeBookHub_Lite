@@ -1,9 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using PS.FreeBookHub_Lite.OrderService.Application.Interfaces;
 using PS.FreeBookHub_Lite.OrderService.Common.Events;
 using PS.FreeBookHub_Lite.OrderService.Common.Logging;
+using PS.FreeBookHub_Lite.OrderService.Common.Options;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
@@ -17,24 +19,27 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly IModel _channel;
         private readonly IConnection _connection;
+        private readonly RabbitMqConfig _config;
 
-        private const string ExchangeName = "bookhub.exchange";
-
-        public PaymentCompletedConsumer(ILogger<PaymentCompletedConsumer> logger, IServiceScopeFactory scopeFactory)
+        public PaymentCompletedConsumer(
+            ILogger<PaymentCompletedConsumer> logger,
+            IServiceScopeFactory scopeFactory,
+            IOptions<RabbitMqConfig> config)
         {
             _logger = logger;
             _scopeFactory = scopeFactory;
+            _config = config.Value;
 
-            var factory = new ConnectionFactory() { HostName = "localhost" }; // Или конфиг
+            var factory = new ConnectionFactory() { HostName = _config.HostName };
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();
 
-            _channel.ExchangeDeclare(ExchangeName, ExchangeType.Topic, durable: true);
+            _channel.ExchangeDeclare(_config.ExchangeName, ExchangeType.Topic, durable: true);
 
-            _channel.QueueDeclare(queue: "payment.completed", durable: true, exclusive: false, autoDelete: false);
-            _channel.QueueBind("payment.completed", "bookhub.exchange", "payment.completed");
+            _channel.QueueDeclare(queue: _config.PaymentCompletedQueue, durable: true, exclusive: false, autoDelete: false);
+            _channel.QueueBind(queue: _config.PaymentCompletedQueue, exchange: _config.ExchangeName, routingKey: _config.PaymentCompletedRoutingKey);
 
-            _logger.LogInformation(LoggerMessages.PaymentConsumerStarted, "payment.completed");
+            _logger.LogInformation(LoggerMessages.PaymentConsumerStarted, _config.PaymentCompletedQueue);
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -94,7 +99,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
                 }
             };
 
-            _channel.BasicConsume(queue: "payment.completed", autoAck: true, consumer: consumer);
+            _channel.BasicConsume(_config.PaymentCompletedQueue, autoAck: true, consumer: consumer);
             return Task.CompletedTask;
         }
 
@@ -103,7 +108,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
             _channel.Close();
             _connection.Close();
             base.Dispose();
-            _logger.LogInformation(LoggerMessages.PaymentConsumerStopped, "payment.completed");
+            _logger.LogInformation(LoggerMessages.PaymentConsumerStopped, _config.PaymentCompletedQueue);
         }
     }
 }

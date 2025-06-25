@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.Extensions.Logging;
 using PS.FreeBookHub_Lite.OrderService.Common.Logging;
 using Microsoft.Extensions.Options;
-using PS.FreeBookHub_Lite.OrderService.Common.Options;
+using PS.FreeBookHub_Lite.OrderService.Common.Configuration;
 
 namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging
 {

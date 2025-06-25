@@ -7,7 +7,7 @@ using PS.FreeBookHub_Lite.OrderService.Application.Mappings;
 using PS.FreeBookHub_Lite.OrderService.Application.Services;
 using PS.FreeBookHub_Lite.OrderService.Application.Services.Interfaces;
 using PS.FreeBookHub_Lite.OrderService.Application.Validators;
-using PS.FreeBookHub_Lite.OrderService.Common.Options;
+using PS.FreeBookHub_Lite.OrderService.Common.Configuration;
 
 namespace PS.FreeBookHub_Lite.OrderService.Application
 {

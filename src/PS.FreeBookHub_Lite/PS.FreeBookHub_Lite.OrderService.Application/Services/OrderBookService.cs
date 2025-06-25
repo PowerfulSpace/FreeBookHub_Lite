@@ -5,10 +5,10 @@ using PS.FreeBookHub_Lite.OrderService.Application.Clients;
 using PS.FreeBookHub_Lite.OrderService.Application.DTOs;
 using PS.FreeBookHub_Lite.OrderService.Application.Interfaces;
 using PS.FreeBookHub_Lite.OrderService.Application.Services.Interfaces;
+using PS.FreeBookHub_Lite.OrderService.Common.Configuration;
 using PS.FreeBookHub_Lite.OrderService.Common.Events;
 using PS.FreeBookHub_Lite.OrderService.Common.Events.Interfaces;
 using PS.FreeBookHub_Lite.OrderService.Common.Logging;
-using PS.FreeBookHub_Lite.OrderService.Common.Options;
 using PS.FreeBookHub_Lite.OrderService.Domain.Entities;
 using PS.FreeBookHub_Lite.OrderService.Domain.Exceptions.Order;
 

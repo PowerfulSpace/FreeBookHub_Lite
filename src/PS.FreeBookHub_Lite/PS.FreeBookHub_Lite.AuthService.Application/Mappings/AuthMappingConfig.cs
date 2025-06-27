@@ -1,4 +1,5 @@
 ﻿using Mapster;
+using PS.FreeBookHub_Lite.AuthService.Application.CQRS.Commands.Register;
 using PS.FreeBookHub_Lite.AuthService.Application.DTOs;
 using PS.FreeBookHub_Lite.AuthService.Domain.Entities;
 
@@ -10,6 +11,8 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.Mappings
         {
             config.NewConfig<User, UserDto>()
                 .Map(dest => dest.Role, src => src.Role.ToString());
+
+            config.NewConfig<RegisterUserRequest, RegisterCommand>();
         }
     }
 }

@@ -3,8 +3,6 @@ using FluentValidation.AspNetCore;
 using Mapster;
 using Microsoft.Extensions.DependencyInjection;
 using PS.FreeBookHub_Lite.AuthService.Application.Mappings;
-using PS.FreeBookHub_Lite.AuthService.Application.Services;
-using PS.FreeBookHub_Lite.AuthService.Application.Services.Interfaces;
 
 namespace PS.FreeBookHub_Lite.AuthService.Application
 {
@@ -13,19 +11,12 @@ namespace PS.FreeBookHub_Lite.AuthService.Application
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services
-               .AddApplicationServices()
                .AddApplicationMediatR()
                .AddApplicationValidation()
                .AddApplicationMapping();
 
             return services;
 
-        }
-
-        private static IServiceCollection AddApplicationServices(this IServiceCollection services)
-        {
-            services.AddScoped<IAuthBookService, AuthBookService>();
-            return services;
         }
 
         private static IServiceCollection AddApplicationMediatR(this IServiceCollection services)

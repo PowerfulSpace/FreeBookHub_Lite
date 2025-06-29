@@ -2,9 +2,9 @@
 
 namespace PS.FreeBookHub_Lite.AuthService.Application.CQRS.Commands.LogoutAll
 {
-    public class LogoutAllSessionsCommandValidator : AbstractValidator<LogoutAllSessionsCommand>
+    public class LogoutAllCommandValidator : AbstractValidator<LogoutAllCommand>
     {
-        public LogoutAllSessionsCommandValidator()
+        public LogoutAllCommandValidator()
         {
             RuleFor(x => x.UserId)
                 .NotEmpty().WithMessage("UserId is required.");

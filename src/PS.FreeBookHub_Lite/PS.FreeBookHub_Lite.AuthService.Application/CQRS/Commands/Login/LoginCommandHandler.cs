@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using PS.FreeBookHub_Lite.AuthService.Application.DTOs;
 using PS.FreeBookHub_Lite.AuthService.Application.Interfaces;
 using PS.FreeBookHub_Lite.AuthService.Application.Services.Interfaces;
+using PS.FreeBookHub_Lite.AuthService.Common.Logging;
 using PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.User;
 
 using RefreshTokenEntity = PS.FreeBookHub_Lite.AuthService.Domain.Entities.RefreshToken;
@@ -38,7 +39,7 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.CQRS.Commands.Login
 
         public async Task<AuthResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Login started for {Email}", request.Email);
+            _logger.LogInformation(LoggerMessages.LoginStarted, request.Email);
 
             var user = await _userRepository.GetByEmailAsync(request.Email, cancellationToken, asNoTracking: true);
             if (user is null)
@@ -69,7 +70,7 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.CQRS.Commands.Login
 
             await _refreshTokenRepository.AddAsync(refreshToken, cancellationToken);
 
-            _logger.LogInformation("Login successful for {Email} with UserId {UserId}", user.Email, user.Id);
+            _logger.LogInformation(LoggerMessages.LoginSuccess, user.Email, user.Id);
 
             return new AuthResponse
             {

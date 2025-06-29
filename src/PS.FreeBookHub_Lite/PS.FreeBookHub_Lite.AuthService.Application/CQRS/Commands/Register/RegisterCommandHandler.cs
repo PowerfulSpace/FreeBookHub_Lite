@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using PS.FreeBookHub_Lite.AuthService.Application.DTOs;
 using PS.FreeBookHub_Lite.AuthService.Application.Interfaces;
 using PS.FreeBookHub_Lite.AuthService.Application.Services.Interfaces;
+using PS.FreeBookHub_Lite.AuthService.Common.Logging;
 using PS.FreeBookHub_Lite.AuthService.Domain.Entities;
 using PS.FreeBookHub_Lite.AuthService.Domain.Enums;
 using PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.User;
@@ -39,7 +40,7 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.CQRS.Commands.Register
 
         public async Task<AuthResponse> Handle(RegisterCommand request, CancellationToken ct)
         {
-            _logger.LogInformation("Registration started for {Email}", request.Email);
+            _logger.LogInformation(LoggerMessages.RegistrationStarted, request.Email);
 
             // Проверка существования пользователя
             var existingUser = await _userRepository.GetByEmailAsync(request.Email, ct, asNoTracking: true);
@@ -74,7 +75,7 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.CQRS.Commands.Register
 
             await _refreshTokenRepository.AddAsync(refreshToken, ct);
 
-            _logger.LogInformation("Registration successful for {Email} with UserId {UserId}", request.Email, newUser.Id);
+            _logger.LogInformation(LoggerMessages.RegistrationSuccess, request.Email, newUser.Id);
 
             return new AuthResponse
             {

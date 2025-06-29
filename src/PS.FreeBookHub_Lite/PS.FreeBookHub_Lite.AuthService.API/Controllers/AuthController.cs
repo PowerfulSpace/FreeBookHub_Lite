@@ -1,7 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Mapster;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PS.FreeBookHub_Lite.AuthService.Application.CQRS.Commands.Login;
+using PS.FreeBookHub_Lite.AuthService.Application.CQRS.Commands.Logout;
+using PS.FreeBookHub_Lite.AuthService.Application.CQRS.Commands.LogoutAll;
+using PS.FreeBookHub_Lite.AuthService.Application.CQRS.Commands.RefreshToken;
+using PS.FreeBookHub_Lite.AuthService.Application.CQRS.Commands.Register;
 using PS.FreeBookHub_Lite.AuthService.Application.DTOs;
-using PS.FreeBookHub_Lite.AuthService.Application.Services.Interfaces;
 using PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.User;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -11,11 +17,11 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Controllers
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
-        private readonly IAuthBookService _authService;
+        private readonly IMediator _mediator;
 
-        public AuthController(IAuthBookService authService)
+        public AuthController(IMediator mediator)
         {
-            _authService = authService;
+            _mediator = mediator;
         }
 
         [HttpPost("register")]
@@ -23,7 +29,9 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Controllers
         [SwaggerOperation(Summary = "Регистрация нового пользователя", Description = "Создает новую учетную запись пользователя")]
         public async Task<IActionResult> Register([FromBody] RegisterUserRequest request, CancellationToken ct)
         {
-            var result = await _authService.RegisterAsync(request, ct);
+            var command = request.Adapt<RegisterCommand>();
+            var result = await _mediator.Send(command, ct);
+
             return Ok(result);
         }
 
@@ -32,7 +40,9 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Controllers
         [SwaggerOperation(Summary = "Аутентификация пользователя", Description = "Выполняет вход пользователя и возвращает токены доступа")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request, CancellationToken ct)
         {
-            var result = await _authService.LoginAsync(request, ct);
+            var command = request.Adapt<LoginCommand>();
+            var result = await _mediator.Send(command, ct);
+
             return Ok(result);
         }
 
@@ -43,7 +53,8 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Controllers
         {
             var userId = GetUserIdFromClaimsOrThrow();
 
-            var result = await _authService.RefreshTokenAsync(request, ct);
+            var command = request.Adapt<RefreshTokenCommand>();
+            var result = await _mediator.Send(command, ct);
 
             return Ok(result);
         }
@@ -55,7 +66,8 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Controllers
         {
             var userId = GetUserIdFromClaimsOrThrow();
 
-            await _authService.LogoutCurrentSessionAsync(request, ct);
+            var command = request.Adapt<LogoutCommand>();
+            await _mediator.Send(command, ct);
 
             return NoContent();
         }
@@ -67,7 +79,8 @@ namespace PS.FreeBookHub_Lite.AuthService.API.Controllers
         {
             var userId = GetUserIdFromClaimsOrThrow();
 
-            await _authService.LogoutAllSessionsAsync(userId, ct);
+            var command = new LogoutAllCommand() { UserId = userId };
+            await _mediator.Send(command, ct);
 
             return NoContent();
         }

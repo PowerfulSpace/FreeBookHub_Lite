@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using PS.FreeBookHub_Lite.AuthService.Application.DTOs;
 using PS.FreeBookHub_Lite.AuthService.Application.Interfaces;
 using PS.FreeBookHub_Lite.AuthService.Application.Services.Interfaces;
+using PS.FreeBookHub_Lite.AuthService.Common.Logging;
 using PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.Token;
 using PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.User;
 
@@ -36,7 +37,7 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.CQRS.Commands.RefreshToken
 
         public async Task<AuthResponse> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Refreshing token: {RefreshToken}", request.RefreshToken);
+            _logger.LogInformation(LoggerMessages.RefreshStarted, request.RefreshToken);
 
             var existingToken = await _refreshTokenRepository.GetByTokenAsync(request.RefreshToken, cancellationToken);
             if (existingToken is null || !existingToken.IsActive())
@@ -54,7 +55,7 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.CQRS.Commands.RefreshToken
             existingToken.Revoke();
             await _refreshTokenRepository.UpdateAsync(existingToken, cancellationToken);
 
-            _logger.LogInformation("Revoked old refresh token: {RefreshToken}", request.RefreshToken);
+            _logger.LogInformation(LoggerMessages.RefreshOldTokenRevoked, request.RefreshToken);
 
             // Generate new token
             var newRefreshTokenStr = _tokenService.GenerateRefreshToken();
@@ -71,7 +72,7 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.CQRS.Commands.RefreshToken
             var accessToken = _tokenService.GenerateAccessToken(user);
             int accessTokenExpiryMinutes = int.Parse(_configuration["Auth:JwtSettings:AccessTokenExpiryMinutes"] ?? "15");
 
-            _logger.LogInformation("Issued new refresh token for user {UserId}", user.Id);
+            _logger.LogInformation(LoggerMessages.RefreshNewTokenIssued, user.Id);
 
             return new AuthResponse
             {

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
 using PS.FreeBookHub_Lite.AuthService.Application.Interfaces;
+using PS.FreeBookHub_Lite.AuthService.Common.Logging;
 using PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.Token;
 
 namespace PS.FreeBookHub_Lite.AuthService.Application.CQRS.Commands.Logout
@@ -22,7 +23,7 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.CQRS.Commands.Logout
         {
             ArgumentNullException.ThrowIfNull(request);
 
-            _logger.LogInformation("Logout started for refresh token: {RefreshToken}", request.RefreshToken);
+            _logger.LogInformation(LoggerMessages.LogoutSessionStarted, request.RefreshToken);
 
             var token = await _refreshTokenRepository.GetByTokenAsync(request.RefreshToken, cancellationToken);
             if (token is null)
@@ -38,7 +39,7 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.CQRS.Commands.Logout
             token.Revoke();
             await _refreshTokenRepository.UpdateAsync(token, cancellationToken);
 
-            _logger.LogInformation("Refresh token revoked: {RefreshToken}", request.RefreshToken);
+            _logger.LogInformation(LoggerMessages.LogoutTokenRevoked, request.RefreshToken);
 
             return Unit.Value;
         }

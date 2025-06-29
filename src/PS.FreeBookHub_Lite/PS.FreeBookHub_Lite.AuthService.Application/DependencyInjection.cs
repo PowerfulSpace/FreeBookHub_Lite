@@ -22,7 +22,6 @@ namespace PS.FreeBookHub_Lite.AuthService.Application
 
         }
 
-
         private static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddScoped<IAuthBookService, AuthBookService>();

@@ -1,8 +1,15 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Mapster;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PS.FreeBookHub_Lite.CartService.Application.CQRS.Commands.AddItem;
+using PS.FreeBookHub_Lite.CartService.Application.CQRS.Commands.Checkout;
+using PS.FreeBookHub_Lite.CartService.Application.CQRS.Commands.ClearCart;
+using PS.FreeBookHub_Lite.CartService.Application.CQRS.Commands.RemoveItem;
+using PS.FreeBookHub_Lite.CartService.Application.CQRS.Commands.UpdateItemQuantity;
+using PS.FreeBookHub_Lite.CartService.Application.CQRS.Queries.GetCart;
 using PS.FreeBookHub_Lite.CartService.Application.DTOs.Cart;
 using PS.FreeBookHub_Lite.CartService.Application.DTOs.Order;
-using PS.FreeBookHub_Lite.CartService.Application.Services.Interfaces;
 using PS.FreeBookHub_Lite.CartService.Domain.Exceptions.User;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -13,20 +20,23 @@ namespace PS.FreeBookHub_Lite.CartService.API.Controllers
     [Route("api/[controller]")]
     public class CartController : ControllerBase
     {
-        private readonly ICartBookService _cartService;
+        private readonly IMediator _mediator;
 
-        public CartController(ICartBookService cartService)
+        public CartController(IMediator mediator)
         {
-            _cartService = cartService;
+            _mediator = mediator;
         }
 
-        
+
         [HttpGet("my")]
         [SwaggerOperation(Summary = "Получение своей корзины", Description = "Возвращает содержимое корзины текущего пользователя")]
         public async Task<IActionResult> Get(CancellationToken cancellationToken)
         {
             var userId = GetUserIdFromClaimsOrThrow();
-            var cart = await _cartService.GetCartAsync(userId, cancellationToken);
+
+            var query = new GetCartQuery(userId);
+            var cart = await _mediator.Send(query, cancellationToken);
+
             return Ok(cart);
         }
 
@@ -35,7 +45,12 @@ namespace PS.FreeBookHub_Lite.CartService.API.Controllers
         public async Task<IActionResult> AddBook([FromBody] AddItemRequest request, CancellationToken cancellationToken)
         {
             var userId = GetUserIdFromClaimsOrThrow();
-            await _cartService.AddItemAsync(userId, request, cancellationToken);
+
+            var command = request.BuildAdapter()
+                        .AddParameters("UserId", userId)
+                        .AdaptToType<AddItemCommand>();
+            await _mediator.Send(command, cancellationToken);
+
             return NoContent();
         }
 
@@ -44,7 +59,13 @@ namespace PS.FreeBookHub_Lite.CartService.API.Controllers
         public async Task<IActionResult> UpdateBookQuantity([FromBody] UpdateItemQuantityRequest request, CancellationToken cancellationToken)
         {
             var userId = GetUserIdFromClaimsOrThrow();
-            await _cartService.UpdateItemQuantityAsync(userId, request, cancellationToken);
+
+            var command = request.BuildAdapter()
+                       .AddParameters("UserId", userId)
+                       .AdaptToType<UpdateItemQuantityCommand>();
+
+            await _mediator.Send(command, cancellationToken);
+
             return NoContent();
         }
 
@@ -53,7 +74,10 @@ namespace PS.FreeBookHub_Lite.CartService.API.Controllers
         public async Task<IActionResult> RemoveBook(Guid bookId, CancellationToken cancellationToken)
         {
             var userId = GetUserIdFromClaimsOrThrow();
-            await _cartService.RemoveItemAsync(userId, bookId, cancellationToken);
+
+            var command = new RemoveItemCommand(userId, bookId);
+            await _mediator.Send(command, cancellationToken);
+
             return NoContent();
         }
 
@@ -62,7 +86,10 @@ namespace PS.FreeBookHub_Lite.CartService.API.Controllers
         public async Task<IActionResult> ClearCart(CancellationToken cancellationToken)
         {
             var userId = GetUserIdFromClaimsOrThrow();
-            await _cartService.ClearCartAsync(userId, cancellationToken);
+
+            var command = new ClearCartCommand(userId);
+            await _mediator.Send(command, cancellationToken);
+
             return NoContent();
         }
 
@@ -71,7 +98,13 @@ namespace PS.FreeBookHub_Lite.CartService.API.Controllers
         public async Task<IActionResult> Checkout([FromBody] CheckoutRequest request, CancellationToken cancellationToken)
         {
             var userId = GetUserIdFromClaimsOrThrow();
-            var order = await _cartService.CheckoutAsync(userId, request.ShippingAddress, cancellationToken);
+
+            var command = request.BuildAdapter()
+                      .AddParameters("UserId", userId)
+                      .AdaptToType<CheckoutCommand>();
+
+            var order = await _mediator.Send(command, cancellationToken);
+
             return Ok(order);
         }
 

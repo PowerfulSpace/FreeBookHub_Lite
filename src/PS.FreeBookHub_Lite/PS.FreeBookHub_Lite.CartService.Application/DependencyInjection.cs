@@ -3,9 +3,6 @@ using FluentValidation.AspNetCore;
 using Mapster;
 using Microsoft.Extensions.DependencyInjection;
 using PS.FreeBookHub_Lite.CartService.Application.Mappings;
-using PS.FreeBookHub_Lite.CartService.Application.Services;
-using PS.FreeBookHub_Lite.CartService.Application.Services.Interfaces;
-using PS.FreeBookHub_Lite.CartService.Application.Validators;
 
 namespace PS.FreeBookHub_Lite.CartService.Application
 {
@@ -13,21 +10,40 @@ namespace PS.FreeBookHub_Lite.CartService.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddScoped<ICartBookService, CartBookService>();
+            services
+                .AddApplicationMediatR()
+                .AddApplicationValidation()
+                .AddApplicationMapping();
 
-            services.AddValidatorsFromAssemblyContaining<AddItemRequestValidator>();
-            services.AddValidatorsFromAssemblyContaining<UpdateItemQuantityRequestValidator>();
+            return services;
+        }
 
-            //Отключает встроенную валидацию DataAnnotations
-            //Оставляет только FluentValidation (чтобы не было дублирования)
+
+        private static IServiceCollection AddApplicationMediatR(this IServiceCollection services)
+        {
+            services.AddMediatR(cfg =>
+            {
+                cfg.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly);
+            });
+
+            return services;
+        }
+
+        private static IServiceCollection AddApplicationValidation(this IServiceCollection services)
+        {
+            services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
+
             services.AddFluentValidationAutoValidation(options =>
             {
                 options.DisableDataAnnotationsValidation = true;
             });
 
-            // Регистрация всех маппингов, реализующих IRegister
-            TypeAdapterConfig.GlobalSettings.Scan(typeof(CartMappingConfig).Assembly);
+            return services;
+        }
 
+        private static IServiceCollection AddApplicationMapping(this IServiceCollection services)
+        {
+            TypeAdapterConfig.GlobalSettings.Scan(typeof(CartMappingConfig).Assembly);
             return services;
         }
     }

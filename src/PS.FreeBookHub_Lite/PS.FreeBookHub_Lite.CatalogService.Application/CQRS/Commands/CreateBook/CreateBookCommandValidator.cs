@@ -1,11 +1,10 @@
 ﻿using FluentValidation;
-using PS.FreeBookHub_Lite.CatalogService.Application.DTOs;
 
-namespace PS.FreeBookHub_Lite.CatalogService.Application.Validators
+namespace PS.FreeBookHub_Lite.CatalogService.Application.CQRS.Commands.CreateBook
 {
-    public class UpdateBookRequestValidator : AbstractValidator<UpdateBookRequest>
+    public class CreateBookCommandValidator : AbstractValidator<CreateBookCommand>
     {
-        public UpdateBookRequestValidator()
+        public CreateBookCommandValidator()
         {
             RuleFor(x => x.Title).NotEmpty().MaximumLength(200);
             RuleFor(x => x.Author).NotEmpty().MaximumLength(100);

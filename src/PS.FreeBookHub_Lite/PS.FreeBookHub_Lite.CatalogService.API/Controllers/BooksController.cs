@@ -1,7 +1,14 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Mapster;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PS.FreeBookHub_Lite.CatalogService.Application.CQRS.Commands.CreateBook;
+using PS.FreeBookHub_Lite.CatalogService.Application.CQRS.Commands.DeleteBook;
+using PS.FreeBookHub_Lite.CatalogService.Application.CQRS.Commands.UpdateBook;
+using PS.FreeBookHub_Lite.CatalogService.Application.CQRS.Queries.GetAllBooks;
+using PS.FreeBookHub_Lite.CatalogService.Application.CQRS.Queries.GetBookById;
+using PS.FreeBookHub_Lite.CatalogService.Application.CQRS.Queries.GetBookPrice;
 using PS.FreeBookHub_Lite.CatalogService.Application.DTOs;
-using PS.FreeBookHub_Lite.CatalogService.Application.Services.Interfaces;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace PS.FreeBookHub_Lite.CatalogService.API.Controllers
@@ -10,18 +17,21 @@ namespace PS.FreeBookHub_Lite.CatalogService.API.Controllers
     [Route("api/[controller]")]
     public class BooksController : ControllerBase
     {
-        private readonly IBookService _bookService;
+        private readonly IMediator _mediator;
 
-        public BooksController(IBookService bookService)
+        public BooksController(IMediator mediator)
         {
-            _bookService = bookService;
+            _mediator = mediator;
         }
+
 
         [HttpGet(Name = "GetBooksAll")]
         [SwaggerOperation(Summary = "Получение всех книг", Description = "Возвращает список всех доступных книг в каталоге")]
         public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
         {
-            var books = await _bookService.GetAllBooksAsync(cancellationToken);
+            var query = new GetAllBooksQuery();
+            var books = await _mediator.Send(query, cancellationToken);
+
             return Ok(books);
         }
 
@@ -29,8 +39,20 @@ namespace PS.FreeBookHub_Lite.CatalogService.API.Controllers
         [SwaggerOperation(Summary = "Получение книги по идентификатору", Description = "Возвращает детальную информацию о книге по её идентификатору")]
         public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
         {
-            var book = await _bookService.GetBookByIdAsync(id, cancellationToken);
+            var query = new GetBookByIdQuery(id);
+            var book = await _mediator.Send(query, cancellationToken);
+
             return book is not null ? Ok(book) : NotFound();
+        }
+
+        [HttpGet("{id:guid}/price")]
+        [SwaggerOperation(Summary = "Получение цены книги", Description = "Возвращает текущую цену указанной книги")]
+        public async Task<IActionResult> GetPrice(Guid id, CancellationToken cancellationToken)
+        {
+            var query = new GetBookPriceQuery(id);
+            var price = await _mediator.Send(query, cancellationToken);
+
+            return price.HasValue ? Ok(price.Value) : NotFound();
         }
 
         [Authorize(Policy = "Moderator")]
@@ -38,7 +60,9 @@ namespace PS.FreeBookHub_Lite.CatalogService.API.Controllers
         [SwaggerOperation(Summary = "Создание новой книги", Description = "Добавляет новую книгу в каталог")]
         public async Task<IActionResult> Create([FromBody] CreateBookRequest request, CancellationToken cancellationToken)
         {
-            var result = await _bookService.CreateBookAsync(request, cancellationToken);
+            var command = request.Adapt<CreateBookCommand>();
+            var result = await _mediator.Send(command, cancellationToken);
+
             return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
         }
 
@@ -47,7 +71,9 @@ namespace PS.FreeBookHub_Lite.CatalogService.API.Controllers
         [SwaggerOperation(Summary = "Обновление информации о книге", Description = "Обновляет информацию о существующей книге в каталоге")]
         public async Task<IActionResult> Update(Guid id, [FromBody] UpdateBookRequest request, CancellationToken cancellationToken)
         {
-            var updated = await _bookService.UpdateBookAsync(id, request, cancellationToken);
+            var command = request.Adapt<UpdateBookCommand>();
+            var updated = await _mediator.Send(command, cancellationToken);
+
             return updated ? NoContent() : NotFound();
         }
 
@@ -56,16 +82,10 @@ namespace PS.FreeBookHub_Lite.CatalogService.API.Controllers
         [SwaggerOperation(Summary = "Удаление книги", Description = "Удаляет книгу из каталога по её идентификатору")]
         public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
         {
-            var deleted = await _bookService.DeleteBookAsync(id, cancellationToken);
-            return deleted ? NoContent() : NotFound();
-        }
+            var command = new DeleteBookCommand() { Id = id};
+            var deleted = await _mediator.Send(command, cancellationToken);
 
-        [HttpGet("{id:guid}/price")]
-        [SwaggerOperation(Summary = "Получение цены книги", Description = "Возвращает текущую цену указанной книги")]
-        public async Task<IActionResult> GetPrice(Guid id, CancellationToken cancellationToken)
-        {
-            var price = await _bookService.GetBookPriceAsync(id, cancellationToken);
-            return price.HasValue ? Ok(price.Value) : NotFound();
+            return deleted ? NoContent() : NotFound();
         }
     }
 }

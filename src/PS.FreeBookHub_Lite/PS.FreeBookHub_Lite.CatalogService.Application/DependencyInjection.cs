@@ -3,9 +3,6 @@ using FluentValidation.AspNetCore;
 using Mapster;
 using Microsoft.Extensions.DependencyInjection;
 using PS.FreeBookHub_Lite.CatalogService.Application.Mapping;
-using PS.FreeBookHub_Lite.CatalogService.Application.Services;
-using PS.FreeBookHub_Lite.CatalogService.Application.Services.Interfaces;
-using PS.FreeBookHub_Lite.CatalogService.Application.Validators;
 
 namespace PS.FreeBookHub_Lite.CatalogService.Application
 {
@@ -13,10 +10,28 @@ namespace PS.FreeBookHub_Lite.CatalogService.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddScoped<IBookService, BookService>();
+            services
+                .AddApplicationMediatR()
+                .AddApplicationValidation()
+                .AddApplicationMapping();
 
-            services.AddValidatorsFromAssemblyContaining<CreateBookRequestValidator>();
-            services.AddValidatorsFromAssemblyContaining<UpdateBookRequestValidator>();
+            return services;
+        }
+
+
+        private static IServiceCollection AddApplicationMediatR(this IServiceCollection services)
+        {
+            services.AddMediatR(cfg =>
+            {
+                cfg.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly);
+            });
+
+            return services;
+        }
+
+        private static IServiceCollection AddApplicationValidation(this IServiceCollection services)
+        {
+            services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
 
             //Отключает встроенную валидацию DataAnnotations
             //Оставляет только FluentValidation (чтобы не было дублирования)
@@ -25,9 +40,12 @@ namespace PS.FreeBookHub_Lite.CatalogService.Application
                 options.DisableDataAnnotationsValidation = true;
             });
 
-            // Регистрация всех маппингов, реализующих IRegister
-            TypeAdapterConfig.GlobalSettings.Scan(typeof(BookMappingConfig).Assembly);
+            return services;
+        }
 
+        private static IServiceCollection AddApplicationMapping(this IServiceCollection services)
+        {
+            TypeAdapterConfig.GlobalSettings.Scan(typeof(BookMappingConfig).Assembly);
             return services;
         }
     }

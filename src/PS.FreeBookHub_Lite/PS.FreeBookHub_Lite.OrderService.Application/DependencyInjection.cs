@@ -6,7 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 using PS.FreeBookHub_Lite.OrderService.Application.Mappings;
 using PS.FreeBookHub_Lite.OrderService.Application.Services;
 using PS.FreeBookHub_Lite.OrderService.Application.Services.Interfaces;
-using PS.FreeBookHub_Lite.OrderService.Application.Validators;
 using PS.FreeBookHub_Lite.OrderService.Common.Configuration;
 
 namespace PS.FreeBookHub_Lite.OrderService.Application
@@ -15,20 +14,49 @@ namespace PS.FreeBookHub_Lite.OrderService.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services, ConfigurationManager configuration)
         {
-            services.Configure<RabbitMqConfig>(configuration.GetSection("RabbitMQ"));
+            services
+               .AddApplicationConfiguration(configuration)
+               .AddApplicationMediatR()
+               .AddApplicationValidation()
+               .AddApplicationMapping();
 
             services.AddScoped<IOrderBookService, OrderBookService>();
 
-            services.AddValidatorsFromAssemblyContaining<CreateOrderItemRequestValidator>();
-            services.AddValidatorsFromAssemblyContaining<CreateOrderRequestValidator>();
+            return services;
+        }
+
+        private static IServiceCollection AddApplicationConfiguration(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.Configure<RabbitMqConfig>(configuration.GetSection("RabbitMQ"));
+            return services;
+        }
+
+
+        private static IServiceCollection AddApplicationMediatR(this IServiceCollection services)
+        {
+            services.AddMediatR(cfg =>
+            {
+                cfg.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly);
+            });
+
+            return services;
+        }
+
+        private static IServiceCollection AddApplicationValidation(this IServiceCollection services)
+        {
+            services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
 
             services.AddFluentValidationAutoValidation(options =>
             {
                 options.DisableDataAnnotationsValidation = true;
             });
 
-            TypeAdapterConfig.GlobalSettings.Scan(typeof(OrderMappingConfig).Assembly);
+            return services;
+        }
 
+        private static IServiceCollection AddApplicationMapping(this IServiceCollection services)
+        {
+            TypeAdapterConfig.GlobalSettings.Scan(typeof(OrderMappingConfig).Assembly);
             return services;
         }
     }

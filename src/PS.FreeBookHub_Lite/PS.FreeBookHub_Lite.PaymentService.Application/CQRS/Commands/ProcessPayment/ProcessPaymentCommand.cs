@@ -5,10 +5,10 @@ namespace PS.FreeBookHub_Lite.PaymentService.Application.CQRS.Commands.ProcessPa
 {
     public class ProcessPaymentCommand : IRequest<PaymentResponse>
     {
-        public Guid OrderId { get; }
-        public Guid UserId { get; }
-        public decimal Amount { get; }
-        public string PaymentMethod { get; }
+        public Guid OrderId { get; set; }
+        public Guid UserId { get; set; }
+        public decimal Amount { get; set; }
+        public string PaymentMethod { get; set; }
 
         public ProcessPaymentCommand(Guid orderId, Guid userId, decimal amount, string paymentMethod)
         {

@@ -1,4 +1,5 @@
 ﻿using Mapster;
+using PS.FreeBookHub_Lite.PaymentService.Application.CQRS.Commands.ProcessPayment;
 using PS.FreeBookHub_Lite.PaymentService.Application.DTOs;
 using PS.FreeBookHub_Lite.PaymentService.Domain.Entities;
 
@@ -12,6 +13,9 @@ namespace PS.FreeBookHub_Lite.PaymentService.Application.Mappings
                 .Map(dest => dest.Status, src => src.Status.ToString());
 
             config.NewConfig<CreatePaymentRequest, Payment>();
+
+
+            config.NewConfig<CreatePaymentRequest, ProcessPaymentCommand>();
         }
     }
 }

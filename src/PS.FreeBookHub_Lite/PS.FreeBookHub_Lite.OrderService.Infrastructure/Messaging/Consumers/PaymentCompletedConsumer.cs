@@ -1,7 +1,9 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using PS.FreeBookHub_Lite.OrderService.Application.CQRS.Commands.MarkOrderAsPaid;
 using PS.FreeBookHub_Lite.OrderService.Application.Interfaces;
 using PS.FreeBookHub_Lite.OrderService.Common.Configuration;
 using PS.FreeBookHub_Lite.OrderService.Common.Events;
@@ -63,25 +65,28 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
                     }
 
                     orderId = paymentCompleted.OrderId;
-                    _logger.LogInformation(LoggerMessages.PaymentMessageReceived, paymentCompleted.OrderId, paymentCompleted.PaymentId);
 
+                    _logger.LogInformation(LoggerMessages.PaymentMessageReceived, paymentCompleted.OrderId, paymentCompleted.PaymentId);
 
                     using var scope = _scopeFactory.CreateScope();
                     var orderRepository = scope.ServiceProvider.GetRequiredService<IOrderRepository>();
 
-                    _logger.LogInformation(LoggerMessages.PaymentMessageProcessing, paymentCompleted.OrderId);
+                    //var order = await orderRepository.GetByIdAsync(paymentCompleted.OrderId, stoppingToken);
+                    //if (order == null)
+                    //{
+                    //    _logger.LogWarning(LoggerMessages.PaymentOrderNotFound, paymentCompleted.OrderId);
+                    //    return;
+                    //}
 
-                    var order = await orderRepository.GetByIdAsync(paymentCompleted.OrderId, stoppingToken);
-                    if (order == null)
-                    {
-                        _logger.LogWarning(LoggerMessages.PaymentOrderNotFound, paymentCompleted.OrderId);
-                        return;
-                    }
+                    //order.MarkAsPaid();
+                    //await orderRepository.UpdateAsync(order, stoppingToken);
 
-                    order.MarkAsPaid();
-                    await orderRepository.UpdateAsync(order, stoppingToken);
+                    //_logger.LogInformation(LoggerMessages.PaymentMessageProcessing, paymentCompleted.OrderId);
 
-                    _logger.LogInformation(LoggerMessages.PaymentOrderMarkedAsPaid, order.Id);
+                    var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+                    await mediator.Send(new MarkOrderAsPaidCommand(paymentCompleted.OrderId), stoppingToken);
+
+                    //_logger.LogInformation(LoggerMessages.PaymentOrderMarkedAsPaid, paymentCompleted.OrderId);
 
                     var elapsedMs = (DateTime.UtcNow - startTime).TotalMilliseconds;
                     _logger.LogInformation(LoggerMessages.PaymentMessageProcessed, paymentCompleted.OrderId, elapsedMs);

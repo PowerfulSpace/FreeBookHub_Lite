@@ -20,7 +20,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Application
                .AddApplicationValidation()
                .AddApplicationMapping();
 
-            services.AddScoped<IOrderBookService, OrderBookService>();
+            //services.AddScoped<IOrderBookService, OrderBookService>();
 
             return services;
         }

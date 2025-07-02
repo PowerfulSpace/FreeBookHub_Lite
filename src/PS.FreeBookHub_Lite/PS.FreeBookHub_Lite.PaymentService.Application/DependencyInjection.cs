@@ -17,7 +17,7 @@ namespace PS.FreeBookHub_Lite.PaymentService.Application
                 .AddApplicationValidation()
                 .AddApplicationMapping();
 
-            services.AddScoped<IPaymentBookService, PaymentBookService>();
+            //services.AddScoped<IPaymentBookService, PaymentBookService>();
 
             return services;
         }

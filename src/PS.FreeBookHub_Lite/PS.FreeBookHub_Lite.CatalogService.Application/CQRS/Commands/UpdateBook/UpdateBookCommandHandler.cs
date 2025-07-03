@@ -30,8 +30,8 @@ namespace PS.FreeBookHub_Lite.CatalogService.Application.CQRS.Commands.UpdateBoo
                 throw new BookNotFoundException(request.Id);
             }
 
-            request.Request.Adapt(existing);
-            await _repository.UpdateAsync(existing, cancellationToken);
+            var book = request.Adapt(existing);
+            await _repository.UpdateAsync(book, cancellationToken);
 
             _logger.LogInformation(LoggerMessages.UpdateBookSuccess, request.Id);
 

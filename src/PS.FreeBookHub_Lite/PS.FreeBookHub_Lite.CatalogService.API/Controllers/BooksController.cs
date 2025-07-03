@@ -72,6 +72,7 @@ namespace PS.FreeBookHub_Lite.CatalogService.API.Controllers
         public async Task<IActionResult> Update(Guid id, [FromBody] UpdateBookRequest request, CancellationToken cancellationToken)
         {
             var command = request.Adapt<UpdateBookCommand>();
+            command.Id = id;
             var updated = await _mediator.Send(command, cancellationToken);
 
             return updated ? NoContent() : NotFound();

@@ -86,8 +86,6 @@ namespace PS.FreeBookHub_Lite.OrderService.API.Controllers
             if (order.UserId != userId)
                 return Forbid();
 
-            //await _orderService.CancelOrderAsync(orderId, ct);
-
             var command = new CancelOrderCommand(orderId);
             await _mediator.Send(command, ct);
 

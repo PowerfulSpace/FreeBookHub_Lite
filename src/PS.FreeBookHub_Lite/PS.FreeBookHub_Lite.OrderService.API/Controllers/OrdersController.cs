@@ -77,8 +77,6 @@ namespace PS.FreeBookHub_Lite.OrderService.API.Controllers
         {
             var userId = GetUserIdFromClaimsOrThrow();
 
-            //var order = await _orderService.GetOrderByIdAsync(orderId, ct);
-
             var query = new GetOrderByIdQuery(orderId);
             var order = await _mediator.Send(query, ct);
 

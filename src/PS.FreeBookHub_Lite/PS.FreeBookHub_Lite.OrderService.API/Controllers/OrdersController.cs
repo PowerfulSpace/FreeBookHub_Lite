@@ -30,8 +30,6 @@ namespace PS.FreeBookHub_Lite.OrderService.API.Controllers
         public async Task<IActionResult> Create([FromBody] CreateOrderRequest request, CancellationToken ct)
         {
             var userId = GetUserIdFromClaimsOrThrow();
-            //request.UserId = userId;
-            //var order = await _orderService.CreateOrderAsync(request, ct);
 
             var command = request.Adapt<CreateOrderCommand>();
             command.UserId = userId;

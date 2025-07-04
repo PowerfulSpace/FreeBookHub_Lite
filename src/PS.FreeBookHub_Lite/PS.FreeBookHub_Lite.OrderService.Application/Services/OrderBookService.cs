@@ -49,15 +49,6 @@ namespace PS.FreeBookHub_Lite.OrderService.Application.Services
 
             await _orderRepository.AddAsync(order, cancellationToken);
 
-            //var paymentRequest = new CreatePaymentRequest()
-            //{
-            //    OrderId = order.Id,
-            //    UserId = order.UserId,
-            //    Amount = order.TotalPrice
-            //};
-
-            //await _paymentClient.CreatePaymentAsync(paymentRequest, cancellationToken);
-
             var orderCreatedEvent = new OrderCreatedEvent(
                 OrderId: order.Id,
                 UserId: order.UserId,
@@ -66,10 +57,6 @@ namespace PS.FreeBookHub_Lite.OrderService.Application.Services
             );
 
             await _eventPublisher.PublishAsync(orderCreatedEvent, routingKey: _config.OrderCreatedRoutingKey, cancellationToken);
-
-
-            //order.MarkAsPaid();
-            //await _orderRepository.UpdateAsync(order, cancellationToken);
 
             _logger.LogInformation(LoggerMessages.CreateOrderSuccess, order.Id, order.UserId);
 

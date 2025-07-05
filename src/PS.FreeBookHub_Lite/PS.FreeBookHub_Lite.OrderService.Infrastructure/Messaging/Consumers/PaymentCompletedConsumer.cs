@@ -4,7 +4,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PS.FreeBookHub_Lite.OrderService.Application.CQRS.Commands.MarkOrderAsPaid;
-using PS.FreeBookHub_Lite.OrderService.Application.Interfaces;
 using PS.FreeBookHub_Lite.OrderService.Common.Configuration;
 using PS.FreeBookHub_Lite.OrderService.Common.Events;
 using PS.FreeBookHub_Lite.OrderService.Common.Logging;
@@ -58,39 +57,39 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
                     var message = Encoding.UTF8.GetString(body);
 
                     var paymentCompleted = JsonSerializer.Deserialize<PaymentCompletedEvent>(message);
-                    if (paymentCompleted is null)
-                    {
-                        _logger.LogWarning(LoggerMessages.PaymentMessageDeserializeError, message);
-                        return;
-                    }
+                    if (paymentCompleted == null)
+                        throw new JsonException("Deserialization returned null");
 
                     orderId = paymentCompleted.OrderId;
 
                     _logger.LogInformation(LoggerMessages.PaymentMessageReceived, paymentCompleted.OrderId, paymentCompleted.PaymentId);
 
                     using var scope = _scopeFactory.CreateScope();
-                    var orderRepository = scope.ServiceProvider.GetRequiredService<IOrderRepository>();
-
                     var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
                     await mediator.Send(new MarkOrderAsPaidCommand(paymentCompleted.OrderId), stoppingToken);
 
                     var elapsedMs = (DateTime.UtcNow - startTime).TotalMilliseconds;
                     _logger.LogInformation(LoggerMessages.PaymentMessageProcessed, paymentCompleted.OrderId, elapsedMs);
 
+                    _channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
                 }
                 catch (JsonException jsonEx)
                 {
                     _logger.LogError(jsonEx, LoggerMessages.PaymentMessageDeserializeError,
                         Encoding.UTF8.GetString(ea.Body.ToArray()));
+
+                    _channel.BasicNack(deliveryTag: ea.DeliveryTag, multiple: false, requeue: false);
                 }
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, LoggerMessages.PaymentProcessingError,
                         orderId?.ToString() ?? "unknown", ex.Message);
+
+                    _channel.BasicNack(deliveryTag: ea.DeliveryTag, multiple: false, requeue: true);
                 }
             };
 
-            _channel.BasicConsume(_config.PaymentCompletedQueue, autoAck: true, consumer: consumer);
+            _channel.BasicConsume(_config.PaymentCompletedQueue, autoAck: false, consumer: consumer);
             return Task.CompletedTask;
         }
 

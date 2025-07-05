@@ -4,8 +4,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PS.FreeBookHub_Lite.PaymentService.Application.CQRS.Commands.ProcessPayment;
-using PS.FreeBookHub_Lite.PaymentService.Application.DTOs;
-using PS.FreeBookHub_Lite.PaymentService.Application.Services.Interfaces;
 using PS.FreeBookHub_Lite.PaymentService.Common.Configuration;
 using PS.FreeBookHub_Lite.PaymentService.Common.Events;
 using PS.FreeBookHub_Lite.PaymentService.Common.Events.Interfaces;
@@ -75,18 +73,11 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
                     _logger.LogInformation(LoggerMessages.OrderProcessingStarted, orderCreated.OrderId);
 
                     using var scope = _scopeFactory.CreateScope();
-                    //var paymentService = scope.ServiceProvider.GetRequiredService<IPaymentBookService>();
+
                     var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
                     var publisher = scope.ServiceProvider.GetRequiredService<IEventPublisher>();
 
                     _logger.LogInformation(LoggerMessages.PaymentProcessingStarted, orderCreated.OrderId);
-
-                    //var paymentResponse = await paymentService.ProcessPaymentAsync(new CreatePaymentRequest
-                    //{
-                    //    OrderId = orderCreated.OrderId,
-                    //    UserId = orderCreated.UserId,
-                    //    Amount = orderCreated.Amount
-                    //}, stoppingToken);
 
                     var command = new ProcessPaymentCommand(
                         orderCreated.OrderId,

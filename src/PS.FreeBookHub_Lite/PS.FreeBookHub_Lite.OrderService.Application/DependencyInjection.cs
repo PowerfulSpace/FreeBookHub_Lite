@@ -4,8 +4,6 @@ using Mapster;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PS.FreeBookHub_Lite.OrderService.Application.Mappings;
-using PS.FreeBookHub_Lite.OrderService.Application.Services;
-using PS.FreeBookHub_Lite.OrderService.Application.Services.Interfaces;
 using PS.FreeBookHub_Lite.OrderService.Common.Configuration;
 
 namespace PS.FreeBookHub_Lite.OrderService.Application
@@ -19,8 +17,6 @@ namespace PS.FreeBookHub_Lite.OrderService.Application
                .AddApplicationMediatR()
                .AddApplicationValidation()
                .AddApplicationMapping();
-
-            //services.AddScoped<IOrderBookService, OrderBookService>();
 
             return services;
         }

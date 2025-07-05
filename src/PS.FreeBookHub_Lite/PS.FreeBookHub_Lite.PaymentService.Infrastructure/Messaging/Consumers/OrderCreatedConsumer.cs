@@ -61,10 +61,7 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
                     var orderCreated = JsonSerializer.Deserialize<OrderCreatedEvent>(message);
 
                     if (orderCreated == null)
-                    {
-                        _logger.LogWarning(LoggerMessages.OrderMessageDeserializeError, message);
-                        return;
-                    }
+                        throw new JsonException("Deserialization returned null");
 
                     orderId = orderCreated.OrderId;
                     _logger.LogInformation(LoggerMessages.OrderMessageReceived, orderCreated.OrderId, orderCreated.UserId, orderCreated.Amount);
@@ -104,15 +101,26 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
                     var elapsedMs = (DateTime.UtcNow - startTime).TotalMilliseconds;
                     _logger.LogInformation(LoggerMessages.OrderMessageProcessed,
                         orderCreated.OrderId, elapsedMs);
+
+                    _channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
+                }
+                catch (JsonException jsonEx)
+                {
+                    _logger.LogError(jsonEx, LoggerMessages.OrderMessageDeserializeError,
+                        Encoding.UTF8.GetString(ea.Body.ToArray()));
+
+                    _channel.BasicNack(deliveryTag: ea.DeliveryTag, multiple: false, requeue: false);
                 }
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, LoggerMessages.OrderProcessingError,
                         orderId?.ToString() ?? "unknown", ex.Message);
+
+                    _channel.BasicNack(deliveryTag: ea.DeliveryTag, multiple: false, requeue: true);
                 }
             };
 
-            _channel.BasicConsume(queue: _config.OrderCreatedQueue, autoAck: true, consumer: consumer);
+            _channel.BasicConsume(queue: _config.OrderCreatedQueue, autoAck: false, consumer: consumer);
             return Task.CompletedTask;
         }
 

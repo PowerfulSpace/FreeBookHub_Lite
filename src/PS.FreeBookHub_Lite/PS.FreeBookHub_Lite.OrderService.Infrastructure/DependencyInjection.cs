@@ -63,6 +63,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure
 
             services.AddSingleton<IEventPublisher, RabbitMqEventPublisher>();
             services.AddHostedService<PaymentCompletedConsumer>();
+            services.AddHostedService<PaymentCompletedDlqConsumer>();
 
             return services;
         }

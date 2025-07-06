@@ -31,14 +31,11 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
             _scopeFactory = scopeFactory;
             _config = config.Value;
 
-            var factory = new ConnectionFactory() { HostName = _config.HostName };
-            _connection = factory.CreateConnection();
-            _channel = _connection.CreateModel();
-
-            _channel.ExchangeDeclare(_config.ExchangeName, ExchangeType.Topic, durable: true);
-
-            _channel.QueueDeclare(queue: _config.PaymentCompletedQueue, durable: true, exclusive: false, autoDelete: false);
-            _channel.QueueBind(queue: _config.PaymentCompletedQueue, exchange: _config.ExchangeName, routingKey: _config.PaymentCompletedRoutingKey);
+            _connection = CreateConnection();
+            _channel = CreateChannel(_connection);
+            DeclareExchanges();
+            DeclareQueue();
+            BindQueue();
 
             _logger.LogInformation(LoggerMessages.PaymentConsumerStarted, _config.PaymentCompletedQueue);
         }
@@ -100,5 +97,56 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
             base.Dispose();
             _logger.LogInformation(LoggerMessages.PaymentConsumerStopped, _config.PaymentCompletedQueue);
         }
+
+
+
+        private IConnection CreateConnection()
+        {
+            var factory = new ConnectionFactory() { HostName = _config.HostName };
+            return factory.CreateConnection();
+        }
+
+        private IModel CreateChannel(IConnection connection)
+        {
+            return connection.CreateModel();
+        }
+
+        private void DeclareExchanges()
+        {
+            _channel.ExchangeDeclare(
+                _config.ExchangeName,
+                ExchangeType.Topic,
+                durable: true);
+
+            _channel.ExchangeDeclare(
+                _config.PaymentCompletedDeadLetterExchange,
+                ExchangeType.Topic,
+                durable: true);
+        }
+
+        private void DeclareQueue()
+        {
+            var queueArgs = new Dictionary<string, object>
+            {
+                { "x-dead-letter-exchange", _config.PaymentCompletedDeadLetterExchange },
+                { "x-dead-letter-routing-key", _config.PaymentCompletedDeadLetterRoutingKey }
+            };
+
+            _channel.QueueDeclare(
+                queue: _config.PaymentCompletedQueue,
+                durable: true,
+                exclusive: false,
+                autoDelete: false,
+                arguments: queueArgs);
+        }
+
+        private void BindQueue()
+        {
+            _channel.QueueBind(
+                queue: _config.PaymentCompletedQueue,
+                exchange: _config.ExchangeName,
+                routingKey: _config.PaymentCompletedRoutingKey);
+        }
+
     }
 }

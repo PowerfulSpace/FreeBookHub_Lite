@@ -7,5 +7,9 @@
         public string PaymentCompletedQueue { get; set; } = "payment.completed";
         public string PaymentCompletedRoutingKey { get; set; } = "payment.completed";
         public string OrderCreatedRoutingKey { get; set; } = "order.created";
+
+        public string PaymentCompletedDeadLetterExchange { get; set; } = "bookhub.exchange.dlx";
+        public string PaymentCompletedDeadLetterQueue { get; set; } = "payment.completed.dlq";
+        public string PaymentCompletedDeadLetterRoutingKey { get; set; } = "payment.completed.dlq";
     }
 }

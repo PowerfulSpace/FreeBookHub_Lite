@@ -33,37 +33,11 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
             _scopeFactory = scopeFactory;
             _config = config.Value;
 
-            var factory = new ConnectionFactory() { HostName = _config.HostName };
-            _connection = factory.CreateConnection();
-            _channel = _connection.CreateModel();
-
-            _channel.ExchangeDeclare(
-                exchange: _config.ExchangeName,
-                ExchangeType.Topic,
-                durable: true);
-
-            _channel.ExchangeDeclare(
-               _config.OrderCreatedDeadLetterExchange,
-               ExchangeType.Topic,
-               durable: true);
-
-            var queueArgs = new Dictionary<string, object>
-            {
-                { "x-dead-letter-exchange", _config.OrderCreatedDeadLetterExchange },
-                { "x-dead-letter-routing-key", _config.OrderCreatedDeadLetterRoutingKey }
-            };
-
-            _channel.QueueDeclare(
-                _config.OrderCreatedQueue,
-                durable: true,
-                exclusive: false,
-                autoDelete: false,
-                arguments: queueArgs);
-
-            _channel.QueueBind(
-                queue: _config.OrderCreatedQueue,
-                exchange: _config.ExchangeName,
-                routingKey: _config.OrderCreatedRoutingKey);
+            _connection = CreateConnection();
+            _channel = CreateChannel(_connection);
+            DeclareExchanges();
+            DeclareQueue();
+            BindQueue();
 
             _logger.LogInformation(LoggerMessages.OrderConsumerStarted, _config.OrderCreatedQueue);
         }
@@ -153,6 +127,57 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
             _connection.Close();
             base.Dispose();
             _logger.LogInformation(LoggerMessages.OrderConsumerStopped, _config.OrderCreatedQueue);
+        }
+
+        private IConnection CreateConnection()
+        {
+            var factory = new ConnectionFactory
+            {
+                HostName = _config.HostName
+            };
+            return factory.CreateConnection();
+        }
+
+        private IModel CreateChannel(IConnection connection)
+        {
+            return connection.CreateModel();
+        }
+
+        private void DeclareExchanges()
+        {
+            _channel.ExchangeDeclare(
+                _config.ExchangeName,
+                ExchangeType.Topic,
+                durable: true);
+
+            _channel.ExchangeDeclare(
+               _config.OrderCreatedDeadLetterExchange,
+               ExchangeType.Topic,
+               durable: true);
+        }
+
+        private void DeclareQueue()
+        {
+            var queueArgs = new Dictionary<string, object>
+            {
+                { "x-dead-letter-exchange", _config.OrderCreatedDeadLetterExchange },
+                { "x-dead-letter-routing-key", _config.OrderCreatedDeadLetterRoutingKey }
+            };
+
+            _channel.QueueDeclare(
+                _config.OrderCreatedQueue,
+                durable: true,
+                exclusive: false,
+                autoDelete: false,
+                arguments: queueArgs);
+        }
+
+        private void BindQueue()
+        {
+            _channel.QueueBind(
+                queue: _config.OrderCreatedQueue,
+                exchange: _config.ExchangeName,
+                routingKey: _config.OrderCreatedRoutingKey);
         }
     }
 }

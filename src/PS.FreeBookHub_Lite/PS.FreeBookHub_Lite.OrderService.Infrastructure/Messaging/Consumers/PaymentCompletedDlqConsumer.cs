@@ -26,25 +26,11 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
             _scopeFactory = scopeFactory;
             _config = config.Value;
 
-            var factory = new ConnectionFactory() { HostName = _config.HostName };
-            _connection = factory.CreateConnection();
-            _channel = _connection.CreateModel();
-
-            _channel.ExchangeDeclare(
-                _config.PaymentCompletedDeadLetterExchange,
-                ExchangeType.Topic,
-                durable: true);
-
-            _channel.QueueDeclare(
-                queue: _config.PaymentCompletedDeadLetterQueue,
-                durable: true,
-                exclusive: false,
-                autoDelete: false);
-
-            _channel.QueueBind(
-                queue: _config.PaymentCompletedDeadLetterQueue,
-                exchange: _config.PaymentCompletedDeadLetterExchange,
-                routingKey: _config.PaymentCompletedDeadLetterRoutingKey);
+            _connection = CreateConnection();
+            _channel = CreateChannel(_connection);
+            DeclareExchange();
+            DeclareQueue();
+            BindQueue();
 
             _logger.LogInformation("DLQ Consumer initialized for queue: {Queue}", _config.PaymentCompletedDeadLetterQueue);
         }
@@ -84,6 +70,45 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
             _connection.Close();
             base.Dispose();
             _logger.LogInformation("DLQ Consumer stopped for queue: {Queue}", _config.PaymentCompletedDeadLetterQueue);
+        }
+
+        private IConnection CreateConnection()
+        {
+            var factory = new ConnectionFactory()
+            {
+                HostName = _config.HostName
+            };
+            return factory.CreateConnection();
+        }
+
+        private IModel CreateChannel(IConnection connection)
+        {
+            return connection.CreateModel();
+        }
+
+        private void DeclareExchange()
+        {
+            _channel.ExchangeDeclare(
+                _config.PaymentCompletedDeadLetterExchange,
+                ExchangeType.Topic,
+                durable: true);
+        }
+
+        private void DeclareQueue()
+        {
+            _channel.QueueDeclare(
+                queue: _config.PaymentCompletedDeadLetterQueue,
+                durable: true,
+                exclusive: false,
+                autoDelete: false);
+        }
+
+        private void BindQueue()
+        {
+            _channel.QueueBind(
+                queue: _config.PaymentCompletedDeadLetterQueue,
+                exchange: _config.PaymentCompletedDeadLetterExchange,
+                routingKey: _config.PaymentCompletedDeadLetterRoutingKey);
         }
     }
 }

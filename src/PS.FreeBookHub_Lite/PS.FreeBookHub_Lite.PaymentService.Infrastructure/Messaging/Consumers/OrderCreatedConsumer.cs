@@ -37,10 +37,28 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();
 
-            _channel.ExchangeDeclare(exchange: _config.ExchangeName, ExchangeType.Topic, durable: true);
+            _channel.ExchangeDeclare(
+                exchange: _config.ExchangeName,
+                ExchangeType.Topic,
+                durable: true);
 
-            _channel.QueueDeclare(_config.OrderCreatedQueue, durable: true, exclusive: false, autoDelete: false);
-            _channel.QueueBind(queue: _config.OrderCreatedQueue, exchange: _config.ExchangeName, routingKey: _config.OrderCreatedRoutingKey);
+            var queueArgs = new Dictionary<string, object>
+            {
+                { "x-dead-letter-exchange", _config.OrderCreatedDeadLetterExchange },
+                { "x-dead-letter-routing-key", _config.OrderCreatedDeadLetterRoutingKey }
+            };
+
+            _channel.QueueDeclare(
+                _config.OrderCreatedQueue,
+                durable: true,
+                exclusive: false,
+                autoDelete: false,
+                arguments: queueArgs);
+
+            _channel.QueueBind(
+                queue: _config.OrderCreatedQueue,
+                exchange: _config.ExchangeName,
+                routingKey: _config.OrderCreatedRoutingKey);
 
             _logger.LogInformation(LoggerMessages.OrderConsumerStarted, _config.OrderCreatedQueue);
         }

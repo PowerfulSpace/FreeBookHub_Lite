@@ -7,5 +7,9 @@
         public string OrderCreatedQueue { get; set; } = "order.created";
         public string OrderCreatedRoutingKey { get; set; } = "order.created";
         public string PaymentCompletedRoutingKey { get; set; } = "payment.completed";
+
+        public string OrderCreatedDeadLetterExchange { get; set; } = "bookhub.exchange.dlx";
+        public string OrderCreatedDeadLetterQueue { get; set; } = "order.created.dlq";
+        public string OrderCreatedDeadLetterRoutingKey { get; set; } = "order.created.dlq";
     }
 }

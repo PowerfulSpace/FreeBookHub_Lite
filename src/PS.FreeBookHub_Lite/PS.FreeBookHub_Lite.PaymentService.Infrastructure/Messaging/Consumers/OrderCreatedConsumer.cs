@@ -42,6 +42,11 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
                 ExchangeType.Topic,
                 durable: true);
 
+            _channel.ExchangeDeclare(
+               _config.OrderCreatedDeadLetterExchange,
+               ExchangeType.Topic,
+               durable: true);
+
             var queueArgs = new Dictionary<string, object>
             {
                 { "x-dead-letter-exchange", _config.OrderCreatedDeadLetterExchange },

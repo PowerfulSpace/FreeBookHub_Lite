@@ -3,8 +3,6 @@ using FluentValidation.AspNetCore;
 using Mapster;
 using Microsoft.Extensions.DependencyInjection;
 using PS.FreeBookHub_Lite.PaymentService.Application.Mappings;
-using PS.FreeBookHub_Lite.PaymentService.Application.Services;
-using PS.FreeBookHub_Lite.PaymentService.Application.Services.Interfaces;
 
 namespace PS.FreeBookHub_Lite.PaymentService.Application
 {
@@ -16,8 +14,6 @@ namespace PS.FreeBookHub_Lite.PaymentService.Application
                 .AddApplicationMediatR()
                 .AddApplicationValidation()
                 .AddApplicationMapping();
-
-            //services.AddScoped<IPaymentBookService, PaymentBookService>();
 
             return services;
         }

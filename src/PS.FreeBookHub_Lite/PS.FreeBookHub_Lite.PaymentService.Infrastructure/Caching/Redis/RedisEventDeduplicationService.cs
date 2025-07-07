@@ -3,7 +3,7 @@ using StackExchange.Redis;
 
 namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Caching.Redis
 {
-    internal class RedisEventDeduplicationService : IEventDeduplicationService
+    public class RedisEventDeduplicationService : IEventDeduplicationService
     {
         private readonly IDatabase _database;
         public RedisEventDeduplicationService(IConnectionMultiplexer redis)

@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PS.FreeBookHub_Lite.OrderService.Application.CQRS.Commands.MarkOrderAsPaid;
+using PS.FreeBookHub_Lite.OrderService.Application.Interfaces.Redis;
 using PS.FreeBookHub_Lite.OrderService.Common.Configuration;
 using PS.FreeBookHub_Lite.OrderService.Common.Events;
 using PS.FreeBookHub_Lite.OrderService.Common.Logging;
@@ -40,7 +41,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
             _logger.LogInformation(LoggerMessages.PaymentConsumerStarted, _config.PaymentCompletedQueue);
         }
 
-        protected override Task ExecuteAsync(CancellationToken stoppingToken)
+        protected override Task ExecuteAsync(CancellationToken ct)
         {
             var consumer = new EventingBasicConsumer(_channel);
             consumer.Received += async (model, ea) =>
@@ -62,8 +63,21 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
                     _logger.LogInformation(LoggerMessages.PaymentMessageReceived, paymentCompleted.OrderId, paymentCompleted.PaymentId);
 
                     using var scope = _scopeFactory.CreateScope();
+
+                    var dedupService = scope.ServiceProvider.GetRequiredService<IEventDeduplicationService>();
+                    var messageId = ea.BasicProperties.MessageId ?? paymentCompleted.PaymentId.ToString();
+                    var deduplicationKey = $"processed:PaymentCompletedEvent:{messageId}";
+
+                    if (await dedupService.IsDuplicateAsync(deduplicationKey, TimeSpan.FromHours(24), ct))
+                    {
+                        _logger.LogWarning("Duplicate PaymentCompletedEvent detected. MessageId: {MessageId}, PaymentId: {PaymentId}", messageId, paymentCompleted.PaymentId);
+
+                        _channel.BasicAck(ea.DeliveryTag, false);
+                        return;
+                    }
+
                     var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-                    await mediator.Send(new MarkOrderAsPaidCommand(paymentCompleted.OrderId), stoppingToken);
+                    await mediator.Send(new MarkOrderAsPaidCommand(paymentCompleted.OrderId), ct);
 
                     var elapsedMs = (DateTime.UtcNow - startTime).TotalMilliseconds;
                     _logger.LogInformation(LoggerMessages.PaymentMessageProcessed, paymentCompleted.OrderId, elapsedMs);

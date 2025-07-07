@@ -44,6 +44,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging
 
                 var properties = _channel.CreateBasicProperties();
                 properties.Persistent = true;
+                properties.MessageId = Guid.NewGuid().ToString();
 
                 _channel.BasicPublish(
                     exchange: _config.ExchangeName,

@@ -2,12 +2,15 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PS.FreeBookHub_Lite.PaymentService.Application.Interfaces;
+using PS.FreeBookHub_Lite.PaymentService.Application.Interfaces.Redis;
 using PS.FreeBookHub_Lite.PaymentService.Common.Configuration;
 using PS.FreeBookHub_Lite.PaymentService.Common.Events.Interfaces;
+using PS.FreeBookHub_Lite.PaymentService.Infrastructure.Caching.Redis;
 using PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging;
 using PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers;
 using PS.FreeBookHub_Lite.PaymentService.Infrastructure.Persistence;
 using PS.FreeBookHub_Lite.PaymentService.Infrastructure.Persistence.Repositories;
+using StackExchange.Redis;
 
 namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure
 {
@@ -17,7 +20,8 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure
         {
             services
                 .AddPersistance(configuration)
-                .AddRabbitMqIntegration(configuration);
+                .AddRabbitMqIntegration(configuration)
+                .AddRedis(configuration);
 
             return services;
         }
@@ -39,6 +43,18 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure
             services.AddSingleton<IEventPublisher, RabbitMqEventPublisher>();
             services.AddHostedService<OrderCreatedConsumer>();
             services.AddHostedService<OrderCreatedDlqConsumer>();
+
+            return services;
+        }
+
+        private static IServiceCollection AddRedis(this IServiceCollection services, ConfigurationManager configuration)
+        {
+            var redisConnection = configuration.GetConnectionString("Redis");
+
+            services.AddSingleton<IConnectionMultiplexer>(
+                _ => ConnectionMultiplexer.Connect(redisConnection!));
+
+            services.AddScoped<IEventDeduplicationService, RedisEventDeduplicationService>();
 
             return services;
         }

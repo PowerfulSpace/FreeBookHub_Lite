@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PS.FreeBookHub_Lite.PaymentService.Application.CQRS.Commands.ProcessPayment;
+using PS.FreeBookHub_Lite.PaymentService.Application.Interfaces.Redis;
 using PS.FreeBookHub_Lite.PaymentService.Common.Configuration;
 using PS.FreeBookHub_Lite.PaymentService.Common.Events;
 using PS.FreeBookHub_Lite.PaymentService.Common.Events.Interfaces;
@@ -42,7 +43,7 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
             _logger.LogInformation(LoggerMessages.OrderConsumerStarted, _config.OrderCreatedQueue);
         }
 
-        protected override Task ExecuteAsync(CancellationToken stoppingToken)
+        protected override Task ExecuteAsync(CancellationToken ct)
         {
             var consumer = new EventingBasicConsumer(_channel);
             consumer.Received += async (model, ea) =>
@@ -68,6 +69,18 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
 
                     using var scope = _scopeFactory.CreateScope();
 
+                    var dedupService = scope.ServiceProvider.GetRequiredService<IEventDeduplicationService>();
+                    var messageId = ea.BasicProperties.MessageId ?? orderCreated.OrderId.ToString();
+                    var deduplicationKey = $"processed:OrderCreatedEvent:{messageId}";
+
+                    if (await dedupService.IsDuplicateAsync(deduplicationKey, TimeSpan.FromHours(24), ct))
+                    {
+                        _logger.LogWarning("Duplicate OrderCreatedEvent detected. MessageId: {MessageId}, OrderId: {OrderId}", messageId, orderCreated.OrderId);
+                           
+                        _channel.BasicAck(ea.DeliveryTag, false);
+                        return;
+                    }
+
                     var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
                     var publisher = scope.ServiceProvider.GetRequiredService<IEventPublisher>();
 
@@ -80,7 +93,7 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
                         ""
                     );
 
-                    var paymentResponse = await mediator.Send(command, stoppingToken);
+                    var paymentResponse = await mediator.Send(command, ct);
 
                     _logger.LogInformation(LoggerMessages.PaymentProcessed, paymentResponse.Id, paymentResponse.OrderId);
 
@@ -91,7 +104,7 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
                         CompletedAt: DateTime.UtcNow
                     );
 
-                    await publisher.PublishAsync(paymentCompleted, _config.PaymentCompletedRoutingKey, stoppingToken);
+                    await publisher.PublishAsync(paymentCompleted, _config.PaymentCompletedRoutingKey, ct);
 
                     _logger.LogInformation(LoggerMessages.PaymentEventPublished, paymentResponse.OrderId, paymentResponse.Id);
 

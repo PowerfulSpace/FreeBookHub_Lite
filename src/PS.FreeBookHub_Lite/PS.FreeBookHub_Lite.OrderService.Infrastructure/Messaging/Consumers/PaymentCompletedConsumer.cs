@@ -14,6 +14,15 @@ using System.Diagnostics.Metrics;
 using System.Text;
 using System.Text.Json;
 
+
+// 1) Получение сообщения из очереди.
+// 2) Десериализация в PaymentCompletedEvent.
+// 3) Проверка лимита повторных обработок (x-death).
+// 4) Создание IServiceScope для DI.
+// 5) Проверка дубликата через IEventDeduplicationService.
+// 6) Отправка команды MarkOrderAsPaidCommand через IMediator.
+// 7) Подтверждение обработки (BasicAck).
+
 namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
 {
     public class PaymentCompletedConsumer : BackgroundService

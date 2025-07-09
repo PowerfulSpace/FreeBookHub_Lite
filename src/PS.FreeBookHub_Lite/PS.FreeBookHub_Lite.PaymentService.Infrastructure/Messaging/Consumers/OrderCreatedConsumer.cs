@@ -15,6 +15,16 @@ using System.Diagnostics.Metrics;
 using System.Text;
 using System.Text.Json;
 
+
+// 1) Получение сообщения – из очереди RabbitMQ.
+// 2) Десериализация – в объект OrderCreatedEvent.
+// 3) Проверка лимита повторных обработок – анализ заголовков (x-death).
+// 4) Создание IServiceScope – для работы с DI.
+// 5) Проверка дубликата – через IEventDeduplicationService.
+// 6) Обработка платежа – отправка ProcessPaymentCommand через IMediator.
+// 7) Публикация события PaymentCompletedEvent – через IEventPublisher.
+// 8) Подтверждение обработки (BasicAck) – удаление сообщения из очереди.
+
 namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
 {
     public class OrderCreatedConsumer : BackgroundService

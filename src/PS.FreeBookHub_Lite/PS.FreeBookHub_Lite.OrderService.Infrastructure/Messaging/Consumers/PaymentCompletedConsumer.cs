@@ -73,29 +73,16 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
 
                     _logger.LogInformation(LoggerMessages.PaymentMessageReceived, paymentCompleted.OrderId, paymentCompleted.PaymentId);
 
-                    var retryCount = GetRetryCount(ea.BasicProperties.Headers);
-                    if (retryCount >= _maxRetryCount)
+                    if (ExceededRetryLimit(ea, messageId))
                     {
-                        _logger.LogWarning(
-                            "Message exceeded retry limit and will be dead-lettered. DeliveryTag: {DeliveryTag}, MessageId: {MessageId}",
-                            ea.DeliveryTag, messageId);
-
-                        _channel.BasicNack(deliveryTag: ea.DeliveryTag, multiple: false, requeue: false);
                         return;
                     }
 
                     using var scope = _scopeFactory.CreateScope();
 
-                    var dedupService = scope.ServiceProvider.GetRequiredService<IEventDeduplicationService>();
                     var deduplicationKey = $"processed:PaymentCompletedEvent:{messageId}";
-
-                    if (await dedupService.IsDuplicateAsync(deduplicationKey, TimeSpan.FromHours(24), ct))
+                    if (await HandleDuplicateIfExists(scope, deduplicationKey, messageId, paymentCompleted.PaymentId, ea.DeliveryTag, ct))
                     {
-                        _duplicateCounter.Add(1, new KeyValuePair<string, object?>("event_type", "PaymentCompletedEvent"));
-
-                        _logger.LogWarning("Duplicate PaymentCompletedEvent detected. MessageId: {MessageId}, PaymentId: {PaymentId}", messageId, paymentCompleted.PaymentId);
-
-                        _channel.BasicAck(ea.DeliveryTag, false);
                         return;
                     }
 
@@ -185,6 +172,47 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
                 routingKey: _config.PaymentCompletedRoutingKey);
         }
 
+        private async Task<bool> HandleDuplicateIfExists(
+            IServiceScope scope,
+            string deduplicationKey,
+            string messageId,
+            Guid paymentId,
+            ulong deliveryTag,
+            CancellationToken ct)
+        {
+            var dedupService = scope.ServiceProvider.GetRequiredService<IEventDeduplicationService>();
+
+            if (await dedupService.IsDuplicateAsync(deduplicationKey, TimeSpan.FromHours(24), ct))
+            {
+                _duplicateCounter.Add(1, new KeyValuePair<string, object?>("event_type", "PaymentCompletedEvent"));
+
+                _logger.LogWarning(
+                    "Duplicate PaymentCompletedEvent detected. MessageId: {MessageId}, PaymentId: {PaymentId}",
+                    messageId, paymentId);
+
+                _channel.BasicAck(deliveryTag, false);
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool ExceededRetryLimit(BasicDeliverEventArgs ea, string messageId)
+        {
+            var retryCount = GetRetryCount(ea.BasicProperties.Headers);
+
+            if (retryCount >= _maxRetryCount)
+            {
+                _logger.LogWarning(
+                    "Message exceeded retry limit and will be dead-lettered. DeliveryTag: {DeliveryTag}, MessageId: {MessageId}",
+                    ea.DeliveryTag, messageId);
+
+                _channel.BasicNack(deliveryTag: ea.DeliveryTag, multiple: false, requeue: false);
+                return true;
+            }
+
+            return false;
+        }
 
         private static long GetRetryCount(IDictionary<string, object>? headers)
         {

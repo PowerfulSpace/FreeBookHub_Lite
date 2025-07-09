@@ -75,33 +75,18 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
 
                     _logger.LogInformation(LoggerMessages.OrderMessageReceived, orderCreated.OrderId, orderCreated.UserId, orderCreated.Amount);
 
-                    var retryCount = GetRetryCount(ea.BasicProperties.Headers);
-
-                    if (retryCount >= _maxRetryCount)
+                    if (ExceededRetryLimit(ea, messageId))
                     {
-                        _logger.LogWarning(
-                            "Message exceeded retry limit and will be dead-lettered. DeliveryTag: {DeliveryTag}, MessageId: {MessageId}",
-                            ea.DeliveryTag, messageId);
-
-                        _channel.BasicNack(deliveryTag: ea.DeliveryTag, multiple: false, requeue: false);
                         return;
                     }
-
-
+                        
                     _logger.LogInformation(LoggerMessages.OrderProcessingStarted, orderCreated.OrderId);
 
                     using var scope = _scopeFactory.CreateScope();
 
-                    var dedupService = scope.ServiceProvider.GetRequiredService<IEventDeduplicationService>();
                     var deduplicationKey = $"processed:OrderCreatedEvent:{messageId}";
-
-                    if (await dedupService.IsDuplicateAsync(deduplicationKey, TimeSpan.FromHours(24), ct))
+                    if (await HandleDuplicateIfExists(scope, deduplicationKey, messageId, orderCreated.OrderId, ea.DeliveryTag, ct))
                     {
-                        _duplicateCounter.Add(1, new KeyValuePair<string, object?>("event_type", "OrderCreatedEvent"));
-
-                        _logger.LogWarning("Duplicate OrderCreatedEvent detected. MessageId: {MessageId}, OrderId: {OrderId}", messageId, orderCreated.OrderId);
-                           
-                        _channel.BasicAck(ea.DeliveryTag, false);
                         return;
                     }
 
@@ -218,6 +203,48 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
                 routingKey: _config.OrderCreatedRoutingKey);
         }
 
+
+        private async Task<bool> HandleDuplicateIfExists(
+            IServiceScope scope,
+            string deduplicationKey,
+            string messageId,
+            Guid orderId,
+            ulong deliveryTag,
+            CancellationToken ct)
+        {
+            var dedupService = scope.ServiceProvider.GetRequiredService<IEventDeduplicationService>();
+
+            if (await dedupService.IsDuplicateAsync(deduplicationKey, TimeSpan.FromHours(24), ct))
+            {
+                _duplicateCounter.Add(1, new KeyValuePair<string, object?>("event_type", "OrderCreatedEvent"));
+
+                _logger.LogWarning(
+                    "Duplicate OrderCreatedEvent detected. MessageId: {MessageId}, OrderId: {OrderId}",
+                    messageId, orderId);
+
+                _channel.BasicAck(deliveryTag, false);
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool ExceededRetryLimit(BasicDeliverEventArgs ea, string messageId)
+        {
+            var retryCount = GetRetryCount(ea.BasicProperties.Headers);
+
+            if (retryCount >= _maxRetryCount)
+            {
+                _logger.LogWarning(
+                    "Message exceeded retry limit and will be dead-lettered. DeliveryTag: {DeliveryTag}, MessageId: {MessageId}",
+                    ea.DeliveryTag, messageId);
+
+                _channel.BasicNack(deliveryTag: ea.DeliveryTag, multiple: false, requeue: false);
+                return true;
+            }
+
+            return false;
+        }
 
         private static long GetRetryCount(IDictionary<string, object>? headers)
         {

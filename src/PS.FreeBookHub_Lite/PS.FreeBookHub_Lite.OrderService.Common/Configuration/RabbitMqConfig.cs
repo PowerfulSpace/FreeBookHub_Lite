@@ -11,5 +11,8 @@
         public string PaymentCompletedDeadLetterExchange { get; set; } = "bookhub.exchange.dlx";
         public string PaymentCompletedDeadLetterQueue { get; set; } = "payment.completed.dlq";
         public string PaymentCompletedDeadLetterRoutingKey { get; set; } = "payment.completed.dlq";
+
+        public int RetryIntervalMs { get; set; } = 5000;
+        public int MaxRetryCount { get; set; } = 5;
     }
 }

@@ -10,6 +10,7 @@ using PS.FreeBookHub_Lite.OrderService.Common.Events;
 using PS.FreeBookHub_Lite.OrderService.Common.Logging;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using System.Diagnostics.Metrics;
 using System.Text;
 using System.Text.Json;
 
@@ -17,11 +18,18 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
 {
     public class PaymentCompletedConsumer : BackgroundService
     {
+        private static readonly Meter _meter = new("PS.FreeBookHub_Lite.OrderService");
+        private static readonly Counter<long> _duplicateCounter = _meter.CreateCounter<long>(
+            "orderservice.event.duplicates",
+            unit: "{events}",
+            description: "Count of duplicated PaymentCompleted events");
+
         private readonly ILogger<PaymentCompletedConsumer> _logger;
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly IModel _channel;
         private readonly IConnection _connection;
         private readonly RabbitMqConfig _config;
+        private readonly int _maxRetryCount;
 
         public PaymentCompletedConsumer(
             ILogger<PaymentCompletedConsumer> logger,
@@ -37,6 +45,8 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
             DeclareExchanges();
             DeclareQueue();
             BindQueue();
+
+            _maxRetryCount = _config.MaxRetryCount;
 
             _logger.LogInformation(LoggerMessages.PaymentConsumerStarted, _config.PaymentCompletedQueue);
         }
@@ -59,17 +69,30 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
                         throw new JsonException("Deserialization returned null");
 
                     orderId = paymentCompleted.OrderId;
+                    var messageId = ea.BasicProperties.MessageId ?? paymentCompleted.PaymentId.ToString();
 
                     _logger.LogInformation(LoggerMessages.PaymentMessageReceived, paymentCompleted.OrderId, paymentCompleted.PaymentId);
+
+                    var retryCount = GetRetryCount(ea.BasicProperties.Headers);
+                    if (retryCount >= _maxRetryCount)
+                    {
+                        _logger.LogWarning(
+                            "Message exceeded retry limit and will be dead-lettered. DeliveryTag: {DeliveryTag}, MessageId: {MessageId}",
+                            ea.DeliveryTag, messageId);
+
+                        _channel.BasicNack(deliveryTag: ea.DeliveryTag, multiple: false, requeue: false);
+                        return;
+                    }
 
                     using var scope = _scopeFactory.CreateScope();
 
                     var dedupService = scope.ServiceProvider.GetRequiredService<IEventDeduplicationService>();
-                    var messageId = ea.BasicProperties.MessageId ?? paymentCompleted.PaymentId.ToString();
                     var deduplicationKey = $"processed:PaymentCompletedEvent:{messageId}";
 
                     if (await dedupService.IsDuplicateAsync(deduplicationKey, TimeSpan.FromHours(24), ct))
                     {
+                        _duplicateCounter.Add(1, new KeyValuePair<string, object?>("event_type", "PaymentCompletedEvent"));
+
                         _logger.LogWarning("Duplicate PaymentCompletedEvent detected. MessageId: {MessageId}, PaymentId: {PaymentId}", messageId, paymentCompleted.PaymentId);
 
                         _channel.BasicAck(ea.DeliveryTag, false);
@@ -162,5 +185,28 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
                 routingKey: _config.PaymentCompletedRoutingKey);
         }
 
+
+        private static long GetRetryCount(IDictionary<string, object>? headers)
+        {
+            if (headers?.TryGetValue("x-death", out var deathHeader) != true)
+                return 0;
+
+            try
+            {
+                if (deathHeader is List<object> deathList &&
+                    deathList.FirstOrDefault() is Dictionary<string, object> firstDeath &&
+                    firstDeath.TryGetValue("count", out var countObj) &&
+                    countObj is long count)
+                {
+                    return count;
+                }
+            }
+            catch
+            {
+                return 0;
+            }
+
+            return 0;
+        }
     }
 }

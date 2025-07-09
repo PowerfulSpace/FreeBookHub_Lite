@@ -11,5 +11,8 @@
         public string OrderCreatedDeadLetterExchange { get; set; } = "bookhub.exchange.dlx";
         public string OrderCreatedDeadLetterQueue { get; set; } = "order.created.dlq";
         public string OrderCreatedDeadLetterRoutingKey { get; set; } = "order.created.dlq";
+
+        public int RetryIntervalMs { get; set; } = 5000;
+        public int MaxRetryCount { get; set; } = 5;
     }
 }

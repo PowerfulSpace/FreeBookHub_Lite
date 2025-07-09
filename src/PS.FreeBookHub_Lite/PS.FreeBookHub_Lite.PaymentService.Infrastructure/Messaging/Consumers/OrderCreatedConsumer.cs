@@ -11,6 +11,7 @@ using PS.FreeBookHub_Lite.PaymentService.Common.Events.Interfaces;
 using PS.FreeBookHub_Lite.PaymentService.Common.Logging;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using System.Diagnostics.Metrics;
 using System.Text;
 using System.Text.Json;
 
@@ -18,12 +19,18 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
 {
     public class OrderCreatedConsumer : BackgroundService
     {
+        private static readonly Meter _meter = new("PS.FreeBookHub_Lite.PaymentService");
+        private static readonly Counter<long> _duplicateCounter = _meter.CreateCounter<long>(
+            "paymentservice.event.duplicates",
+            unit: "{events}",
+            description: "Count of duplicated OrderCreated events");
+
         private readonly ILogger<OrderCreatedConsumer> _logger;
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly IModel _channel;
         private readonly IConnection _connection;
         private readonly RabbitMqConfig _config;
-
+        private readonly int _maxRetryCount;
 
         public OrderCreatedConsumer(
             ILogger<OrderCreatedConsumer> logger,
@@ -39,6 +46,8 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
             DeclareExchanges();
             DeclareQueue();
             BindQueue();
+
+            _maxRetryCount = _config.MaxRetryCount;
 
             _logger.LogInformation(LoggerMessages.OrderConsumerStarted, _config.OrderCreatedQueue);
         }
@@ -62,7 +71,21 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
                         throw new JsonException("Deserialization returned null");
 
                     orderId = orderCreated.OrderId;
+                    var messageId = ea.BasicProperties.MessageId ?? orderCreated.OrderId.ToString();
+
                     _logger.LogInformation(LoggerMessages.OrderMessageReceived, orderCreated.OrderId, orderCreated.UserId, orderCreated.Amount);
+
+                    var retryCount = GetRetryCount(ea.BasicProperties.Headers);
+
+                    if (retryCount >= _maxRetryCount)
+                    {
+                        _logger.LogWarning(
+                            "Message exceeded retry limit and will be dead-lettered. DeliveryTag: {DeliveryTag}, MessageId: {MessageId}",
+                            ea.DeliveryTag, messageId);
+
+                        _channel.BasicNack(deliveryTag: ea.DeliveryTag, multiple: false, requeue: false);
+                        return;
+                    }
 
 
                     _logger.LogInformation(LoggerMessages.OrderProcessingStarted, orderCreated.OrderId);
@@ -70,11 +93,12 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
                     using var scope = _scopeFactory.CreateScope();
 
                     var dedupService = scope.ServiceProvider.GetRequiredService<IEventDeduplicationService>();
-                    var messageId = ea.BasicProperties.MessageId ?? orderCreated.OrderId.ToString();
                     var deduplicationKey = $"processed:OrderCreatedEvent:{messageId}";
 
                     if (await dedupService.IsDuplicateAsync(deduplicationKey, TimeSpan.FromHours(24), ct))
                     {
+                        _duplicateCounter.Add(1, new KeyValuePair<string, object?>("event_type", "OrderCreatedEvent"));
+
                         _logger.LogWarning("Duplicate OrderCreatedEvent detected. MessageId: {MessageId}, OrderId: {OrderId}", messageId, orderCreated.OrderId);
                            
                         _channel.BasicAck(ea.DeliveryTag, false);
@@ -174,7 +198,8 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
             var queueArgs = new Dictionary<string, object>
             {
                 { "x-dead-letter-exchange", _config.OrderCreatedDeadLetterExchange },
-                { "x-dead-letter-routing-key", _config.OrderCreatedDeadLetterRoutingKey }
+                { "x-dead-letter-routing-key", _config.OrderCreatedDeadLetterRoutingKey },
+                { "x-message-ttl", _config.RetryIntervalMs }
             };
 
             _channel.QueueDeclare(
@@ -191,6 +216,30 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
                 queue: _config.OrderCreatedQueue,
                 exchange: _config.ExchangeName,
                 routingKey: _config.OrderCreatedRoutingKey);
+        }
+
+
+        private static long GetRetryCount(IDictionary<string, object>? headers)
+        {
+            if (headers?.TryGetValue("x-death", out var deathHeader) != true)
+                return 0;
+
+            try
+            {
+                if (deathHeader is List<object> deathList &&
+                    deathList.FirstOrDefault() is Dictionary<string, object> firstDeath &&
+                    firstDeath.TryGetValue("count", out var countObj) &&
+                    countObj is long count)
+                {
+                    return count;
+                }
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+
+            return 0;
         }
     }
 }

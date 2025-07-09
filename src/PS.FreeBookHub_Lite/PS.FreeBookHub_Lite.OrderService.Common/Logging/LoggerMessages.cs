@@ -41,7 +41,7 @@
 
 
         // RabbitMQ Consumer Logs
-        //                  --- OrderCreatedConsumer
+        //                  --- PaymentCompletedConsumer
         public const string PaymentConsumerStarted = "[RABBITMQ] PAYMENT_CONSUMER started listening queue: {Queue}";
         public const string PaymentConsumerStopped = "[RABBITMQ] PAYMENT_CONSUMER stopped listening queue: {Queue}";
         public const string PaymentMessageReceived = "[RABBITMQ] PAYMENT_MESSAGE received | OrderId:{OrderId} | PaymentId:{PaymentId}";
@@ -51,6 +51,13 @@
         public const string PaymentMessageProcessed = "[RABBITMQ] PAYMENT_MESSAGE processed | OrderId:{OrderId} | Duration:{ElapsedMs}ms";
         public const string PaymentMessageDeserializeError = "[RABBITMQ] PAYMENT_MESSAGE deserialize error | Body:{MessageBody}";
         public const string PaymentProcessingError = "[RABBITMQ] PAYMENT_PROCESSING error | OrderId:{OrderId} | Error:{ErrorMessage}";
+        public const string PaymentDuplicateDetected = "[RABBITMQ] PAYMENT_DUPLICATE detected | MessageId:{MessageId} | PaymentId:{PaymentId}";
+        public const string PaymentRetryLimitExceeded = "[RABBITMQ] PAYMENT_RETRY_LIMIT exceeded, message will be dead-lettered | DeliveryTag:{DeliveryTag} | MessageId:{MessageId}";
+
+        //                  --- PaymentCompletedDlqConsumer
+        public const string DlqConsumerStarted = "[RABBITMQ] DLQ_CONSUMER started | Queue:{Queue}";
+        public const string DlqConsumerStopped = "[RABBITMQ] DLQ_CONSUMER stopped | Queue:{Queue}";
+        public const string DlqMessageReceived = "[RABBITMQ] DLQ_MESSAGE received | Body:{MessageBody}";
 
         //                  --- EventPublisher
         public const string EventPublisherCreated = "[RABBITMQ] EVENT_PUBLISHER created | Exchange:{Exchange}";

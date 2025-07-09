@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PS.FreeBookHub_Lite.OrderService.Common.Configuration;
+using PS.FreeBookHub_Lite.OrderService.Common.Logging;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
@@ -32,7 +33,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
             DeclareQueue();
             BindQueue();
 
-            _logger.LogInformation("DLQ Consumer initialized for queue: {Queue}", _config.PaymentCompletedDeadLetterQueue);
+            _logger.LogInformation(LoggerMessages.DlqConsumerStarted, _config.PaymentCompletedDeadLetterQueue);
         }
 
 
@@ -45,7 +46,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
             {
                 var message = Encoding.UTF8.GetString(ea.Body.ToArray());
 
-                _logger.LogWarning("Received message from DLQ: {Message}", message);
+                _logger.LogWarning(LoggerMessages.DlqMessageReceived, message);
 
                 // Здесь можно:
                 // - сохранить в базу
@@ -69,7 +70,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
             _channel.Close();
             _connection.Close();
             base.Dispose();
-            _logger.LogInformation("DLQ Consumer stopped for queue: {Queue}", _config.PaymentCompletedDeadLetterQueue);
+            _logger.LogInformation(LoggerMessages.DlqConsumerStopped, _config.PaymentCompletedDeadLetterQueue);
         }
 
         private IConnection CreateConnection()

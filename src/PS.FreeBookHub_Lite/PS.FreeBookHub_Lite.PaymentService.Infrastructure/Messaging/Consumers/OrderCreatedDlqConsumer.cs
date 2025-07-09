@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PS.FreeBookHub_Lite.PaymentService.Common.Configuration;
+using PS.FreeBookHub_Lite.PaymentService.Common.Logging;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
@@ -28,7 +29,7 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
             DeclareQueue();
             BindQueue();
 
-            _logger.LogInformation("DLQ Consumer initialized for OrderCreated queue: {Queue}", _config.OrderCreatedDeadLetterQueue);
+            _logger.LogInformation(LoggerMessages.DlqConsumerInitialized, _config.OrderCreatedDeadLetterQueue);
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -39,9 +40,8 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
             {
                 var message = Encoding.UTF8.GetString(ea.Body.ToArray());
 
-                _logger.LogWarning("Received message from OrderCreated DLQ: {Message}", message);
+                _logger.LogWarning(LoggerMessages.DlqMessageReceived, message);
 
-                // Пока просто логируем и подтверждаем
                 _channel.BasicAck(ea.DeliveryTag, multiple: false);
             };
 
@@ -58,7 +58,7 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
             _channel.Close();
             _connection.Close();
             base.Dispose();
-            _logger.LogInformation("DLQ Consumer stopped for queue: {Queue}", _config.OrderCreatedDeadLetterQueue);
+            _logger.LogInformation(LoggerMessages.DlqConsumerStopped, _config.OrderCreatedDeadLetterQueue);
         }
 
         private IConnection CreateConnection()

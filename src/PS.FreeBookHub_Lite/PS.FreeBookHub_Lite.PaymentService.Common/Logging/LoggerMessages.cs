@@ -40,6 +40,13 @@
         public const string OrderMessageProcessed = "[RABBITMQ] ORDER_MESSAGE processed | OrderId:{OrderId} | Duration:{ElapsedMs}ms";
         public const string OrderMessageDeserializeError = "[RABBITMQ] ORDER_MESSAGE deserialize error | Body:{MessageBody}";
         public const string OrderProcessingError = "[RABBITMQ] ORDER_PROCESSING error | OrderId:{OrderId} | Error:{ErrorMessage}";
+        public const string OrderMessageDuplicate = "[RABBITMQ] ORDER_MESSAGE duplicate detected | MessageId:{MessageId} | OrderId:{OrderId}";
+        public const string OrderMessageRetryLimitExceeded = "[RABBITMQ] ORDER_MESSAGE retry limit exceeded — DeliveryTag:{DeliveryTag} | MessageId:{MessageId}";
+
+        //                  --- OrderCreatedDlqConsumer
+        public const string DlqConsumerInitialized = "[RABBITMQ] DLQ_CONSUMER initialized for queue: {Queue}";
+        public const string DlqMessageReceived = "[RABBITMQ] DLQ_MESSAGE received from OrderCreated DLQ | Message:{Message}";
+        public const string DlqConsumerStopped = "[RABBITMQ] DLQ_CONSUMER stopped for queue: {Queue}";
 
         //                  --- EventPublisher
         public const string EventPublisherCreated = "[RABBITMQ] EVENT_PUBLISHER created | Exchange:{Exchange}";

@@ -218,9 +218,7 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
             {
                 _duplicateCounter.Add(1, new KeyValuePair<string, object?>("event_type", "OrderCreatedEvent"));
 
-                _logger.LogWarning(
-                    "Duplicate OrderCreatedEvent detected. MessageId: {MessageId}, OrderId: {OrderId}",
-                    messageId, orderId);
+                _logger.LogWarning(LoggerMessages.OrderMessageDuplicate, messageId, orderId);
 
                 _channel.BasicAck(deliveryTag, false);
                 return true;
@@ -235,9 +233,7 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
 
             if (retryCount >= _maxRetryCount)
             {
-                _logger.LogWarning(
-                    "Message exceeded retry limit and will be dead-lettered. DeliveryTag: {DeliveryTag}, MessageId: {MessageId}",
-                    ea.DeliveryTag, messageId);
+                _logger.LogWarning(LoggerMessages.OrderMessageRetryLimitExceeded, ea.DeliveryTag, messageId);
 
                 _channel.BasicNack(deliveryTag: ea.DeliveryTag, multiple: false, requeue: false);
                 return true;

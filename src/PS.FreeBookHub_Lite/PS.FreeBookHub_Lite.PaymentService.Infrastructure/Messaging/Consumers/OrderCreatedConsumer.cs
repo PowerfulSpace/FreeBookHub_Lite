@@ -57,9 +57,9 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
             DeclareQueue();
             BindQueue();
 
-            _maxRetryCount = _config.MaxRetryCount;
+            _maxRetryCount = _config.RetryPolicy.MaxRetryCount;
 
-            _logger.LogInformation(LoggerMessages.OrderConsumerStarted, _config.OrderCreatedQueue);
+            _logger.LogInformation(LoggerMessages.OrderConsumerStarted, _config.Queues.OrderCreatedQueue);
         }
 
         protected override Task ExecuteAsync(CancellationToken ct)
@@ -123,7 +123,7 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
                         CompletedAt: DateTime.UtcNow
                     );
 
-                    await publisher.PublishAsync(paymentCompleted, _config.PaymentCompletedRoutingKey, ct);
+                    await publisher.PublishAsync(paymentCompleted, _config.RoutingKeys.PaymentCompletedRoutingKey, ct);
 
                     _logger.LogInformation(LoggerMessages.PaymentEventPublished, paymentResponse.OrderId, paymentResponse.Id);
 
@@ -149,7 +149,7 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
                 }
             };
 
-            _channel.BasicConsume(queue: _config.OrderCreatedQueue, autoAck: false, consumer: consumer);
+            _channel.BasicConsume(queue: _config.Queues.OrderCreatedQueue, autoAck: false, consumer: consumer);
             return Task.CompletedTask;
         }
 
@@ -158,7 +158,7 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
             _channel.Close();
             _connection.Close();
             base.Dispose();
-            _logger.LogInformation(LoggerMessages.OrderConsumerStopped, _config.OrderCreatedQueue);
+            _logger.LogInformation(LoggerMessages.OrderConsumerStopped, _config.Queues.OrderCreatedQueue);
         }
 
         private IConnection CreateConnection()
@@ -183,7 +183,7 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
                 durable: true);
 
             _channel.ExchangeDeclare(
-               _config.OrderCreatedDeadLetterExchange,
+               _config.DeadLetter.Exchange,
                ExchangeType.Topic,
                durable: true);
         }
@@ -192,13 +192,13 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
         {
             var queueArgs = new Dictionary<string, object>
             {
-                { "x-dead-letter-exchange", _config.OrderCreatedDeadLetterExchange },
-                { "x-dead-letter-routing-key", _config.OrderCreatedDeadLetterRoutingKey },
-                { "x-message-ttl", _config.RetryIntervalMs }
+                { "x-dead-letter-exchange", _config.DeadLetter.Exchange },
+                { "x-dead-letter-routing-key", _config.DeadLetter.RoutingKey },
+                { "x-message-ttl", _config.RetryPolicy.IntervalMs }
             };
 
             _channel.QueueDeclare(
-                _config.OrderCreatedQueue,
+                _config.Queues.OrderCreatedQueue,
                 durable: true,
                 exclusive: false,
                 autoDelete: false,
@@ -208,9 +208,9 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
         private void BindQueue()
         {
             _channel.QueueBind(
-                queue: _config.OrderCreatedQueue,
+                queue: _config.Queues.OrderCreatedQueue,
                 exchange: _config.ExchangeName,
-                routingKey: _config.OrderCreatedRoutingKey);
+                routingKey: _config.RoutingKeys.OrderCreatedRoutingKey);
         }
 
 

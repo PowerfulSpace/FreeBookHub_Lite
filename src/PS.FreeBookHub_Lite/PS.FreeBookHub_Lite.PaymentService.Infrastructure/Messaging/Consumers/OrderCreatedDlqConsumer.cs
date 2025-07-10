@@ -29,7 +29,7 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
             DeclareQueue();
             BindQueue();
 
-            _logger.LogInformation(LoggerMessages.DlqConsumerInitialized, _config.OrderCreatedDeadLetterQueue);
+            _logger.LogInformation(LoggerMessages.DlqConsumerInitialized, _config.DeadLetter.Queue);
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -46,7 +46,7 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
             };
 
             _channel.BasicConsume(
-                queue: _config.OrderCreatedDeadLetterQueue,
+                queue: _config.DeadLetter.Queue,
                 autoAck: false,
                 consumer: consumer);
 
@@ -58,7 +58,7 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
             _channel.Close();
             _connection.Close();
             base.Dispose();
-            _logger.LogInformation(LoggerMessages.DlqConsumerStopped, _config.OrderCreatedDeadLetterQueue);
+            _logger.LogInformation(LoggerMessages.DlqConsumerStopped, _config.DeadLetter.Queue);
         }
 
         private IConnection CreateConnection()
@@ -78,7 +78,7 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
         private void DeclareExchange()
         {
             _channel.ExchangeDeclare(
-                _config.OrderCreatedDeadLetterExchange,
+                _config.DeadLetter.Exchange,
                 ExchangeType.Topic,
                 durable: true);
         }
@@ -86,7 +86,7 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
         private void DeclareQueue()
         {
             _channel.QueueDeclare(
-                queue: _config.OrderCreatedDeadLetterQueue,
+                queue: _config.DeadLetter.Queue,
                 durable: true,
                 exclusive: false,
                 autoDelete: false);
@@ -95,9 +95,9 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
         private void BindQueue()
         {
             _channel.QueueBind(
-                queue: _config.OrderCreatedDeadLetterQueue,
-                exchange: _config.OrderCreatedDeadLetterExchange,
-                routingKey: _config.OrderCreatedDeadLetterRoutingKey);
+                queue: _config.DeadLetter.Queue,
+                exchange: _config.DeadLetter.Exchange,
+                routingKey: _config.DeadLetter.RoutingKey);
         }
     }
 }

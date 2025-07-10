@@ -33,7 +33,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
             DeclareQueue();
             BindQueue();
 
-            _logger.LogInformation(LoggerMessages.DlqConsumerStarted, _config.PaymentCompletedDeadLetterQueue);
+            _logger.LogInformation(LoggerMessages.DlqConsumerStarted, _config.DeadLetter.Exchange);
         }
 
 
@@ -58,7 +58,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
             };
 
             _channel.BasicConsume(
-                queue: _config.PaymentCompletedDeadLetterQueue,
+                queue: _config.DeadLetter.Queue,
                 autoAck: false,
                 consumer: consumer);
 
@@ -70,7 +70,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
             _channel.Close();
             _connection.Close();
             base.Dispose();
-            _logger.LogInformation(LoggerMessages.DlqConsumerStopped, _config.PaymentCompletedDeadLetterQueue);
+            _logger.LogInformation(LoggerMessages.DlqConsumerStopped, _config.DeadLetter.Queue);
         }
 
         private IConnection CreateConnection()
@@ -90,7 +90,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
         private void DeclareExchange()
         {
             _channel.ExchangeDeclare(
-                _config.PaymentCompletedDeadLetterExchange,
+                _config.DeadLetter.Exchange,
                 ExchangeType.Topic,
                 durable: true);
         }
@@ -98,7 +98,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
         private void DeclareQueue()
         {
             _channel.QueueDeclare(
-                queue: _config.PaymentCompletedDeadLetterQueue,
+                queue: _config.DeadLetter.Queue,
                 durable: true,
                 exclusive: false,
                 autoDelete: false);
@@ -107,9 +107,9 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
         private void BindQueue()
         {
             _channel.QueueBind(
-                queue: _config.PaymentCompletedDeadLetterQueue,
-                exchange: _config.PaymentCompletedDeadLetterExchange,
-                routingKey: _config.PaymentCompletedDeadLetterRoutingKey);
+                queue: _config.DeadLetter.Queue,
+                exchange: _config.DeadLetter.Exchange,
+                routingKey: _config.DeadLetter.RoutingKey);
         }
     }
 }

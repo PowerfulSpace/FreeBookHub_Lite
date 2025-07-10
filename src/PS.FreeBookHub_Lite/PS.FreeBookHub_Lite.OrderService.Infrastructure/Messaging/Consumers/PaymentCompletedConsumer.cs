@@ -55,9 +55,9 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
             DeclareQueue();
             BindQueue();
 
-            _maxRetryCount = _config.MaxRetryCount;
+            _maxRetryCount = _config.RetryPolicy.MaxRetryCount;
 
-            _logger.LogInformation(LoggerMessages.PaymentConsumerStarted, _config.PaymentCompletedQueue);
+            _logger.LogInformation(LoggerMessages.PaymentConsumerStarted, _config.Queues.PaymentCompletedQueue);
         }
 
         protected override Task ExecuteAsync(CancellationToken ct)
@@ -119,7 +119,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
                 }
             };
 
-            _channel.BasicConsume(_config.PaymentCompletedQueue, autoAck: false, consumer: consumer);
+            _channel.BasicConsume(_config.Queues.PaymentCompletedQueue, autoAck: false, consumer: consumer);
             return Task.CompletedTask;
         }
 
@@ -128,7 +128,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
             _channel.Close();
             _connection.Close();
             base.Dispose();
-            _logger.LogInformation(LoggerMessages.PaymentConsumerStopped, _config.PaymentCompletedQueue);
+            _logger.LogInformation(LoggerMessages.PaymentConsumerStopped, _config.Queues.PaymentCompletedQueue);
         }
 
 
@@ -152,7 +152,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
                 durable: true);
 
             _channel.ExchangeDeclare(
-                _config.PaymentCompletedDeadLetterExchange,
+                _config.DeadLetter.Exchange,
                 ExchangeType.Topic,
                 durable: true);
         }
@@ -161,12 +161,12 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
         {
             var queueArgs = new Dictionary<string, object>
             {
-                { "x-dead-letter-exchange", _config.PaymentCompletedDeadLetterExchange },
-                { "x-dead-letter-routing-key", _config.PaymentCompletedDeadLetterRoutingKey }
+                { "x-dead-letter-exchange", _config.DeadLetter.Exchange },
+                { "x-dead-letter-routing-key", _config.DeadLetter.RoutingKey }
             };
 
             _channel.QueueDeclare(
-                queue: _config.PaymentCompletedQueue,
+                queue: _config.Queues.PaymentCompletedQueue,
                 durable: true,
                 exclusive: false,
                 autoDelete: false,
@@ -176,9 +176,9 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
         private void BindQueue()
         {
             _channel.QueueBind(
-                queue: _config.PaymentCompletedQueue,
+                queue: _config.Queues.PaymentCompletedQueue,
                 exchange: _config.ExchangeName,
-                routingKey: _config.PaymentCompletedRoutingKey);
+                routingKey: _config.RoutingKeys.PaymentCompletedRoutingKey);
         }
 
         private async Task<bool> HandleDuplicateIfExists(

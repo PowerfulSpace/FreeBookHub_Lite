@@ -51,7 +51,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Application.CQRS.Commands.CreateOrder
                 CreatedAt: DateTime.UtcNow
             );
 
-            await _eventPublisher.PublishAsync(orderCreatedEvent, routingKey: _config.OrderCreatedRoutingKey, cancellationToken);
+            await _eventPublisher.PublishAsync(orderCreatedEvent, routingKey: _config.RoutingKeys.OrderCreatedRoutingKey, cancellationToken);
 
             _logger.LogInformation(LoggerMessages.CreateOrderSuccess, order.Id, order.UserId);
 

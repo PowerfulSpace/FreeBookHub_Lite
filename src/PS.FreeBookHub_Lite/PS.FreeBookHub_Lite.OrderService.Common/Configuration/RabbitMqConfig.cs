@@ -1,21 +1,5 @@
 ﻿namespace PS.FreeBookHub_Lite.OrderService.Common.Configuration
 {
-    //public class RabbitMqConfig
-    //{
-    //    public string HostName { get; set; } = "localhost";
-    //    public string ExchangeName { get; set; } = "bookhub.exchange";
-    //    public string PaymentCompletedQueue { get; set; } = "payment.completed";
-    //    public string PaymentCompletedRoutingKey { get; set; } = "payment.completed";
-    //    public string OrderCreatedRoutingKey { get; set; } = "order.created";
-
-    //    public string PaymentCompletedDeadLetterExchange { get; set; } = "bookhub.exchange.dlx";
-    //    public string PaymentCompletedDeadLetterQueue { get; set; } = "payment.completed.dlq";
-    //    public string PaymentCompletedDeadLetterRoutingKey { get; set; } = "payment.completed.dlq";
-
-    //    public int RetryIntervalMs { get; set; } = 5000;
-    //    public int MaxRetryCount { get; set; } = 5;
-    //}
-
     public class RabbitMqConfig
     {
         public string HostName { get; set; } = "localhost";

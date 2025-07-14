@@ -1,4 +1,4 @@
-﻿using PS.FreeBookHub_Lite.CartService.Common;
+﻿using PS.FreeBookHub_Lite.CartService.Common.Logging;
 using PS.FreeBookHub_Lite.CartService.Domain.Exceptions.Cart;
 using PS.FreeBookHub_Lite.CartService.Domain.Exceptions.User;
 

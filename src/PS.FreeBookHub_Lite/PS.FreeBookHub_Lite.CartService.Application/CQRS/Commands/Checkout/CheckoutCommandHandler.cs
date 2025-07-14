@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using PS.FreeBookHub_Lite.CartService.Application.Clients;
 using PS.FreeBookHub_Lite.CartService.Application.DTOs.Order;
 using PS.FreeBookHub_Lite.CartService.Application.Interfaces;
-using PS.FreeBookHub_Lite.CartService.Common;
+using PS.FreeBookHub_Lite.CartService.Common.Logging;
 using PS.FreeBookHub_Lite.CartService.Domain.Exceptions.Cart;
 
 namespace PS.FreeBookHub_Lite.CartService.Application.CQRS.Commands.Checkout

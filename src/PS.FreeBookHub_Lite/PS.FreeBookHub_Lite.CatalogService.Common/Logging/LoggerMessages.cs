@@ -1,4 +1,4 @@
-﻿namespace PS.FreeBookHub_Lite.CatalogService.Common
+﻿namespace PS.FreeBookHub_Lite.CatalogService.Common.Logging
 {
     public static class LoggerMessages
     {

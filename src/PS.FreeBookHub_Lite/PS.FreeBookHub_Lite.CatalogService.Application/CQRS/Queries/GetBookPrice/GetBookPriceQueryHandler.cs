@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
 using PS.FreeBookHub_Lite.CatalogService.Application.Interfaces;
-using PS.FreeBookHub_Lite.CatalogService.Common;
+using PS.FreeBookHub_Lite.CatalogService.Common.Logging;
 using PS.FreeBookHub_Lite.CatalogService.Domain.Exceptions.Book;
 
 namespace PS.FreeBookHub_Lite.CatalogService.Application.CQRS.Queries.GetBookPrice

@@ -1,4 +1,4 @@
-﻿using PS.FreeBookHub_Lite.CatalogService.Common;
+﻿using PS.FreeBookHub_Lite.CatalogService.Common.Logging;
 using PS.FreeBookHub_Lite.CatalogService.Domain.Exceptions.Book;
 
 namespace PS.FreeBookHub_Lite.CatalogService.API.Middleware

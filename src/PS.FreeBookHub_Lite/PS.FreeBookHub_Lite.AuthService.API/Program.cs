@@ -55,6 +55,3 @@ finally
     Log.Information("Shut down complete.[AuthService]");
     Log.CloseAndFlush();
 }
-
-
-

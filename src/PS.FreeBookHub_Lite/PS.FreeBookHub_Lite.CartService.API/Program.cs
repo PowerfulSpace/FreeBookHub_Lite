@@ -57,5 +57,3 @@ finally
     Log.Information("Shut down complete.[CartService]");
     Log.CloseAndFlush();
 }
-
-

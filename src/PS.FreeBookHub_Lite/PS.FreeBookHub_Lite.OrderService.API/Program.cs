@@ -54,6 +54,3 @@ finally
     Log.Information("Shut down complete.[OrderService]");
     Log.CloseAndFlush();
 }
-
-
-

@@ -20,6 +20,17 @@ namespace AuthService.UnitTests.Domain
             Assert.True(user.IsActive);
         }
 
+
+        [Fact]
+        public void Deactivate_ShouldSetIsActiveToFalse_WhenUserIsActive()
+        {
+            var user = new User("email@example.com", "hash");
+
+            user.Deactivate();
+
+            Assert.False(user.IsActive);
+        }
+
         [Fact]
         public void Deactivate_WhenAlreadyInactive_ShouldThrow()
         {
@@ -29,6 +40,7 @@ namespace AuthService.UnitTests.Domain
             var ex = Assert.Throws<InvalidOperationException>(() => user.Deactivate());
             Assert.Equal("The user is already deactivated.", ex.Message);
         }
+
 
         [Fact]
         public void PromoteTo_SameRole_ShouldThrow()

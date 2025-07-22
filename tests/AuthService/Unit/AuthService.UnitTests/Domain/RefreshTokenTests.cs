@@ -31,11 +31,37 @@ namespace AuthService.UnitTests.Domain
         }
 
         [Fact]
+        public void Revoke_WhenNotRevoked_ShouldSetIsRevokedToTrue()
+        {
+            var token = new RefreshToken(Guid.NewGuid(), "token", DateTime.UtcNow.AddMinutes(10));
+
+            token.Revoke();
+
+            Assert.True(token.IsRevoked);
+        }
+
+        [Fact]
         public void IsActive_WhenNotExpiredAndNotRevoked_ShouldBeTrue()
         {
             var token = new RefreshToken(Guid.NewGuid(), "token", DateTime.UtcNow.AddMinutes(5));
 
             Assert.True(token.IsActive());
+        }
+
+        [Fact]
+        public void IsActive_WhenExpired_ShouldBeFalse()
+        {
+            var token = new RefreshToken(Guid.NewGuid(), "token", DateTime.UtcNow.AddMinutes(-5));
+            Assert.False(token.IsActive());
+        }
+
+        [Fact]
+        public void IsActive_WhenRevoked_ShouldBeFalse()
+        {
+            var token = new RefreshToken(Guid.NewGuid(), "token", DateTime.UtcNow.AddMinutes(5));
+            token.Revoke();
+
+            Assert.False(token.IsActive());
         }
 
         [Fact]

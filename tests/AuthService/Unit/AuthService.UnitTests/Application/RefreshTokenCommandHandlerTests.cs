@@ -123,6 +123,7 @@ namespace AuthService.UnitTests.Application
             var userId = Guid.NewGuid();
             var token = new RefreshToken(userId, "token", DateTime.UtcNow.AddDays(1));
             var user = new User("test@mail.com", "hash", UserRole.User); // по умолчанию не активен
+            user.Deactivate();
 
             var command = new RefreshTokenCommand { RefreshToken = "token" };
 

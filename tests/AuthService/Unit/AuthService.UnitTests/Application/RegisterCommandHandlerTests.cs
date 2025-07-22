@@ -18,9 +18,17 @@ namespace AuthService.UnitTests.Application
         private readonly Mock<IPasswordHasher> _passwordHasherMock = new();
         private readonly Mock<ILogger<RegisterCommandHandler>> _loggerMock = new();
 
-        private RegisterCommandHandler CreateHandler() =>
-            new(_userRepoMock.Object, _tokenServiceMock.Object, _configMock.Object,
-                _refreshRepoMock.Object, _passwordHasherMock.Object, _loggerMock.Object);
+        private RegisterCommandHandler CreateHandler()
+        {
+            return new RegisterCommandHandler(
+                _userRepoMock.Object,
+                _tokenServiceMock.Object,
+                _configMock.Object,
+                _refreshRepoMock.Object,
+                _passwordHasherMock.Object,
+                _loggerMock.Object
+            );
+        }
 
         [Fact]
         public async Task Handle_UserAlreadyExists_ShouldThrowUserAlreadyExistsException()

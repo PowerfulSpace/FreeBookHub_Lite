@@ -42,7 +42,7 @@ namespace AuthService.UnitTests.Application.Commands.Logout
             token.Revoke(); // делает токен неактивным
 
             _refreshTokenRepoMock
-                .Setup(x => x.GetByTokenAsync(It.IsAny<string>(), It.IsAny<CancellationToken>(), true))
+                .Setup(x => x.GetByTokenAsync(It.IsAny<string>(), It.IsAny<CancellationToken>(), false))
                 .ReturnsAsync(token);
 
             var model = new LogoutCommand { RefreshToken = "token-value" };
@@ -63,7 +63,7 @@ namespace AuthService.UnitTests.Application.Commands.Logout
             // активный по умолчанию
 
             _refreshTokenRepoMock
-                .Setup(x => x.GetByTokenAsync(It.IsAny<string>(), It.IsAny<CancellationToken>(), true))
+                .Setup(x => x.GetByTokenAsync(It.IsAny<string>(), It.IsAny<CancellationToken>(), false))
                 .ReturnsAsync(token);
 
             var model = new LogoutCommand { RefreshToken = "valid-token" };

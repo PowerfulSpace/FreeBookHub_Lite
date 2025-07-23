@@ -8,20 +8,21 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.CQRS.Commands.Logout
         public LogoutCommandValidator(IRefreshTokenRepository refreshTokenRepository)
         {
             RuleFor(x => x.RefreshToken)
-                .MustAsync(async (token, ct) =>
+                .CustomAsync(async (token, context, ct) =>
                 {
                     var rt = await refreshTokenRepository.GetByTokenAsync(token, ct);
-                    return rt != null;
-                })
-                .WithMessage("Refresh token not found.");
 
-            RuleFor(x => x.RefreshToken)
-                .MustAsync(async (token, ct) =>
-                {
-                    var rt = await refreshTokenRepository.GetByTokenAsync(token, ct);
-                    return rt == null || rt.IsActive();
-                })
-                .WithMessage("Refresh token is already revoked.");
+                    if (rt == null)
+                    {
+                        context.AddFailure("RefreshToken", "Refresh token not found.");
+                        return;
+                    }
+
+                    if (!rt.IsActive())
+                    {
+                        context.AddFailure("RefreshToken", "Refresh token is already revoked.");
+                    }
+                });
         }
     }
 }

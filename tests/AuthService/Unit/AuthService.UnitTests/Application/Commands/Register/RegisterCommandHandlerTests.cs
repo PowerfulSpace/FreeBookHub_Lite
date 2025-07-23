@@ -7,7 +7,7 @@ using PS.FreeBookHub_Lite.AuthService.Application.Services.Interfaces;
 using PS.FreeBookHub_Lite.AuthService.Domain.Entities;
 using PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.User;
 
-namespace AuthService.UnitTests.Application
+namespace AuthService.UnitTests.Application.Commands.Register
 {
     public class RegisterCommandHandlerTests
     {

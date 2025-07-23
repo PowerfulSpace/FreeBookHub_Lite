@@ -4,7 +4,7 @@ using Moq;
 using PS.FreeBookHub_Lite.AuthService.Application.CQRS.Commands.LogoutAll;
 using PS.FreeBookHub_Lite.AuthService.Application.Interfaces;
 
-namespace AuthService.UnitTests.Application
+namespace AuthService.UnitTests.Application.Commands.LogoutAll
 {
     public class LogoutAllCommandHandlerTests
     {

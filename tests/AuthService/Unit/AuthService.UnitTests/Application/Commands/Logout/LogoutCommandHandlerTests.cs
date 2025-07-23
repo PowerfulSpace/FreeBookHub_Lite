@@ -6,7 +6,7 @@ using PS.FreeBookHub_Lite.AuthService.Application.Interfaces;
 using PS.FreeBookHub_Lite.AuthService.Domain.Entities;
 using PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.Token;
 
-namespace AuthService.UnitTests.Application
+namespace AuthService.UnitTests.Application.Commands.Logout
 {
     public class LogoutCommandHandlerTests
     {

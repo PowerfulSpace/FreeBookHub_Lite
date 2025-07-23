@@ -10,7 +10,7 @@ using PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.Token;
 using PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.User;
 
 
-namespace AuthService.UnitTests.Application
+namespace AuthService.UnitTests.Application.Commands.RefreshTokens
 {
     public class RefreshTokenCommandHandlerTests
     {

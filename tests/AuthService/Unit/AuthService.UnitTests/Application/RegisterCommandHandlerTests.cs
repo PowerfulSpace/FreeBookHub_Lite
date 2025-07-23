@@ -35,8 +35,9 @@ namespace AuthService.UnitTests.Application
         {
             // Arrange
             var existingUser = new User("existing@mail.com", "hash");
-            _userRepoMock.Setup(x => x.GetByEmailAsync(existingUser.Email, It.IsAny<CancellationToken>(), true))
-                         .ReturnsAsync(existingUser);
+            _userRepoMock
+                .Setup(x => x.GetByEmailAsync(existingUser.Email, It.IsAny<CancellationToken>(), true))
+                .ReturnsAsync(existingUser);
 
             var handler = CreateHandler();
             var command = new RegisterCommand
@@ -60,22 +61,39 @@ namespace AuthService.UnitTests.Application
             var accessToken = "access-token";
             var refreshToken = "refresh-token";
 
-            _userRepoMock.Setup(x => x.GetByEmailAsync(email, It.IsAny<CancellationToken>(), true))
-                         .ReturnsAsync((User?)null);
+            _userRepoMock
+                .Setup(x => x.GetByEmailAsync(email, It.IsAny<CancellationToken>(), true))
+                .ReturnsAsync((User?)null);
 
-            _passwordHasherMock.Setup(x => x.Hash(password)).Returns(hashedPassword);
 
-            _tokenServiceMock.Setup(x => x.GenerateAccessToken(It.IsAny<User>())).Returns(accessToken);
-            _tokenServiceMock.Setup(x => x.GenerateRefreshToken()).Returns(refreshToken);
+            _passwordHasherMock
+                .Setup(x => x.Hash(password))
+                .Returns(hashedPassword);
 
-            _configMock.Setup(x => x["Auth:JwtSettings:RefreshTokenExpiryDays"]).Returns("7");
-            _configMock.Setup(x => x["Auth:JwtSettings:AccessTokenExpiryMinutes"]).Returns("15");
+            _tokenServiceMock
+                .Setup(x => x.GenerateAccessToken(It.IsAny<User>()))
+                .Returns(accessToken);
 
-            _userRepoMock.Setup(x => x.AddAsync(It.IsAny<User>(), It.IsAny<CancellationToken>()))
-                         .Returns(Task.CompletedTask);
+            _tokenServiceMock
+                .Setup(x => x.GenerateRefreshToken())
+                .Returns(refreshToken);
 
-            _refreshRepoMock.Setup(x => x.AddAsync(It.IsAny<RefreshToken>(), It.IsAny<CancellationToken>()))
-                            .Returns(Task.CompletedTask);
+            _configMock
+                .Setup(x => x["Auth:JwtSettings:RefreshTokenExpiryDays"])
+                .Returns("7");
+
+            _configMock
+                .Setup(x => x["Auth:JwtSettings:AccessTokenExpiryMinutes"])
+                .Returns("15");
+
+            _userRepoMock
+                .Setup(x => x.AddAsync(It.IsAny<User>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
+
+
+            _refreshRepoMock
+                .Setup(x => x.AddAsync(It.IsAny<RefreshToken>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
 
             var handler = CreateHandler();
 

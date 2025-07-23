@@ -6,28 +6,25 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.CQRS.Commands.RefreshToken
     public class RefreshTokenCommandValidator : AbstractValidator<RefreshTokenCommand>
     {
         public RefreshTokenCommandValidator(
-          IRefreshTokenRepository refreshTokenRepository,
-          IUserRepository userRepository)
+            IRefreshTokenRepository refreshTokenRepository,
+            IUserRepository userRepository)
         {
             RuleFor(x => x.RefreshToken)
-                .MustAsync(async (token, ct) =>
+                .CustomAsync(async (token, context, ct) =>
                 {
                     var rt = await refreshTokenRepository.GetByTokenAsync(token, ct, asNoTracking: true);
-                    return rt != null && rt.IsActive();
-                })
-                .WithMessage("Invalid or expired refresh token.")
 
-                .DependentRules(() =>
-                {
-                    RuleFor(x => x.RefreshToken)
-                        .MustAsync(async (token, ct) =>
-                        {
-                            var rt = await refreshTokenRepository.GetByTokenAsync(token, ct, asNoTracking: true);
-                            if (rt == null) return true; // теоретически не дойдём, но на всякий
-                            var user = await userRepository.GetByIdAsync(rt.UserId, ct, asNoTracking: true);
-                            return user != null && user.IsActive;
-                        })
-                        .WithMessage("Associated user account is not active.");
+                    if (rt == null || !rt.IsActive())
+                    {
+                        context.AddFailure("RefreshToken", "Invalid or expired refresh token.");
+                        return;
+                    }
+
+                    var user = await userRepository.GetByIdAsync(rt.UserId, ct, asNoTracking: true);
+                    if (user == null || !user.IsActive)
+                    {
+                        context.AddFailure("RefreshToken", "Associated user account is not active.");
+                    }
                 });
         }
     }

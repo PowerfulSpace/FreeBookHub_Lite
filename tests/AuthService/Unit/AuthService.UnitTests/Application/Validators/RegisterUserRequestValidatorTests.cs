@@ -53,17 +53,14 @@ namespace AuthService.UnitTests.Application.Validators
                   .WithErrorMessage("Invalid role");
         }
 
-        [Fact]
-        public void Should_Not_Have_Error_When_Role_Is_Null_Or_Empty()
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        public void Should_Not_Have_Error_When_Role_Is_Null_Or_Empty(string? role)
         {
-            var model1 = new RegisterUserRequest { Email = "user@example.com", Password = "validpass", Role = null };
-            var model2 = new RegisterUserRequest { Email = "user@example.com", Password = "validpass", Role = "" };
-
-            var result1 = _validator.TestValidate(model1);
-            var result2 = _validator.TestValidate(model2);
-
-            result1.ShouldNotHaveValidationErrorFor(x => x.Role);
-            result2.ShouldNotHaveValidationErrorFor(x => x.Role);
+            var model = new RegisterUserRequest { Email = "user@example.com", Password = "validpass", Role = role };
+            var result = _validator.TestValidate(model);
+            result.ShouldNotHaveValidationErrorFor(x => x.Role);
         }
 
         [Fact]

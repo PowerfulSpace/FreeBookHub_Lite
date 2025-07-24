@@ -8,20 +8,22 @@ namespace PS.FreeBookHub_Lite.AuthService.Application.CQRS.Commands.Login
         public LoginCommandValidator(IUserRepository userRepository)
         {
             RuleFor(x => x.Email)
-                .MustAsync(async (email, ct) =>
+                .NotEmpty().WithMessage("Email is required.")
+                .CustomAsync(async (email, context, ct) =>
                 {
                     var user = await userRepository.GetByEmailAsync(email, ct, asNoTracking: true);
-                    return user != null;
-                })
-                .WithMessage("Invalid credentials.");
 
-            RuleFor(x => x.Email)
-                .MustAsync(async (email, ct) =>
-                {
-                    var user = await userRepository.GetByEmailAsync(email, ct, asNoTracking: true);
-                    return user == null || user.IsActive;
-                })
-                .WithMessage("This user account has been deactivated.");
+                    if (user == null)
+                    {
+                        context.AddFailure("Invalid credentials.");
+                        return;
+                    }
+
+                    if (!user.IsActive)
+                    {
+                        context.AddFailure("This user account has been deactivated.");
+                    }
+                });
         }
     }
 }

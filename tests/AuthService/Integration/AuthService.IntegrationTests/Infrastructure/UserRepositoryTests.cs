@@ -1,4 +1,5 @@
 ﻿using AuthService.IntegrationTests.TestUtils;
+using Microsoft.EntityFrameworkCore;
 using PS.FreeBookHub_Lite.AuthService.Domain.Entities;
 using PS.FreeBookHub_Lite.AuthService.Domain.Enums;
 using PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence.Repositories;
@@ -68,6 +69,7 @@ namespace AuthService.IntegrationTests.Infrastructure
             var user = new User("update@example.com", "oldHash");
             context.Users.Add(user);
             await context.SaveChangesAsync();
+            context.Entry(user).State = EntityState.Detached;
 
             // Act
             var newUser = new User("new@example.com", "newHash", UserRole.Admin);

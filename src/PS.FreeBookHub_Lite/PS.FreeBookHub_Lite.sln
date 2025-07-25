@@ -135,6 +135,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit", "Unit", "{5EF8CF9E-8
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration", "{C53B2E6F-74CA-4ECA-8E70-E1B61A95DF7D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService.IntegrationTests", "..\..\tests\AuthService\Integration\AuthService.IntegrationTests\AuthService.IntegrationTests.csproj", "{7D5C5AFE-3F4B-417B-B803-C6BD9988420D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -253,6 +255,10 @@ Global
 		{FEF7CA2F-3DCF-4AC5-885D-E5D23217AEAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FEF7CA2F-3DCF-4AC5-885D-E5D23217AEAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FEF7CA2F-3DCF-4AC5-885D-E5D23217AEAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D5C5AFE-3F4B-417B-B803-C6BD9988420D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D5C5AFE-3F4B-417B-B803-C6BD9988420D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D5C5AFE-3F4B-417B-B803-C6BD9988420D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D5C5AFE-3F4B-417B-B803-C6BD9988420D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -322,5 +328,6 @@ Global
 		{BCA01E88-12D7-4719-ADBD-EEA06C0BE32D} = {6E26491D-631E-4C0A-B968-A5B870DE0B66}
 		{5EF8CF9E-883D-4939-AE65-48CA94D0D8EE} = {BCA01E88-12D7-4719-ADBD-EEA06C0BE32D}
 		{C53B2E6F-74CA-4ECA-8E70-E1B61A95DF7D} = {BCA01E88-12D7-4719-ADBD-EEA06C0BE32D}
+		{7D5C5AFE-3F4B-417B-B803-C6BD9988420D} = {C53B2E6F-74CA-4ECA-8E70-E1B61A95DF7D}
 	EndGlobalSection
 EndGlobal

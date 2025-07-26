@@ -1,5 +1,4 @@
-﻿using AuthService.IntegrationTests.TestUtils;
-using AuthService.IntegrationTests.TestUtils.Factories;
+﻿using AuthService.IntegrationTests.TestUtils.Factories;
 using Microsoft.EntityFrameworkCore;
 using PS.FreeBookHub_Lite.AuthService.Domain.Entities;
 using PS.FreeBookHub_Lite.AuthService.Domain.Enums;

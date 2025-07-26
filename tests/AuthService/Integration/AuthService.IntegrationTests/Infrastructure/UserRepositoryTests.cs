@@ -1,4 +1,5 @@
 ﻿using AuthService.IntegrationTests.TestUtils;
+using AuthService.IntegrationTests.TestUtils.Factories;
 using Microsoft.EntityFrameworkCore;
 using PS.FreeBookHub_Lite.AuthService.Domain.Entities;
 using PS.FreeBookHub_Lite.AuthService.Domain.Enums;
@@ -14,7 +15,7 @@ namespace AuthService.IntegrationTests.Infrastructure
         public async Task AddAsync_Should_Add_User_To_Database()
         {
             // Arrange
-            var context = TestDbContextFactory.Create();
+            var context = InMemoryTestDbFactory.Create();
             var repository = new UserRepository(context);
 
             var user = new User("test@example.com", "hashed123");
@@ -31,7 +32,7 @@ namespace AuthService.IntegrationTests.Infrastructure
         [Fact]
         public async Task GetByIdAsync_Should_Return_Correct_User()
         {
-            var context = TestDbContextFactory.Create();
+            var context = InMemoryTestDbFactory.Create();
             var repository = new UserRepository(context);
 
             var user = new User("byid@example.com", "pass");
@@ -47,7 +48,7 @@ namespace AuthService.IntegrationTests.Infrastructure
         [Fact]
         public async Task GetByEmailAsync_Should_Return_Correct_User()
         {
-            var context = TestDbContextFactory.Create();
+            var context = InMemoryTestDbFactory.Create();
             var repository = new UserRepository(context);
 
             var user = new User("byemail@example.com", "pass");
@@ -63,7 +64,7 @@ namespace AuthService.IntegrationTests.Infrastructure
         [Fact]
         public async Task UpdateAsync_Should_Modify_User()
         {
-            var context = TestDbContextFactory.Create();
+            var context = InMemoryTestDbFactory.Create();
             var repository = new UserRepository(context);
 
             var user = new User("update@example.com", "oldHash");
@@ -86,7 +87,7 @@ namespace AuthService.IntegrationTests.Infrastructure
         [Fact]
         public async Task DeleteAsync_Should_Remove_User()
         {
-            var context = TestDbContextFactory.Create();
+            var context = SqliteTestDbFactory.Create();
             var repository = new UserRepository(context);
 
             var user = new User("delete@example.com", "pass");
@@ -97,7 +98,11 @@ namespace AuthService.IntegrationTests.Infrastructure
             await repository.DeleteAsync(user.Id, _ct);
 
             // Assert
-            var deleted = await context.Users.FindAsync(user.Id);
+            var deleted = await context.Users
+                .AsNoTracking()
+                .FirstOrDefaultAsync(u => u.Id == user.Id, _ct);
+
+            Assert.Null(deleted);
             Assert.Null(deleted);
         }
     }

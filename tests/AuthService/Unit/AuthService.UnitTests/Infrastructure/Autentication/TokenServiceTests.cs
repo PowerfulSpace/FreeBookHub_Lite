@@ -25,10 +25,13 @@ namespace AuthService.UnitTests.Infrastructure.Autentication
         [Fact]
         public void GenerateRefreshToken_ShouldReturn_NonEmpty_ValidToken()
         {
+            // Arrange
             var service = CreateService();
 
+            // Act
             var token = service.GenerateRefreshToken();
 
+            // Assert
             Assert.False(string.IsNullOrWhiteSpace(token));
             Assert.True(token.Length >= 43); // Base64Url 32 bytes = ~43 chars
         }
@@ -36,15 +39,18 @@ namespace AuthService.UnitTests.Infrastructure.Autentication
         [Fact]
         public void GenerateAccessToken_ShouldContain_ExpectedClaims()
         {
+            // Arrange
             var service = CreateService();
 
             var user = new User("user@example.com", "hashedpassword");
 
             var token = service.GenerateAccessToken(user);
 
+            // Act
             var handler = new JwtSecurityTokenHandler();
             var jwt = handler.ReadJwtToken(token);
 
+            // Assert
             Assert.Equal("TestIssuer", jwt.Issuer);
             Assert.Equal("TestAudience", jwt.Audiences.First());
 

@@ -14,6 +14,27 @@ namespace AuthService.IntegrationTests.API.Controllers
             _client = factory.CreateClient();
         }
 
-       
+        [Fact]
+        public async Task Register_Should_Return_Tokens()
+        {
+            // Arrange
+            var request = new RegisterUserRequest
+            {
+                Email = "newuser@example.com",
+                Password = "securePassword123"
+            };
+
+            // Act
+            var response = await _client.PostAsJsonAsync("/api/auth/register", request);
+
+            // Assert
+            response.EnsureSuccessStatusCode();
+
+            var result = await response.Content.ReadFromJsonAsync<AuthResponse>();
+            Assert.NotNull(result);
+            Assert.False(string.IsNullOrWhiteSpace(result.AccessToken));
+            Assert.False(string.IsNullOrWhiteSpace(result.RefreshToken));
+        }
+
     }
 }

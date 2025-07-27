@@ -38,9 +38,12 @@ namespace PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence.Repositorie
 
         public async Task<List<RefreshToken>> GetActiveTokensByUserIdAsync(Guid userId, CancellationToken ct, bool asNoTracking = false)
         {
+            // Переписал,т.к SQLite In-Memory + EF Core не поддерживает работу с деревьями 
+            //IQueryable<RefreshToken> tokens = _context.RefreshTokens
+            //    .Where(rt => rt.UserId == userId && rt.IsActive());
 
             IQueryable<RefreshToken> tokens = _context.RefreshTokens
-                .Where(rt => rt.UserId == userId && rt.IsActive());
+                .Where(rt => rt.UserId == userId && !rt.IsRevoked && DateTime.UtcNow < rt.ExpiresAt);
 
             if (asNoTracking)
                 tokens = tokens.AsNoTracking();

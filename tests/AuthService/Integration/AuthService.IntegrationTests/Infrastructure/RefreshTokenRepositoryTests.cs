@@ -1,6 +1,7 @@
 ﻿using AuthService.IntegrationTests.TestUtils.Factories;
 using Microsoft.EntityFrameworkCore;
 using PS.FreeBookHub_Lite.AuthService.Domain.Entities;
+using PS.FreeBookHub_Lite.AuthService.Domain.Enums;
 using PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence.Repositories;
 
 namespace AuthService.IntegrationTests.Infrastructure
@@ -15,8 +16,12 @@ namespace AuthService.IntegrationTests.Infrastructure
             var context = SqliteTestDbFactory.Create();
             var repository = new RefreshTokenRepository(context);
 
+            var user = CreateValidUser();
+            context.Users.Add(user);
+            await context.SaveChangesAsync();
+
             var token = new RefreshToken(
-                userId: Guid.NewGuid(),
+                userId: user.Id,
                 token: "abc123",
                 expiresAt: DateTime.UtcNow.AddDays(7)
                 );
@@ -34,8 +39,12 @@ namespace AuthService.IntegrationTests.Infrastructure
             var context = SqliteTestDbFactory.Create();
             var repository = new RefreshTokenRepository(context);
 
+            var user = CreateValidUser();
+            context.Users.Add(user);
+            await context.SaveChangesAsync();
+
             var token = new RefreshToken(
-               userId: Guid.NewGuid(),
+               userId: user.Id,
                token: "abc123",
                expiresAt: DateTime.UtcNow.AddDays(7)
                );
@@ -43,7 +52,7 @@ namespace AuthService.IntegrationTests.Infrastructure
             context.RefreshTokens.Add(token);
             await context.SaveChangesAsync();
 
-            var result = await repository.GetByTokenAsync("xyz456", _ct);
+            var result = await repository.GetByTokenAsync("abc123", _ct);
 
             Assert.NotNull(result);
             Assert.Equal(token.Id, result!.Id);
@@ -55,8 +64,12 @@ namespace AuthService.IntegrationTests.Infrastructure
             var context = SqliteTestDbFactory.Create();
             var repository = new RefreshTokenRepository(context);
 
+            var user = CreateValidUser();
+            context.Users.Add(user);
+            await context.SaveChangesAsync();
+
             var originalToken = new RefreshToken(
-                userId: Guid.NewGuid(),
+                userId: user.Id,
                 token: "original",
                 expiresAt: DateTime.UtcNow.AddDays(7)
             );
@@ -87,17 +100,19 @@ namespace AuthService.IntegrationTests.Infrastructure
             var context = SqliteTestDbFactory.Create();
             var repository = new RefreshTokenRepository(context);
 
-            var userId = Guid.NewGuid();
+            var user = CreateValidUser();
+            context.Users.Add(user);
+            await context.SaveChangesAsync();
 
-            var active = new RefreshToken(userId, "active", DateTime.UtcNow.AddDays(1));
-            var expired = new RefreshToken(userId, "expired", DateTime.UtcNow.AddDays(-1));
-            var revoked = new RefreshToken(userId, "revoked", DateTime.UtcNow.AddDays(1));
+            var active = new RefreshToken(user.Id, "active", DateTime.UtcNow.AddDays(1));
+            var expired = new RefreshToken(user.Id, "expired", DateTime.UtcNow.AddDays(-1));
+            var revoked = new RefreshToken(user.Id, "revoked", DateTime.UtcNow.AddDays(1));
             revoked.Revoke();
 
             context.RefreshTokens.AddRange(active, expired, revoked);
             await context.SaveChangesAsync();
 
-            var result = await repository.GetActiveTokensByUserIdAsync(userId, _ct);
+            var result = await repository.GetActiveTokensByUserIdAsync(user.Id, _ct);
 
             Assert.Single(result);
             Assert.Equal("active", result[0].Token);
@@ -109,23 +124,34 @@ namespace AuthService.IntegrationTests.Infrastructure
             var context = SqliteTestDbFactory.Create();
             var repository = new RefreshTokenRepository(context);
 
-            var userId = Guid.NewGuid();
+            var user = CreateValidUser();
+            context.Users.Add(user);
+            await context.SaveChangesAsync();
 
-            var token1 = new RefreshToken(userId, "one", DateTime.UtcNow.AddDays(2));
-            var token2 = new RefreshToken(userId, "two", DateTime.UtcNow.AddDays(3));
-            var alreadyRevoked = new RefreshToken(userId, "revoked", DateTime.UtcNow.AddDays(3));
+            var token1 = new RefreshToken(user.Id, "one", DateTime.UtcNow.AddDays(2));
+            var token2 = new RefreshToken(user.Id, "two", DateTime.UtcNow.AddDays(3));
+            var alreadyRevoked = new RefreshToken(user.Id, "revoked", DateTime.UtcNow.AddDays(3));
             alreadyRevoked.Revoke();
 
             context.RefreshTokens.AddRange(token1, token2, alreadyRevoked);
             await context.SaveChangesAsync();
 
-            await repository.RevokeAllTokensForUserAsync(userId, _ct);
+            await repository.RevokeAllTokensForUserAsync(user.Id, _ct);
 
             var tokens = await context.RefreshTokens
-                .Where(t => t.UserId == userId)
+                .Where(t => t.UserId == user.Id)
                 .ToListAsync();
 
             Assert.All(tokens, t => Assert.True(t.IsRevoked));
+        }
+
+        private static User CreateValidUser()
+        {
+            return new User(
+                email: $"user_{Guid.NewGuid()}@test.com",
+                passwordHash: "hashed_password",
+                role: UserRole.User
+            );
         }
     }
 }

@@ -70,5 +70,56 @@ namespace AuthService.IntegrationTests.API.Controllers
             Assert.False(string.IsNullOrWhiteSpace(tokens!.AccessToken));
             Assert.False(string.IsNullOrWhiteSpace(tokens!.RefreshToken));
         }
+
+
+        [Fact]
+        public async Task Refresh_Should_Return_New_Tokens_When_Valid()
+        {
+            // Arrange
+            var factory = new AuthApiFactory();
+            var client = factory.CreateClient();
+
+            // Register
+            var registerRequest = new RegisterUserRequest
+            {
+                Email = "refreshuser@example.com",
+                Password = "MyPassword123!"
+            };
+
+            var registerResponse = await client.PostAsJsonAsync("/api/auth/register", registerRequest);
+            registerResponse.EnsureSuccessStatusCode();
+
+            // Login
+            var loginRequest = new LoginRequest
+            {
+                Email = registerRequest.Email,
+                Password = registerRequest.Password
+            };
+
+            var loginResponse = await client.PostAsJsonAsync("/api/auth/login", loginRequest);
+            loginResponse.EnsureSuccessStatusCode();
+
+            var tokens = await loginResponse.Content.ReadFromJsonAsync<AuthResponse>();
+
+            // Устанавливаем access token в заголовок
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", tokens!.AccessToken);
+
+            // Act — Refresh
+            var refreshRequest = new RefreshTokenRequest
+            {
+                RefreshToken = tokens.RefreshToken
+            };
+
+            var refreshResponse = await client.PostAsJsonAsync("/api/auth/refresh", refreshRequest);
+
+            // Assert
+            refreshResponse.EnsureSuccessStatusCode();
+            var refreshedTokens = await refreshResponse.Content.ReadFromJsonAsync<AuthResponse>();
+
+            Assert.NotNull(refreshedTokens);
+            Assert.NotEqual(tokens.AccessToken, refreshedTokens!.AccessToken);
+            Assert.NotEqual(tokens.RefreshToken, refreshedTokens.RefreshToken);
+            Assert.True(refreshedTokens.ExpiresAt > tokens.ExpiresAt);
+        }
     }
 }

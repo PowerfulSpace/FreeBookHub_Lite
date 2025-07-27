@@ -102,7 +102,6 @@ namespace AuthService.IntegrationTests.Infrastructure
                 .FirstOrDefaultAsync(u => u.Id == user.Id, _ct);
 
             Assert.Null(deleted);
-            Assert.Null(deleted);
         }
     }
 }

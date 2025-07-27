@@ -121,5 +121,50 @@ namespace AuthService.IntegrationTests.API.Controllers
             Assert.NotEqual(tokens.RefreshToken, refreshedTokens.RefreshToken);
             Assert.True(refreshedTokens.ExpiresAt > tokens.ExpiresAt);
         }
+
+        [Fact]
+        public async Task Logout_Should_Revoke_Refresh_Token()
+        {
+            // Arrange
+            var factory = new AuthApiFactory();
+            var client = factory.CreateClient();
+
+            var email = "logoutuser@example.com";
+            var password = "MyPassword123!";
+
+            await client.PostAsJsonAsync("/api/auth/register", new RegisterUserRequest
+            {
+                Email = email,
+                Password = password
+            });
+
+            var loginResponse = await client.PostAsJsonAsync("/api/auth/login", new LoginRequest
+            {
+                Email = email,
+                Password = password
+            });
+
+            var tokens = await loginResponse.Content.ReadFromJsonAsync<AuthResponse>();
+            client.DefaultRequestHeaders.Authorization = new("Bearer", tokens!.AccessToken);
+
+            // Act — Logout
+            var logoutRequest = new LogoutRequest
+            {
+                RefreshToken = tokens.RefreshToken
+            };
+
+            var logoutResponse = await client.PostAsJsonAsync("/api/auth/logout", logoutRequest);
+
+            // Assert
+            Assert.Equal(HttpStatusCode.NoContent, logoutResponse.StatusCode);
+
+            // Попытка refresh — должна провалиться
+            var refreshResponse = await client.PostAsJsonAsync("/api/auth/refresh", new RefreshTokenRequest
+            {
+                RefreshToken = tokens.RefreshToken
+            });
+
+            Assert.Equal(HttpStatusCode.Unauthorized, refreshResponse.StatusCode);
+        }
     }
 }

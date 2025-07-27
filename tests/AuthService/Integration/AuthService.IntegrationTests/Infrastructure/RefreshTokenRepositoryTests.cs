@@ -1,5 +1,6 @@
 ﻿using AuthService.IntegrationTests.TestUtils.Factories;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using PS.FreeBookHub_Lite.AuthService.Domain.Entities;
 using PS.FreeBookHub_Lite.AuthService.Domain.Enums;
 using PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence.Repositories;
@@ -128,9 +129,11 @@ namespace AuthService.IntegrationTests.Infrastructure
             context.Users.Add(user);
             await context.SaveChangesAsync();
 
-            var token1 = new RefreshToken(user.Id, "one", DateTime.UtcNow.AddDays(2));
-            var token2 = new RefreshToken(user.Id, "two", DateTime.UtcNow.AddDays(3));
-            var alreadyRevoked = new RefreshToken(user.Id, "revoked", DateTime.UtcNow.AddDays(3));
+            var now = DateTime.UtcNow;
+
+            var token1 = new RefreshToken(user.Id, "one", now.AddDays(2));
+            var token2 = new RefreshToken(user.Id, "two", now.AddDays(3));
+            var alreadyRevoked = new RefreshToken(user.Id, "revoked", now.AddDays(3));
             alreadyRevoked.Revoke();
 
             context.RefreshTokens.AddRange(token1, token2, alreadyRevoked);

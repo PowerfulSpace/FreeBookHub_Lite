@@ -166,5 +166,62 @@ namespace AuthService.IntegrationTests.API.Controllers
 
             Assert.Equal(HttpStatusCode.Unauthorized, refreshResponse.StatusCode);
         }
+
+
+        [Fact]
+        public async Task LogoutAll_Should_Revoke_All_Refresh_Tokens_For_User()
+        {
+            // Arrange
+            var factory = new AuthApiFactory();
+            var client = factory.CreateClient();
+
+            var email = "logoutalluser@example.com";
+            var password = "MyPassword123!";
+
+            await client.PostAsJsonAsync("/api/auth/register", new RegisterUserRequest
+            {
+                Email = email,
+                Password = password
+            });
+
+            var loginResponse1 = await client.PostAsJsonAsync("/api/auth/login", new LoginRequest
+            {
+                Email = email,
+                Password = password
+            });
+
+            var tokens1 = await loginResponse1.Content.ReadFromJsonAsync<AuthResponse>();
+
+            // эмулируем вторую сессию
+            var loginResponse2 = await client.PostAsJsonAsync("/api/auth/login", new LoginRequest
+            {
+                Email = email,
+                Password = password
+            });
+
+            var tokens2 = await loginResponse2.Content.ReadFromJsonAsync<AuthResponse>();
+
+            client.DefaultRequestHeaders.Authorization = new("Bearer", tokens1!.AccessToken);
+
+            // Act — LogoutAll
+            var logoutAllResponse = await client.PostAsync("/api/auth/logout-all", null);
+
+            // Assert
+            Assert.Equal(HttpStatusCode.NoContent, logoutAllResponse.StatusCode);
+
+            // Проверим, что оба refresh токена более невалидны
+            var failedRefresh1 = await client.PostAsJsonAsync("/api/auth/refresh", new RefreshTokenRequest
+            {
+                RefreshToken = tokens1.RefreshToken
+            });
+
+            var failedRefresh2 = await client.PostAsJsonAsync("/api/auth/refresh", new RefreshTokenRequest
+            {
+                RefreshToken = tokens2!.RefreshToken
+            });
+
+            Assert.Equal(HttpStatusCode.Unauthorized, failedRefresh1.StatusCode);
+            Assert.Equal(HttpStatusCode.Unauthorized, failedRefresh2.StatusCode);
+        }
     }
 }

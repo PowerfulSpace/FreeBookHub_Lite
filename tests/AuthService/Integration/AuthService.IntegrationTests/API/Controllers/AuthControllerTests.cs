@@ -36,7 +36,6 @@ namespace AuthService.IntegrationTests.API.Controllers
             Assert.False(string.IsNullOrWhiteSpace(result.RefreshToken));
         }
 
-
         [Fact]
         public async Task Login_Should_Return_Tokens_For_Valid_Credentials()
         {
@@ -70,7 +69,6 @@ namespace AuthService.IntegrationTests.API.Controllers
             Assert.False(string.IsNullOrWhiteSpace(tokens!.AccessToken));
             Assert.False(string.IsNullOrWhiteSpace(tokens!.RefreshToken));
         }
-
 
         [Fact]
         public async Task Refresh_Should_Return_New_Tokens_When_Valid()
@@ -166,7 +164,6 @@ namespace AuthService.IntegrationTests.API.Controllers
 
             Assert.Equal(HttpStatusCode.Unauthorized, refreshResponse.StatusCode);
         }
-
 
         [Fact]
         public async Task LogoutAll_Should_Revoke_All_Refresh_Tokens_For_User()

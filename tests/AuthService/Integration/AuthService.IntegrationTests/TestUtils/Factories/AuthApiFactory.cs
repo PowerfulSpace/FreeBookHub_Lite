@@ -32,7 +32,7 @@ namespace AuthService.IntegrationTests.TestUtils.Factories
                 using var scope = sp.CreateScope();
                 var db = scope.ServiceProvider.GetRequiredService<AuthDbContext>();
                 db.Database.OpenConnection();
-                db.Database.EnsureCreated(); // или db.Database.Migrate();
+                db.Database.EnsureCreated();
             });
         }
     }

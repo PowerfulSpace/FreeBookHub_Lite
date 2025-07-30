@@ -29,6 +29,13 @@ namespace PS.FreeBookHub_Lite.AuthService.Infrastructure
             services.AddDbContext<AuthDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("AuthDb")));
 
+
+            //Нужен для интеграционных тестов, временное решение
+            //services.AddDbContext<AuthDbContext>(options =>
+            //{
+            //    options.UseSqlite("DataSource=:memory:");
+            //});
+
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 

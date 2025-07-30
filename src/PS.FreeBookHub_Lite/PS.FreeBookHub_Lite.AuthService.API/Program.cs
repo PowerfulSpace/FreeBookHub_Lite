@@ -26,6 +26,7 @@ try
 
         if (app.Environment.IsDevelopment())
         {
+            //app.UseDeveloperExceptionPage();
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
@@ -55,3 +56,5 @@ finally
     Log.Information("Shut down complete.[AuthService]");
     Log.CloseAndFlush();
 }
+
+public partial class Program { }

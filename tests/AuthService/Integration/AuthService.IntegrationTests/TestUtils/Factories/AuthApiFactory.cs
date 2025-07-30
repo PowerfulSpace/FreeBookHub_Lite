@@ -4,16 +4,19 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 using PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Data.Sqlite;
 
 namespace AuthService.IntegrationTests.TestUtils.Factories
 {
     public class AuthApiFactory : WebApplicationFactory<Program>
     {
+        private readonly SqliteConnection _connection = new("DataSource=:memory:");
+
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             builder.ConfigureServices(services =>
             {
-                // Удалим оригинальный контекст
+                // Удалим оригинальный DbContext
                 var descriptor = services.SingleOrDefault(
                     d => d.ServiceType == typeof(DbContextOptions<AuthDbContext>));
                 if (descriptor != null)
@@ -21,19 +24,27 @@ namespace AuthService.IntegrationTests.TestUtils.Factories
                     services.Remove(descriptor);
                 }
 
-                // Добавим InMemory или SQLite (в зависимости от твоего выбора)
+                // Открываем соединение заранее и регистрируем его
+                _connection.Open();
+
                 services.AddDbContext<AuthDbContext>(options =>
                 {
-                    options.UseSqlite("DataSource=:memory:");
+                    options.UseSqlite(_connection); // <-- ВАЖНО!
                 });
 
-                // Создадим базу и применим миграции
+                // Собираем провайдер и вызываем EnsureCreated
                 var sp = services.BuildServiceProvider();
+
                 using var scope = sp.CreateScope();
                 var db = scope.ServiceProvider.GetRequiredService<AuthDbContext>();
-                db.Database.OpenConnection();
                 db.Database.EnsureCreated();
             });
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            _connection.Close(); // Закрываем соединение при завершении тестов
         }
     }
 }

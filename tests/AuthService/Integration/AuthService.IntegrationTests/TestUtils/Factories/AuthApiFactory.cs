@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
-using PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence;
 
 namespace AuthService.IntegrationTests.TestUtils.Factories
 {

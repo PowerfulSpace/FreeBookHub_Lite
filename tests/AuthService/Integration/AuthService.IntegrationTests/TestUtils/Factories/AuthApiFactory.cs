@@ -43,7 +43,7 @@ namespace AuthService.IntegrationTests.TestUtils.Factories
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-            _connection.Close(); // Закрываем соединение при завершении тестов
+            _connection.Close();
         }
     }
 }

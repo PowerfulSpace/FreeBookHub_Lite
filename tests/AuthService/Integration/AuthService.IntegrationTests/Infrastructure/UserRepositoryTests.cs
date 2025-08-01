@@ -122,6 +122,15 @@ namespace AuthService.IntegrationTests.Infrastructure
             Assert.False(isTracked);
         }
 
+        [Fact]
+        public async Task GetByIdAsync_Should_Return_Null_If_Not_Found()
+        {
+            var context = InMemoryTestDbFactory.Create();
+            var repository = new UserRepository(context);
 
+            var result = await repository.GetByIdAsync(Guid.NewGuid(), _ct);
+
+            Assert.Null(result);
+        }
     }
 }

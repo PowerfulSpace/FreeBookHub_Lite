@@ -132,5 +132,20 @@ namespace AuthService.IntegrationTests.Infrastructure
 
             Assert.Null(result);
         }
+
+        [Fact]
+        public async Task AddAsync_Should_Throw_On_Duplicate_Id()
+        {
+            var context = InMemoryTestDbFactory.Create();
+            var repository = new UserRepository(context);
+
+            var user = new User("duplicate@example.com", "pass");
+            await repository.AddAsync(user, _ct);
+
+            var duplicate = new User("another@example.com", "pass");
+            typeof(User).GetProperty("Id")!.SetValue(duplicate, user.Id);
+
+            await Assert.ThrowsAsync<DbUpdateException>(() => repository.AddAsync(duplicate, _ct));
+        }
     }
 }

@@ -63,6 +63,7 @@ namespace AuthService.IntegrationTests.Infrastructure
         [Fact]
         public async Task UpdateAsync_Should_Modify_User()
         {
+            // Arrange
             var context = InMemoryTestDbFactory.Create();
             var repository = new UserRepository(context);
 

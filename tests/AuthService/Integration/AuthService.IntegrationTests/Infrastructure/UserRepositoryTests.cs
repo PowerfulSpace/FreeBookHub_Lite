@@ -103,5 +103,25 @@ namespace AuthService.IntegrationTests.Infrastructure
 
             Assert.Null(deleted);
         }
+
+
+
+        [Fact]
+        public async Task GetByIdAsync_AsNoTracking_Should_Not_Track_Entity()
+        {
+            var context = InMemoryTestDbFactory.Create();
+            var repository = new UserRepository(context);
+
+            var user = new User("ntracking@example.com", "pass");
+            context.Users.Add(user);
+            await context.SaveChangesAsync();
+
+            var found = await repository.GetByIdAsync(user.Id, _ct, asNoTracking: true);
+
+            var isTracked = context.ChangeTracker.Entries<User>().Any(e => e.Entity.Id == user.Id);
+            Assert.False(isTracked);
+        }
+
+
     }
 }

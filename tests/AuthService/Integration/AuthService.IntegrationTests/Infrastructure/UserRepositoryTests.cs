@@ -105,7 +105,6 @@ namespace AuthService.IntegrationTests.Infrastructure
         }
 
 
-
         [Fact]
         public async Task GetByIdAsync_AsNoTracking_Should_Not_Track_Entity()
         {

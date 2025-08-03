@@ -31,15 +31,18 @@ namespace AuthService.IntegrationTests.Infrastructure
         [Fact]
         public async Task GetByIdAsync_Should_Return_Correct_User()
         {
+            // Arrange
             var context = InMemoryTestDbFactory.Create();
             var repository = new UserRepository(context);
 
+            // Act
             var user = new User("byid@example.com", "pass");
             context.Users.Add(user);
             await context.SaveChangesAsync();
 
             var found = await repository.GetByIdAsync(user.Id, _ct);
 
+            // Assert
             Assert.NotNull(found);
             Assert.Equal(user.Id, found!.Id);
         }

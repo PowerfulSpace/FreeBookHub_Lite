@@ -50,6 +50,7 @@ namespace AuthService.IntegrationTests.Infrastructure
         [Fact]
         public async Task GetByEmailAsync_Should_Return_Correct_User()
         {
+            // Arrange
             var context = InMemoryTestDbFactory.Create();
             var repository = new UserRepository(context);
 
@@ -57,8 +58,10 @@ namespace AuthService.IntegrationTests.Infrastructure
             context.Users.Add(user);
             await context.SaveChangesAsync();
 
+            // Act
             var found = await repository.GetByEmailAsync("byemail@example.com", _ct);
 
+            // Assert
             Assert.NotNull(found);
             Assert.Equal(user.Email, found!.Email);
         }

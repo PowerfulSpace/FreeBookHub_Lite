@@ -93,6 +93,7 @@ namespace AuthService.IntegrationTests.Infrastructure
         [Fact]
         public async Task DeleteAsync_Should_Remove_User()
         {
+            // Arrange
             var context = SqliteTestDbFactory.Create();
             var repository = new UserRepository(context);
 

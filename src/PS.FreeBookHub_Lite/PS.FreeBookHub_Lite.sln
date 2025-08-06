@@ -137,6 +137,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService.IntegrationTests", "..\..\tests\AuthService\Integration\AuthService.IntegrationTests\AuthService.IntegrationTests.csproj", "{7D5C5AFE-3F4B-417B-B803-C6BD9988420D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{F9329CE9-37CC-461C-B5A6-33BACCC8EF51}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -329,5 +331,6 @@ Global
 		{5EF8CF9E-883D-4939-AE65-48CA94D0D8EE} = {BCA01E88-12D7-4719-ADBD-EEA06C0BE32D}
 		{C53B2E6F-74CA-4ECA-8E70-E1B61A95DF7D} = {BCA01E88-12D7-4719-ADBD-EEA06C0BE32D}
 		{7D5C5AFE-3F4B-417B-B803-C6BD9988420D} = {C53B2E6F-74CA-4ECA-8E70-E1B61A95DF7D}
+		{F9329CE9-37CC-461C-B5A6-33BACCC8EF51} = {9770E99F-1FD1-46CC-8A6B-0894C7AFFA6F}
 	EndGlobalSection
 EndGlobal

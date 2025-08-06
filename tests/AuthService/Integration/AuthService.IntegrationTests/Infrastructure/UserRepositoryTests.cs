@@ -116,6 +116,7 @@ namespace AuthService.IntegrationTests.Infrastructure
         [Fact]
         public async Task GetByIdAsync_AsNoTracking_Should_Not_Track_Entity()
         {
+            // Arrange
             var context = InMemoryTestDbFactory.Create();
             var repository = new UserRepository(context);
 
@@ -123,8 +124,10 @@ namespace AuthService.IntegrationTests.Infrastructure
             context.Users.Add(user);
             await context.SaveChangesAsync();
 
+            // Act
             var found = await repository.GetByIdAsync(user.Id, _ct, asNoTracking: true);
 
+            // Assert
             var isTracked = context.ChangeTracker.Entries<User>().Any(e => e.Entity.Id == user.Id);
             Assert.False(isTracked);
         }

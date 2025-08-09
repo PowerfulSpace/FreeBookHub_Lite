@@ -24,4 +24,10 @@
     <Folder Include="Infrastructure\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\src\PS.FreeBookHub_Lite\PS.FreeBookHub_Lite.CartService.Application\PS.FreeBookHub_Lite.CartService.Application.csproj" />
+    <ProjectReference Include="..\..\..\..\src\PS.FreeBookHub_Lite\PS.FreeBookHub_Lite.CartService.Domain\PS.FreeBookHub_Lite.CartService.Domain.csproj" />
+    <ProjectReference Include="..\..\..\..\src\PS.FreeBookHub_Lite\PS.FreeBookHub_Lite.CartService.Infrastructure\PS.FreeBookHub_Lite.CartService.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

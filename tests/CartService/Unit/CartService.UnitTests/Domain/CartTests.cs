@@ -8,10 +8,13 @@ namespace CartService.UnitTests.Domain
         [Fact]
         public void CreateCart_ShouldInitializeCorrectly()
         {
+            //Arrange
             var userId = Guid.NewGuid();
 
+            // Act
             var cart = new Cart(userId);
 
+            // Assert
             Assert.Equal(userId, cart.UserId);
             Assert.Empty(cart.Items);
             Assert.NotEqual(Guid.Empty, cart.Id);

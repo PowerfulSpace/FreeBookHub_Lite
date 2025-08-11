@@ -41,12 +41,15 @@ namespace CartService.UnitTests.Domain
         [Fact]
         public void AddItem_ShouldIncreaseQuantity_WhenBookAlreadyInCart()
         {
+            //Arrange
             var cart = new Cart(Guid.NewGuid());
             var bookId = Guid.NewGuid();
 
+            // Act
             cart.AddItem(bookId, 2, 10m);
             cart.AddItem(bookId, 3, 10m);
 
+            // Assert
             var item = cart.Items.First();
             Assert.Equal(5, item.Quantity);
             Assert.Equal(50m, item.TotalPrice);

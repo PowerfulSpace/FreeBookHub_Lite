@@ -23,11 +23,14 @@ namespace CartService.UnitTests.Domain
         [Fact]
         public void AddItem_ShouldAddNewItem_WhenBookNotInCart()
         {
+            //Arrange
             var cart = new Cart(Guid.NewGuid());
             var bookId = Guid.NewGuid();
 
+            // Act
             cart.AddItem(bookId, 2, 10m);
 
+            // Assert
             Assert.Single(cart.Items);
             var item = cart.Items.First();
             Assert.Equal(bookId, item.BookId);

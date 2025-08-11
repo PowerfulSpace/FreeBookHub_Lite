@@ -90,12 +90,15 @@ namespace CartService.UnitTests.Domain
         [Fact]
         public void UpdateQuantity_ShouldUpdate_WhenItemExists()
         {
+            //Arrange
             var cart = new Cart(Guid.NewGuid());
             var bookId = Guid.NewGuid();
 
+            // Act
             cart.AddItem(bookId, 2, 10m);
             cart.UpdateQuantity(bookId, 5);
 
+            // Assert
             var item = cart.Items.First();
             Assert.Equal(5, item.Quantity);
             Assert.Equal(50m, item.TotalPrice);

@@ -76,10 +76,10 @@ namespace CartService.UnitTests.Domain
             var book1 = Guid.NewGuid();
             var book2 = Guid.NewGuid();
 
+            // Act
             cart.AddItem(book1, 1, 10m);
             cart.AddItem(book2, 1, 20m);
 
-            // Act
             cart.RemoveItem(book1);
 
             // Assert

@@ -58,8 +58,10 @@ namespace CartService.UnitTests.Domain
         [Fact]
         public void AddItem_WithNonPositiveQuantity_ShouldThrow()
         {
+            // Act
             var cart = new Cart(Guid.NewGuid());
 
+            // Assert
             var ex = Assert.Throws<InvalidCartItemQuantityException>(
                 () => cart.AddItem(Guid.NewGuid(), 0, 10m)
             );

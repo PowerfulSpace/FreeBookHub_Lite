@@ -107,13 +107,17 @@ namespace CartService.UnitTests.Domain
         [Fact]
         public void UpdateQuantity_WhenItemDoesNotExist_ShouldThrow()
         {
+            //Arrange
             var userId = Guid.NewGuid();
             var cart = new Cart(userId);
             var bookId = Guid.NewGuid();
 
+            // Act
             var ex = Assert.Throws<CartItemNotFoundException>(
                 () => cart.UpdateQuantity(bookId, 3)
             );
+
+            // Assert
             Assert.Equal(userId, ex.UserId);
             Assert.Equal(bookId, ex.BookId);
         }

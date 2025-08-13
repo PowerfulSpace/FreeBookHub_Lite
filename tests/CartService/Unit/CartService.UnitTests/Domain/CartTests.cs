@@ -125,10 +125,14 @@ namespace CartService.UnitTests.Domain
         [Fact]
         public void TotalPrice_ShouldReturnSumOfAllItems()
         {
+            //Arrange
             var cart = new Cart(Guid.NewGuid());
+
+            // Act
             cart.AddItem(Guid.NewGuid(), 2, 10m); // 20
             cart.AddItem(Guid.NewGuid(), 3, 5m);  // 15
 
+            // Assert
             Assert.Equal(35m, cart.TotalPrice);
         }
 

@@ -60,6 +60,24 @@ services:
     networks:
       - backend
 
+  # OrderService
+  orderservice:
+    build:
+      context: .
+      dockerfile: PS.FreeBookHub_Lite.OrderService/Dockerfile
+    container_name: orderservice
+    ports:
+      - "5003:80"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Docker"
+    depends_on:
+      - mssql
+      - rabbitmq
+      - redis
+      - paymentservice
+    networks:
+      - backend
+
 networks:
   backend:
 

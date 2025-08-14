@@ -1,0 +1,53 @@
+version: "3.9"
+
+services:
+  # MSSQL Server
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: mssql
+    environment:
+      SA_PASSWORD: "Your_password123" # Пароль обязательно >8 символов + сложный
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    networks:
+      - backend
+    volumes:
+      - mssql_data:/var/opt/mssql
+
+  # AuthService
+  authservice:
+    build:
+      context: .
+      dockerfile: PS.FreeBookHub_Lite.AuthService/Dockerfile
+    container_name: authservice
+    ports:
+      - "5000:80"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Docker"
+    depends_on:
+      - mssql
+    networks:
+      - backend
+
+  # CartService
+  cartservice:
+    build:
+      context: ./PS.FreeBookHub_Lite.CartService
+      dockerfile: Dockerfile
+    container_name: cartservice
+    ports:
+      - "5001:80"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Docker"
+    depends_on:
+      - mssql
+    networks:
+      - backend
+
+
+networks:
+  backend:
+
+volumes:
+  mssql_data:

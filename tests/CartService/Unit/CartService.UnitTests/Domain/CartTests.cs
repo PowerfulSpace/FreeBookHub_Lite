@@ -139,11 +139,14 @@ namespace CartService.UnitTests.Domain
         [Fact]
         public void Clear_ShouldRemoveAllItems()
         {
+            //Arrange
             var cart = new Cart(Guid.NewGuid());
             cart.AddItem(Guid.NewGuid(), 1, 10m);
 
+            // Act
             cart.Clear();
 
+            // Assert
             Assert.Empty(cart.Items);
             Assert.Equal(0m, cart.TotalPrice);
         }

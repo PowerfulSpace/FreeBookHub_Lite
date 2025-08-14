@@ -45,6 +45,20 @@ services:
     networks:
       - backend
 
+  # CatalogsSrvice
+  catalogservice:
+    build:
+      context: .
+      dockerfile: PS.FreeBookHub_Lite.CatalogService/Dockerfile
+    container_name: catalogservice
+    ports:
+      - "5002:80"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Docker"
+    depends_on:
+      - mssql
+    networks:
+      - backend
 
 networks:
   backend:

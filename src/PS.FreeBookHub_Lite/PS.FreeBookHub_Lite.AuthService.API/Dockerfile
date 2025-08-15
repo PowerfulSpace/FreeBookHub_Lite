@@ -9,11 +9,11 @@ COPY ["PS.FreeBookHub_Lite.AuthService.Domain/PS.FreeBookHub_Lite.AuthService.Do
 COPY ["PS.FreeBookHub_Lite.AuthService.Infrastructure/PS.FreeBookHub_Lite.AuthService.Infrastructure.csproj", "PS.FreeBookHub_Lite.AuthService.Infrastructure/"]
 COPY ["PS.FreeBookHub_Lite.AuthService.Common/PS.FreeBookHub_Lite.AuthService.Common.csproj", "PS.FreeBookHub_Lite.AuthService.Common/"]
 
-RUN dotnet restore "PS.FreeBookHub_Lite.AuthService/PS.FreeBookHub_Lite.AuthService.csproj"
+RUN dotnet restore "PS.FreeBookHub_Lite.AuthService.API/PS.FreeBookHub_Lite.AuthService.API.csproj"
 
 # Копируем всё остальное и публикуем
 COPY . .
-WORKDIR "/src/PS.FreeBookHub_Lite.AuthService"
+WORKDIR "/src/PS.FreeBookHub_Lite.AuthService.API"
 RUN dotnet publish -c Release -o /app/publish /p:UseAppHost=false
 
 # ========== 2. Runtime stage ==========
@@ -27,4 +27,4 @@ COPY --from=build /app/publish .
 ENV ASPNETCORE_URLS=http://+:80
 ENV DOTNET_EnableDiagnostics=0
 
-ENTRYPOINT ["dotnet", "PS.FreeBookHub_Lite.AuthService.dll"]
+ENTRYPOINT ["dotnet", "PS.FreeBookHub_Lite.AuthService.API.dll"]

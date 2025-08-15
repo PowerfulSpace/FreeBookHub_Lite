@@ -38,7 +38,7 @@ services:
   authservice:
     build:
       context: .
-      dockerfile: PS.FreeBookHub_Lite.AuthService/Dockerfile
+      dockerfile: PS.FreeBookHub_Lite.AuthService.API/Dockerfile
     container_name: authservice
     ports:
       - "5000:80"
@@ -53,7 +53,7 @@ services:
   cartservice:
     build:
       context: .
-      dockerfile: PS.FreeBookHub_Lite.CartService/Dockerfile
+      dockerfile: PS.FreeBookHub_Lite.CartService.API/Dockerfile
     container_name: cartservice
     ports:
       - "5001:80"
@@ -70,7 +70,7 @@ services:
   catalogservice:
     build:
       context: .
-      dockerfile: PS.FreeBookHub_Lite.CatalogService/Dockerfile
+      dockerfile: PS.FreeBookHub_Lite.CatalogService.API/Dockerfile
     container_name: catalogservice
     ports:
       - "5002:80"
@@ -85,7 +85,7 @@ services:
   orderservice:
     build:
       context: .
-      dockerfile: PS.FreeBookHub_Lite.OrderService/Dockerfile
+      dockerfile: PS.FreeBookHub_Lite.OrderService.API/Dockerfile
     container_name: orderservice
     ports:
       - "5003:80"
@@ -103,7 +103,7 @@ services:
   paymentservice:
     build:
       context: .
-      dockerfile: PS.FreeBookHub_Lite.PaymentService/Dockerfile
+      dockerfile: PS.FreeBookHub_Lite.PaymentService.API/Dockerfile
     container_name: paymentservice
     ports:
       - "5004:80"

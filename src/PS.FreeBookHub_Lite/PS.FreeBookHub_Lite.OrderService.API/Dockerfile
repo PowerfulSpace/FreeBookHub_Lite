@@ -8,6 +8,7 @@ COPY ["PS.FreeBookHub_Lite.OrderService.Domain/PS.FreeBookHub_Lite.OrderService.
 COPY ["PS.FreeBookHub_Lite.OrderService.Infrastructure/PS.FreeBookHub_Lite.OrderService.Infrastructure.csproj", "PS.FreeBookHub_Lite.OrderService.Infrastructure/"]
 COPY ["PS.FreeBookHub_Lite.OrderService.Common/PS.FreeBookHub_Lite.OrderService.Common.csproj", "PS.FreeBookHub_Lite.OrderService.Common/"]
 
+
 RUN dotnet restore "PS.FreeBookHub_Lite.OrderService.API/PS.FreeBookHub_Lite.OrderService.API.csproj"
 
 COPY . .

@@ -9,6 +9,7 @@ COPY ["PS.FreeBookHub_Lite.CatalogService.Domain/PS.FreeBookHub_Lite.CatalogServ
 COPY ["PS.FreeBookHub_Lite.CatalogService.Infrastructure/PS.FreeBookHub_Lite.CatalogService.Infrastructure.csproj", "PS.FreeBookHub_Lite.CatalogService.Infrastructure/"]
 COPY ["PS.FreeBookHub_Lite.CatalogService.Common/PS.FreeBookHub_Lite.CatalogService.Common.csproj", "PS.FreeBookHub_Lite.CatalogService.Common/"]
 
+
 RUN dotnet restore "PS.FreeBookHub_Lite.CatalogService.API/PS.FreeBookHub_Lite.CatalogService.API.csproj"
 
 # Копируем весь код и публикуем

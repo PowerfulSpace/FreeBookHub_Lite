@@ -8,6 +8,7 @@ COPY ["PS.FreeBookHub_Lite.PaymentService.Domain/PS.FreeBookHub_Lite.PaymentServ
 COPY ["PS.FreeBookHub_Lite.PaymentService.Infrastructure/PS.FreeBookHub_Lite.PaymentService.Infrastructure.csproj", "PS.FreeBookHub_Lite.PaymentService.Infrastructure/"]
 COPY ["PS.FreeBookHub_Lite.PaymentService.Common/PS.FreeBookHub_Lite.PaymentService.Common.csproj", "PS.FreeBookHub_Lite.PaymentService.Common/"]
 
+
 RUN dotnet restore "PS.FreeBookHub_Lite.PaymentService.API/PS.FreeBookHub_Lite.PaymentService.API.csproj"
 
 COPY . .

@@ -24,6 +24,11 @@ services:
       - "15672:15672" # Web UI
     networks:
       - backend
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   # Redis
   redis:
@@ -33,6 +38,11 @@ services:
       - "6379:6379"
     networks:
       - backend
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
 
   # AuthService
   authservice:
@@ -45,7 +55,8 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: "Docker"
     depends_on:
-      - mssql
+      mssql:
+        condition: service_started
     networks:
       - backend
 
@@ -60,9 +71,12 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: "Docker"
     depends_on:
-      - mssql
-      - catalogservice
-      - orderservice
+      mssql:
+        condition: service_started
+      catalogservice:
+        condition: service_started
+      orderservice:
+        condition: service_started
     networks:
       - backend
 
@@ -77,7 +91,8 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: "Docker"
     depends_on:
-      - mssql
+      mssql:
+        condition: service_started
     networks:
       - backend
 
@@ -92,10 +107,14 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: "Docker"
     depends_on:
-      - mssql
-      - rabbitmq
-      - redis
-      - paymentservice
+      mssql:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      paymentservice:
+        condition: service_started
     networks:
       - backend
 
@@ -110,9 +129,12 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: "Docker"
     depends_on:
-      - mssql
-      - rabbitmq
-      - redis
+      mssql:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     networks:
       - backend
 

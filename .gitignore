@@ -398,3 +398,11 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Ignore actual env files
+.env
+.env.*
+
+# But keep example env files
+!.env.example
+!.env.*.example

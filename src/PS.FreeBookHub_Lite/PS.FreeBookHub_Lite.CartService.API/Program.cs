@@ -1,3 +1,4 @@
+using DotNetEnv;
 using PS.FreeBookHub_Lite.CartService.API;
 using PS.FreeBookHub_Lite.CartService.API.Logging;
 using PS.FreeBookHub_Lite.CartService.API.Middleware;
@@ -22,6 +23,18 @@ try
         .AddInfrastructure(builder.Configuration)
         .AddApplication();
 
+
+    if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+    {
+        if (File.Exists(".env.development"))
+        {
+            Env.Load(".env.development");
+        }
+        else
+        {
+            Log.Warning(".env.development not found. Using default configuration.");
+        }
+    }
 
     var app = builder.Build();
     {

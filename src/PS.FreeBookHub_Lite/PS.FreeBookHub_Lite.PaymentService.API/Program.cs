@@ -1,3 +1,4 @@
+using DotNetEnv;
 using PS.FreeBookHub_Lite.PaymentService.API;
 using PS.FreeBookHub_Lite.PaymentService.API.Logging;
 using PS.FreeBookHub_Lite.PaymentService.API.Middleware;
@@ -20,6 +21,17 @@ try
         .AddInfrastructure(builder.Configuration)
         .AddApplication();
 
+    if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+    {
+        if (File.Exists(".env.development"))
+        {
+            Env.Load(".env.development");
+        }
+        else
+        {
+            Log.Warning(".env.development not found. Using default configuration.");
+        }
+    }
 
     var app = builder.Build();
     {

@@ -404,5 +404,5 @@ FodyWeavers.xsd
 .env.*
 
 # But keep example env files
-!.env.example
 !.env.*.example
+!.env.example

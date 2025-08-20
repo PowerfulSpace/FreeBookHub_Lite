@@ -5,9 +5,11 @@ services:
   mssql:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: mssql
+    env_file:
+      - ./env/.env.mssql
     environment:
-      SA_PASSWORD: "Your_password123"
-      ACCEPT_EULA: "Y"
+      SA_PASSWORD: ${MSSQL_SA_PASSWORD}
+      ACCEPT_EULA: ${MSSQL_ACCEPT_EULA}
     ports:
       - "1433:1433"
     networks:

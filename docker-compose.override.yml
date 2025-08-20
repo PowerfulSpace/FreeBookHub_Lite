@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  authservice:
+    env_file:
+      - ./env/.env.authservice
+
+  cartservice:
+    env_file:
+      - ./env/.env.cartservice
+
+  catalogservice:
+    env_file:
+      - ./env/.env.catalogservice
+
+  orderservice:
+    env_file:
+      - ./env/.env.orderservice
+
+  paymentservice:
+    env_file:
+      - ./env/.env.paymentservice

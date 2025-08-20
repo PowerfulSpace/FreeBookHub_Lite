@@ -1,4 +1,5 @@
-﻿using PS.FreeBookHub_Lite.AuthService.API;
+﻿using DotNetEnv;
+using PS.FreeBookHub_Lite.AuthService.API;
 using PS.FreeBookHub_Lite.AuthService.API.Logging;
 using PS.FreeBookHub_Lite.AuthService.API.Middleware;
 using PS.FreeBookHub_Lite.AuthService.Application;
@@ -20,6 +21,18 @@ try
         .AddPresentation(builder.Configuration)
         .AddInfrastructure(builder.Configuration)
         .AddApplication();
+
+    if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+    {
+        if (File.Exists(".env.development"))
+        {
+            Env.Load(".env.development");
+        }
+        else
+        {
+            Log.Warning(".env.development not found. Using default configuration.");
+        }
+    }
 
     var app = builder.Build();
     {

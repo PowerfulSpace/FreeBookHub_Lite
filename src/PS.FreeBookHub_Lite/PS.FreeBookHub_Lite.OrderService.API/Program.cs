@@ -13,15 +13,6 @@ try
 {
     Log.Information("Starting up [OrderService]...");
 
-    var builder = WebApplication.CreateBuilder(args);
-
-    builder.Host.UseSerilog();
-
-    builder.Services
-        .AddPresentation(builder.Configuration)
-        .AddInfrastructure(builder.Configuration)
-        .AddApplication(builder.Configuration);
-
     if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
     {
         if (File.Exists(".env.development"))
@@ -33,6 +24,15 @@ try
             Log.Warning(".env.development not found. Using default configuration.");
         }
     }
+
+    var builder = WebApplication.CreateBuilder(args);
+
+    builder.Host.UseSerilog();
+
+    builder.Services
+        .AddPresentation(builder.Configuration)
+        .AddInfrastructure(builder.Configuration)
+        .AddApplication(builder.Configuration);
 
     var app = builder.Build();
     {

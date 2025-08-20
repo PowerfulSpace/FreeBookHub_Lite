@@ -13,14 +13,6 @@ SerilogBootstrapper.ConfigureSerilog();
 try
 {
     Log.Information("Starting up [AuthService]...");
-    var builder = WebApplication.CreateBuilder(args);
-
-    builder.Host.UseSerilog();
-
-    builder.Services
-        .AddPresentation(builder.Configuration)
-        .AddInfrastructure(builder.Configuration)
-        .AddApplication();
 
     if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
     {
@@ -33,6 +25,15 @@ try
             Log.Warning(".env.development not found. Using default configuration.");
         }
     }
+
+    var builder = WebApplication.CreateBuilder(args);
+
+    builder.Host.UseSerilog();
+
+    builder.Services
+        .AddPresentation(builder.Configuration)
+        .AddInfrastructure(builder.Configuration)
+        .AddApplication();
 
     var app = builder.Build();
     {

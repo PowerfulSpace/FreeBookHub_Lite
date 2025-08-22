@@ -140,6 +140,31 @@ services:
     networks:
       - backend
 
+# Gateway
+gateway:
+  build:
+    context: ./src/PS.FreeBookHub_Lite
+    dockerfile: PS.FreeBookHub_Lite.Gateway/Dockerfile
+  container_name: gateway
+  ports:
+    - "5005:80"
+  environment:
+    ASPNETCORE_ENVIRONMENT: "Docker"
+  depends_on:
+    authservice:
+      condition: service_started
+    cartservice:
+      condition: service_started
+    catalogservice:
+      condition: service_started
+    orderservice:
+      condition: service_started
+    paymentservice:
+      condition: service_started
+  networks:
+    - backend
+
+
 networks:
   backend:
 

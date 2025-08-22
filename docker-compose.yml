@@ -17,13 +17,13 @@ services:
     volumes:
       - mssql_data:/var/opt/mssql
 
-  # RabbitMQ (с панелью управления)
+  # RabbitMQ
   rabbitmq:
     image: rabbitmq:3-management
     container_name: rabbitmq
     ports:
-      - "5672:5672"   # AMQP
-      - "15672:15672" # Web UI
+      - "5672:5672"
+      - "15672:15672"
     networks:
       - backend
     healthcheck:
@@ -140,30 +140,24 @@ services:
     networks:
       - backend
 
-# Gateway
-gateway:
-  build:
-    context: ./src/PS.FreeBookHub_Lite
-    dockerfile: PS.FreeBookHub_Lite.Gateway/Dockerfile
-  container_name: gateway
-  ports:
-    - "5005:80"
-  environment:
-    ASPNETCORE_ENVIRONMENT: "Docker"
-  depends_on:
-    authservice:
-      condition: service_started
-    cartservice:
-      condition: service_started
-    catalogservice:
-      condition: service_started
-    orderservice:
-      condition: service_started
-    paymentservice:
-      condition: service_started
-  networks:
-    - backend
-
+  # Gateway
+  gateway:
+    build:
+      context: ./src/PS.FreeBookHub_Lite
+      dockerfile: PS.FreeBookHub_Lite.Gateway/Dockerfile
+    container_name: gateway
+    ports:
+      - "5005:80"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Docker"
+    depends_on:
+      - authservice
+      - cartservice
+      - catalogservice
+      - orderservice
+      - paymentservice
+    networks:
+      - backend
 
 networks:
   backend:

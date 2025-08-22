@@ -20,5 +20,7 @@ var app = builder.Build();
 
     app.MapControllers();
 
+    app.MapReverseProxy();
+
     app.Run();
 }

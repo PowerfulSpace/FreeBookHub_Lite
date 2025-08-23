@@ -18,5 +18,16 @@ namespace CartService.UnitTests.Domain
             Assert.Equal(unitPrice, item.UnitPrice);
             Assert.Equal(quantity * unitPrice, item.TotalPrice);
         }
+
+        [Fact]
+        public void UpdateQuantity_ShouldChangeQuantity_WhenValid()
+        {
+            var item = new CartItem(Guid.NewGuid(), 2, 10m);
+
+            item.UpdateQuantity(5);
+
+            Assert.Equal(5, item.Quantity);
+            Assert.Equal(50m, item.TotalPrice);
+        }
     }
 }

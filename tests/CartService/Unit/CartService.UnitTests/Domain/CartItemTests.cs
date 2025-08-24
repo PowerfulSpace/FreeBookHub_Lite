@@ -1,4 +1,5 @@
 ﻿using PS.FreeBookHub_Lite.CartService.Domain.Entities;
+using PS.FreeBookHub_Lite.CartService.Domain.Exceptions.Cart;
 
 namespace CartService.UnitTests.Domain
 {
@@ -29,5 +30,21 @@ namespace CartService.UnitTests.Domain
             Assert.Equal(5, item.Quantity);
             Assert.Equal(50m, item.TotalPrice);
         }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-1)]
+        [InlineData(-10)]
+        public void UpdateQuantity_ShouldThrow_WhenQuantityIsZeroOrNegative(int invalidQuantity)
+        {
+            var item = new CartItem(Guid.NewGuid(), 2, 10m);
+
+            var ex = Assert.Throws<InvalidCartItemQuantityException>(
+                () => item.UpdateQuantity(invalidQuantity)
+            );
+
+            Assert.Equal(invalidQuantity, ex.Quantity);
+        }
+
     }
 }

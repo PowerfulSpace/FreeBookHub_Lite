@@ -28,6 +28,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\PS.FreeBookHub_Lite.OrderService.Application\PS.FreeBookHub_Lite.OrderService.Application.csproj" />
+		<ProjectReference Include="..\PS.FreeBookHub_Lite.OrderService.Common\PS.FreeBookHub_Lite.OrderService.Common.csproj" />
 	</ItemGroup>
 
 </Project>

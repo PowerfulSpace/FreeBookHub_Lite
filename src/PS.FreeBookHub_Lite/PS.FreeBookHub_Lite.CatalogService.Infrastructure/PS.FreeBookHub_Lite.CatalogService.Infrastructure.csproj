@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PS.FreeBookHub_Lite.CatalogService.Application\PS.FreeBookHub_Lite.CatalogService.Application.csproj" />
+    <ProjectReference Include="..\PS.FreeBookHub_Lite.CatalogService.Common\PS.FreeBookHub_Lite.CatalogService.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>

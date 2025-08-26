@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PS.FreeBookHub_Lite.CartService.Application\PS.FreeBookHub_Lite.CartService.Application.csproj" />
+    <ProjectReference Include="..\PS.FreeBookHub_Lite.CartService.Common\PS.FreeBookHub_Lite.CartService.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>

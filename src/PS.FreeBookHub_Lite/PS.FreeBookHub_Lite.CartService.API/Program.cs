@@ -4,6 +4,9 @@ using PS.FreeBookHub_Lite.CartService.API.Logging;
 using PS.FreeBookHub_Lite.CartService.API.Middleware;
 using PS.FreeBookHub_Lite.CartService.Application;
 using PS.FreeBookHub_Lite.CartService.Infrastructure;
+using PS.FreeBookHub_Lite.CartService.Common.Extensions.DependencyInjection;
+using PS.FreeBookHub_Lite.CartService.Common.Extensions.Hosting;
+using PS.FreeBookHub_Lite.CartService.Infrastructure.StartupTasks;
 using Serilog;
 
 
@@ -35,6 +38,8 @@ try
         .AddInfrastructure(builder.Configuration)
         .AddApplication();
 
+    builder.Services.AddStartupTask<DatabaseMigrationStartupTask>();
+
     var app = builder.Build();
     {
         if (app.Environment.IsDevelopment())
@@ -58,6 +63,8 @@ try
         app.UseAuthorization();
 
         app.MapControllers();
+
+        app.RunStartupTasks();
 
         app.Run();
     }

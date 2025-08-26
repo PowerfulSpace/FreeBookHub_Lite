@@ -1,0 +1,25 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using PS.FreeBookHub_Lite.AuthService.Common.Interfaces.StartupTasks;
+using PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence;
+
+namespace PS.FreeBookHub_Lite.AuthService.Infrastructure.StartupTasks
+{
+    public class DatabaseMigrationStartupTask : StartupTask
+    {
+        private readonly IServiceProvider _serviceProvider;
+
+        public DatabaseMigrationStartupTask(IServiceProvider serviceProvider)
+        {
+            _serviceProvider = serviceProvider;
+        }
+
+        protected override async Task ExecuteAsync()
+        {
+            using var scope = _serviceProvider.CreateScope();
+            var db = scope.ServiceProvider.GetRequiredService<AuthDbContext>();
+
+            await db.Database.MigrateAsync();
+        }
+    }
+}

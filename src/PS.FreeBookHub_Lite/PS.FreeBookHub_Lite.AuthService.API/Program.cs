@@ -3,7 +3,10 @@ using PS.FreeBookHub_Lite.AuthService.API;
 using PS.FreeBookHub_Lite.AuthService.API.Logging;
 using PS.FreeBookHub_Lite.AuthService.API.Middleware;
 using PS.FreeBookHub_Lite.AuthService.Application;
+using PS.FreeBookHub_Lite.AuthService.Common.Extensions.DependencyInjection;
+using PS.FreeBookHub_Lite.AuthService.Common.Extensions.Hosting;
 using PS.FreeBookHub_Lite.AuthService.Infrastructure;
+using PS.FreeBookHub_Lite.AuthService.Infrastructure.StartupTasks;
 using Serilog;
 
 
@@ -35,6 +38,8 @@ try
         .AddInfrastructure(builder.Configuration)
         .AddApplication();
 
+    builder.Services.AddStartupTask<DatabaseMigrationStartupTask>();
+
     var app = builder.Build();
     {
 
@@ -60,6 +65,8 @@ try
         app.UseAuthorization();
 
         app.MapControllers();
+
+        app.RunStartupTasks();
 
         app.Run();
     }

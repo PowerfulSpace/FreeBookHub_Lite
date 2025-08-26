@@ -4,6 +4,9 @@ using PS.FreeBookHub_Lite.PaymentService.API.Logging;
 using PS.FreeBookHub_Lite.PaymentService.API.Middleware;
 using PS.FreeBookHub_Lite.PaymentService.Application;
 using PS.FreeBookHub_Lite.PaymentService.Infrastructure;
+using PS.FreeBookHub_Lite.PaymentService.Common.Extensions.DependencyInjection;
+using PS.FreeBookHub_Lite.PaymentService.Common.Extensions.Hosting;
+using PS.FreeBookHub_Lite.PaymentService.Infrastructure.StartupTasks;
 using Serilog;
 
 SerilogBootstrapper.ConfigureSerilog();
@@ -33,6 +36,8 @@ try
         .AddInfrastructure(builder.Configuration)
         .AddApplication();
 
+    builder.Services.AddStartupTask<DatabaseMigrationStartupTask>();
+
     var app = builder.Build();
     {
         if (app.Environment.IsDevelopment())
@@ -56,6 +61,8 @@ try
         app.UseAuthorization();
 
         app.MapControllers();
+
+        app.RunStartupTasks();
 
         app.Run();
     }

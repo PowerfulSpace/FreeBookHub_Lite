@@ -28,6 +28,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\PS.FreeBookHub_Lite.PaymentService.Application\PS.FreeBookHub_Lite.PaymentService.Application.csproj" />
+	  <ProjectReference Include="..\PS.FreeBookHub_Lite.PaymentService.Common\PS.FreeBookHub_Lite.PaymentService.Common.csproj" />
 	</ItemGroup>
 
 </Project>

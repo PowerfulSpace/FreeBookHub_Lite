@@ -7,9 +7,9 @@ services:
     container_name: mssql
     env_file:
       - ./env/.env.mssql
-    environment:
-      SA_PASSWORD: ${MSSQL_SA_PASSWORD}
-      ACCEPT_EULA: ${MSSQL_ACCEPT_EULA}
+    environment: {}
+      # SA_PASSWORD: ${SA_PASSWORD}
+      # ACCEPT_EULA: ${ACCEPT_EULA}
     ports:
       - "1433:1433"
     networks:

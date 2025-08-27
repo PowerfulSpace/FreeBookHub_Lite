@@ -46,5 +46,16 @@ namespace CartService.UnitTests.Domain
             Assert.Equal(invalidQuantity, ex.Quantity);
         }
 
+        [Fact]
+        public void TotalPrice_ShouldReflectQuantityChanges()
+        {
+            var item = new CartItem(Guid.NewGuid(), 1, 15m);
+
+            Assert.Equal(15m, item.TotalPrice);
+
+            item.UpdateQuantity(3);
+
+            Assert.Equal(45m, item.TotalPrice);
+        }
     }
 }

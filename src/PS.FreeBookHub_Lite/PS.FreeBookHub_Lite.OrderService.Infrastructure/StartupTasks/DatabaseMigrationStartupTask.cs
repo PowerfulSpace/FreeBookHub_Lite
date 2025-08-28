@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Polly;
 using PS.FreeBookHub_Lite.OrderService.Common.Interfaces.StartupTasks;
 using PS.FreeBookHub_Lite.OrderService.Infrastructure.Persistence;
 
@@ -19,7 +21,16 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.StartupTasks
             using var scope = _serviceProvider.CreateScope();
             var db = scope.ServiceProvider.GetRequiredService<OrderDbContext>();
 
-            await db.Database.MigrateAsync();
+            //await db.Database.MigrateAsync();
+
+            var retryPolicy = Policy
+                  .Handle<SqlException>()
+                  .Or<InvalidOperationException>() // если соединение ещё не готово
+                  .WaitAndRetryAsync(
+                      retryCount: 5,
+                      sleepDurationProvider: attempt => TimeSpan.FromSeconds(5));
+
+            await retryPolicy.ExecuteAsync(() => db.Database.MigrateAsync());
         }
     }
 }

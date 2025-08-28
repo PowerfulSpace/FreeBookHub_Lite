@@ -8,12 +8,15 @@ namespace CartService.UnitTests.Domain
         [Fact]
         public void CreateCartItem_ShouldInitializeCorrectly()
         {
+            // Arrange
             var bookId = Guid.NewGuid();
             var quantity = 2;
             var unitPrice = 10m;
 
+            // Act
             var item = new CartItem(bookId, quantity, unitPrice);
 
+            // Assert
             Assert.Equal(bookId, item.BookId);
             Assert.Equal(quantity, item.Quantity);
             Assert.Equal(unitPrice, item.UnitPrice);

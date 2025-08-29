@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  test-mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: test-mssql
+    environment:
+      SA_PASSWORD: "TestPassword123!"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1434:1433"
+    networks:
+      - test-network
+
+networks:
+  test-network:

@@ -74,7 +74,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure
 
         private static IServiceCollection AddRedis(this IServiceCollection services, ConfigurationManager configuration)
         {
-            var redisConnection = configuration.GetConnectionString("Redis");
+            var redisConnection = configuration["Redis:ConnectionString"];
 
             services.AddSingleton<IConnectionMultiplexer>(
                 _ => ConnectionMultiplexer.Connect(redisConnection!));

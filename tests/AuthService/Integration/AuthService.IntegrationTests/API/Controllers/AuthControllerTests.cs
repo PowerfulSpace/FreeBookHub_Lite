@@ -14,23 +14,22 @@ namespace AuthService.IntegrationTests.API.Controllers
             _client = factory.CreateClient();
         }
 
+        // --- Happy path тесты (у тебя уже были) ---
+
         [Fact]
         public async Task Register_Should_Return_Tokens()
         {
-            // Arrange
             var request = new RegisterUserRequest
             {
                 Email = "newuser@example.com",
                 Password = "securePassword123"
             };
 
-            // Act
             var response = await _client.PostAsJsonAsync("/api/auth/register", request);
 
-            // Assert
             response.EnsureSuccessStatusCode();
-
             var result = await response.Content.ReadFromJsonAsync<AuthResponse>();
+
             Assert.NotNull(result);
             Assert.False(string.IsNullOrWhiteSpace(result.AccessToken));
             Assert.False(string.IsNullOrWhiteSpace(result.RefreshToken));
@@ -39,18 +38,13 @@ namespace AuthService.IntegrationTests.API.Controllers
         [Fact]
         public async Task Login_Should_Return_Tokens_For_Valid_Credentials()
         {
-            // Arrange
-            var factory = new AuthApiFactory();
-            var client = factory.CreateClient();
-
             var registerRequest = new RegisterUserRequest
             {
                 Email = "loginuser@example.com",
                 Password = "Secure123!"
             };
 
-            var registerResponse = await client.PostAsJsonAsync("/api/auth/register", registerRequest);
-            registerResponse.EnsureSuccessStatusCode();
+            await _client.PostAsJsonAsync("/api/auth/register", registerRequest);
 
             var loginRequest = new LoginRequest
             {
@@ -58,10 +52,8 @@ namespace AuthService.IntegrationTests.API.Controllers
                 Password = "Secure123!"
             };
 
-            // Act
-            var loginResponse = await client.PostAsJsonAsync("/api/auth/login", loginRequest);
+            var loginResponse = await _client.PostAsJsonAsync("/api/auth/login", loginRequest);
 
-            // Assert
             loginResponse.EnsureSuccessStatusCode();
             var tokens = await loginResponse.Content.ReadFromJsonAsync<AuthResponse>();
 
@@ -73,44 +65,29 @@ namespace AuthService.IntegrationTests.API.Controllers
         [Fact]
         public async Task Refresh_Should_Return_New_Tokens_When_Valid()
         {
-            // Arrange
-            var factory = new AuthApiFactory();
-            var client = factory.CreateClient();
-
-            // Register
             var registerRequest = new RegisterUserRequest
             {
                 Email = "refreshuser@example.com",
                 Password = "MyPassword123!"
             };
 
-            var registerResponse = await client.PostAsJsonAsync("/api/auth/register", registerRequest);
-            registerResponse.EnsureSuccessStatusCode();
+            await _client.PostAsJsonAsync("/api/auth/register", registerRequest);
 
-            // Login
             var loginRequest = new LoginRequest
             {
                 Email = registerRequest.Email,
                 Password = registerRequest.Password
             };
 
-            var loginResponse = await client.PostAsJsonAsync("/api/auth/login", loginRequest);
-            loginResponse.EnsureSuccessStatusCode();
-
+            var loginResponse = await _client.PostAsJsonAsync("/api/auth/login", loginRequest);
             var tokens = await loginResponse.Content.ReadFromJsonAsync<AuthResponse>();
 
-            // Устанавливаем access token в заголовок
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", tokens!.AccessToken);
+            _client.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", tokens!.AccessToken);
 
-            // Act — Refresh
-            var refreshRequest = new RefreshTokenRequest
-            {
-                RefreshToken = tokens.RefreshToken
-            };
+            var refreshRequest = new RefreshTokenRequest { RefreshToken = tokens.RefreshToken };
+            var refreshResponse = await _client.PostAsJsonAsync("/api/auth/refresh", refreshRequest);
 
-            var refreshResponse = await client.PostAsJsonAsync("/api/auth/refresh", refreshRequest);
-
-            // Assert
             refreshResponse.EnsureSuccessStatusCode();
             var refreshedTokens = await refreshResponse.Content.ReadFromJsonAsync<AuthResponse>();
 
@@ -118,70 +95,59 @@ namespace AuthService.IntegrationTests.API.Controllers
             Assert.NotEqual(tokens.AccessToken, refreshedTokens!.AccessToken);
             Assert.NotEqual(tokens.RefreshToken, refreshedTokens.RefreshToken);
             Assert.True(refreshedTokens.ExpiresAt > tokens.ExpiresAt);
+
+            _client.DefaultRequestHeaders.Authorization = null; // сбрасываем
         }
 
         [Fact]
         public async Task Logout_Should_Revoke_Refresh_Token()
         {
-            // Arrange
-            var factory = new AuthApiFactory();
-            var client = factory.CreateClient();
-
             var email = "logoutuser@example.com";
             var password = "MyPassword123!";
 
-            await client.PostAsJsonAsync("/api/auth/register", new RegisterUserRequest
+            await _client.PostAsJsonAsync("/api/auth/register", new RegisterUserRequest
             {
                 Email = email,
                 Password = password
             });
 
-            var loginResponse = await client.PostAsJsonAsync("/api/auth/login", new LoginRequest
+            var loginResponse = await _client.PostAsJsonAsync("/api/auth/login", new LoginRequest
             {
                 Email = email,
                 Password = password
             });
 
             var tokens = await loginResponse.Content.ReadFromJsonAsync<AuthResponse>();
-            client.DefaultRequestHeaders.Authorization = new("Bearer", tokens!.AccessToken);
+            _client.DefaultRequestHeaders.Authorization = new("Bearer", tokens!.AccessToken);
 
-            // Act — Logout
-            var logoutRequest = new LogoutRequest
-            {
-                RefreshToken = tokens.RefreshToken
-            };
+            var logoutRequest = new LogoutRequest { RefreshToken = tokens.RefreshToken };
+            var logoutResponse = await _client.PostAsJsonAsync("/api/auth/logout", logoutRequest);
 
-            var logoutResponse = await client.PostAsJsonAsync("/api/auth/logout", logoutRequest);
-
-            // Assert
             Assert.Equal(HttpStatusCode.NoContent, logoutResponse.StatusCode);
 
-            // Попытка refresh — должна провалиться
-            var refreshResponse = await client.PostAsJsonAsync("/api/auth/refresh", new RefreshTokenRequest
+            var refreshResponse = await _client.PostAsJsonAsync("/api/auth/refresh", new RefreshTokenRequest
             {
                 RefreshToken = tokens.RefreshToken
             });
 
             Assert.Equal(HttpStatusCode.Unauthorized, refreshResponse.StatusCode);
+
+            _client.DefaultRequestHeaders.Authorization = null;
         }
 
         [Fact]
         public async Task LogoutAll_Should_Revoke_All_Refresh_Tokens_For_User()
         {
-            // Arrange
-            var factory = new AuthApiFactory();
-            var client = factory.CreateClient();
-
             var email = "logoutalluser@example.com";
             var password = "MyPassword123!";
 
-            await client.PostAsJsonAsync("/api/auth/register", new RegisterUserRequest
+            await _client.PostAsJsonAsync("/api/auth/register", new RegisterUserRequest
             {
                 Email = email,
                 Password = password
             });
 
-            var loginResponse1 = await client.PostAsJsonAsync("/api/auth/login", new LoginRequest
+            var loginResponse1 = await _client.PostAsJsonAsync("/api/auth/login", new LoginRequest
             {
                 Email = email,
                 Password = password
@@ -189,8 +155,7 @@ namespace AuthService.IntegrationTests.API.Controllers
 
             var tokens1 = await loginResponse1.Content.ReadFromJsonAsync<AuthResponse>();
 
-            // эмулируем вторую сессию
-            var loginResponse2 = await client.PostAsJsonAsync("/api/auth/login", new LoginRequest
+            var loginResponse2 = await _client.PostAsJsonAsync("/api/auth/login", new LoginRequest
             {
                 Email = email,
                 Password = password
@@ -198,27 +163,99 @@ namespace AuthService.IntegrationTests.API.Controllers
 
             var tokens2 = await loginResponse2.Content.ReadFromJsonAsync<AuthResponse>();
 
-            client.DefaultRequestHeaders.Authorization = new("Bearer", tokens1!.AccessToken);
+            _client.DefaultRequestHeaders.Authorization = new("Bearer", tokens1!.AccessToken);
 
-            // Act — LogoutAll
-            var logoutAllResponse = await client.PostAsync("/api/auth/logout-all", null);
+            var logoutAllResponse = await _client.PostAsync("/api/auth/logout-all", null);
 
-            // Assert
             Assert.Equal(HttpStatusCode.NoContent, logoutAllResponse.StatusCode);
 
-            // Проверим, что оба refresh токена более невалидны
-            var failedRefresh1 = await client.PostAsJsonAsync("/api/auth/refresh", new RefreshTokenRequest
+            var failedRefresh1 = await _client.PostAsJsonAsync("/api/auth/refresh", new RefreshTokenRequest
             {
                 RefreshToken = tokens1.RefreshToken
             });
 
-            var failedRefresh2 = await client.PostAsJsonAsync("/api/auth/refresh", new RefreshTokenRequest
+            var failedRefresh2 = await _client.PostAsJsonAsync("/api/auth/refresh", new RefreshTokenRequest
             {
                 RefreshToken = tokens2!.RefreshToken
             });
 
             Assert.Equal(HttpStatusCode.Unauthorized, failedRefresh1.StatusCode);
             Assert.Equal(HttpStatusCode.Unauthorized, failedRefresh2.StatusCode);
+
+            _client.DefaultRequestHeaders.Authorization = null;
+        }
+
+        // --- Дополнительные тесты (негативные сценарии) ---
+
+        [Fact]
+        public async Task Register_Should_Fail_When_Email_Already_Exists()
+        {
+            var request = new RegisterUserRequest
+            {
+                Email = "duplicate@example.com",
+                Password = "Password123!"
+            };
+
+            await _client.PostAsJsonAsync("/api/auth/register", request);
+
+            var secondResponse = await _client.PostAsJsonAsync("/api/auth/register", request);
+
+            Assert.Equal(HttpStatusCode.BadRequest, secondResponse.StatusCode);
+        }
+
+        [Fact]
+        public async Task Login_Should_Fail_For_Invalid_Password()
+        {
+            var email = "wrongpass@example.com";
+            var password = "Password123!";
+
+            await _client.PostAsJsonAsync("/api/auth/register", new RegisterUserRequest
+            {
+                Email = email,
+                Password = password
+            });
+
+            var loginResponse = await _client.PostAsJsonAsync("/api/auth/login", new LoginRequest
+            {
+                Email = email,
+                Password = "WrongPassword!"
+            });
+
+            Assert.Equal(HttpStatusCode.Unauthorized, loginResponse.StatusCode);
+        }
+
+        [Fact]
+        public async Task Login_Should_Fail_For_Unknown_Email()
+        {
+            var loginResponse = await _client.PostAsJsonAsync("/api/auth/login", new LoginRequest
+            {
+                Email = "notexist@example.com",
+                Password = "SomePassword123!"
+            });
+
+            Assert.Equal(HttpStatusCode.Unauthorized, loginResponse.StatusCode);
+        }
+
+        [Fact]
+        public async Task Refresh_Should_Fail_For_Invalid_Token()
+        {
+            var refreshResponse = await _client.PostAsJsonAsync("/api/auth/refresh", new RefreshTokenRequest
+            {
+                RefreshToken = "invalid-refresh-token"
+            });
+
+            Assert.Equal(HttpStatusCode.Unauthorized, refreshResponse.StatusCode);
+        }
+
+        [Fact]
+        public async Task Logout_Should_Fail_For_Invalid_Token()
+        {
+            var logoutResponse = await _client.PostAsJsonAsync("/api/auth/logout", new LogoutRequest
+            {
+                RefreshToken = "invalid-refresh-token"
+            });
+
+            Assert.Equal(HttpStatusCode.Unauthorized, logoutResponse.StatusCode);
         }
     }
 }

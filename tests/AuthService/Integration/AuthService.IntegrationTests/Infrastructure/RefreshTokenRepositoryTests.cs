@@ -1,19 +1,33 @@
 ﻿using AuthService.IntegrationTests.TestUtils.Factories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using PS.FreeBookHub_Lite.AuthService.Domain.Entities;
 using PS.FreeBookHub_Lite.AuthService.Domain.Enums;
+using PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence;
 using PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence.Repositories;
 
 namespace AuthService.IntegrationTests.Infrastructure
 {
-    public class RefreshTokenRepositoryTests
+    public class RefreshTokenRepositoryTests : IClassFixture<AuthApiFactory>
     {
         private readonly CancellationToken _ct = CancellationToken.None;
+        private readonly AuthApiFactory _factory;
+
+        public RefreshTokenRepositoryTests(AuthApiFactory factory)
+        {
+            _factory = factory;
+        }
+
+        private AuthDbContext CreateContext()
+        {
+            var scope = _factory.Services.CreateScope();
+            return scope.ServiceProvider.GetRequiredService<AuthDbContext>();
+        }
 
         [Fact]
         public async Task AddAsync_Should_Add_Token()
         {
-            var context = SqliteTestDbFactory.Create();
+            using var context = CreateContext();
             var repository = new RefreshTokenRepository(context);
 
             var user = CreateValidUser();
@@ -21,10 +35,10 @@ namespace AuthService.IntegrationTests.Infrastructure
             await context.SaveChangesAsync();
 
             var token = new RefreshToken(
-                userId: user.Id,
-                token: "abc123",
-                expiresAt: DateTime.UtcNow.AddDays(7)
-                );
+                user.Id,
+                "abc123",
+                DateTime.UtcNow.AddDays(7)
+            );
 
             await repository.AddAsync(token, _ct);
 
@@ -36,19 +50,14 @@ namespace AuthService.IntegrationTests.Infrastructure
         [Fact]
         public async Task GetByTokenAsync_Should_Return_Correct_Token()
         {
-            var context = SqliteTestDbFactory.Create();
+            using var context = CreateContext();
             var repository = new RefreshTokenRepository(context);
 
             var user = CreateValidUser();
             context.Users.Add(user);
             await context.SaveChangesAsync();
 
-            var token = new RefreshToken(
-               userId: user.Id,
-               token: "abc123",
-               expiresAt: DateTime.UtcNow.AddDays(7)
-               );
-
+            var token = new RefreshToken(user.Id, "abc123", DateTime.UtcNow.AddDays(7));
             context.RefreshTokens.Add(token);
             await context.SaveChangesAsync();
 
@@ -61,43 +70,33 @@ namespace AuthService.IntegrationTests.Infrastructure
         [Fact]
         public async Task UpdateAsync_Should_Modify_Token()
         {
-            var context = SqliteTestDbFactory.Create();
+            using var context = CreateContext();
             var repository = new RefreshTokenRepository(context);
 
             var user = CreateValidUser();
             context.Users.Add(user);
             await context.SaveChangesAsync();
 
-            var originalToken = new RefreshToken(
-                userId: user.Id,
-                token: "original",
-                expiresAt: DateTime.UtcNow.AddDays(7)
-            );
-
+            var originalToken = new RefreshToken(user.Id, "original", DateTime.UtcNow.AddDays(7));
             context.RefreshTokens.Add(originalToken);
             await context.SaveChangesAsync();
+
             context.Entry(originalToken).State = EntityState.Detached;
 
-            // Новый экземпляр с тем же Id
-            var updatedToken = new RefreshToken(
-                userId: originalToken.UserId,
-                token: "updated",
-                expiresAt: originalToken.ExpiresAt
-            );
-
-            typeof(RefreshToken)
-                .GetProperty("Id")!
-                .SetValue(updatedToken, originalToken.Id);
+            // Новый объект с тем же Id
+            var updatedToken = new RefreshToken(user.Id, "updated", originalToken.ExpiresAt);
+            typeof(RefreshToken).GetProperty("Id")!.SetValue(updatedToken, originalToken.Id);
 
             await repository.UpdateAsync(updatedToken, _ct);
 
             var result = await context.RefreshTokens.FindAsync(originalToken.Id);
             Assert.Equal("updated", result!.Token);
         }
+
         [Fact]
         public async Task GetActiveTokensByUserIdAsync_Should_Return_Only_Active()
         {
-            var context = SqliteTestDbFactory.Create();
+            using var context = CreateContext();
             var repository = new RefreshTokenRepository(context);
 
             var user = CreateValidUser();
@@ -121,7 +120,7 @@ namespace AuthService.IntegrationTests.Infrastructure
         [Fact]
         public async Task RevokeAllTokensForUserAsync_Should_Revoke_Active_Tokens()
         {
-            var context = SqliteTestDbFactory.Create();
+            using var context = CreateContext();
             var repository = new RefreshTokenRepository(context);
 
             var user = CreateValidUser();

@@ -1,29 +1,34 @@
 ﻿using AuthService.IntegrationTests.TestUtils.Factories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using PS.FreeBookHub_Lite.AuthService.Domain.Entities;
 using PS.FreeBookHub_Lite.AuthService.Domain.Enums;
+using PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence;
 using PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence.Repositories;
 
 namespace AuthService.IntegrationTests.Infrastructure
 {
-    public class UserRepositoryTests
+    public class UserRepositoryTests : IClassFixture<AuthApiFactory>
     {
         private readonly CancellationToken _ct = CancellationToken.None;
+        private readonly AuthDbContext _context;
+        private readonly UserRepository _repository;
+
+        public UserRepositoryTests(AuthApiFactory factory)
+        {
+            // Берём DbContext из фабрики
+            _context = factory.Services.CreateScope().ServiceProvider.GetRequiredService<AuthDbContext>();
+            _repository = new UserRepository(_context);
+        }
 
         [Fact]
         public async Task AddAsync_Should_Add_User_To_Database()
         {
-            // Arrange
-            var context = InMemoryTestDbFactory.Create();
-            var repository = new UserRepository(context);
-
             var user = new User("test@example.com", "hashed123");
 
-            // Act
-            await repository.AddAsync(user, _ct);
+            await _repository.AddAsync(user, _ct);
 
-            // Assert
-            var saved = await context.Users.FindAsync(user.Id);
+            var saved = await _context.Users.FindAsync(user.Id);
             Assert.NotNull(saved);
             Assert.Equal("test@example.com", saved.Email);
         }
@@ -31,18 +36,12 @@ namespace AuthService.IntegrationTests.Infrastructure
         [Fact]
         public async Task GetByIdAsync_Should_Return_Correct_User()
         {
-            // Arrange
-            var context = InMemoryTestDbFactory.Create();
-            var repository = new UserRepository(context);
-
-            // Act
             var user = new User("byid@example.com", "pass");
-            context.Users.Add(user);
-            await context.SaveChangesAsync();
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
 
-            var found = await repository.GetByIdAsync(user.Id, _ct);
+            var found = await _repository.GetByIdAsync(user.Id, _ct);
 
-            // Assert
             Assert.NotNull(found);
             Assert.Equal(user.Id, found!.Id);
         }
@@ -50,18 +49,12 @@ namespace AuthService.IntegrationTests.Infrastructure
         [Fact]
         public async Task GetByEmailAsync_Should_Return_Correct_User()
         {
-            // Arrange
-            var context = InMemoryTestDbFactory.Create();
-            var repository = new UserRepository(context);
-
             var user = new User("byemail@example.com", "pass");
-            context.Users.Add(user);
-            await context.SaveChangesAsync();
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
 
-            // Act
-            var found = await repository.GetByEmailAsync("byemail@example.com", _ct);
+            var found = await _repository.GetByEmailAsync("byemail@example.com", _ct);
 
-            // Assert
             Assert.NotNull(found);
             Assert.Equal(user.Email, found!.Email);
         }
@@ -69,23 +62,17 @@ namespace AuthService.IntegrationTests.Infrastructure
         [Fact]
         public async Task UpdateAsync_Should_Modify_User()
         {
-            // Arrange
-            var context = InMemoryTestDbFactory.Create();
-            var repository = new UserRepository(context);
-
             var user = new User("update@example.com", "oldHash");
-            context.Users.Add(user);
-            await context.SaveChangesAsync();
-            context.Entry(user).State = EntityState.Detached;
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+            _context.Entry(user).State = EntityState.Detached;
 
-            // Act
             var newUser = new User("new@example.com", "newHash", UserRole.Admin);
-            typeof(User).GetProperty("Id")!.SetValue(newUser, user.Id); // сохраним тот же ID
+            typeof(User).GetProperty("Id")!.SetValue(newUser, user.Id);
 
-            await repository.UpdateAsync(newUser, _ct);
+            await _repository.UpdateAsync(newUser, _ct);
 
-            // Assert
-            var updated = await context.Users.FindAsync(user.Id);
+            var updated = await _context.Users.FindAsync(user.Id);
             Assert.NotNull(updated);
             Assert.Equal("new@example.com", updated!.Email);
         }
@@ -93,69 +80,50 @@ namespace AuthService.IntegrationTests.Infrastructure
         [Fact]
         public async Task DeleteAsync_Should_Remove_User()
         {
-            // Arrange
-            var context = SqliteTestDbFactory.Create();
-            var repository = new UserRepository(context);
-
             var user = new User("delete@example.com", "pass");
-            context.Users.Add(user);
-            await context.SaveChangesAsync();
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
 
-            // Act
-            await repository.DeleteAsync(user.Id, _ct);
+            await _repository.DeleteAsync(user.Id, _ct);
 
-            // Assert
-            var deleted = await context.Users
+            var deleted = await _context.Users
                 .AsNoTracking()
                 .FirstOrDefaultAsync(u => u.Id == user.Id, _ct);
 
             Assert.Null(deleted);
         }
 
-
         [Fact]
         public async Task GetByIdAsync_AsNoTracking_Should_Not_Track_Entity()
         {
-            // Arrange
-            var context = InMemoryTestDbFactory.Create();
-            var repository = new UserRepository(context);
-
             var user = new User("ntracking@example.com", "pass");
-            context.Users.Add(user);
-            await context.SaveChangesAsync();
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
 
-            // Act
-            var found = await repository.GetByIdAsync(user.Id, _ct, asNoTracking: true);
+            var found = await _repository.GetByIdAsync(user.Id, _ct, asNoTracking: true);
 
-            // Assert
-            var isTracked = context.ChangeTracker.Entries<User>().Any(e => e.Entity.Id == user.Id);
+            var isTracked = _context.ChangeTracker.Entries<User>().Any(e => e.Entity.Id == user.Id);
             Assert.False(isTracked);
+            Assert.NotNull(found);
         }
 
         [Fact]
         public async Task GetByIdAsync_Should_Return_Null_If_Not_Found()
         {
-            var context = InMemoryTestDbFactory.Create();
-            var repository = new UserRepository(context);
-
-            var result = await repository.GetByIdAsync(Guid.NewGuid(), _ct);
-
+            var result = await _repository.GetByIdAsync(Guid.NewGuid(), _ct);
             Assert.Null(result);
         }
 
         [Fact]
         public async Task AddAsync_Should_Throw_On_Duplicate_Id()
         {
-            var context = InMemoryTestDbFactory.Create();
-            var repository = new UserRepository(context);
-
             var user = new User("duplicate@example.com", "pass");
-            await repository.AddAsync(user, _ct);
+            await _repository.AddAsync(user, _ct);
 
             var duplicate = new User("another@example.com", "pass");
             typeof(User).GetProperty("Id")!.SetValue(duplicate, user.Id);
 
-            await Assert.ThrowsAsync<DbUpdateException>(() => repository.AddAsync(duplicate, _ct));
+            await Assert.ThrowsAsync<DbUpdateException>(() => _repository.AddAsync(duplicate, _ct));
         }
     }
 }

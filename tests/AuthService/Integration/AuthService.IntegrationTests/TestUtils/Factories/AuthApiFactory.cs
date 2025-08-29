@@ -1,21 +1,21 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Data.SqlClient;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Polly;
 using PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence;
 
 namespace AuthService.IntegrationTests.TestUtils.Factories
 {
     public class AuthApiFactory : WebApplicationFactory<Program>
     {
-        private readonly SqliteConnection _connection = new("DataSource=:memory:");
-
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             builder.ConfigureServices(services =>
             {
-                // Удалим оригинальный DbContext
+                // Удаляем оригинальный DbContext
                 var descriptor = services.SingleOrDefault(
                     d => d.ServiceType == typeof(DbContextOptions<AuthDbContext>));
                 if (descriptor != null)
@@ -23,27 +23,27 @@ namespace AuthService.IntegrationTests.TestUtils.Factories
                     services.Remove(descriptor);
                 }
 
-                // Открываем соединение заранее и регистрируем его
-                _connection.Open();
-
+                // Подключаемся к тестовой MSSQL
                 services.AddDbContext<AuthDbContext>(options =>
                 {
-                    options.UseSqlite(_connection); // <-- ВАЖНО!
+                    options.UseSqlServer("Server=localhost,1434;Database=AuthTest;User=sa;Password=TestPassword123!;TrustServerCertificate=true;");
                 });
 
-                // Собираем провайдер и вызываем EnsureCreated
+                // Применяем миграции как в продакшене
                 var sp = services.BuildServiceProvider();
-
                 using var scope = sp.CreateScope();
                 var db = scope.ServiceProvider.GetRequiredService<AuthDbContext>();
-                db.Database.EnsureCreated();
-            });
-        }
 
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            _connection.Close();
+                var retryPolicy = Policy
+                    .Handle<SqlException>()
+                    .WaitAndRetry(5, attempt => TimeSpan.FromSeconds(1));
+
+                retryPolicy.Execute(() =>
+                {
+                    db.Database.EnsureDeleted();
+                    db.Database.Migrate();
+                });
+            });
         }
     }
 }

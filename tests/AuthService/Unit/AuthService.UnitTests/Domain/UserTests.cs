@@ -9,11 +9,14 @@ namespace AuthService.UnitTests.Domain
         [Fact]
         public void CreateUser_ShouldSetAllFieldsCorrectly()
         {
+            //Arrange
             var email = "user@example.com";
             var passwordHash = "hashed_pwd";
 
+            // Act
             var user = new User(email, passwordHash);
 
+            // Assert
             Assert.Equal(email, user.Email);
             Assert.Equal(passwordHash, user.PasswordHash);
             Assert.Equal(UserRole.User, user.Role);

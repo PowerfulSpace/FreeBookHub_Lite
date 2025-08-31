@@ -5,7 +5,9 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
+using PS.FreeBookHub_Lite.AuthService.Common.Interfaces.StartupTasks;
 using PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace AuthService.IntegrationTests.TestUtils.Factories
 {
@@ -15,6 +17,9 @@ namespace AuthService.IntegrationTests.TestUtils.Factories
         {
             builder.ConfigureServices(services =>
             {
+                // УДАЛЯЕМ StartupTask чтобы избежать миграций продакшен-базы
+                services.RemoveAll<IStartupTask>();
+
                 // Удаляем оригинальный DbContext
                 var descriptor = services.SingleOrDefault(
                     d => d.ServiceType == typeof(DbContextOptions<AuthDbContext>));

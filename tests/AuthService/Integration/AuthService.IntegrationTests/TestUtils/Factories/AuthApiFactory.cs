@@ -7,7 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Polly;
 using PS.FreeBookHub_Lite.AuthService.Common.Interfaces.StartupTasks;
 using PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Configuration;
 
 namespace AuthService.IntegrationTests.TestUtils.Factories

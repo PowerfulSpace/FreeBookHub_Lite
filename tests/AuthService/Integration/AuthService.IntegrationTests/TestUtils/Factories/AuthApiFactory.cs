@@ -5,7 +5,6 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
-using PS.FreeBookHub_Lite.AuthService.Common.Interfaces.StartupTasks;
 using PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence;
 using Microsoft.Extensions.Configuration;
 

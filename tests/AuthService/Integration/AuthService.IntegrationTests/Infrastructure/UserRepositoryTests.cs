@@ -118,6 +118,8 @@ namespace AuthService.IntegrationTests.Infrastructure
                 db.Users.Add(user);
                 await db.SaveChangesAsync();
 
+                db.Entry(user).State = EntityState.Detached;
+
                 var found = await repo.GetByIdAsync(user.Id, CancellationToken.None, asNoTracking: true);
 
                 var isTracked = db.ChangeTracker.Entries<User>().Any(e => e.Entity.Id == user.Id);

@@ -155,6 +155,8 @@ namespace AuthService.IntegrationTests.Infrastructure
                 db.Users.Add(user);
                 await db.SaveChangesAsync();
 
+                db.Entry(user).State = EntityState.Detached;
+
                 // создаём новый объект с тем же Id и другими данными
                 var updatedUser = new User("rolechanged@example.com", "hash", UserRole.Admin);
                 typeof(User).GetProperty(nameof(User.Id))!

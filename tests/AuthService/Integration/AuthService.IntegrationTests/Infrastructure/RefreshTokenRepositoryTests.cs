@@ -90,6 +90,8 @@ namespace AuthService.IntegrationTests.Infrastructure
                 db.RefreshTokens.Add(token);
                 await db.SaveChangesAsync();
 
+                db.Entry(token).State = EntityState.Detached;
+
                 var found = await repo.GetByTokenAsync(tokenValue, CancellationToken.None, asNoTracking: true);
 
                 var isTracked = db.ChangeTracker.Entries<RefreshToken>().Any(e => e.Entity.Token == tokenValue);

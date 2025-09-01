@@ -5,6 +5,7 @@ using PS.FreeBookHub_Lite.AuthService.Domain.Entities;
 using PS.FreeBookHub_Lite.AuthService.Domain.Enums;
 using PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence;
 using PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence.Repositories;
+using System.Runtime.Intrinsics.X86;
 
 namespace AuthService.IntegrationTests.Infrastructure
 {
@@ -68,6 +69,8 @@ namespace AuthService.IntegrationTests.Infrastructure
                 var user = new User("update@example.com", "old-hash");
                 db.Users.Add(user);
                 await db.SaveChangesAsync();
+
+                db.Entry(user).State = EntityState.Detached;
 
                 // создаём новый объект с тем же Id (Attach + Modified в репо)
                 var updatedUser = new User("update@example.com", "new-hash");

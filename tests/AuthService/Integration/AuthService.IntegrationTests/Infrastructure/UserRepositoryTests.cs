@@ -134,6 +134,8 @@ namespace AuthService.IntegrationTests.Infrastructure
                 var user1 = new User("dup@example.com", "hash");
                 await repo.AddAsync(user1, CancellationToken.None);
 
+                db.Entry(user1).State = EntityState.Detached;
+
                 var user2 = new User("dup2@example.com", "hash");
                 typeof(User).GetProperty(nameof(User.Id))!
                     .SetValue(user2, user1.Id);

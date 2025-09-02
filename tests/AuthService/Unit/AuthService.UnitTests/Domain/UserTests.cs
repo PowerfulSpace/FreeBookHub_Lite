@@ -27,10 +27,13 @@ namespace AuthService.UnitTests.Domain
         [Fact]
         public void Deactivate_ShouldSetIsActiveToFalse_WhenUserIsActive()
         {
+            //Arrange
             var user = new User("email@example.com", "hash");
 
+            // Act
             user.Deactivate();
 
+            // Assert
             Assert.False(user.IsActive);
         }
 

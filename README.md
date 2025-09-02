@@ -70,18 +70,22 @@
 
 Клонируйте репозиторий:
 
-`git clone https://github.com/your-username/FreeBookHub_Lite.git`  
-`cd FreeBookHub_Lite`
+```bash
+git clone https://github.com/PowerfulSpace/FreeBookHub_Lite.git
+cd FreeBookHub_Lite
+```
 
 Перейдите в папку `env` и создайте файлы окружения на основе примеров:
 
-`cd env`  
-`copy .env.mssql.example .env.mssql`  
-`copy .env.authservice.example .env.authservice`  
-`copy .env.cartservice.example .env.cartservice`  
-`copy .env.catalogservice.example .env.catalogservice`  
-`copy .env.orderservice.example .env.orderservice`  
-`copy .env.paymentservice.example .env.paymentservice`
+```bash
+cd env
+copy .env.mssql.example .env.mssql
+copy .env.authservice.example .env.authservice
+copy .env.cartservice.example .env.cartservice
+copy .env.catalogservice.example .env.catalogservice
+copy .env.orderservice.example .env.orderservice
+copy .env.paymentservice.example .env.paymentservice
+```
 
 ⚠️ Заполните реальные значения в файлах `.env.*` (например, пароли, JWT-секреты и строки подключения).
 
@@ -103,7 +107,9 @@
 
 В корне каждого сервиса создайте файл для локальной разработки:
 
-`copy .env.development.example .env.development`
+```bash
+copy .env.development.example .env.development
+```
 
 ### ⚙️ Заполнение параметров
 

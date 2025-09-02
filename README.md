@@ -159,20 +159,26 @@ docker-compose down
 
 ---
 
-### 3. Проверка работы через Swagger
+### 3. Проверка работы
 
-##### Swagger для сервисов будет доступен по адресам:
+#### 🔍 Swagger для сервисов доступен по адресам:
+- [AuthService → http://localhost:5000/swagger/index.html](http://localhost:5000/swagger/index.html)
+- [CartService → http://localhost:5001/swagger/index.html](http://localhost:5001/swagger/index.html)
+- [CatalogService → http://localhost:5002/swagger/index.html](http://localhost:5002/swagger/index.html)
+- [OrderService → http://localhost:5003/swagger/index.html](http://localhost:5003/swagger/index.html)
+- [PaymentService → http://localhost:5004/swagger/index.html](http://localhost:5004/swagger/index.html)
 
-- [AuthService → http://localhost:5000/swagger/index.html](http://localhost:5000/swagger/index.html)  
-- [CartService → http://localhost:5001/swagger/index.html](http://localhost:5001/swagger/index.html)  
-- [CatalogService → http://localhost:5002/swagger/index.html](http://localhost:5002/swagger/index.html)  
-- [OrderService → http://localhost:5003/swagger/index.html](http://localhost:5003/swagger/index.html)  
-- [PaymentService → http://localhost:5004/swagger/index.html](http://localhost:5004/swagger/index.html)  
+#### 🌐 Gateway — доступные маршруты (порт `5005`):
+- `http://localhost:5005/api/auth/` — маршрутизация к **AuthService**
+- `http://localhost:5005/api/cart/` — маршрутизация к **CartService**
+- `http://localhost:5005/api/catalog/` — маршрутизация к **CatalogService**
+- `http://localhost:5005/api/orders/` — маршрутизация к **OrderService**
+- `http://localhost:5005/api/payments/` — маршрутизация к **PaymentService**
 
-##### Панель управления RabbitMQ:
-
+#### 🛠️ Панель управления RabbitMQ:
 - [http://localhost:15672](http://localhost:15672)  
-  (логин/пароль по умолчанию: `guest/guest`)
+  *(логин/пароль по умолчанию: `guest/guest`)*
+
 
 ---
 

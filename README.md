@@ -131,9 +131,19 @@ copy .env.docker.example .env.docker
 
 ### 2. Запуск через Docker
 
-Выполните команду в корне проекта:
+#### Выполните команду в корне проекта:
 
-`docker-compose up --build`
+##### Чтобы запустить все контейнеры:
+
+```bash
+docker-compose up -d --build
+```
+
+##### Чтобы остановить и удалить все контейнеры:
+
+```bash
+docker-compose down
+```
 
 Это поднимет следующие сервисы:
 
@@ -144,29 +154,25 @@ copy .env.docker.example .env.docker
 - **CartService** (порт `5001`)  
 - **CatalogService** (порт `5002`)  
 - **OrderService** (порт `5003`)  
-- **PaymentService** (порт `5004`)  
+- **PaymentService** (порт `5004`)
+- **Gateway** (порт `5005`)  
 
 ---
 
-### 3. Проверка работы
+### 3. Проверка работы через Swagger
 
-Swagger для сервисов будет доступен по адресам:
+##### Swagger для сервисов будет доступен по адресам:
 
-- [AuthService → http://localhost:5000/swagger](http://localhost:5000/swagger)  
-- [CartService → http://localhost:5001/swagger](http://localhost:5001/swagger)  
-- [CatalogService → http://localhost:5002/swagger](http://localhost:5002/swagger)  
-- [OrderService → http://localhost:5003/swagger](http://localhost:5003/swagger)  
-- [PaymentService → http://localhost:5004/swagger](http://localhost:5004/swagger)  
+- [AuthService → http://localhost:5000/swagger/index.html](http://localhost:5000/swagger/index.html)  
+- [CartService → http://localhost:5001/swagger/index.html](http://localhost:5001/swagger/index.html)  
+- [CatalogService → http://localhost:5002/swagger/index.html](http://localhost:5002/swagger/index.html)  
+- [OrderService → http://localhost:5003/swagger/index.html](http://localhost:5003/swagger/index.html)  
+- [PaymentService → http://localhost:5004/swagger/index.html](http://localhost:5004/swagger/index.html)  
 
-RabbitMQ Management UI: [http://localhost:15672](http://localhost:15672)  
-(логин/пароль по умолчанию: `guest/guest`)
+##### Панель управления RabbitMQ:
 
----
-
-### 4. Остановка сервисов
-
-Чтобы остановить и удалить контейнеры:
-
-`docker-compose down`
+- [http://localhost:15672](http://localhost:15672)  
+  (логин/пароль по умолчанию: `guest/guest`)
 
 ---
+

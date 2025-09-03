@@ -40,9 +40,13 @@ namespace AuthService.UnitTests.Domain
         [Fact]
         public void Deactivate_WhenAlreadyInactive_ShouldThrow()
         {
+            //Arrange
             var user = new User("email", "hash");
+
+            // Act
             user.Deactivate();
 
+            // Assert
             var ex = Assert.Throws<InvalidOperationException>(() => user.Deactivate());
             Assert.Equal("The user is already deactivated.", ex.Message);
         }

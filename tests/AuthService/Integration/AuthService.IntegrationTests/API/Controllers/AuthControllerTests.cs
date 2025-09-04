@@ -1,6 +1,7 @@
 ﻿using AuthService.IntegrationTests.TestUtils.Factories;
 using PS.FreeBookHub_Lite.AuthService.Application.DTOs;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 
 namespace AuthService.IntegrationTests.API.Controllers
@@ -82,8 +83,7 @@ namespace AuthService.IntegrationTests.API.Controllers
             var loginResponse = await _client.PostAsJsonAsync("/api/auth/login", loginRequest);
             var tokens = await loginResponse.Content.ReadFromJsonAsync<AuthResponse>();
 
-            _client.DefaultRequestHeaders.Authorization =
-                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", tokens!.AccessToken);
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokens!.AccessToken);
 
             var refreshRequest = new RefreshTokenRequest { RefreshToken = tokens.RefreshToken };
             var refreshResponse = await _client.PostAsJsonAsync("/api/auth/refresh", refreshRequest);

@@ -55,8 +55,10 @@ namespace AuthService.UnitTests.Domain
         [Fact]
         public void PromoteTo_SameRole_ShouldThrow()
         {
+            //Arrange
             var user = new User("email", "hash");
 
+            // Assert
             var ex = Assert.Throws<RoleAssignmentException>(() => user.PromoteTo(UserRole.User));
             Assert.Equal("The user already has a role User", ex.Message);
         }

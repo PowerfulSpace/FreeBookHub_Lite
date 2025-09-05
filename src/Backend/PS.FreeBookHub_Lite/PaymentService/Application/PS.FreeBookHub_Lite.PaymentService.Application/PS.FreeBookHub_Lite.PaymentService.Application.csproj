@@ -15,8 +15,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\PS.FreeBookHub_Lite.PaymentService.Common\PS.FreeBookHub_Lite.PaymentService.Common.csproj" />
-	  <ProjectReference Include="..\PS.FreeBookHub_Lite.PaymentService.Domain\PS.FreeBookHub_Lite.PaymentService.Domain.csproj" />
+	  <ProjectReference Include="..\..\Common\PS.FreeBookHub_Lite.PaymentService.Common\PS.FreeBookHub_Lite.PaymentService.Common.csproj" />
+	  <ProjectReference Include="..\..\Domain\PS.FreeBookHub_Lite.PaymentService.Domain\PS.FreeBookHub_Lite.PaymentService.Domain.csproj" />
 	</ItemGroup>
 
 </Project>

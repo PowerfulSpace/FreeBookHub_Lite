@@ -14,13 +14,15 @@
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.4" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<ProjectReference Include="..\PS.FreeBookHub_Lite.AuthService.Common\PS.FreeBookHub_Lite.AuthService.Common.csproj" />
-		<ProjectReference Include="..\PS.FreeBookHub_Lite.AuthService.Domain\PS.FreeBookHub_Lite.AuthService.Domain.csproj" />
-	</ItemGroup>
 
 	<ItemGroup>
 	  <Folder Include="CQRS\Queries\" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\Common\PS.FreeBookHub_Lite.AuthService.Common\PS.FreeBookHub_Lite.AuthService.Common.csproj" />
+	  <ProjectReference Include="..\..\Domain\PS.FreeBookHub_Lite.AuthService.Domain\PS.FreeBookHub_Lite.AuthService.Domain.csproj" />
 	</ItemGroup>
 
 </Project>

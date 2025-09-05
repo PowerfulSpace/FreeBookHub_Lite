@@ -16,13 +16,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Using Include="Xunit" />
+    <ProjectReference Include="..\..\..\..\src\Backend\PS.FreeBookHub_Lite\AuthService\Application\PS.FreeBookHub_Lite.AuthService.Application\PS.FreeBookHub_Lite.AuthService.Application.csproj" />
+    <ProjectReference Include="..\..\..\..\src\Backend\PS.FreeBookHub_Lite\AuthService\Domain\PS.FreeBookHub_Lite.AuthService.Domain\PS.FreeBookHub_Lite.AuthService.Domain.csproj" />
+    <ProjectReference Include="..\..\..\..\src\Backend\PS.FreeBookHub_Lite\AuthService\Infrastructure\PS.FreeBookHub_Lite.AuthService.Infrastructure\PS.FreeBookHub_Lite.AuthService.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\src\PS.FreeBookHub_Lite\PS.FreeBookHub_Lite.AuthService.Application\PS.FreeBookHub_Lite.AuthService.Application.csproj" />
-    <ProjectReference Include="..\..\..\..\src\PS.FreeBookHub_Lite\PS.FreeBookHub_Lite.AuthService.Domain\PS.FreeBookHub_Lite.AuthService.Domain.csproj" />
-    <ProjectReference Include="..\..\..\..\src\PS.FreeBookHub_Lite\PS.FreeBookHub_Lite.AuthService.Infrastructure\PS.FreeBookHub_Lite.AuthService.Infrastructure.csproj" />
+    <Using Include="Xunit" />
   </ItemGroup>
 
 </Project>

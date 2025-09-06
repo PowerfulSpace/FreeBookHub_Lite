@@ -22,9 +22,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\Application\PS.FreeBookHub_Lite.CatalogService.Application\PS.FreeBookHub_Lite.CatalogService.Application.csproj" />
-	  <ProjectReference Include="..\..\Common\PS.FreeBookHub_Lite.CatalogService.Common\PS.FreeBookHub_Lite.CatalogService.Common.csproj" />
-	  <ProjectReference Include="..\..\PS.FreeBookHub_Lite.CatalogService.Infrastructure\PS.FreeBookHub_Lite.CatalogService.Infrastructure.csproj" />
+	  <ProjectReference Include="..\..\Application\PS.CatalogService.Application\PS.FreeBookHub_Lite.CatalogService.Application.csproj" />
+	  <ProjectReference Include="..\..\Common\PS.CatalogService.Common\PS.FreeBookHub_Lite.CatalogService.Common.csproj" />
+	  <ProjectReference Include="..\..\Infrastructure\PS.CatalogService.Infrastructure\PS.FreeBookHub_Lite.CatalogService.Infrastructure.csproj" />
 	</ItemGroup>
 
 

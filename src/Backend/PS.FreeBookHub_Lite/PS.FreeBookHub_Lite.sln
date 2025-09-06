@@ -125,12 +125,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.OrderSe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.OrderService.Infrastructure", "OrderService\Infrastructure\PS.FreeBookHub_Lite.OrderService.Infrastructure\PS.FreeBookHub_Lite.OrderService.Infrastructure.csproj", "{ED9EFDC9-C0F3-F6D6-8E14-45D606FAF389}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.CatalogService.Application", "CatalogService\Application\PS.FreeBookHub_Lite.CatalogService.Application\PS.FreeBookHub_Lite.CatalogService.Application.csproj", "{F63160B3-D864-7535-0024-5F4083CED32F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.CatalogService.Common", "CatalogService\Common\PS.FreeBookHub_Lite.CatalogService.Common\PS.FreeBookHub_Lite.CatalogService.Common.csproj", "{004D0D5E-E432-445E-F031-9E32D029F546}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.CatalogService.Domain", "CatalogService\Domain\PS.FreeBookHub_Lite.CatalogService.Domain\PS.FreeBookHub_Lite.CatalogService.Domain.csproj", "{18B4EBE8-7515-55D2-E4BA-59E74DA30FA5}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.PaymentService.API", "PaymentService\API\PS.FreeBookHub_Lite.PaymentService.API\PS.FreeBookHub_Lite.PaymentService.API.csproj", "{AE7D9819-8C97-1551-96C1-B095FE8774FE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.PaymentService.Application", "PaymentService\Application\PS.FreeBookHub_Lite.PaymentService.Application\PS.FreeBookHub_Lite.PaymentService.Application.csproj", "{1B83DE99-D25D-AB36-A97B-17E9F6FD4C16}"
@@ -139,11 +133,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.Payment
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.PaymentService.Domain", "PaymentService\Domain\PS.FreeBookHub_Lite.PaymentService.Domain\PS.FreeBookHub_Lite.PaymentService.Domain.csproj", "{D7D71A3D-4AD6-4A77-F2FE-24A896AB0F50}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.CatalogService.Infrastructure", "CatalogService\PS.FreeBookHub_Lite.CatalogService.Infrastructure\PS.FreeBookHub_Lite.CatalogService.Infrastructure.csproj", "{9A2FCBFB-D6DB-93B7-C243-C0E599BBAD1A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.CatalogService.API", "CatalogService\API\PS.FreeBookHub_Lite.CatalogService.API\PS.FreeBookHub_Lite.CatalogService.API.csproj", "{E5AEE517-2E4A-BEB7-443E-247F0F7E9D10}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.PaymentService.Infrastructure", "PaymentService\PS.FreeBookHub_Lite.PaymentService.Infrastructure\PS.FreeBookHub_Lite.PaymentService.Infrastructure.csproj", "{2385DDB8-CA07-F871-10DD-BFC5D4C20AEA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.CatalogService.API", "CatalogService\API\PS.CatalogService.API\PS.FreeBookHub_Lite.CatalogService.API.csproj", "{2EBDAC79-0410-B34D-3C43-60A2D0FD3736}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.CatalogService.Application", "CatalogService\Application\PS.CatalogService.Application\PS.FreeBookHub_Lite.CatalogService.Application.csproj", "{3FC6692B-ADC8-55E5-FC5B-A4FD220A20B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.CatalogService.Common", "CatalogService\Common\PS.CatalogService.Common\PS.FreeBookHub_Lite.CatalogService.Common.csproj", "{64C00AF1-3D33-3152-7050-E160B0BE10B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.CatalogService.Domain", "CatalogService\Domain\PS.CatalogService.Domain\PS.FreeBookHub_Lite.CatalogService.Domain.csproj", "{A070A882-967A-4D88-B25B-B479C370E34F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.CatalogService.Infrastructure", "CatalogService\Infrastructure\PS.CatalogService.Infrastructure\PS.FreeBookHub_Lite.CatalogService.Infrastructure.csproj", "{7870D88F-80A9-83BE-B549-ABB49B1E0852}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -231,18 +231,6 @@ Global
 		{ED9EFDC9-C0F3-F6D6-8E14-45D606FAF389}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED9EFDC9-C0F3-F6D6-8E14-45D606FAF389}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED9EFDC9-C0F3-F6D6-8E14-45D606FAF389}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F63160B3-D864-7535-0024-5F4083CED32F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F63160B3-D864-7535-0024-5F4083CED32F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F63160B3-D864-7535-0024-5F4083CED32F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F63160B3-D864-7535-0024-5F4083CED32F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{004D0D5E-E432-445E-F031-9E32D029F546}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{004D0D5E-E432-445E-F031-9E32D029F546}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{004D0D5E-E432-445E-F031-9E32D029F546}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{004D0D5E-E432-445E-F031-9E32D029F546}.Release|Any CPU.Build.0 = Release|Any CPU
-		{18B4EBE8-7515-55D2-E4BA-59E74DA30FA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{18B4EBE8-7515-55D2-E4BA-59E74DA30FA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{18B4EBE8-7515-55D2-E4BA-59E74DA30FA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{18B4EBE8-7515-55D2-E4BA-59E74DA30FA5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AE7D9819-8C97-1551-96C1-B095FE8774FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AE7D9819-8C97-1551-96C1-B095FE8774FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE7D9819-8C97-1551-96C1-B095FE8774FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -259,18 +247,30 @@ Global
 		{D7D71A3D-4AD6-4A77-F2FE-24A896AB0F50}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7D71A3D-4AD6-4A77-F2FE-24A896AB0F50}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7D71A3D-4AD6-4A77-F2FE-24A896AB0F50}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9A2FCBFB-D6DB-93B7-C243-C0E599BBAD1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9A2FCBFB-D6DB-93B7-C243-C0E599BBAD1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9A2FCBFB-D6DB-93B7-C243-C0E599BBAD1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9A2FCBFB-D6DB-93B7-C243-C0E599BBAD1A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E5AEE517-2E4A-BEB7-443E-247F0F7E9D10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E5AEE517-2E4A-BEB7-443E-247F0F7E9D10}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E5AEE517-2E4A-BEB7-443E-247F0F7E9D10}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E5AEE517-2E4A-BEB7-443E-247F0F7E9D10}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2385DDB8-CA07-F871-10DD-BFC5D4C20AEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2385DDB8-CA07-F871-10DD-BFC5D4C20AEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2385DDB8-CA07-F871-10DD-BFC5D4C20AEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2385DDB8-CA07-F871-10DD-BFC5D4C20AEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EBDAC79-0410-B34D-3C43-60A2D0FD3736}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EBDAC79-0410-B34D-3C43-60A2D0FD3736}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EBDAC79-0410-B34D-3C43-60A2D0FD3736}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EBDAC79-0410-B34D-3C43-60A2D0FD3736}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FC6692B-ADC8-55E5-FC5B-A4FD220A20B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FC6692B-ADC8-55E5-FC5B-A4FD220A20B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FC6692B-ADC8-55E5-FC5B-A4FD220A20B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FC6692B-ADC8-55E5-FC5B-A4FD220A20B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64C00AF1-3D33-3152-7050-E160B0BE10B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64C00AF1-3D33-3152-7050-E160B0BE10B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64C00AF1-3D33-3152-7050-E160B0BE10B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64C00AF1-3D33-3152-7050-E160B0BE10B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A070A882-967A-4D88-B25B-B479C370E34F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A070A882-967A-4D88-B25B-B479C370E34F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A070A882-967A-4D88-B25B-B479C370E34F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A070A882-967A-4D88-B25B-B479C370E34F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7870D88F-80A9-83BE-B549-ABB49B1E0852}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7870D88F-80A9-83BE-B549-ABB49B1E0852}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7870D88F-80A9-83BE-B549-ABB49B1E0852}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7870D88F-80A9-83BE-B549-ABB49B1E0852}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -335,16 +335,16 @@ Global
 		{4BD9651C-83B1-C35B-AEEB-8F034FF759F6} = {EE01CB97-67B4-41B3-8BDB-2ED730DF8E4A}
 		{74B2115A-32A2-C2F5-093B-7DB7A4A798B5} = {E1437D11-F8AE-41AA-925F-C76DD12F3281}
 		{ED9EFDC9-C0F3-F6D6-8E14-45D606FAF389} = {C2D58ED3-83E4-4EB0-BE6D-971B5EBDB29F}
-		{F63160B3-D864-7535-0024-5F4083CED32F} = {AB6ABACE-8062-48DC-814F-71E23F159412}
-		{004D0D5E-E432-445E-F031-9E32D029F546} = {0A050336-B3C2-4E25-99D6-3690695F818D}
-		{18B4EBE8-7515-55D2-E4BA-59E74DA30FA5} = {CA75F02F-CEDD-4A08-A62C-EA664C208F52}
 		{AE7D9819-8C97-1551-96C1-B095FE8774FE} = {22F28645-0A0C-4688-9C37-11C83469D117}
 		{1B83DE99-D25D-AB36-A97B-17E9F6FD4C16} = {3E78CFB0-5827-45C5-B18A-F621EB8EBBB0}
 		{C56278DB-5A76-8965-3DCD-62864F2AB75D} = {4EB4C09F-F419-4B33-B11A-EADBE5637E01}
 		{D7D71A3D-4AD6-4A77-F2FE-24A896AB0F50} = {AF5E0AD1-4DFB-4550-90AA-C4C327FBDA3C}
-		{9A2FCBFB-D6DB-93B7-C243-C0E599BBAD1A} = {6FA0C208-3DA2-4268-B100-AE6372A89118}
-		{E5AEE517-2E4A-BEB7-443E-247F0F7E9D10} = {88D19D23-113B-4D38-9AC5-AC8B782FFE8A}
 		{2385DDB8-CA07-F871-10DD-BFC5D4C20AEA} = {BFC2377E-D152-4E22-8D41-C0CE96547467}
+		{2EBDAC79-0410-B34D-3C43-60A2D0FD3736} = {88D19D23-113B-4D38-9AC5-AC8B782FFE8A}
+		{3FC6692B-ADC8-55E5-FC5B-A4FD220A20B6} = {AB6ABACE-8062-48DC-814F-71E23F159412}
+		{64C00AF1-3D33-3152-7050-E160B0BE10B8} = {0A050336-B3C2-4E25-99D6-3690695F818D}
+		{A070A882-967A-4D88-B25B-B479C370E34F} = {CA75F02F-CEDD-4A08-A62C-EA664C208F52}
+		{7870D88F-80A9-83BE-B549-ABB49B1E0852} = {6FA0C208-3DA2-4268-B100-AE6372A89118}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9DD91AFE-550D-48F3-9C0B-14FC12D42555}

@@ -15,8 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\PS.FreeBookHub_Lite.CatalogService.Common\PS.FreeBookHub_Lite.CatalogService.Common.csproj" />
-    <ProjectReference Include="..\..\Domain\PS.FreeBookHub_Lite.CatalogService.Domain\PS.FreeBookHub_Lite.CatalogService.Domain.csproj" />
+    <ProjectReference Include="..\..\Common\PS.CatalogService.Common\PS.FreeBookHub_Lite.CatalogService.Common.csproj" />
+    <ProjectReference Include="..\..\Domain\PS.CatalogService.Domain\PS.FreeBookHub_Lite.CatalogService.Domain.csproj" />
   </ItemGroup>
 
 </Project>

@@ -15,8 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\PS.FreeBookHub_Lite.CartService.Common\PS.FreeBookHub_Lite.CartService.Common.csproj" />
-    <ProjectReference Include="..\..\Domain\PS.FreeBookHub_Lite.CartService.Domain\PS.FreeBookHub_Lite.CartService.Domain.csproj" />
+    <ProjectReference Include="..\..\Common\PS.CartService.Common\PS.FreeBookHub_Lite.CartService.Common.csproj" />
+    <ProjectReference Include="..\..\Domain\PS.CartService.Domain\PS.FreeBookHub_Lite.CartService.Domain.csproj" />
   </ItemGroup>
 
 </Project>

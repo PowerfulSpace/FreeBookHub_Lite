@@ -22,9 +22,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Application\PS.FreeBookHub_Lite.CartService.Application\PS.FreeBookHub_Lite.CartService.Application.csproj" />
-    <ProjectReference Include="..\..\Common\PS.FreeBookHub_Lite.CartService.Common\PS.FreeBookHub_Lite.CartService.Common.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\PS.FreeBookHub_Lite.CartService.Infrastructure\PS.FreeBookHub_Lite.CartService.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Application\PS.CartService.Application\PS.FreeBookHub_Lite.CartService.Application.csproj" />
+    <ProjectReference Include="..\..\Common\PS.CartService.Common\PS.FreeBookHub_Lite.CartService.Common.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\PS.CartService.Infrastructure\PS.FreeBookHub_Lite.CartService.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

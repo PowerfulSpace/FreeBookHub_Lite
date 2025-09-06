@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<PropertyGroup>
 		<TargetFramework>net9.0</TargetFramework>
@@ -24,7 +24,8 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\..\Application\PS.FreeBookHub_Lite.CatalogService.Application\PS.FreeBookHub_Lite.CatalogService.Application.csproj" />
 	  <ProjectReference Include="..\..\Common\PS.FreeBookHub_Lite.CatalogService.Common\PS.FreeBookHub_Lite.CatalogService.Common.csproj" />
-	  <ProjectReference Include="..\..\Infrastructure\PS.FreeBookHub_Lite.CatalogService.Infrastructure\PS.FreeBookHub_Lite.CatalogService.Infrastructure.csproj" />
+	  <ProjectReference Include="..\..\PS.FreeBookHub_Lite.CatalogService.Infrastructure\PS.FreeBookHub_Lite.CatalogService.Infrastructure.csproj" />
 	</ItemGroup>
+
 
 </Project>

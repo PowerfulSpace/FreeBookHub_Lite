@@ -21,8 +21,8 @@
 
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\Common\PS.FreeBookHub_Lite.AuthService.Common\PS.FreeBookHub_Lite.AuthService.Common.csproj" />
-	  <ProjectReference Include="..\..\Domain\PS.FreeBookHub_Lite.AuthService.Domain\PS.FreeBookHub_Lite.AuthService.Domain.csproj" />
+	  <ProjectReference Include="..\..\Common\PS.AuthService.Common\PS.FreeBookHub_Lite.AuthService.Common.csproj" />
+	  <ProjectReference Include="..\..\Domain\PS.AuthService.Domain\PS.FreeBookHub_Lite.AuthService.Domain.csproj" />
 	</ItemGroup>
 
 </Project>

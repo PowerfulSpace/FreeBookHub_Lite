@@ -1,4 +1,4 @@
-﻿namespace PS.FreeBookHub_Lite.PaymentService.API.Authentication.Enums
+﻿namespace PS.PaymentService.API.Authentication.Enums
 {
     public enum UserRole
     {

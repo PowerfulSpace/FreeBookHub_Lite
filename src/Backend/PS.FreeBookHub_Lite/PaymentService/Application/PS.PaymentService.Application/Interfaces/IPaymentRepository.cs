@@ -1,6 +1,6 @@
-﻿using PS.FreeBookHub_Lite.PaymentService.Domain.Entities;
+﻿using PS.PaymentService.Domain.Entities;
 
-namespace PS.FreeBookHub_Lite.PaymentService.Application.Interfaces
+namespace PS.PaymentService.Application.Interfaces
 {
     public interface IPaymentRepository
     {

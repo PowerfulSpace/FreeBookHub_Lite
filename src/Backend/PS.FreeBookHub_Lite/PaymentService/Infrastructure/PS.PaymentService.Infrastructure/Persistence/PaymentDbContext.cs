@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PS.FreeBookHub_Lite.PaymentService.Domain.Entities;
+using PS.PaymentService.Domain.Entities;
 
-namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Persistence
+namespace PS.PaymentService.Infrastructure.Persistence
 {
     public class PaymentDbContext : DbContext
     {

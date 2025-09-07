@@ -1,4 +1,4 @@
-﻿namespace PS.FreeBookHub_Lite.PaymentService.Application.Interfaces.Redis
+﻿namespace PS.PaymentService.Application.Interfaces.Redis
 {
     public interface IEventDeduplicationService
     {

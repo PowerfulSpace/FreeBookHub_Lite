@@ -1,9 +1,9 @@
 ﻿using Mapster;
-using PS.FreeBookHub_Lite.PaymentService.Application.CQRS.Commands.ProcessPayment;
-using PS.FreeBookHub_Lite.PaymentService.Application.DTOs;
-using PS.FreeBookHub_Lite.PaymentService.Domain.Entities;
+using PS.PaymentService.Application.CQRS.Commands.ProcessPayment;
+using PS.PaymentService.Application.DTOs;
+using PS.PaymentService.Domain.Entities;
 
-namespace PS.FreeBookHub_Lite.PaymentService.Application.Mappings
+namespace PS.PaymentService.Application.Mappings
 {
     public class PaymentMappingConfig : IRegister
     {

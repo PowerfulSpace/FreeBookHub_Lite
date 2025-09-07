@@ -1,14 +1,14 @@
 ﻿using Mapster;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using PS.FreeBookHub_Lite.PaymentService.Application.DTOs;
-using PS.FreeBookHub_Lite.PaymentService.Application.Interfaces;
-using PS.FreeBookHub_Lite.PaymentService.Common.Logging;
-using PS.FreeBookHub_Lite.PaymentService.Domain.Entities;
-using PS.FreeBookHub_Lite.PaymentService.Domain.Enums;
-using PS.FreeBookHub_Lite.PaymentService.Domain.Exceptions.Payment;
+using PS.PaymentService.Application.DTOs;
+using PS.PaymentService.Application.Interfaces;
+using PS.PaymentService.Common.Logging;
+using PS.PaymentService.Domain.Entities;
+using PS.PaymentService.Domain.Enums;
+using PS.PaymentService.Domain.Exceptions.Payment;
 
-namespace PS.FreeBookHub_Lite.PaymentService.Application.CQRS.Commands.ProcessPayment
+namespace PS.PaymentService.Application.CQRS.Commands.ProcessPayment
 {
     public class ProcessPaymentCommandHandler : IRequestHandler<ProcessPaymentCommand, PaymentResponse>
     {

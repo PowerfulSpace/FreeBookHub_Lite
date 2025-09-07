@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace PS.FreeBookHub_Lite.PaymentService.Application.CQRS.Commands.ProcessPayment
+namespace PS.PaymentService.Application.CQRS.Commands.ProcessPayment
 {
     public class ProcessPaymentCommandValidator : AbstractValidator<ProcessPaymentCommand>
     {

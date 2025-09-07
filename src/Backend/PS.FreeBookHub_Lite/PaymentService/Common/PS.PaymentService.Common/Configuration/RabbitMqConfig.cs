@@ -1,4 +1,4 @@
-﻿namespace PS.FreeBookHub_Lite.PaymentService.Common.Configuration
+﻿namespace PS.PaymentService.Common.Configuration
 {
     public class RabbitMqConfig
     {

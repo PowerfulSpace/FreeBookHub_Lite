@@ -1,4 +1,4 @@
-﻿namespace PS.FreeBookHub_Lite.PaymentService.Common.Events
+﻿namespace PS.PaymentService.Common.Events
 {
     public record PaymentCompletedEvent(
       Guid OrderId,

@@ -2,14 +2,14 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PS.FreeBookHub_Lite.PaymentService.Application.CQRS.Commands.ProcessPayment;
-using PS.FreeBookHub_Lite.PaymentService.Application.CQRS.Queries.GetPaymentById;
-using PS.FreeBookHub_Lite.PaymentService.Application.CQRS.Queries.GetPaymentsByOrderId;
-using PS.FreeBookHub_Lite.PaymentService.Application.DTOs;
-using PS.FreeBookHub_Lite.PaymentService.Domain.Exceptions.User;
+using PS.PaymentService.Application.CQRS.Commands.ProcessPayment;
+using PS.PaymentService.Application.CQRS.Queries.GetPaymentById;
+using PS.PaymentService.Application.CQRS.Queries.GetPaymentsByOrderId;
+using PS.PaymentService.Application.DTOs;
+using PS.PaymentService.Domain.Exceptions.User;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace PS.FreeBookHub_Lite.PaymentService.API.Controllers
+namespace PS.PaymentService.API.Controllers
 {
     [Authorize(Policy = "User")]
     [ApiController]

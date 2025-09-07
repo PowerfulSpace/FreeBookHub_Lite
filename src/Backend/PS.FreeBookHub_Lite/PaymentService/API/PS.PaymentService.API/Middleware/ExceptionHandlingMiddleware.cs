@@ -1,8 +1,8 @@
-﻿using PS.FreeBookHub_Lite.PaymentService.Common.Logging;
-using PS.FreeBookHub_Lite.PaymentService.Domain.Exceptions.Payment;
-using PS.FreeBookHub_Lite.PaymentService.Domain.Exceptions.User;
+﻿using PS.PaymentService.Common.Logging;
+using PS.PaymentService.Domain.Exceptions.Payment;
+using PS.PaymentService.Domain.Exceptions.User;
 
-namespace PS.FreeBookHub_Lite.PaymentService.API.Middleware
+namespace PS.PaymentService.API.Middleware
 {
     public class ExceptionHandlingMiddleware
     {

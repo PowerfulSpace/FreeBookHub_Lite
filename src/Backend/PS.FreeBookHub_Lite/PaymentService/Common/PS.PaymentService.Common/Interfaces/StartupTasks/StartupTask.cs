@@ -1,4 +1,4 @@
-﻿namespace PS.FreeBookHub_Lite.PaymentService.Common.Interfaces.StartupTasks
+﻿namespace PS.PaymentService.Common.Interfaces.StartupTasks
 {
     public abstract class StartupTask : IStartupTask
     {

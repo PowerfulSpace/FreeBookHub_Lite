@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using PS.FreeBookHub_Lite.PaymentService.Common.Interfaces.StartupTasks;
+using PS.PaymentService.Common.Interfaces.StartupTasks;
 
-namespace PS.FreeBookHub_Lite.PaymentService.Common.Extensions.DependencyInjection
+namespace PS.PaymentService.Common.Extensions.DependencyInjection
 {
     public static class ServiceCollectionExtensions
     {

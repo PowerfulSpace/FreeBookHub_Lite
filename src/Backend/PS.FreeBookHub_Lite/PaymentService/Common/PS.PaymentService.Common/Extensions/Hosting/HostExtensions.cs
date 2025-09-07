@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using PS.FreeBookHub_Lite.PaymentService.Common.Interfaces.StartupTasks;
+using PS.PaymentService.Common.Interfaces.StartupTasks;
 
-namespace PS.FreeBookHub_Lite.PaymentService.Common.Extensions.Hosting
+namespace PS.PaymentService.Common.Extensions.Hosting
 {
     public static class HostExtensions
     {

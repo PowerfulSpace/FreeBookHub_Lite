@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Persistence.Migrations
+namespace PS.PaymentService.Infrastructure.Persistence.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration

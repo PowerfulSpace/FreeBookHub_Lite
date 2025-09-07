@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using PS.FreeBookHub_Lite.PaymentService.Application.DTOs;
+using PS.PaymentService.Application.DTOs;
 
-namespace PS.FreeBookHub_Lite.PaymentService.Application.Validators
+namespace PS.PaymentService.Application.Validators
 {
     public class CreatePaymentRequestValidator : AbstractValidator<CreatePaymentRequest>
     {

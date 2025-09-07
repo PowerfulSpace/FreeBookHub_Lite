@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PS.FreeBookHub_Lite.PaymentService.Domain.Entities;
+using PS.PaymentService.Domain.Entities;
 
-namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Persistence.Configurations
+namespace PS.PaymentService.Infrastructure.Persistence.Configurations
 {
     public class PaymentConfiguration : IEntityTypeConfiguration<Payment>
     {

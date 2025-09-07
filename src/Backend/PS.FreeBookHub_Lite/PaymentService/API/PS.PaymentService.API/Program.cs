@@ -1,12 +1,12 @@
 using DotNetEnv;
-using PS.FreeBookHub_Lite.PaymentService.API;
-using PS.FreeBookHub_Lite.PaymentService.API.Logging;
-using PS.FreeBookHub_Lite.PaymentService.API.Middleware;
-using PS.FreeBookHub_Lite.PaymentService.Application;
-using PS.FreeBookHub_Lite.PaymentService.Infrastructure;
-using PS.FreeBookHub_Lite.PaymentService.Common.Extensions.DependencyInjection;
-using PS.FreeBookHub_Lite.PaymentService.Common.Extensions.Hosting;
-using PS.FreeBookHub_Lite.PaymentService.Infrastructure.StartupTasks;
+using PS.PaymentService.API;
+using PS.PaymentService.API.Logging;
+using PS.PaymentService.API.Middleware;
+using PS.PaymentService.Application;
+using PS.PaymentService.Infrastructure;
+using PS.PaymentService.Common.Extensions.DependencyInjection;
+using PS.PaymentService.Common.Extensions.Hosting;
+using PS.PaymentService.Infrastructure.StartupTasks;
 using Serilog;
 
 SerilogBootstrapper.ConfigureSerilog();

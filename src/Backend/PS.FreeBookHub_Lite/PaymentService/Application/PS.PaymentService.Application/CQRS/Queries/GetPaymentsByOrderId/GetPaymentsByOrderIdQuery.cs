@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using PS.FreeBookHub_Lite.PaymentService.Application.DTOs;
+using PS.PaymentService.Application.DTOs;
 
-namespace PS.FreeBookHub_Lite.PaymentService.Application.CQRS.Queries.GetPaymentsByOrderId
+namespace PS.PaymentService.Application.CQRS.Queries.GetPaymentsByOrderId
 {
     public class GetPaymentsByOrderIdQuery : IRequest<IEnumerable<PaymentResponse>>
     {

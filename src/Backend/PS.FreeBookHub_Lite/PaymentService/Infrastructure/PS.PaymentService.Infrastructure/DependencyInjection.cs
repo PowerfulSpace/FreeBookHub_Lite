@@ -1,18 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PS.FreeBookHub_Lite.PaymentService.Application.Interfaces;
-using PS.FreeBookHub_Lite.PaymentService.Application.Interfaces.Redis;
-using PS.FreeBookHub_Lite.PaymentService.Common.Configuration;
-using PS.FreeBookHub_Lite.PaymentService.Common.Events.Interfaces;
-using PS.FreeBookHub_Lite.PaymentService.Infrastructure.Caching.Redis;
-using PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging;
-using PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers;
-using PS.FreeBookHub_Lite.PaymentService.Infrastructure.Persistence;
-using PS.FreeBookHub_Lite.PaymentService.Infrastructure.Persistence.Repositories;
+using PS.PaymentService.Application.Interfaces;
+using PS.PaymentService.Application.Interfaces.Redis;
+using PS.PaymentService.Common.Configuration;
+using PS.PaymentService.Common.Events.Interfaces;
+using PS.PaymentService.Infrastructure.Caching.Redis;
+using PS.PaymentService.Infrastructure.Messaging;
+using PS.PaymentService.Infrastructure.Messaging.Consumers;
+using PS.PaymentService.Infrastructure.Persistence;
+using PS.PaymentService.Infrastructure.Persistence.Repositories;
 using StackExchange.Redis;
 
-namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure
+namespace PS.PaymentService.Infrastructure
 {
     public static class DependencyInjection
     {

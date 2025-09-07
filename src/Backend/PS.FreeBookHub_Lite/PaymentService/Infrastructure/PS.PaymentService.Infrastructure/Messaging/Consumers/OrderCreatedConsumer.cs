@@ -3,12 +3,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using PS.FreeBookHub_Lite.PaymentService.Application.CQRS.Commands.ProcessPayment;
-using PS.FreeBookHub_Lite.PaymentService.Application.Interfaces.Redis;
-using PS.FreeBookHub_Lite.PaymentService.Common.Configuration;
-using PS.FreeBookHub_Lite.PaymentService.Common.Events;
-using PS.FreeBookHub_Lite.PaymentService.Common.Events.Interfaces;
-using PS.FreeBookHub_Lite.PaymentService.Common.Logging;
+using PS.PaymentService.Application.CQRS.Commands.ProcessPayment;
+using PS.PaymentService.Application.Interfaces.Redis;
+using PS.PaymentService.Common.Configuration;
+using PS.PaymentService.Common.Events;
+using PS.PaymentService.Common.Events.Interfaces;
+using PS.PaymentService.Common.Logging;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Diagnostics.Metrics;
@@ -25,11 +25,11 @@ using System.Text.Json;
 // 7) Публикация события PaymentCompletedEvent – через IEventPublisher.
 // 8) Подтверждение обработки (BasicAck) – удаление сообщения из очереди.
 
-namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging.Consumers
+namespace PS.PaymentService.Infrastructure.Messaging.Consumers
 {
     public class OrderCreatedConsumer : BackgroundService
     {
-        private static readonly Meter _meter = new("PS.FreeBookHub_Lite.PaymentService");
+        private static readonly Meter _meter = new("PS.PaymentService");
         private static readonly Counter<long> _duplicateCounter = _meter.CreateCounter<long>(
             "paymentservice.event.duplicates",
             unit: "{events}",

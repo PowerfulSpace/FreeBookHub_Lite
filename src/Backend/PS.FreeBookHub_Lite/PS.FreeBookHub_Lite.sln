@@ -135,15 +135,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.OrderService.Domain", "O
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.OrderService.Infrastructure", "OrderService\Infrastructure\PS.OrderService.Infrastructure\PS.OrderService.Infrastructure.csproj", "{99ED32AB-4741-6760-CEE8-2C978A546A7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.PaymentService.API", "PaymentService\API\PS.PaymentService.API\PS.FreeBookHub_Lite.PaymentService.API.csproj", "{AB5E3D92-43E0-0FE3-8689-D7C9473FAC22}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.PaymentService.API", "PaymentService\API\PS.PaymentService.API\PS.PaymentService.API.csproj", "{AB5E3D92-43E0-0FE3-8689-D7C9473FAC22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.PaymentService.Application", "PaymentService\Application\PS.PaymentService.Application\PS.FreeBookHub_Lite.PaymentService.Application.csproj", "{5B851CB8-DDB8-3077-7152-9DFC9828AFCB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.PaymentService.Application", "PaymentService\Application\PS.PaymentService.Application\PS.PaymentService.Application.csproj", "{5B851CB8-DDB8-3077-7152-9DFC9828AFCB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.PaymentService.Common", "PaymentService\Common\PS.PaymentService.Common\PS.FreeBookHub_Lite.PaymentService.Common.csproj", "{F088321F-E4C8-D54B-A9B1-D639F51B9EA7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.PaymentService.Common", "PaymentService\Common\PS.PaymentService.Common\PS.PaymentService.Common.csproj", "{F088321F-E4C8-D54B-A9B1-D639F51B9EA7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.PaymentService.Domain", "PaymentService\Domain\PS.PaymentService.Domain\PS.FreeBookHub_Lite.PaymentService.Domain.csproj", "{E850ED77-2467-1556-B74A-D6A769EEA33F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.PaymentService.Domain", "PaymentService\Domain\PS.PaymentService.Domain\PS.PaymentService.Domain.csproj", "{E850ED77-2467-1556-B74A-D6A769EEA33F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.PaymentService.Infrastructure", "PaymentService\Infrastructure\PS.PaymentService.Infrastructure\PS.FreeBookHub_Lite.PaymentService.Infrastructure.csproj", "{5C5835F1-E273-A81C-030D-FA0A4B72F6A6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.PaymentService.Infrastructure", "PaymentService\Infrastructure\PS.PaymentService.Infrastructure\PS.PaymentService.Infrastructure.csproj", "{5C5835F1-E273-A81C-030D-FA0A4B72F6A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

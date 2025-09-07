@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
-using PS.FreeBookHub_Lite.PaymentService.Application.Interfaces.Redis;
+using PS.PaymentService.Application.Interfaces.Redis;
 using StackExchange.Redis;
 
-namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Caching.Redis
+namespace PS.PaymentService.Infrastructure.Caching.Redis
 {
     public class RedisEventDeduplicationService : IEventDeduplicationService
     {

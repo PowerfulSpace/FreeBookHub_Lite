@@ -2,10 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
-using PS.FreeBookHub_Lite.PaymentService.Common.Interfaces.StartupTasks;
-using PS.FreeBookHub_Lite.PaymentService.Infrastructure.Persistence;
+using PS.PaymentService.Common.Interfaces.StartupTasks;
+using PS.PaymentService.Infrastructure.Persistence;
 
-namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.StartupTasks
+namespace PS.PaymentService.Infrastructure.StartupTasks
 {
     public class DatabaseMigrationStartupTask : StartupTask
     {

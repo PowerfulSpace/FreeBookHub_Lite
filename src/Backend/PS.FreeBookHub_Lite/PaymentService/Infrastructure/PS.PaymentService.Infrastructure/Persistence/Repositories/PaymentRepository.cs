@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PS.FreeBookHub_Lite.PaymentService.Application.Interfaces;
-using PS.FreeBookHub_Lite.PaymentService.Domain.Entities;
+using PS.PaymentService.Application.Interfaces;
+using PS.PaymentService.Domain.Entities;
 
-namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Persistence.Repositories
+namespace PS.PaymentService.Infrastructure.Persistence.Repositories
 {
     public class PaymentRepository : IPaymentRepository
     {

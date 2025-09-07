@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 
-namespace PS.FreeBookHub_Lite.PaymentService.API.Security
+namespace PS.PaymentService.API.Security
 {
     public class InternalApiKeyHandler : AuthorizationHandler<InternalApiKeyRequirement>
     {

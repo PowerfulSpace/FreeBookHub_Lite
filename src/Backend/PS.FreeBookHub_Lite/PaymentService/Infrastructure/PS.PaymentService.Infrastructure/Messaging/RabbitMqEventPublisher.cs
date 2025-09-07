@@ -1,13 +1,13 @@
-﻿using PS.FreeBookHub_Lite.PaymentService.Common.Events.Interfaces;
+﻿using PS.PaymentService.Common.Events.Interfaces;
 using RabbitMQ.Client;
 using System.Text.Json;
 using System.Text;
 using Microsoft.Extensions.Logging;
-using PS.FreeBookHub_Lite.PaymentService.Common.Logging;
-using PS.FreeBookHub_Lite.PaymentService.Common.Configuration;
+using PS.PaymentService.Common.Logging;
+using PS.PaymentService.Common.Configuration;
 using Microsoft.Extensions.Options;
 
-namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Messaging
+namespace PS.PaymentService.Infrastructure.Messaging
 {
     public class RabbitMqEventPublisher : IEventPublisher, IDisposable
     {

@@ -1,6 +1,6 @@
-﻿using PS.FreeBookHub_Lite.PaymentService.Domain.Exceptions.User.Base;
+﻿using PS.PaymentService.Domain.Exceptions.User.Base;
 
-namespace PS.FreeBookHub_Lite.PaymentService.Domain.Exceptions.User
+namespace PS.PaymentService.Domain.Exceptions.User
 {
     public class InvalidUserIdentifierException : UserException
     {

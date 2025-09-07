@@ -1,4 +1,4 @@
-﻿namespace PS.FreeBookHub_Lite.PaymentService.Domain.Exceptions.Base
+﻿namespace PS.PaymentService.Domain.Exceptions.Base
 {
     public abstract class PaymentServiceException : Exception
     {

@@ -1,7 +1,7 @@
-﻿using PS.FreeBookHub_Lite.PaymentService.Domain.Enums;
-using PS.FreeBookHub_Lite.PaymentService.Domain.Exceptions.Base;
+﻿using PS.PaymentService.Domain.Enums;
+using PS.PaymentService.Domain.Exceptions.Base;
 
-namespace PS.FreeBookHub_Lite.PaymentService.Domain.Exceptions.Payment
+namespace PS.PaymentService.Domain.Exceptions.Payment
 {
     public class InvalidPaymentStatusException : PaymentServiceException
     {

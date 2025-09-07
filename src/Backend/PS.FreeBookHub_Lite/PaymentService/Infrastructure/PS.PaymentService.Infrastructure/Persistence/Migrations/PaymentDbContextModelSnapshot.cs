@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using PS.FreeBookHub_Lite.PaymentService.Infrastructure.Persistence;
+using PS.PaymentService.Infrastructure.Persistence;
 
 #nullable disable
 
-namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Persistence.Migrations
+namespace PS.PaymentService.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(PaymentDbContext))]
     partial class PaymentDbContextModelSnapshot : ModelSnapshot
@@ -22,7 +22,7 @@ namespace PS.FreeBookHub_Lite.PaymentService.Infrastructure.Persistence.Migratio
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("PS.FreeBookHub_Lite.PaymentService.Domain.Entities.Payment", b =>
+            modelBuilder.Entity("PS.PaymentService.Domain.Entities.Payment", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()

@@ -1,4 +1,4 @@
-﻿namespace PS.FreeBookHub_Lite.PaymentService.Application.DTOs
+﻿namespace PS.PaymentService.Application.DTOs
 {
     public class CreatePaymentRequest
     {

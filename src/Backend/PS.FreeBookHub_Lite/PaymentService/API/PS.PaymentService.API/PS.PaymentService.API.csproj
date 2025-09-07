@@ -22,9 +22,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\Application\PS.PaymentService.Application\PS.FreeBookHub_Lite.PaymentService.Application.csproj" />
-	  <ProjectReference Include="..\..\Common\PS.PaymentService.Common\PS.FreeBookHub_Lite.PaymentService.Common.csproj" />
-	  <ProjectReference Include="..\..\Infrastructure\PS.PaymentService.Infrastructure\PS.FreeBookHub_Lite.PaymentService.Infrastructure.csproj" />
+	  <ProjectReference Include="..\..\Application\PS.PaymentService.Application\PS.PaymentService.Application.csproj" />
+	  <ProjectReference Include="..\..\Common\PS.PaymentService.Common\PS.PaymentService.Common.csproj" />
+	  <ProjectReference Include="..\..\Infrastructure\PS.PaymentService.Infrastructure\PS.PaymentService.Infrastructure.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-﻿namespace PS.FreeBookHub_Lite.PaymentService.API.Authentication.Models
+﻿namespace PS.PaymentService.API.Authentication.Models
 {
     public class JwtSettings
     {

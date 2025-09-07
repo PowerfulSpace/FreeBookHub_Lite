@@ -1,7 +1,7 @@
-﻿using PS.FreeBookHub_Lite.PaymentService.Domain.Enums;
-using PS.FreeBookHub_Lite.PaymentService.Domain.Exceptions.Payment;
+﻿using PS.PaymentService.Domain.Enums;
+using PS.PaymentService.Domain.Exceptions.Payment;
 
-namespace PS.FreeBookHub_Lite.PaymentService.Domain.Entities
+namespace PS.PaymentService.Domain.Entities
 {
     public class Payment
     {

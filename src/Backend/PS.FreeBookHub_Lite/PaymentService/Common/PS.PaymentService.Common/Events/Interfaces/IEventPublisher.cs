@@ -1,4 +1,4 @@
-﻿namespace PS.FreeBookHub_Lite.PaymentService.Common.Events.Interfaces
+﻿namespace PS.PaymentService.Common.Events.Interfaces
 {
     public interface IEventPublisher
     {

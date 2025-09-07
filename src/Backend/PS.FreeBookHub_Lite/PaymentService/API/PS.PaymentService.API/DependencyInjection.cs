@@ -2,12 +2,12 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using PS.FreeBookHub_Lite.PaymentService.API.Authentication.Enums;
-using PS.FreeBookHub_Lite.PaymentService.API.Authentication.Models;
-using PS.FreeBookHub_Lite.PaymentService.API.Security;
+using PS.PaymentService.API.Authentication.Enums;
+using PS.PaymentService.API.Authentication.Models;
+using PS.PaymentService.API.Security;
 using System.Text;
 
-namespace PS.FreeBookHub_Lite.PaymentService.API
+namespace PS.PaymentService.API
 {
     public static class DependencyInjection
     {

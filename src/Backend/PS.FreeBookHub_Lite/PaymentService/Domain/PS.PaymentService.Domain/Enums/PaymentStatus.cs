@@ -1,4 +1,4 @@
-﻿namespace PS.FreeBookHub_Lite.PaymentService.Domain.Enums
+﻿namespace PS.PaymentService.Domain.Enums
 {
     public enum PaymentStatus
     {

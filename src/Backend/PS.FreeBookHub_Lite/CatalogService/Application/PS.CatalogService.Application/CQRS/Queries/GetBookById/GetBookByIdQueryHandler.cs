@@ -1,12 +1,12 @@
 ﻿using Mapster;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using PS.FreeBookHub_Lite.CatalogService.Application.DTOs;
-using PS.FreeBookHub_Lite.CatalogService.Application.Interfaces;
-using PS.FreeBookHub_Lite.CatalogService.Common.Logging;
-using PS.FreeBookHub_Lite.CatalogService.Domain.Exceptions.Book;
+using PS.CatalogService.Application.DTOs;
+using PS.CatalogService.Application.Interfaces;
+using PS.CatalogService.Common.Logging;
+using PS.CatalogService.Domain.Exceptions.Book;
 
-namespace PS.FreeBookHub_Lite.CatalogService.Application.CQRS.Queries.GetBookById
+namespace PS.CatalogService.Application.CQRS.Queries.GetBookById
 {
     public class GetBookByIdQueryHandler : IRequestHandler<GetBookByIdQuery, BookResponse>
     {

@@ -1,4 +1,4 @@
-﻿namespace PS.FreeBookHub_Lite.CatalogService.Domain.Entities
+﻿namespace PS.CatalogService.Domain.Entities
 {
     public class Book
     {

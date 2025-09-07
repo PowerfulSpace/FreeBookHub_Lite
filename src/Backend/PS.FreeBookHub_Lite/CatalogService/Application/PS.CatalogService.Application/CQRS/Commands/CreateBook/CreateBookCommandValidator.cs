@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace PS.FreeBookHub_Lite.CatalogService.Application.CQRS.Commands.CreateBook
+namespace PS.CatalogService.Application.CQRS.Commands.CreateBook
 {
     public class CreateBookCommandValidator : AbstractValidator<CreateBookCommand>
     {

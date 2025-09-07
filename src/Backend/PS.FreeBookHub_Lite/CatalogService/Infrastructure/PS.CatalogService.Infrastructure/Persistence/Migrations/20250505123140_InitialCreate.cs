@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace PS.FreeBookHub_Lite.CatalogService.Infrastructure.Persistence.Migrations
+namespace PS.CatalogService.Infrastructure.Persistence.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration

@@ -1,6 +1,6 @@
-﻿using PS.FreeBookHub_Lite.CatalogService.Domain.Entities;
+﻿using PS.CatalogService.Domain.Entities;
 
-namespace PS.FreeBookHub_Lite.CatalogService.Application.Interfaces
+namespace PS.CatalogService.Application.Interfaces
 {
     public interface IBookRepository
     {

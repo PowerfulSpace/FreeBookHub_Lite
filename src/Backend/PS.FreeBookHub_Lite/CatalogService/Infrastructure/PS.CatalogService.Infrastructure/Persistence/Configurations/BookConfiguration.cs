@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PS.FreeBookHub_Lite.CatalogService.Domain.Entities;
+using PS.CatalogService.Domain.Entities;
 
-namespace PS.FreeBookHub_Lite.CatalogService.Infrastructure.Persistence.Configurations
+namespace PS.CatalogService.Infrastructure.Persistence.Configurations
 {
     public class BookConfiguration : IEntityTypeConfiguration<Book>
     {

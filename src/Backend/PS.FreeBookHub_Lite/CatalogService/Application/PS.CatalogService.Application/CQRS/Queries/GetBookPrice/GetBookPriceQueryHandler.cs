@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
-using PS.FreeBookHub_Lite.CatalogService.Application.Interfaces;
-using PS.FreeBookHub_Lite.CatalogService.Common.Logging;
-using PS.FreeBookHub_Lite.CatalogService.Domain.Exceptions.Book;
+using PS.CatalogService.Application.Interfaces;
+using PS.CatalogService.Common.Logging;
+using PS.CatalogService.Domain.Exceptions.Book;
 
-namespace PS.FreeBookHub_Lite.CatalogService.Application.CQRS.Queries.GetBookPrice
+namespace PS.CatalogService.Application.CQRS.Queries.GetBookPrice
 {
     public class GetBookPriceQueryHandler : IRequestHandler<GetBookPriceQuery, decimal?>
     {

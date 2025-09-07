@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using PS.FreeBookHub_Lite.CatalogService.Application.DTOs;
+using PS.CatalogService.Application.DTOs;
 
-namespace PS.FreeBookHub_Lite.CatalogService.Application.CQRS.Commands.CreateBook
+namespace PS.CatalogService.Application.CQRS.Commands.CreateBook
 {
     public class CreateBookCommand : IRequest<BookResponse>
     {

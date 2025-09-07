@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PS.FreeBookHub_Lite.CatalogService.Domain.Entities;
+using PS.CatalogService.Domain.Entities;
 
-namespace PS.FreeBookHub_Lite.CatalogService.Infrastructure.Persistence
+namespace PS.CatalogService.Infrastructure.Persistence
 {
 
     public class CatalogDbContext : DbContext

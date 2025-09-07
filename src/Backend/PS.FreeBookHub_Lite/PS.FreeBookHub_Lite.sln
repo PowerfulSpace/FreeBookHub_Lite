@@ -93,15 +93,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService.UnitTests", "..
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CartService.UnitTests", "..\..\..\tests\CartService\Unit\CartService.UnitTests\CartService.UnitTests.csproj", "{40F23ACC-6EAB-FA64-2DBD-2A532C0817CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.CatalogService.API", "CatalogService\API\PS.CatalogService.API\PS.FreeBookHub_Lite.CatalogService.API.csproj", "{2EBDAC79-0410-B34D-3C43-60A2D0FD3736}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.CatalogService.API", "CatalogService\API\PS.CatalogService.API\PS.CatalogService.API.csproj", "{2EBDAC79-0410-B34D-3C43-60A2D0FD3736}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.CatalogService.Application", "CatalogService\Application\PS.CatalogService.Application\PS.FreeBookHub_Lite.CatalogService.Application.csproj", "{3FC6692B-ADC8-55E5-FC5B-A4FD220A20B6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.CatalogService.Application", "CatalogService\Application\PS.CatalogService.Application\PS.CatalogService.Application.csproj", "{3FC6692B-ADC8-55E5-FC5B-A4FD220A20B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.CatalogService.Common", "CatalogService\Common\PS.CatalogService.Common\PS.FreeBookHub_Lite.CatalogService.Common.csproj", "{64C00AF1-3D33-3152-7050-E160B0BE10B8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.CatalogService.Common", "CatalogService\Common\PS.CatalogService.Common\PS.CatalogService.Common.csproj", "{64C00AF1-3D33-3152-7050-E160B0BE10B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.CatalogService.Domain", "CatalogService\Domain\PS.CatalogService.Domain\PS.FreeBookHub_Lite.CatalogService.Domain.csproj", "{A070A882-967A-4D88-B25B-B479C370E34F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.CatalogService.Domain", "CatalogService\Domain\PS.CatalogService.Domain\PS.CatalogService.Domain.csproj", "{A070A882-967A-4D88-B25B-B479C370E34F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.CatalogService.Infrastructure", "CatalogService\Infrastructure\PS.CatalogService.Infrastructure\PS.FreeBookHub_Lite.CatalogService.Infrastructure.csproj", "{7870D88F-80A9-83BE-B549-ABB49B1E0852}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.CatalogService.Infrastructure", "CatalogService\Infrastructure\PS.CatalogService.Infrastructure\PS.CatalogService.Infrastructure.csproj", "{7870D88F-80A9-83BE-B549-ABB49B1E0852}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.AuthService.API", "AuthService\API\PS.AuthService.API\PS.AuthService.API.csproj", "{DDF1308C-3001-0101-D94C-08446A20D795}"
 EndProject

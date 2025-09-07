@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PS.FreeBookHub_Lite.CatalogService.Application.Interfaces;
-using PS.FreeBookHub_Lite.CatalogService.Infrastructure.Persistence;
-using PS.FreeBookHub_Lite.CatalogService.Infrastructure.Persistence.Repositories;
+using PS.CatalogService.Application.Interfaces;
+using PS.CatalogService.Infrastructure.Persistence;
+using PS.CatalogService.Infrastructure.Persistence.Repositories;
 
-namespace PS.FreeBookHub_Lite.CatalogService.Infrastructure
+namespace PS.CatalogService.Infrastructure
 {
     public static class DependencyInjection
     {

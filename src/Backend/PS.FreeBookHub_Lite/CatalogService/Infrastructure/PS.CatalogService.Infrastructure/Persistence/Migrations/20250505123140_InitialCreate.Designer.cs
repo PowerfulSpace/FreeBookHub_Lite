@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using PS.FreeBookHub_Lite.CatalogService.Infrastructure.Persistence;
+using PS.CatalogService.Infrastructure.Persistence;
 
 #nullable disable
 
-namespace PS.FreeBookHub_Lite.CatalogService.Infrastructure.Persistence.Migrations
+namespace PS.CatalogService.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(CatalogDbContext))]
     [Migration("20250505123140_InitialCreate")]
@@ -25,7 +25,7 @@ namespace PS.FreeBookHub_Lite.CatalogService.Infrastructure.Persistence.Migratio
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("PS.FreeBookHub_Lite.CatalogService.Domain.Entities.Book", b =>
+            modelBuilder.Entity("PS.CatalogService.Domain.Entities.Book", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()

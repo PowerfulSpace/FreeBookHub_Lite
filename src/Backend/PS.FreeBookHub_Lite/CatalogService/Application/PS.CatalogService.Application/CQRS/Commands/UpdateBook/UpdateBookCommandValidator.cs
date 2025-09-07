@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace PS.FreeBookHub_Lite.CatalogService.Application.CQRS.Commands.UpdateBook
+namespace PS.CatalogService.Application.CQRS.Commands.UpdateBook
 {
     public class UpdateBookCommandValidator : AbstractValidator<UpdateBookCommand>
     {

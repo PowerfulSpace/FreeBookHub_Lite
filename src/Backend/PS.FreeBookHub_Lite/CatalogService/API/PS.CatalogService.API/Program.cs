@@ -1,12 +1,12 @@
 using DotNetEnv;
-using PS.FreeBookHub_Lite.CatalogService.API;
-using PS.FreeBookHub_Lite.CatalogService.API.Logging;
-using PS.FreeBookHub_Lite.CatalogService.API.Middleware;
-using PS.FreeBookHub_Lite.CatalogService.Application;
-using PS.FreeBookHub_Lite.CatalogService.Infrastructure;
-using PS.FreeBookHub_Lite.CatalogService.Common.Extensions.DependencyInjection;
-using PS.FreeBookHub_Lite.CatalogService.Common.Extensions.Hosting;
-using PS.FreeBookHub_Lite.CatalogService.Infrastructure.StartupTasks;
+using PS.CatalogService.API;
+using PS.CatalogService.API.Logging;
+using PS.CatalogService.API.Middleware;
+using PS.CatalogService.Application;
+using PS.CatalogService.Infrastructure;
+using PS.CatalogService.Common.Extensions.DependencyInjection;
+using PS.CatalogService.Common.Extensions.Hosting;
+using PS.CatalogService.Infrastructure.StartupTasks;
 using Serilog;
 
 

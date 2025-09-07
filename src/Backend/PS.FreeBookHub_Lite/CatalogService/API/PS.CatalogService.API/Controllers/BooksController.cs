@@ -2,16 +2,16 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PS.FreeBookHub_Lite.CatalogService.Application.CQRS.Commands.CreateBook;
-using PS.FreeBookHub_Lite.CatalogService.Application.CQRS.Commands.DeleteBook;
-using PS.FreeBookHub_Lite.CatalogService.Application.CQRS.Commands.UpdateBook;
-using PS.FreeBookHub_Lite.CatalogService.Application.CQRS.Queries.GetAllBooks;
-using PS.FreeBookHub_Lite.CatalogService.Application.CQRS.Queries.GetBookById;
-using PS.FreeBookHub_Lite.CatalogService.Application.CQRS.Queries.GetBookPrice;
-using PS.FreeBookHub_Lite.CatalogService.Application.DTOs;
+using PS.CatalogService.Application.CQRS.Commands.CreateBook;
+using PS.CatalogService.Application.CQRS.Commands.DeleteBook;
+using PS.CatalogService.Application.CQRS.Commands.UpdateBook;
+using PS.CatalogService.Application.CQRS.Queries.GetAllBooks;
+using PS.CatalogService.Application.CQRS.Queries.GetBookById;
+using PS.CatalogService.Application.CQRS.Queries.GetBookPrice;
+using PS.CatalogService.Application.DTOs;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace PS.FreeBookHub_Lite.CatalogService.API.Controllers
+namespace PS.CatalogService.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

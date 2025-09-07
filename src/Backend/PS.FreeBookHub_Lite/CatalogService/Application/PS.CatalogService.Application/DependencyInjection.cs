@@ -2,9 +2,9 @@
 using FluentValidation.AspNetCore;
 using Mapster;
 using Microsoft.Extensions.DependencyInjection;
-using PS.FreeBookHub_Lite.CatalogService.Application.Mapping;
+using PS.CatalogService.Application.Mapping;
 
-namespace PS.FreeBookHub_Lite.CatalogService.Application
+namespace PS.CatalogService.Application
 {
     public static class DependencyInjection
     {

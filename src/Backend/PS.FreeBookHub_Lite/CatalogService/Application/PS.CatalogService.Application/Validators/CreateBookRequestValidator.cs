@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using PS.FreeBookHub_Lite.CatalogService.Application.DTOs;
+using PS.CatalogService.Application.DTOs;
 
-namespace PS.FreeBookHub_Lite.CatalogService.Application.Validators
+namespace PS.CatalogService.Application.Validators
 {
     public class CreateBookRequestValidator : AbstractValidator<CreateBookRequest>
     {

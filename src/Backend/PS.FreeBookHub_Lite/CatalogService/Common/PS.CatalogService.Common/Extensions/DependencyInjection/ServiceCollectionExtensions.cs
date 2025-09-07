@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using PS.FreeBookHub_Lite.CatalogService.Common.Interfaces.StartupTasks;
+using PS.CatalogService.Common.Interfaces.StartupTasks;
 
-namespace PS.FreeBookHub_Lite.CatalogService.Common.Extensions.DependencyInjection
+namespace PS.CatalogService.Common.Extensions.DependencyInjection
 {
     public static class ServiceCollectionExtensions
     {

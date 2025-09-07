@@ -1,6 +1,6 @@
-﻿using PS.FreeBookHub_Lite.CatalogService.Domain.Exceptions.Book.Base;
+﻿using PS.CatalogService.Domain.Exceptions.Book.Base;
 
-namespace PS.FreeBookHub_Lite.CatalogService.Domain.Exceptions.Book
+namespace PS.CatalogService.Domain.Exceptions.Book
 {
     public class BookNotFoundException : CatalogServiceException
     {

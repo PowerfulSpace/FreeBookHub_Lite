@@ -1,12 +1,12 @@
 ﻿using Mapster;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using PS.FreeBookHub_Lite.CatalogService.Application.DTOs;
-using PS.FreeBookHub_Lite.CatalogService.Application.Interfaces;
-using PS.FreeBookHub_Lite.CatalogService.Common.Logging;
-using PS.FreeBookHub_Lite.CatalogService.Domain.Entities;
+using PS.CatalogService.Application.DTOs;
+using PS.CatalogService.Application.Interfaces;
+using PS.CatalogService.Common.Logging;
+using PS.CatalogService.Domain.Entities;
 
-namespace PS.FreeBookHub_Lite.CatalogService.Application.CQRS.Commands.CreateBook
+namespace PS.CatalogService.Application.CQRS.Commands.CreateBook
 {
     public class CreateBookCommandHandler : IRequestHandler<CreateBookCommand, BookResponse>
     {

@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace PS.FreeBookHub_Lite.CatalogService.Application.CQRS.Queries.GetBookPrice
+namespace PS.CatalogService.Application.CQRS.Queries.GetBookPrice
 {
     public class GetBookPriceQuery : IRequest<decimal?>
     {

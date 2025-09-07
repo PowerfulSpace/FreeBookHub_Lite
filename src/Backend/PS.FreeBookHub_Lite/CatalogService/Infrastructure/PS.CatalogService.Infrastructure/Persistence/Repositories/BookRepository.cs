@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PS.FreeBookHub_Lite.CatalogService.Application.Interfaces;
-using PS.FreeBookHub_Lite.CatalogService.Domain.Entities;
+using PS.CatalogService.Application.Interfaces;
+using PS.CatalogService.Domain.Entities;
 
-namespace PS.FreeBookHub_Lite.CatalogService.Infrastructure.Persistence.Repositories
+namespace PS.CatalogService.Infrastructure.Persistence.Repositories
 {
     public class BookRepository : IBookRepository
     {

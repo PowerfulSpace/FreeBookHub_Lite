@@ -1,4 +1,4 @@
-﻿namespace PS.FreeBookHub_Lite.CatalogService.Domain.Exceptions.Book.Base
+﻿namespace PS.CatalogService.Domain.Exceptions.Book.Base
 {
     public abstract class CatalogServiceException : Exception
     {

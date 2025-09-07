@@ -1,10 +1,10 @@
 ﻿using Mapster;
-using PS.FreeBookHub_Lite.CatalogService.Application.CQRS.Commands.CreateBook;
-using PS.FreeBookHub_Lite.CatalogService.Application.CQRS.Commands.UpdateBook;
-using PS.FreeBookHub_Lite.CatalogService.Application.DTOs;
-using PS.FreeBookHub_Lite.CatalogService.Domain.Entities;
+using PS.CatalogService.Application.CQRS.Commands.CreateBook;
+using PS.CatalogService.Application.CQRS.Commands.UpdateBook;
+using PS.CatalogService.Application.DTOs;
+using PS.CatalogService.Domain.Entities;
 
-namespace PS.FreeBookHub_Lite.CatalogService.Application.Mapping
+namespace PS.CatalogService.Application.Mapping
 {
     public class BookMappingConfig : IRegister
     {

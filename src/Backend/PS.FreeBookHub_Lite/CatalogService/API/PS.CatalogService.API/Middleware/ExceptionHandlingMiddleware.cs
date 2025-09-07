@@ -1,7 +1,7 @@
-﻿using PS.FreeBookHub_Lite.CatalogService.Common.Logging;
-using PS.FreeBookHub_Lite.CatalogService.Domain.Exceptions.Book;
+﻿using PS.CatalogService.Common.Logging;
+using PS.CatalogService.Domain.Exceptions.Book;
 
-namespace PS.FreeBookHub_Lite.CatalogService.API.Middleware
+namespace PS.CatalogService.API.Middleware
 {
     public class ExceptionHandlingMiddleware
     {

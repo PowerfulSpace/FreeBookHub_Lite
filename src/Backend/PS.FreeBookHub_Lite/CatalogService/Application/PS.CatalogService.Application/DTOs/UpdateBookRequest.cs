@@ -1,4 +1,4 @@
-﻿namespace PS.FreeBookHub_Lite.CatalogService.Application.DTOs
+﻿namespace PS.CatalogService.Application.DTOs
 {
     public class UpdateBookRequest
     {

@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using PS.FreeBookHub_Lite.CatalogService.Application.DTOs;
+using PS.CatalogService.Application.DTOs;
 
-namespace PS.FreeBookHub_Lite.CatalogService.Application.CQRS.Queries.GetBookById
+namespace PS.CatalogService.Application.CQRS.Queries.GetBookById
 {
     public class GetBookByIdQuery : IRequest<BookResponse>
     {

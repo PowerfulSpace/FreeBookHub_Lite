@@ -123,7 +123,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.CartService.Domain", "Ca
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.CartService.Infrastructure", "CartService\Infrastructure\PS.CartService.Infrastructure\PS.CartService.Infrastructure.csproj", "{33F2C2A3-C5DF-319E-DEA5-5DA5E237F33B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub.Gateway.API", "Gateway\API\PS.Gateway.API\PS.FreeBookHub.Gateway.API.csproj", "{1DE71962-EA17-385D-87F0-91B3E87A839C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.Gateway.API", "Gateway\API\PS.Gateway.API\PS.Gateway.API.csproj", "{1DE71962-EA17-385D-87F0-91B3E87A839C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.OrderService.API", "OrderService\API\PS.OrderService.API\PS.OrderService.API.csproj", "{26D520D1-02D1-5C27-7475-E98CEFC355DA}"
 EndProject

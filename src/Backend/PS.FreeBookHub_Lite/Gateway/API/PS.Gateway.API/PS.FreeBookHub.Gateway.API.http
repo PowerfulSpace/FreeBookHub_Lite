@@ -1,6 +1,6 @@
-@PS.FreeBookHub.Gateway.API_HostAddress = http://localhost:5096
+@PS.Gateway.API_HostAddress = http://localhost:5096
 
-GET {{PS.FreeBookHub.Gateway.API_HostAddress}}/weatherforecast/
+GET {{PS.Gateway.API_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###

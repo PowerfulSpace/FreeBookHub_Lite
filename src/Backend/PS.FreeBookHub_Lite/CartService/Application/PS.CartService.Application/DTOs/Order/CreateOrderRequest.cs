@@ -1,4 +1,4 @@
-﻿namespace PS.FreeBookHub_Lite.CartService.Application.DTOs.Order
+﻿namespace PS.CartService.Application.DTOs.Order
 {
     public class CreateOrderRequest
     {

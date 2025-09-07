@@ -1,6 +1,6 @@
-﻿using PS.FreeBookHub_Lite.CartService.Application.DTOs.Order;
+﻿using PS.CartService.Application.DTOs.Order;
 
-namespace PS.FreeBookHub_Lite.CartService.Application.Clients
+namespace PS.CartService.Application.Clients
 {
     public interface IOrderServiceClient
     {

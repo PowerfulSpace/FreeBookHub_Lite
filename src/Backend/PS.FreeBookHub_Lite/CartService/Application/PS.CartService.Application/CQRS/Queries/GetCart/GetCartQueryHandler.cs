@@ -1,12 +1,12 @@
 ﻿using Mapster;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using PS.FreeBookHub_Lite.CartService.Application.DTOs.Cart;
-using PS.FreeBookHub_Lite.CartService.Application.Interfaces;
-using PS.FreeBookHub_Lite.CartService.Common.Logging;
-using PS.FreeBookHub_Lite.CartService.Domain.Entities;
+using PS.CartService.Application.DTOs.Cart;
+using PS.CartService.Application.Interfaces;
+using PS.CartService.Common.Logging;
+using PS.CartService.Domain.Entities;
 
-namespace PS.FreeBookHub_Lite.CartService.Application.CQRS.Queries.GetCart
+namespace PS.CartService.Application.CQRS.Queries.GetCart
 {
     public class GetCartQueryHandler : IRequestHandler<GetCartQuery, CartResponse>
     {

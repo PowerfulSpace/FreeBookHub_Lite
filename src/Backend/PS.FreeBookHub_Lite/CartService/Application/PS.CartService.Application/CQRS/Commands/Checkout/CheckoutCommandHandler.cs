@@ -1,12 +1,12 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
-using PS.FreeBookHub_Lite.CartService.Application.Clients;
-using PS.FreeBookHub_Lite.CartService.Application.DTOs.Order;
-using PS.FreeBookHub_Lite.CartService.Application.Interfaces;
-using PS.FreeBookHub_Lite.CartService.Common.Logging;
-using PS.FreeBookHub_Lite.CartService.Domain.Exceptions.Cart;
+using PS.CartService.Application.Clients;
+using PS.CartService.Application.DTOs.Order;
+using PS.CartService.Application.Interfaces;
+using PS.CartService.Common.Logging;
+using PS.CartService.Domain.Exceptions.Cart;
 
-namespace PS.FreeBookHub_Lite.CartService.Application.CQRS.Commands.Checkout
+namespace PS.CartService.Application.CQRS.Commands.Checkout
 {
     public class CheckoutCommandHandler : IRequestHandler<CheckoutCommand, OrderResponse>
     {

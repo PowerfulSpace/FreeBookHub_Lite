@@ -1,4 +1,4 @@
-﻿namespace PS.FreeBookHub_Lite.CartService.Application.Clients
+﻿namespace PS.CartService.Application.Clients
 {
     public interface IBookCatalogClient
     {

@@ -1,5 +1,5 @@
-﻿using PS.FreeBookHub_Lite.CartService.Domain.Entities;
-using PS.FreeBookHub_Lite.CartService.Domain.Exceptions.Cart;
+﻿using PS.CartService.Domain.Entities;
+using PS.CartService.Domain.Exceptions.Cart;
 
 namespace CartService.UnitTests.Domain
 {

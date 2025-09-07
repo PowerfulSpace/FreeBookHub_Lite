@@ -1,4 +1,4 @@
-﻿namespace PS.FreeBookHub_Lite.CartService.Common.Interfaces.StartupTasks
+﻿namespace PS.CartService.Common.Interfaces.StartupTasks
 {
     public abstract class StartupTask : IStartupTask
     {

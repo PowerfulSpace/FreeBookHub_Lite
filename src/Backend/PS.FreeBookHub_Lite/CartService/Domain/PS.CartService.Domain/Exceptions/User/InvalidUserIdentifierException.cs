@@ -1,6 +1,6 @@
-﻿using PS.FreeBookHub_Lite.CartService.Domain.Exceptions.User.Base;
+﻿using PS.CartService.Domain.Exceptions.User.Base;
 
-namespace PS.FreeBookHub_Lite.CartService.Domain.Exceptions.User
+namespace PS.CartService.Domain.Exceptions.User
 {
     public class InvalidUserIdentifierException : UserException
     {

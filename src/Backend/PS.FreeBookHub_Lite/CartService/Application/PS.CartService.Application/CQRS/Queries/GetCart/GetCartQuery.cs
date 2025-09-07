@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using PS.FreeBookHub_Lite.CartService.Application.DTOs.Cart;
+using PS.CartService.Application.DTOs.Cart;
 
-namespace PS.FreeBookHub_Lite.CartService.Application.CQRS.Queries.GetCart
+namespace PS.CartService.Application.CQRS.Queries.GetCart
 {
     public class GetCartQuery : IRequest<CartResponse>
     {

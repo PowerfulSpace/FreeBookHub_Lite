@@ -113,15 +113,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.AuthService.Domain", "Au
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.AuthService.Infrastructure", "AuthService\Infrastructure\PS.AuthService.Infrastructure\PS.AuthService.Infrastructure.csproj", "{0C11B9B3-ACE2-04FE-7F91-195A4E9D497A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.CartService.API", "CartService\API\PS.CartService.API\PS.FreeBookHub_Lite.CartService.API.csproj", "{175B6DCA-1015-8D2D-35D2-C3119D24175D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.CartService.API", "CartService\API\PS.CartService.API\PS.CartService.API.csproj", "{175B6DCA-1015-8D2D-35D2-C3119D24175D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.CartService.Application", "CartService\Application\PS.CartService.Application\PS.FreeBookHub_Lite.CartService.Application.csproj", "{7A2AB3B4-14B7-6A72-E9CD-29F48DF2F86F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.CartService.Application", "CartService\Application\PS.CartService.Application\PS.CartService.Application.csproj", "{7A2AB3B4-14B7-6A72-E9CD-29F48DF2F86F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.CartService.Common", "CartService\Common\PS.CartService.Common\PS.FreeBookHub_Lite.CartService.Common.csproj", "{8D9AA9BC-F431-7E9C-E140-8874304FBC29}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.CartService.Common", "CartService\Common\PS.CartService.Common\PS.CartService.Common.csproj", "{8D9AA9BC-F431-7E9C-E140-8874304FBC29}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.CartService.Domain", "CartService\Domain\PS.CartService.Domain\PS.FreeBookHub_Lite.CartService.Domain.csproj", "{6F8756B3-392C-D33A-A346-E874D184380C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.CartService.Domain", "CartService\Domain\PS.CartService.Domain\PS.CartService.Domain.csproj", "{6F8756B3-392C-D33A-A346-E874D184380C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.CartService.Infrastructure", "CartService\Infrastructure\PS.CartService.Infrastructure\PS.FreeBookHub_Lite.CartService.Infrastructure.csproj", "{33F2C2A3-C5DF-319E-DEA5-5DA5E237F33B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.CartService.Infrastructure", "CartService\Infrastructure\PS.CartService.Infrastructure\PS.CartService.Infrastructure.csproj", "{33F2C2A3-C5DF-319E-DEA5-5DA5E237F33B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub.Gateway.API", "Gateway\API\PS.Gateway.API\PS.FreeBookHub.Gateway.API.csproj", "{1DE71962-EA17-385D-87F0-91B3E87A839C}"
 EndProject

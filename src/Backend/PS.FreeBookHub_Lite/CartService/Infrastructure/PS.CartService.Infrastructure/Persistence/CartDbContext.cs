@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PS.FreeBookHub_Lite.CartService.Domain.Entities;
+using PS.CartService.Domain.Entities;
 
-namespace PS.FreeBookHub_Lite.CartService.Infrastructure.Persistence
+namespace PS.CartService.Infrastructure.Persistence
 {
     public class CartDbContext : DbContext
     {

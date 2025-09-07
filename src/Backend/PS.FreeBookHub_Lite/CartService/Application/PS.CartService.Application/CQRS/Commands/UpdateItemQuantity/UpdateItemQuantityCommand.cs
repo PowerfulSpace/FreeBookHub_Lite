@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace PS.FreeBookHub_Lite.CartService.Application.CQRS.Commands.UpdateItemQuantity
+namespace PS.CartService.Application.CQRS.Commands.UpdateItemQuantity
 {
     public class UpdateItemQuantityCommand : IRequest<Unit>
     {

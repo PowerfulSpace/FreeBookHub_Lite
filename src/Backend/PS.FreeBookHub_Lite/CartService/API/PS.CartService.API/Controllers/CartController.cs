@@ -2,18 +2,18 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PS.FreeBookHub_Lite.CartService.Application.CQRS.Commands.AddItem;
-using PS.FreeBookHub_Lite.CartService.Application.CQRS.Commands.Checkout;
-using PS.FreeBookHub_Lite.CartService.Application.CQRS.Commands.ClearCart;
-using PS.FreeBookHub_Lite.CartService.Application.CQRS.Commands.RemoveItem;
-using PS.FreeBookHub_Lite.CartService.Application.CQRS.Commands.UpdateItemQuantity;
-using PS.FreeBookHub_Lite.CartService.Application.CQRS.Queries.GetCart;
-using PS.FreeBookHub_Lite.CartService.Application.DTOs.Cart;
-using PS.FreeBookHub_Lite.CartService.Application.DTOs.Order;
-using PS.FreeBookHub_Lite.CartService.Domain.Exceptions.User;
+using PS.CartService.Application.CQRS.Commands.AddItem;
+using PS.CartService.Application.CQRS.Commands.Checkout;
+using PS.CartService.Application.CQRS.Commands.ClearCart;
+using PS.CartService.Application.CQRS.Commands.RemoveItem;
+using PS.CartService.Application.CQRS.Commands.UpdateItemQuantity;
+using PS.CartService.Application.CQRS.Queries.GetCart;
+using PS.CartService.Application.DTOs.Cart;
+using PS.CartService.Application.DTOs.Order;
+using PS.CartService.Domain.Exceptions.User;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace PS.FreeBookHub_Lite.CartService.API.Controllers
+namespace PS.CartService.API.Controllers
 {
     [Authorize(Policy = "User")]
     [ApiController]

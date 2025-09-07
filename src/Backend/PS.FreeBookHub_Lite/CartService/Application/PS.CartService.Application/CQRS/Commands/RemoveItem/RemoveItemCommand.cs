@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace PS.FreeBookHub_Lite.CartService.Application.CQRS.Commands.RemoveItem
+namespace PS.CartService.Application.CQRS.Commands.RemoveItem
 {
     public class RemoveItemCommand : IRequest<Unit>
     {

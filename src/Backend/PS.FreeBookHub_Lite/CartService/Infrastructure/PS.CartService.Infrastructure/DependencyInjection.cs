@@ -1,16 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PS.FreeBookHub_Lite.CartService.Application.Clients;
-using PS.FreeBookHub_Lite.CartService.Application.Interfaces;
-using PS.FreeBookHub_Lite.CartService.Application.Security;
-using PS.FreeBookHub_Lite.CartService.Infrastructure.Clients;
-using PS.FreeBookHub_Lite.CartService.Infrastructure.Http.Handlers;
-using PS.FreeBookHub_Lite.CartService.Infrastructure.Persistence;
-using PS.FreeBookHub_Lite.CartService.Infrastructure.Persistence.Repositories;
-using PS.FreeBookHub_Lite.CartService.Infrastructure.Security;
+using PS.CartService.Application.Clients;
+using PS.CartService.Application.Interfaces;
+using PS.CartService.Application.Security;
+using PS.CartService.Infrastructure.Clients;
+using PS.CartService.Infrastructure.Http.Handlers;
+using PS.CartService.Infrastructure.Persistence;
+using PS.CartService.Infrastructure.Persistence.Repositories;
+using PS.CartService.Infrastructure.Security;
 
-namespace PS.FreeBookHub_Lite.CartService.Infrastructure
+namespace PS.CartService.Infrastructure
 {
     public static class DependencyInjection
     {

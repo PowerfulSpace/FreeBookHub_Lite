@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using PS.FreeBookHub_Lite.CartService.Application.DTOs.Cart;
+using PS.CartService.Application.DTOs.Cart;
 
-namespace PS.FreeBookHub_Lite.CartService.Application.Validators
+namespace PS.CartService.Application.Validators
 {
     public class AddItemRequestValidator : AbstractValidator<AddItemRequest>
     {

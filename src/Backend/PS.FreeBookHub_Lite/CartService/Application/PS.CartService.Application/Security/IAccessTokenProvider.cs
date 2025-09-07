@@ -1,4 +1,4 @@
-﻿namespace PS.FreeBookHub_Lite.CartService.Application.Security
+﻿namespace PS.CartService.Application.Security
 {
     public interface IAccessTokenProvider
     {

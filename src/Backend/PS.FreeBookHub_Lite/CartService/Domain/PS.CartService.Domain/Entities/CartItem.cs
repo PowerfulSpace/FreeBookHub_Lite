@@ -1,6 +1,6 @@
-﻿using PS.FreeBookHub_Lite.CartService.Domain.Exceptions.Cart;
+﻿using PS.CartService.Domain.Exceptions.Cart;
 
-namespace PS.FreeBookHub_Lite.CartService.Domain.Entities
+namespace PS.CartService.Domain.Entities
 {
     public class CartItem
     {

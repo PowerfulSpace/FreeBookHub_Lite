@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using PS.FreeBookHub_Lite.CartService.Common.Interfaces.StartupTasks;
+using PS.CartService.Common.Interfaces.StartupTasks;
 
-namespace PS.FreeBookHub_Lite.CartService.Common.Extensions.DependencyInjection
+namespace PS.CartService.Common.Extensions.DependencyInjection
 {
     public static class ServiceCollectionExtensions
     {

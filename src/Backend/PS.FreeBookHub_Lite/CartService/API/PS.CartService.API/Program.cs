@@ -1,12 +1,12 @@
 using DotNetEnv;
-using PS.FreeBookHub_Lite.CartService.API;
-using PS.FreeBookHub_Lite.CartService.API.Logging;
-using PS.FreeBookHub_Lite.CartService.API.Middleware;
-using PS.FreeBookHub_Lite.CartService.Application;
-using PS.FreeBookHub_Lite.CartService.Infrastructure;
-using PS.FreeBookHub_Lite.CartService.Common.Extensions.DependencyInjection;
-using PS.FreeBookHub_Lite.CartService.Common.Extensions.Hosting;
-using PS.FreeBookHub_Lite.CartService.Infrastructure.StartupTasks;
+using PS.CartService.API;
+using PS.CartService.API.Logging;
+using PS.CartService.API.Middleware;
+using PS.CartService.Application;
+using PS.CartService.Infrastructure;
+using PS.CartService.Common.Extensions.DependencyInjection;
+using PS.CartService.Common.Extensions.Hosting;
+using PS.CartService.Infrastructure.StartupTasks;
 using Serilog;
 
 

@@ -1,4 +1,4 @@
-﻿namespace PS.FreeBookHub_Lite.CartService.Application.DTOs.Cart
+﻿namespace PS.CartService.Application.DTOs.Cart
 {
     public class CartResponse
     {

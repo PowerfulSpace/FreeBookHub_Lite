@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace PS.FreeBookHub_Lite.CartService.Application.CQRS.Commands.Checkout
+namespace PS.CartService.Application.CQRS.Commands.Checkout
 {
     public class CheckoutCommandValidator : AbstractValidator<CheckoutCommand>
     {

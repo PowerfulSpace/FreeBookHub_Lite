@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PS.FreeBookHub_Lite.CartService.Application.Interfaces;
-using PS.FreeBookHub_Lite.CartService.Domain.Entities;
+using PS.CartService.Application.Interfaces;
+using PS.CartService.Domain.Entities;
 
-namespace PS.FreeBookHub_Lite.CartService.Infrastructure.Persistence.Repositories
+namespace PS.CartService.Infrastructure.Persistence.Repositories
 {
     public class CartRepository : ICartRepository
     {

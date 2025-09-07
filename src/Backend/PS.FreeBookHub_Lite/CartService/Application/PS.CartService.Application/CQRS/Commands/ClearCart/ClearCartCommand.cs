@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace PS.FreeBookHub_Lite.CartService.Application.CQRS.Commands.ClearCart
+namespace PS.CartService.Application.CQRS.Commands.ClearCart
 {
     public class ClearCartCommand : IRequest<Unit>
     {

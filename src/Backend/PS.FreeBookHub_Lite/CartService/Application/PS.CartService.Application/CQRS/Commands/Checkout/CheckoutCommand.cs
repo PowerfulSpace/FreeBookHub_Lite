@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using PS.FreeBookHub_Lite.CartService.Application.DTOs.Order;
+using PS.CartService.Application.DTOs.Order;
 
-namespace PS.FreeBookHub_Lite.CartService.Application.CQRS.Commands.Checkout
+namespace PS.CartService.Application.CQRS.Commands.Checkout
 {
     public class CheckoutCommand : IRequest<OrderResponse>
     {

@@ -2,9 +2,9 @@
 using FluentValidation.AspNetCore;
 using Mapster;
 using Microsoft.Extensions.DependencyInjection;
-using PS.FreeBookHub_Lite.CartService.Application.Mappings;
+using PS.CartService.Application.Mappings;
 
-namespace PS.FreeBookHub_Lite.CartService.Application
+namespace PS.CartService.Application
 {
     public static class DependencyInjection
     {

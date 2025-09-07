@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using PS.FreeBookHub_Lite.CartService.Domain.Entities;
+using PS.CartService.Domain.Entities;
 
-namespace PS.FreeBookHub_Lite.CartService.Infrastructure.Persistence.Configurations
+namespace PS.CartService.Infrastructure.Persistence.Configurations
 {
     public class CartItemConfiguration : IEntityTypeConfiguration<CartItem>
     {

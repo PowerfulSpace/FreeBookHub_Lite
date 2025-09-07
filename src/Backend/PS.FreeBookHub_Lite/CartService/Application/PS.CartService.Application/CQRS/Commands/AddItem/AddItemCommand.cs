@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace PS.FreeBookHub_Lite.CartService.Application.CQRS.Commands.AddItem
+namespace PS.CartService.Application.CQRS.Commands.AddItem
 {
     public class AddItemCommand : IRequest<Unit>
     {

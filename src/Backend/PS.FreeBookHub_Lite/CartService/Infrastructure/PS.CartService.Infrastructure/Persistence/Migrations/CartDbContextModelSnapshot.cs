@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using PS.FreeBookHub_Lite.CartService.Infrastructure.Persistence;
+using PS.CartService.Infrastructure.Persistence;
 
 #nullable disable
 
-namespace PS.FreeBookHub_Lite.CartService.Infrastructure.Persistence.Migrations
+namespace PS.CartService.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(CartDbContext))]
     partial class CartDbContextModelSnapshot : ModelSnapshot
@@ -22,7 +22,7 @@ namespace PS.FreeBookHub_Lite.CartService.Infrastructure.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("PS.FreeBookHub_Lite.CartService.Domain.Entities.Cart", b =>
+            modelBuilder.Entity("PS.CartService.Domain.Entities.Cart", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -36,7 +36,7 @@ namespace PS.FreeBookHub_Lite.CartService.Infrastructure.Persistence.Migrations
                     b.ToTable("Carts", (string)null);
                 });
 
-            modelBuilder.Entity("PS.FreeBookHub_Lite.CartService.Domain.Entities.CartItem", b =>
+            modelBuilder.Entity("PS.CartService.Domain.Entities.CartItem", b =>
                 {
                     b.Property<Guid>("CartId")
                         .HasColumnType("uniqueidentifier");
@@ -55,9 +55,9 @@ namespace PS.FreeBookHub_Lite.CartService.Infrastructure.Persistence.Migrations
                     b.ToTable("CartItems", (string)null);
                 });
 
-            modelBuilder.Entity("PS.FreeBookHub_Lite.CartService.Domain.Entities.CartItem", b =>
+            modelBuilder.Entity("PS.CartService.Domain.Entities.CartItem", b =>
                 {
-                    b.HasOne("PS.FreeBookHub_Lite.CartService.Domain.Entities.Cart", "Cart")
+                    b.HasOne("PS.CartService.Domain.Entities.Cart", "Cart")
                         .WithMany("Items")
                         .HasForeignKey("CartId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -66,7 +66,7 @@ namespace PS.FreeBookHub_Lite.CartService.Infrastructure.Persistence.Migrations
                     b.Navigation("Cart");
                 });
 
-            modelBuilder.Entity("PS.FreeBookHub_Lite.CartService.Domain.Entities.Cart", b =>
+            modelBuilder.Entity("PS.CartService.Domain.Entities.Cart", b =>
                 {
                     b.Navigation("Items");
                 });

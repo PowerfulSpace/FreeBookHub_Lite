@@ -1,8 +1,8 @@
-﻿using PS.FreeBookHub_Lite.CartService.Common.Logging;
-using PS.FreeBookHub_Lite.CartService.Domain.Exceptions.Cart;
-using PS.FreeBookHub_Lite.CartService.Domain.Exceptions.User;
+﻿using PS.CartService.Common.Logging;
+using PS.CartService.Domain.Exceptions.Cart;
+using PS.CartService.Domain.Exceptions.User;
 
-namespace PS.FreeBookHub_Lite.CartService.API.Middleware
+namespace PS.CartService.API.Middleware
 {
     public class ExceptionHandlingMiddleware
     {

@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using PS.FreeBookHub_Lite.CartService.Application.Clients;
-using PS.FreeBookHub_Lite.CartService.Common.Logging;
+using PS.CartService.Application.Clients;
+using PS.CartService.Common.Logging;
 using System.Net.Http.Json;
 
-namespace PS.FreeBookHub_Lite.CartService.Infrastructure.Clients
+namespace PS.CartService.Infrastructure.Clients
 {
     public class BookCatalogClient : IBookCatalogClient
     {

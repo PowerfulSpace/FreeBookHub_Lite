@@ -1,12 +1,12 @@
 ﻿using Mapster;
-using PS.FreeBookHub_Lite.CartService.Application.CQRS.Commands.AddItem;
-using PS.FreeBookHub_Lite.CartService.Application.CQRS.Commands.Checkout;
-using PS.FreeBookHub_Lite.CartService.Application.CQRS.Commands.UpdateItemQuantity;
-using PS.FreeBookHub_Lite.CartService.Application.DTOs.Cart;
-using PS.FreeBookHub_Lite.CartService.Application.DTOs.Order;
-using PS.FreeBookHub_Lite.CartService.Domain.Entities;
+using PS.CartService.Application.CQRS.Commands.AddItem;
+using PS.CartService.Application.CQRS.Commands.Checkout;
+using PS.CartService.Application.CQRS.Commands.UpdateItemQuantity;
+using PS.CartService.Application.DTOs.Cart;
+using PS.CartService.Application.DTOs.Order;
+using PS.CartService.Domain.Entities;
 
-namespace PS.FreeBookHub_Lite.CartService.Application.Mappings
+namespace PS.CartService.Application.Mappings
 {
     public class CartMappingConfig : IRegister
     {

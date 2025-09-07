@@ -1,6 +1,6 @@
-﻿using PS.FreeBookHub_Lite.CartService.Domain.Entities;
+﻿using PS.CartService.Domain.Entities;
 
-namespace PS.FreeBookHub_Lite.CartService.Application.Interfaces
+namespace PS.CartService.Application.Interfaces
 {
     public interface ICartRepository
     {

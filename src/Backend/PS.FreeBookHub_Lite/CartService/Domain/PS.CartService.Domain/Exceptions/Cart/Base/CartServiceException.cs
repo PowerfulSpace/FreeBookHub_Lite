@@ -1,4 +1,4 @@
-﻿namespace PS.FreeBookHub_Lite.CartService.Domain.Exceptions.Cart.Base
+﻿namespace PS.CartService.Domain.Exceptions.Cart.Base
 {
     public abstract class CartServiceException : Exception
     {

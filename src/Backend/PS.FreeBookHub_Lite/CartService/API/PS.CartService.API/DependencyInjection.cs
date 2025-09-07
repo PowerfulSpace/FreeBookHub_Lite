@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using PS.FreeBookHub_Lite.CartService.API.Authentication.Enums;
-using PS.FreeBookHub_Lite.CartService.API.Authentication.Models;
+using PS.CartService.API.Authentication.Enums;
+using PS.CartService.API.Authentication.Models;
 using System.Text;
 
-namespace PS.FreeBookHub_Lite.CartService.API
+namespace PS.CartService.API
 {
     public static class DependencyInjection
     {

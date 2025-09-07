@@ -1,7 +1,7 @@
-﻿using PS.FreeBookHub_Lite.CartService.Application.Security;
+﻿using PS.CartService.Application.Security;
 using System.Net.Http.Headers;
 
-namespace PS.FreeBookHub_Lite.CartService.Infrastructure.Http.Handlers
+namespace PS.CartService.Infrastructure.Http.Handlers
 {
     public class AccessTokenHandler : DelegatingHandler
     {

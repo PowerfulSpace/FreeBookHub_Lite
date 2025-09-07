@@ -1,4 +1,4 @@
-﻿namespace PS.FreeBookHub_Lite.AuthService.Infrastructure.Autentication
+﻿namespace PS.AuthService.Infrastructure.Autentication
 {
     public class JwtSettings
     {

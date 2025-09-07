@@ -1,10 +1,10 @@
 ﻿using AuthService.IntegrationTests.TestUtils.Factories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using PS.FreeBookHub_Lite.AuthService.Domain.Entities;
-using PS.FreeBookHub_Lite.AuthService.Domain.Enums;
-using PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence;
-using PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence.Repositories;
+using PS.AuthService.Domain.Entities;
+using PS.AuthService.Domain.Enums;
+using PS.AuthService.Infrastructure.Persistence;
+using PS.AuthService.Infrastructure.Persistence.Repositories;
 using System.Runtime.Intrinsics.X86;
 
 namespace AuthService.IntegrationTests.Infrastructure

@@ -1,13 +1,13 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using PS.FreeBookHub_Lite.AuthService.Application.Services.Interfaces;
-using PS.FreeBookHub_Lite.AuthService.Domain.Entities;
+using PS.AuthService.Application.Services.Interfaces;
+using PS.AuthService.Domain.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace PS.FreeBookHub_Lite.AuthService.Infrastructure.Autentication
+namespace PS.AuthService.Infrastructure.Autentication
 {
     public class TokenService : ITokenService
     {

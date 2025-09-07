@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
-using PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence;
+using PS.AuthService.Infrastructure.Persistence;
 using System.Collections.Concurrent;
 
 namespace AuthService.IntegrationTests.TestUtils.Factories

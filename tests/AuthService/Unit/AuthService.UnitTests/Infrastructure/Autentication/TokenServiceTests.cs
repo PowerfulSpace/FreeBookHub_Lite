@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
-using PS.FreeBookHub_Lite.AuthService.Domain.Entities;
-using PS.FreeBookHub_Lite.AuthService.Infrastructure.Autentication;
+using PS.AuthService.Domain.Entities;
+using PS.AuthService.Infrastructure.Autentication;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 

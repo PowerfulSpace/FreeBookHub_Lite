@@ -1,6 +1,6 @@
-﻿using PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.Token.Base;
+﻿using PS.AuthService.Domain.Exceptions.Token.Base;
 
-namespace PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.Token
+namespace PS.AuthService.Domain.Exceptions.Token
 {
     public class InvalidTokenException : TokenException
     {

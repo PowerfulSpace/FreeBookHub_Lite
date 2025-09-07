@@ -1,6 +1,6 @@
 ﻿using FluentValidation.TestHelper;
-using PS.FreeBookHub_Lite.AuthService.Application.DTOs;
-using PS.FreeBookHub_Lite.AuthService.Application.Validators;
+using PS.AuthService.Application.DTOs;
+using PS.AuthService.Application.Validators;
 
 namespace AuthService.UnitTests.Application.Validators
 {

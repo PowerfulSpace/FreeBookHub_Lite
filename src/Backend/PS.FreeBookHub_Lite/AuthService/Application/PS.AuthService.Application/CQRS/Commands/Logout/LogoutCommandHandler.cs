@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
-using PS.FreeBookHub_Lite.AuthService.Application.Interfaces;
-using PS.FreeBookHub_Lite.AuthService.Common.Logging;
-using PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.Token;
+using PS.AuthService.Application.Interfaces;
+using PS.AuthService.Common.Logging;
+using PS.AuthService.Domain.Exceptions.Token;
 
-namespace PS.FreeBookHub_Lite.AuthService.Application.CQRS.Commands.Logout
+namespace PS.AuthService.Application.CQRS.Commands.Logout
 {
     public class LogoutCommandHandler : IRequestHandler<LogoutCommand, Unit>
     {

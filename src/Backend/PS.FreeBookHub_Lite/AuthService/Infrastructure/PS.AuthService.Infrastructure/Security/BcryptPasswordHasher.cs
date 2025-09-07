@@ -1,6 +1,6 @@
-﻿using PS.FreeBookHub_Lite.AuthService.Application.Services.Interfaces;
+﻿using PS.AuthService.Application.Services.Interfaces;
 
-namespace PS.FreeBookHub_Lite.AuthService.Infrastructure.Security
+namespace PS.AuthService.Infrastructure.Security
 {
     public class BcryptPasswordHasher : IPasswordHasher
     {

@@ -1,5 +1,5 @@
-﻿using PS.FreeBookHub_Lite.AuthService.Domain.Entities;
-using PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.Token;
+﻿using PS.AuthService.Domain.Entities;
+using PS.AuthService.Domain.Exceptions.Token;
 
 namespace AuthService.UnitTests.Domain
 {

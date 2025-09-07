@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PS.FreeBookHub_Lite.AuthService.Application.Interfaces;
-using PS.FreeBookHub_Lite.AuthService.Application.Services.Interfaces;
-using PS.FreeBookHub_Lite.AuthService.Infrastructure.Autentication;
-using PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence;
-using PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence.Repositories;
-using PS.FreeBookHub_Lite.AuthService.Infrastructure.Security;
+using PS.AuthService.Application.Interfaces;
+using PS.AuthService.Application.Services.Interfaces;
+using PS.AuthService.Infrastructure.Autentication;
+using PS.AuthService.Infrastructure.Persistence;
+using PS.AuthService.Infrastructure.Persistence.Repositories;
+using PS.AuthService.Infrastructure.Security;
 
-namespace PS.FreeBookHub_Lite.AuthService.Infrastructure
+namespace PS.AuthService.Infrastructure
 {
     public static class DependencyInjection
     {

@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using PS.FreeBookHub_Lite.AuthService.Application.Interfaces;
+using PS.AuthService.Application.Interfaces;
 
-namespace PS.FreeBookHub_Lite.AuthService.Application.CQRS.Commands.RefreshToken
+namespace PS.AuthService.Application.CQRS.Commands.RefreshToken
 {
     public class RefreshTokenCommandValidator : AbstractValidator<RefreshTokenCommand>
     {

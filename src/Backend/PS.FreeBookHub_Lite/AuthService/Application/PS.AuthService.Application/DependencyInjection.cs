@@ -2,9 +2,9 @@
 using FluentValidation.AspNetCore;
 using Mapster;
 using Microsoft.Extensions.DependencyInjection;
-using PS.FreeBookHub_Lite.AuthService.Application.Mappings;
+using PS.AuthService.Application.Mappings;
 
-namespace PS.FreeBookHub_Lite.AuthService.Application
+namespace PS.AuthService.Application
 {
     public static class DependencyInjection
     {

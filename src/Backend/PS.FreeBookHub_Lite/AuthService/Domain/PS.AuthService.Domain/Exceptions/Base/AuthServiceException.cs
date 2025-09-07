@@ -1,4 +1,4 @@
-﻿namespace PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.Base
+﻿namespace PS.AuthService.Domain.Exceptions.Base
 {
     public abstract class AuthServiceException : Exception
     {

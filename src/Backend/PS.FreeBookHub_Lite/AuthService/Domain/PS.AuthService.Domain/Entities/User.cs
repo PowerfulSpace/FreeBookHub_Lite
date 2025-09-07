@@ -1,7 +1,7 @@
-﻿using PS.FreeBookHub_Lite.AuthService.Domain.Enums;
-using PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.Role;
+﻿using PS.AuthService.Domain.Enums;
+using PS.AuthService.Domain.Exceptions.Role;
 
-namespace PS.FreeBookHub_Lite.AuthService.Domain.Entities
+namespace PS.AuthService.Domain.Entities
 {
     public class User
     {

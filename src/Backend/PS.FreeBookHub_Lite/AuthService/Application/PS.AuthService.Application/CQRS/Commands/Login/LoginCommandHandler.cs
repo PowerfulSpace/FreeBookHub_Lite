@@ -1,15 +1,15 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using PS.FreeBookHub_Lite.AuthService.Application.DTOs;
-using PS.FreeBookHub_Lite.AuthService.Application.Interfaces;
-using PS.FreeBookHub_Lite.AuthService.Application.Services.Interfaces;
-using PS.FreeBookHub_Lite.AuthService.Common.Logging;
-using PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.User;
+using PS.AuthService.Application.DTOs;
+using PS.AuthService.Application.Interfaces;
+using PS.AuthService.Application.Services.Interfaces;
+using PS.AuthService.Common.Logging;
+using PS.AuthService.Domain.Exceptions.User;
 
-using RefreshTokenEntity = PS.FreeBookHub_Lite.AuthService.Domain.Entities.RefreshToken;
+using RefreshTokenEntity = PS.AuthService.Domain.Entities.RefreshToken;
 
-namespace PS.FreeBookHub_Lite.AuthService.Application.CQRS.Commands.Login
+namespace PS.AuthService.Application.CQRS.Commands.Login
 {
     public class LoginCommandHandler : IRequestHandler<LoginCommand, AuthResponse>
     {

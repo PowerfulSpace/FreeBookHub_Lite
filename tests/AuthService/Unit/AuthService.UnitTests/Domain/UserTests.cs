@@ -1,6 +1,6 @@
-﻿using PS.FreeBookHub_Lite.AuthService.Domain.Entities;
-using PS.FreeBookHub_Lite.AuthService.Domain.Enums;
-using PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.Role;
+﻿using PS.AuthService.Domain.Entities;
+using PS.AuthService.Domain.Enums;
+using PS.AuthService.Domain.Exceptions.Role;
 
 namespace AuthService.UnitTests.Domain
 {

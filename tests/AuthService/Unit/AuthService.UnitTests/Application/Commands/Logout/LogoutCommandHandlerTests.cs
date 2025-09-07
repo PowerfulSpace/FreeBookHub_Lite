@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
 using Moq;
-using PS.FreeBookHub_Lite.AuthService.Application.CQRS.Commands.Logout;
-using PS.FreeBookHub_Lite.AuthService.Application.Interfaces;
-using PS.FreeBookHub_Lite.AuthService.Domain.Entities;
-using PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.Token;
+using PS.AuthService.Application.CQRS.Commands.Logout;
+using PS.AuthService.Application.Interfaces;
+using PS.AuthService.Domain.Entities;
+using PS.AuthService.Domain.Exceptions.Token;
 
 namespace AuthService.UnitTests.Application.Commands.Logout
 {

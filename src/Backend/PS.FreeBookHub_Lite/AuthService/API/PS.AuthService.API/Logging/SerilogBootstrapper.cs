@@ -1,6 +1,6 @@
 ﻿using Serilog;
 
-namespace PS.FreeBookHub_Lite.AuthService.API.Logging
+namespace PS.AuthService.API.Logging
 {
     public static class SerilogBootstrapper
     {

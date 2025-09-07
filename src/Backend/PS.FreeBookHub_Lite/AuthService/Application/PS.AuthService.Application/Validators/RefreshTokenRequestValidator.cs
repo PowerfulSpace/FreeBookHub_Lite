@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using PS.FreeBookHub_Lite.AuthService.Application.DTOs;
+using PS.AuthService.Application.DTOs;
 
-namespace PS.FreeBookHub_Lite.AuthService.Application.Validators
+namespace PS.AuthService.Application.Validators
 {
     public class RefreshTokenRequestValidator : AbstractValidator<RefreshTokenRequest>
     {

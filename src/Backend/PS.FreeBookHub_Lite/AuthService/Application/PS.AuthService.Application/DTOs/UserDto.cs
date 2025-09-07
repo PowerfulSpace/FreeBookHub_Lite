@@ -1,4 +1,4 @@
-﻿namespace PS.FreeBookHub_Lite.AuthService.Application.DTOs
+﻿namespace PS.AuthService.Application.DTOs
 {
     public class UserDto
     {

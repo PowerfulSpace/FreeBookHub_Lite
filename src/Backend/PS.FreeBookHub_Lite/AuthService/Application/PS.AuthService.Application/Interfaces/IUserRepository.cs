@@ -1,6 +1,6 @@
-﻿using PS.FreeBookHub_Lite.AuthService.Domain.Entities;
+﻿using PS.AuthService.Domain.Entities;
 
-namespace PS.FreeBookHub_Lite.AuthService.Application.Interfaces
+namespace PS.AuthService.Application.Interfaces
 {
     public interface IUserRepository
     {

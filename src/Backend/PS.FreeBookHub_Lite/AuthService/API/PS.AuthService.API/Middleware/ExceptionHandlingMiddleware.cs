@@ -1,9 +1,9 @@
-﻿using PS.FreeBookHub_Lite.AuthService.Common.Logging;
-using PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.Role;
-using PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.Token;
-using PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.User;
+﻿using PS.AuthService.Common.Logging;
+using PS.AuthService.Domain.Exceptions.Role;
+using PS.AuthService.Domain.Exceptions.Token;
+using PS.AuthService.Domain.Exceptions.User;
 
-namespace PS.FreeBookHub_Lite.AuthService.API.Middleware
+namespace PS.AuthService.API.Middleware
 {
     public class ExceptionHandlingMiddleware
     {

@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Moq;
-using PS.FreeBookHub_Lite.AuthService.Application.CQRS.Commands.Login;
-using PS.FreeBookHub_Lite.AuthService.Application.Interfaces;
-using PS.FreeBookHub_Lite.AuthService.Application.Services.Interfaces;
-using PS.FreeBookHub_Lite.AuthService.Domain.Entities;
-using PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.User;
+using PS.AuthService.Application.CQRS.Commands.Login;
+using PS.AuthService.Application.Interfaces;
+using PS.AuthService.Application.Services.Interfaces;
+using PS.AuthService.Domain.Entities;
+using PS.AuthService.Domain.Exceptions.User;
 
 namespace AuthService.UnitTests.Application.Commands.Login
 {

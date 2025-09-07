@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
 using Moq;
-using PS.FreeBookHub_Lite.AuthService.Application.CQRS.Commands.LogoutAll;
-using PS.FreeBookHub_Lite.AuthService.Application.Interfaces;
+using PS.AuthService.Application.CQRS.Commands.LogoutAll;
+using PS.AuthService.Application.Interfaces;
 
 namespace AuthService.UnitTests.Application.Commands.LogoutAll
 {

@@ -1,4 +1,4 @@
-﻿namespace PS.FreeBookHub_Lite.AuthService.Application.Services.Interfaces
+﻿namespace PS.AuthService.Application.Services.Interfaces
 {
     public interface IPasswordHasher
     {

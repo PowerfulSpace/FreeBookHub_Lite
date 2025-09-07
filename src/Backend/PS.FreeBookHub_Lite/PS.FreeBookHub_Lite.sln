@@ -103,15 +103,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.Catalog
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.CatalogService.Infrastructure", "CatalogService\Infrastructure\PS.CatalogService.Infrastructure\PS.FreeBookHub_Lite.CatalogService.Infrastructure.csproj", "{7870D88F-80A9-83BE-B549-ABB49B1E0852}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.AuthService.API", "AuthService\API\PS.AuthService.API\PS.FreeBookHub_Lite.AuthService.API.csproj", "{DDF1308C-3001-0101-D94C-08446A20D795}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.AuthService.API", "AuthService\API\PS.AuthService.API\PS.AuthService.API.csproj", "{DDF1308C-3001-0101-D94C-08446A20D795}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.AuthService.Application", "AuthService\Application\PS.AuthService.Application\PS.FreeBookHub_Lite.AuthService.Application.csproj", "{25E1C68F-3127-D6DE-10A1-95D37A1FA8B6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.AuthService.Application", "AuthService\Application\PS.AuthService.Application\PS.AuthService.Application.csproj", "{25E1C68F-3127-D6DE-10A1-95D37A1FA8B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.AuthService.Common", "AuthService\Common\PS.AuthService.Common\PS.FreeBookHub_Lite.AuthService.Common.csproj", "{A4F3DC79-0801-B81D-9FEF-5237EF3C7ABA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.AuthService.Common", "AuthService\Common\PS.AuthService.Common\PS.AuthService.Common.csproj", "{A4F3DC79-0801-B81D-9FEF-5237EF3C7ABA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.AuthService.Domain", "AuthService\Domain\PS.AuthService.Domain\PS.FreeBookHub_Lite.AuthService.Domain.csproj", "{563CA0B3-9405-58BA-FC2F-5B67FFBF15AB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.AuthService.Domain", "AuthService\Domain\PS.AuthService.Domain\PS.AuthService.Domain.csproj", "{563CA0B3-9405-58BA-FC2F-5B67FFBF15AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.AuthService.Infrastructure", "AuthService\Infrastructure\PS.AuthService.Infrastructure\PS.FreeBookHub_Lite.AuthService.Infrastructure.csproj", "{0C11B9B3-ACE2-04FE-7F91-195A4E9D497A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.AuthService.Infrastructure", "AuthService\Infrastructure\PS.AuthService.Infrastructure\PS.AuthService.Infrastructure.csproj", "{0C11B9B3-ACE2-04FE-7F91-195A4E9D497A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.CartService.API", "CartService\API\PS.CartService.API\PS.FreeBookHub_Lite.CartService.API.csproj", "{175B6DCA-1015-8D2D-35D2-C3119D24175D}"
 EndProject

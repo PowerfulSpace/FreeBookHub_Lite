@@ -1,6 +1,6 @@
-﻿using PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.User.Base;
+﻿using PS.AuthService.Domain.Exceptions.User.Base;
 
-namespace PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.User
+namespace PS.AuthService.Domain.Exceptions.User
 {
     public class UserByIdNotFoundException : UserException
     {

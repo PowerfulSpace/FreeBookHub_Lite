@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence;
+using PS.AuthService.Infrastructure.Persistence;
 
 namespace AuthService.IntegrationTests.TestUtils.Factories
 {

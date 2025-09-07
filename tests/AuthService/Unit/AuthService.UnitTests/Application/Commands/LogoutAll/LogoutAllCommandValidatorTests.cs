@@ -1,5 +1,5 @@
 ﻿using FluentValidation.TestHelper;
-using PS.FreeBookHub_Lite.AuthService.Application.CQRS.Commands.LogoutAll;
+using PS.AuthService.Application.CQRS.Commands.LogoutAll;
 
 namespace AuthService.UnitTests.Application.Commands.LogoutAll
 {

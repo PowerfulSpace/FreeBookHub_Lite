@@ -1,5 +1,5 @@
 ﻿using AuthService.IntegrationTests.TestUtils.Factories;
-using PS.FreeBookHub_Lite.AuthService.Application.DTOs;
+using PS.AuthService.Application.DTOs;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;

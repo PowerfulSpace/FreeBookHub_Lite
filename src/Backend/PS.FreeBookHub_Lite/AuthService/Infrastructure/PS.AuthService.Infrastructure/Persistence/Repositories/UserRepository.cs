@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PS.FreeBookHub_Lite.AuthService.Application.Interfaces;
-using PS.FreeBookHub_Lite.AuthService.Domain.Entities;
+using PS.AuthService.Application.Interfaces;
+using PS.AuthService.Domain.Entities;
 
-namespace PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence.Repositories
+namespace PS.AuthService.Infrastructure.Persistence.Repositories
 {
     public class UserRepository : IUserRepository
     {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PS.FreeBookHub_Lite.AuthService.Domain.Entities;
+using PS.AuthService.Domain.Entities;
 
-namespace PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence
+namespace PS.AuthService.Infrastructure.Persistence
 {
     public class AuthDbContext : DbContext
     {

@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using PS.FreeBookHub_Lite.AuthService.Domain.Enums;
-using PS.FreeBookHub_Lite.AuthService.Infrastructure.Autentication;
+using PS.AuthService.Domain.Enums;
+using PS.AuthService.Infrastructure.Autentication;
 using System.Text;
 
-namespace PS.FreeBookHub_Lite.AuthService.API
+namespace PS.AuthService.API
 {
     public static class DependencyInjection
     {

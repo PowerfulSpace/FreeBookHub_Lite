@@ -1,12 +1,12 @@
 ﻿using Mapster;
-using PS.FreeBookHub_Lite.AuthService.Application.CQRS.Commands.Login;
-using PS.FreeBookHub_Lite.AuthService.Application.CQRS.Commands.Logout;
-using PS.FreeBookHub_Lite.AuthService.Application.CQRS.Commands.RefreshToken;
-using PS.FreeBookHub_Lite.AuthService.Application.CQRS.Commands.Register;
-using PS.FreeBookHub_Lite.AuthService.Application.DTOs;
-using PS.FreeBookHub_Lite.AuthService.Domain.Entities;
+using PS.AuthService.Application.CQRS.Commands.Login;
+using PS.AuthService.Application.CQRS.Commands.Logout;
+using PS.AuthService.Application.CQRS.Commands.RefreshToken;
+using PS.AuthService.Application.CQRS.Commands.Register;
+using PS.AuthService.Application.DTOs;
+using PS.AuthService.Domain.Entities;
 
-namespace PS.FreeBookHub_Lite.AuthService.Application.Mappings
+namespace PS.AuthService.Application.Mappings
 {
     public class AuthMappingConfig : IRegister
     {

@@ -1,4 +1,4 @@
-﻿namespace PS.FreeBookHub_Lite.AuthService.Common.Logging
+﻿namespace PS.AuthService.Common.Logging
 {
     public static class LoggerMessages
     {

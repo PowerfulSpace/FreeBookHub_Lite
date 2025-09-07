@@ -1,6 +1,6 @@
-﻿using PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.Token;
+﻿using PS.AuthService.Domain.Exceptions.Token;
 
-namespace PS.FreeBookHub_Lite.AuthService.Domain.Entities
+namespace PS.AuthService.Domain.Entities
 {
     public class RefreshToken
     {

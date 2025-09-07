@@ -1,8 +1,8 @@
 ﻿using FluentValidation.TestHelper;
 using Moq;
-using PS.FreeBookHub_Lite.AuthService.Application.CQRS.Commands.Login;
-using PS.FreeBookHub_Lite.AuthService.Application.Interfaces;
-using PS.FreeBookHub_Lite.AuthService.Domain.Entities;
+using PS.AuthService.Application.CQRS.Commands.Login;
+using PS.AuthService.Application.Interfaces;
+using PS.AuthService.Domain.Entities;
 
 namespace AuthService.UnitTests.Application.Commands.Login
 {

@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PS.FreeBookHub_Lite.AuthService.Domain.Entities;
+using PS.AuthService.Domain.Entities;
 
-namespace PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence.Configurations
+namespace PS.AuthService.Infrastructure.Persistence.Configurations
 {
     public class RefreshTokenConfiguration : IEntityTypeConfiguration<RefreshToken>
     {

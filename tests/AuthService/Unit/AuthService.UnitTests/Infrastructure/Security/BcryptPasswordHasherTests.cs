@@ -1,4 +1,4 @@
-﻿using PS.FreeBookHub_Lite.AuthService.Infrastructure.Security;
+﻿using PS.AuthService.Infrastructure.Security;
 
 namespace AuthService.UnitTests.Infrastructure.Security
 {

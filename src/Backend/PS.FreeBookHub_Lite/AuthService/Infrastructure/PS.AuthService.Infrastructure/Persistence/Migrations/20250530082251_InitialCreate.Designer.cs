@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence;
+using PS.AuthService.Infrastructure.Persistence;
 
 #nullable disable
 
-namespace PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence.Migrations
+namespace PS.AuthService.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AuthDbContext))]
     [Migration("20250530082251_InitialCreate")]
@@ -25,7 +25,7 @@ namespace PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("PS.FreeBookHub_Lite.AuthService.Domain.Entities.RefreshToken", b =>
+            modelBuilder.Entity("PS.AuthService.Domain.Entities.RefreshToken", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -63,7 +63,7 @@ namespace PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence.Migrations
                     b.ToTable("RefreshTokens", (string)null);
                 });
 
-            modelBuilder.Entity("PS.FreeBookHub_Lite.AuthService.Domain.Entities.User", b =>
+            modelBuilder.Entity("PS.AuthService.Domain.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -103,9 +103,9 @@ namespace PS.FreeBookHub_Lite.AuthService.Infrastructure.Persistence.Migrations
                     b.ToTable("Users", (string)null);
                 });
 
-            modelBuilder.Entity("PS.FreeBookHub_Lite.AuthService.Domain.Entities.RefreshToken", b =>
+            modelBuilder.Entity("PS.AuthService.Domain.Entities.RefreshToken", b =>
                 {
-                    b.HasOne("PS.FreeBookHub_Lite.AuthService.Domain.Entities.User", null)
+                    b.HasOne("PS.AuthService.Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

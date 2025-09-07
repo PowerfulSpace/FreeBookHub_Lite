@@ -16,9 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\src\Backend\PS.FreeBookHub_Lite\AuthService\Application\PS.AuthService.Application\PS.FreeBookHub_Lite.AuthService.Application.csproj" />
-    <ProjectReference Include="..\..\..\..\src\Backend\PS.FreeBookHub_Lite\AuthService\Domain\PS.AuthService.Domain\PS.FreeBookHub_Lite.AuthService.Domain.csproj" />
-    <ProjectReference Include="..\..\..\..\src\Backend\PS.FreeBookHub_Lite\AuthService\Infrastructure\PS.AuthService.Infrastructure\PS.FreeBookHub_Lite.AuthService.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\..\src\Backend\PS.FreeBookHub_Lite\AuthService\Application\PS.AuthService.Application\PS.AuthService.Application.csproj" />
+    <ProjectReference Include="..\..\..\..\src\Backend\PS.FreeBookHub_Lite\AuthService\Domain\PS.AuthService.Domain\PS.AuthService.Domain.csproj" />
+    <ProjectReference Include="..\..\..\..\src\Backend\PS.FreeBookHub_Lite\AuthService\Infrastructure\PS.AuthService.Infrastructure\PS.AuthService.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

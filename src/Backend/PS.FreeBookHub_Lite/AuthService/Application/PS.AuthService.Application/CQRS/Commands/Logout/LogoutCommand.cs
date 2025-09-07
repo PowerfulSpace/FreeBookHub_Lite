@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace PS.FreeBookHub_Lite.AuthService.Application.CQRS.Commands.Logout
+namespace PS.AuthService.Application.CQRS.Commands.Logout
 {
     public class LogoutCommand : IRequest<Unit>
     {

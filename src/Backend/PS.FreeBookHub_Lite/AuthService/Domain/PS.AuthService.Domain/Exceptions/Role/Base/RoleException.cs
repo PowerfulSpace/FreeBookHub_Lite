@@ -1,6 +1,6 @@
-﻿using PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.Base;
+﻿using PS.AuthService.Domain.Exceptions.Base;
 
-namespace PS.FreeBookHub_Lite.AuthService.Domain.Exceptions.Role.Base
+namespace PS.AuthService.Domain.Exceptions.Role.Base
 {
     public abstract class RoleException : AuthServiceException
     {

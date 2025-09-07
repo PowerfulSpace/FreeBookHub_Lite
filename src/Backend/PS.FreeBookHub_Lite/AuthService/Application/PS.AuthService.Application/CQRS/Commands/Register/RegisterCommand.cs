@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using PS.FreeBookHub_Lite.AuthService.Application.DTOs;
+using PS.AuthService.Application.DTOs;
 
-namespace PS.FreeBookHub_Lite.AuthService.Application.CQRS.Commands.Register
+namespace PS.AuthService.Application.CQRS.Commands.Register
 {
     public class RegisterCommand : IRequest<AuthResponse>
     {

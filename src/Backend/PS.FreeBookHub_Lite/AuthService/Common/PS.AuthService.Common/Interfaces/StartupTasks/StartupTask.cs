@@ -1,4 +1,4 @@
-﻿namespace PS.FreeBookHub_Lite.AuthService.Common.Interfaces.StartupTasks
+﻿namespace PS.AuthService.Common.Interfaces.StartupTasks
 {
     public abstract class StartupTask : IStartupTask
     {

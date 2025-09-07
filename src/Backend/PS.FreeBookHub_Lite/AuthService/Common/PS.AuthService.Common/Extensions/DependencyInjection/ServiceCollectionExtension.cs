@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using PS.FreeBookHub_Lite.AuthService.Common.Interfaces.StartupTasks;
+using PS.AuthService.Common.Interfaces.StartupTasks;
 
-namespace PS.FreeBookHub_Lite.AuthService.Common.Extensions.DependencyInjection
+namespace PS.AuthService.Common.Extensions.DependencyInjection
 {
     public static class ServiceCollectionExtensions
     {

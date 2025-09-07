@@ -1,4 +1,4 @@
-﻿namespace PS.FreeBookHub_Lite.OrderService.Common.Events.Interfaces
+﻿namespace PS.OrderService.Common.Events.Interfaces
 {
 
     public interface IEventPublisher

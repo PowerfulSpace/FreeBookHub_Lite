@@ -2,10 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
-using PS.FreeBookHub_Lite.OrderService.Common.Interfaces.StartupTasks;
-using PS.FreeBookHub_Lite.OrderService.Infrastructure.Persistence;
+using PS.OrderService.Common.Interfaces.StartupTasks;
+using PS.OrderService.Infrastructure.Persistence;
 
-namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.StartupTasks
+namespace PS.OrderService.Infrastructure.StartupTasks
 {
     public class DatabaseMigrationStartupTask : StartupTask
     {

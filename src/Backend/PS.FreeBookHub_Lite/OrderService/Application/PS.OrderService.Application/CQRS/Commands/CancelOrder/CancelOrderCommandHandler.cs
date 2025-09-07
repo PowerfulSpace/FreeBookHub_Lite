@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
-using PS.FreeBookHub_Lite.OrderService.Application.Interfaces;
-using PS.FreeBookHub_Lite.OrderService.Common.Logging;
-using PS.FreeBookHub_Lite.OrderService.Domain.Exceptions.Order;
+using PS.OrderService.Application.Interfaces;
+using PS.OrderService.Common.Logging;
+using PS.OrderService.Domain.Exceptions.Order;
 
-namespace PS.FreeBookHub_Lite.OrderService.Application.CQRS.Commands.CancelOrder
+namespace PS.OrderService.Application.CQRS.Commands.CancelOrder
 {
     public class CancelOrderCommandHandler : IRequestHandler<CancelOrderCommand, Unit>
     {

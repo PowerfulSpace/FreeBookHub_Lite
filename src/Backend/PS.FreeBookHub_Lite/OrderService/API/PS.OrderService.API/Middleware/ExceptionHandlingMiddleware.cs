@@ -1,9 +1,9 @@
-﻿using PS.FreeBookHub_Lite.OrderService.Common.Logging;
-using PS.FreeBookHub_Lite.OrderService.Domain.Exceptions.Order;
-using PS.FreeBookHub_Lite.OrderService.Domain.Exceptions.Payment;
-using PS.FreeBookHub_Lite.OrderService.Domain.Exceptions.User;
+﻿using PS.OrderService.Common.Logging;
+using PS.OrderService.Domain.Exceptions.Order;
+using PS.OrderService.Domain.Exceptions.Payment;
+using PS.OrderService.Domain.Exceptions.User;
 
-namespace PS.FreeBookHub_Lite.OrderService.API.Middleware
+namespace PS.OrderService.API.Middleware
 {
     public class ExceptionHandlingMiddleware
     {

@@ -1,6 +1,6 @@
-﻿using PS.FreeBookHub_Lite.OrderService.Domain.Exceptions.User.Base;
+﻿using PS.OrderService.Domain.Exceptions.User.Base;
 
-namespace PS.FreeBookHub_Lite.OrderService.Domain.Exceptions.User
+namespace PS.OrderService.Domain.Exceptions.User
 {
     public class InvalidUserIdentifierException : UserException
     {

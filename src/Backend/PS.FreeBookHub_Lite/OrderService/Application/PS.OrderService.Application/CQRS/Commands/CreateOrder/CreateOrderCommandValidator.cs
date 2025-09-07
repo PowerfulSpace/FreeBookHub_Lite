@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using PS.FreeBookHub_Lite.OrderService.Application.Validators;
+using PS.OrderService.Application.Validators;
 
-namespace PS.FreeBookHub_Lite.OrderService.Application.CQRS.Commands.CreateOrder
+namespace PS.OrderService.Application.CQRS.Commands.CreateOrder
 {
     public class CreateOrderCommandValidator : AbstractValidator<CreateOrderCommand>
     {

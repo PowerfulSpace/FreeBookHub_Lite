@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.Logging;
-using PS.FreeBookHub_Lite.OrderService.Application.Clients;
-using PS.FreeBookHub_Lite.OrderService.Application.DTOs;
-using PS.FreeBookHub_Lite.OrderService.Common.Logging;
-using PS.FreeBookHub_Lite.OrderService.Domain.Exceptions.Payment;
+using PS.OrderService.Application.Clients;
+using PS.OrderService.Application.DTOs;
+using PS.OrderService.Common.Logging;
+using PS.OrderService.Domain.Exceptions.Payment;
 using System.Net.Http.Json;
 
-namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Clients
+namespace PS.OrderService.Infrastructure.Clients
 {
     public class PaymentServiceClient : IPaymentServiceClient
     {

@@ -2,15 +2,15 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PS.FreeBookHub_Lite.OrderService.Application.CQRS.Commands.CancelOrder;
-using PS.FreeBookHub_Lite.OrderService.Application.CQRS.Commands.CreateOrder;
-using PS.FreeBookHub_Lite.OrderService.Application.CQRS.Queries.GetAllOrdersByUserId;
-using PS.FreeBookHub_Lite.OrderService.Application.CQRS.Queries.GetOrderById;
-using PS.FreeBookHub_Lite.OrderService.Application.DTOs;
-using PS.FreeBookHub_Lite.OrderService.Domain.Exceptions.User;
+using PS.OrderService.Application.CQRS.Commands.CancelOrder;
+using PS.OrderService.Application.CQRS.Commands.CreateOrder;
+using PS.OrderService.Application.CQRS.Queries.GetAllOrdersByUserId;
+using PS.OrderService.Application.CQRS.Queries.GetOrderById;
+using PS.OrderService.Application.DTOs;
+using PS.OrderService.Domain.Exceptions.User;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace PS.FreeBookHub_Lite.OrderService.API.Controllers
+namespace PS.OrderService.API.Controllers
 {
     [Authorize(Policy = "User")]
     [ApiController]

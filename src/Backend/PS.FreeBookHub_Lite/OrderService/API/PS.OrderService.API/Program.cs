@@ -1,13 +1,13 @@
 using DotNetEnv;
-using PS.FreeBookHub_Lite.OrderService.API;
-using PS.FreeBookHub_Lite.OrderService.API.Logging;
-using PS.FreeBookHub_Lite.OrderService.API.Middleware;
-using PS.FreeBookHub_Lite.OrderService.Application;
-using PS.FreeBookHub_Lite.OrderService.Infrastructure;
-using PS.FreeBookHub_Lite.OrderService.Common.Extensions.DependencyInjection;
-using PS.FreeBookHub_Lite.OrderService.Common.Extensions.Hosting;
+using PS.OrderService.API;
+using PS.OrderService.API.Logging;
+using PS.OrderService.API.Middleware;
+using PS.OrderService.Application;
+using PS.OrderService.Infrastructure;
+using PS.OrderService.Common.Extensions.DependencyInjection;
+using PS.OrderService.Common.Extensions.Hosting;
 using Serilog;
-using PS.FreeBookHub_Lite.OrderService.Infrastructure.StartupTasks;
+using PS.OrderService.Infrastructure.StartupTasks;
 
 
 SerilogBootstrapper.ConfigureSerilog();

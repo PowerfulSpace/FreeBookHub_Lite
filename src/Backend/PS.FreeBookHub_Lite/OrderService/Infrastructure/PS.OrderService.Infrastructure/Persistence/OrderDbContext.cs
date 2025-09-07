@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PS.FreeBookHub_Lite.OrderService.Domain.Entities;
+using PS.OrderService.Domain.Entities;
 
-namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Persistence
+namespace PS.OrderService.Infrastructure.Persistence
 {
     public class OrderDbContext : DbContext
     {

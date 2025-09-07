@@ -1,4 +1,4 @@
-﻿namespace PS.FreeBookHub_Lite.OrderService.Domain.Enums
+﻿namespace PS.OrderService.Domain.Enums
 {
     public enum OrderStatus
     {

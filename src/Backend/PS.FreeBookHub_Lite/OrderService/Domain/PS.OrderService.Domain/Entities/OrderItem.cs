@@ -1,6 +1,6 @@
-﻿using PS.FreeBookHub_Lite.OrderService.Domain.Exceptions.Order;
+﻿using PS.OrderService.Domain.Exceptions.Order;
 
-namespace PS.FreeBookHub_Lite.OrderService.Domain.Entities
+namespace PS.OrderService.Domain.Entities
 {
     public class OrderItem
     {

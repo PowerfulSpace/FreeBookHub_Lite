@@ -2,15 +2,15 @@
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using PS.FreeBookHub_Lite.OrderService.Application.DTOs;
-using PS.FreeBookHub_Lite.OrderService.Application.Interfaces;
-using PS.FreeBookHub_Lite.OrderService.Common.Configuration;
-using PS.FreeBookHub_Lite.OrderService.Common.Events;
-using PS.FreeBookHub_Lite.OrderService.Common.Events.Interfaces;
-using PS.FreeBookHub_Lite.OrderService.Common.Logging;
-using PS.FreeBookHub_Lite.OrderService.Domain.Entities;
+using PS.OrderService.Application.DTOs;
+using PS.OrderService.Application.Interfaces;
+using PS.OrderService.Common.Configuration;
+using PS.OrderService.Common.Events;
+using PS.OrderService.Common.Events.Interfaces;
+using PS.OrderService.Common.Logging;
+using PS.OrderService.Domain.Entities;
 
-namespace PS.FreeBookHub_Lite.OrderService.Application.CQRS.Commands.CreateOrder
+namespace PS.OrderService.Application.CQRS.Commands.CreateOrder
 {
     public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, OrderResponse>
     {

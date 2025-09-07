@@ -1,4 +1,4 @@
-﻿namespace PS.FreeBookHub_Lite.OrderService.Common.Events
+﻿namespace PS.OrderService.Common.Events
 {
     public record OrderCreatedEvent(
         Guid OrderId,

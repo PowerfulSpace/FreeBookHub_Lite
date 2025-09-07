@@ -3,10 +3,10 @@ using FluentValidation.AspNetCore;
 using Mapster;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PS.FreeBookHub_Lite.OrderService.Application.Mappings;
-using PS.FreeBookHub_Lite.OrderService.Common.Configuration;
+using PS.OrderService.Application.Mappings;
+using PS.OrderService.Common.Configuration;
 
-namespace PS.FreeBookHub_Lite.OrderService.Application
+namespace PS.OrderService.Application
 {
     public static class DependencyInjection
     {

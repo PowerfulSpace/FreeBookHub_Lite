@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PS.FreeBookHub_Lite.OrderService.Domain.Entities;
+using PS.OrderService.Domain.Entities;
 
-namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Persistence.Configurations
+namespace PS.OrderService.Infrastructure.Persistence.Configurations
 {
     public class OrderItemConfiguration : IEntityTypeConfiguration<OrderItem>
     {

@@ -1,4 +1,4 @@
-﻿namespace PS.FreeBookHub_Lite.OrderService.Common.Interfaces.StartupTasks
+﻿namespace PS.OrderService.Common.Interfaces.StartupTasks
 {
     public abstract class StartupTask : IStartupTask
     {

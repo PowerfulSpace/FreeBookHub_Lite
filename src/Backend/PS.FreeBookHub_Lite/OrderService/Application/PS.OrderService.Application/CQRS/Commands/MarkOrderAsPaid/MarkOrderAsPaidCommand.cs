@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace PS.FreeBookHub_Lite.OrderService.Application.CQRS.Commands.MarkOrderAsPaid
+namespace PS.OrderService.Application.CQRS.Commands.MarkOrderAsPaid
 {
     public class MarkOrderAsPaidCommand : IRequest<Unit>
     {

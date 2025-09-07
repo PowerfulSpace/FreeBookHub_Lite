@@ -1,13 +1,13 @@
-﻿using PS.FreeBookHub_Lite.OrderService.Common.Events.Interfaces;
+﻿using PS.OrderService.Common.Events.Interfaces;
 using RabbitMQ.Client;
 using System.Text.Json;
 using System.Text;
 using Microsoft.Extensions.Logging;
-using PS.FreeBookHub_Lite.OrderService.Common.Logging;
+using PS.OrderService.Common.Logging;
 using Microsoft.Extensions.Options;
-using PS.FreeBookHub_Lite.OrderService.Common.Configuration;
+using PS.OrderService.Common.Configuration;
 
-namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging
+namespace PS.OrderService.Infrastructure.Messaging
 {
     public class RabbitMqEventPublisher : IEventPublisher, IDisposable
     {

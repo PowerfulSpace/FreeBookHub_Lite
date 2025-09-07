@@ -1,6 +1,6 @@
-﻿using PS.FreeBookHub_Lite.OrderService.Domain.Exceptions.Base;
+﻿using PS.OrderService.Domain.Exceptions.Base;
 
-namespace PS.FreeBookHub_Lite.OrderService.Domain.Exceptions.Order
+namespace PS.OrderService.Domain.Exceptions.Order
 {
     public class OrderNotFoundException : OrderServiceException
     {

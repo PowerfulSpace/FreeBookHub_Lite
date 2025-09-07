@@ -1,6 +1,6 @@
-﻿using PS.FreeBookHub_Lite.OrderService.Domain.Exceptions.Base;
+﻿using PS.OrderService.Domain.Exceptions.Base;
 
-namespace PS.FreeBookHub_Lite.OrderService.Domain.Exceptions.Payment
+namespace PS.OrderService.Domain.Exceptions.Payment
 {
     public class PaymentFailedException : OrderServiceException
     {

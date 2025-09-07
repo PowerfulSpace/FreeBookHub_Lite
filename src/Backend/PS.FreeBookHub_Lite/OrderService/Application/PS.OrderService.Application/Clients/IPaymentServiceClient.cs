@@ -1,6 +1,6 @@
-﻿using PS.FreeBookHub_Lite.OrderService.Application.DTOs;
+﻿using PS.OrderService.Application.DTOs;
 
-namespace PS.FreeBookHub_Lite.OrderService.Application.Clients
+namespace PS.OrderService.Application.Clients
 {
     public interface IPaymentServiceClient
     {

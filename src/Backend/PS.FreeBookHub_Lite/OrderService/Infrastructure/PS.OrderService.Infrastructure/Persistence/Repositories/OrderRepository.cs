@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PS.FreeBookHub_Lite.OrderService.Application.Interfaces;
-using PS.FreeBookHub_Lite.OrderService.Domain.Entities;
+using PS.OrderService.Application.Interfaces;
+using PS.OrderService.Domain.Entities;
 
-namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Persistence.Repositories
+namespace PS.OrderService.Infrastructure.Persistence.Repositories
 {
     public class OrderRepository : IOrderRepository
     {

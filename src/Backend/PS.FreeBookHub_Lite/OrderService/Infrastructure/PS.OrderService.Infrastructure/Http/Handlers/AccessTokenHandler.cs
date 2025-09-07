@@ -1,7 +1,7 @@
-﻿using PS.FreeBookHub_Lite.OrderService.Application.Security;
+﻿using PS.OrderService.Application.Security;
 using System.Net.Http.Headers;
 
-namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Http.Handlers
+namespace PS.OrderService.Infrastructure.Http.Handlers
 {
     public class AccessTokenHandler : DelegatingHandler
     {

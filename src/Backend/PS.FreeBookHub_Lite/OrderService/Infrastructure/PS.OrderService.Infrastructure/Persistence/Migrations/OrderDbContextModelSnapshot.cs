@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using PS.FreeBookHub_Lite.OrderService.Infrastructure.Persistence;
+using PS.OrderService.Infrastructure.Persistence;
 
 #nullable disable
 
-namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Persistence.Migrations
+namespace PS.OrderService.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(OrderDbContext))]
     partial class OrderDbContextModelSnapshot : ModelSnapshot
@@ -22,7 +22,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("PS.FreeBookHub_Lite.OrderService.Domain.Entities.Order", b =>
+            modelBuilder.Entity("PS.OrderService.Domain.Entities.Order", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -53,7 +53,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Persistence.Migrations
                     b.ToTable("Orders", (string)null);
                 });
 
-            modelBuilder.Entity("PS.FreeBookHub_Lite.OrderService.Domain.Entities.OrderItem", b =>
+            modelBuilder.Entity("PS.OrderService.Domain.Entities.OrderItem", b =>
                 {
                     b.Property<Guid>("OrderId")
                         .HasColumnType("uniqueidentifier");
@@ -75,9 +75,9 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Persistence.Migrations
                     b.ToTable("OrderItems", (string)null);
                 });
 
-            modelBuilder.Entity("PS.FreeBookHub_Lite.OrderService.Domain.Entities.OrderItem", b =>
+            modelBuilder.Entity("PS.OrderService.Domain.Entities.OrderItem", b =>
                 {
-                    b.HasOne("PS.FreeBookHub_Lite.OrderService.Domain.Entities.Order", "Order")
+                    b.HasOne("PS.OrderService.Domain.Entities.Order", "Order")
                         .WithMany("Items")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -86,7 +86,7 @@ namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Persistence.Migrations
                     b.Navigation("Order");
                 });
 
-            modelBuilder.Entity("PS.FreeBookHub_Lite.OrderService.Domain.Entities.Order", b =>
+            modelBuilder.Entity("PS.OrderService.Domain.Entities.Order", b =>
                 {
                     b.Navigation("Items");
                 });

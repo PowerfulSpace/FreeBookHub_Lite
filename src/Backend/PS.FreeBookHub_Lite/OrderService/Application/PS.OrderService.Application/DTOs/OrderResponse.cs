@@ -1,6 +1,6 @@
-﻿using PS.FreeBookHub_Lite.OrderService.Domain.Enums;
+﻿using PS.OrderService.Domain.Enums;
 
-namespace PS.FreeBookHub_Lite.OrderService.Application.DTOs
+namespace PS.OrderService.Application.DTOs
 {
     public class OrderResponse
     {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using PS.FreeBookHub_Lite.OrderService.Common.Interfaces.StartupTasks;
+using PS.OrderService.Common.Interfaces.StartupTasks;
 
-namespace PS.FreeBookHub_Lite.OrderService.Common.Extensions.DependencyInjection
+namespace PS.OrderService.Common.Extensions.DependencyInjection
 {
     public static class ServiceCollectionExtensions
     {

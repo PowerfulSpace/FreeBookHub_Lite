@@ -1,6 +1,6 @@
-﻿using PS.FreeBookHub_Lite.OrderService.Domain.Entities;
+﻿using PS.OrderService.Domain.Entities;
 
-namespace PS.FreeBookHub_Lite.OrderService.Application.Interfaces
+namespace PS.OrderService.Application.Interfaces
 {
     public interface IOrderRepository
     {

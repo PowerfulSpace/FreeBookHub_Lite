@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using PS.FreeBookHub_Lite.OrderService.Common.Interfaces.StartupTasks;
+using PS.OrderService.Common.Interfaces.StartupTasks;
 
-namespace PS.FreeBookHub_Lite.OrderService.Common.Extensions.Hosting
+namespace PS.OrderService.Common.Extensions.Hosting
 {
     public static class HostExtensions
     {

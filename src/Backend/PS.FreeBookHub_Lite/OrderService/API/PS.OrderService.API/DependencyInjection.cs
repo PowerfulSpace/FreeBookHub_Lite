@@ -2,12 +2,12 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using PS.FreeBookHub_Lite.OrderService.API.Authentication.Enums;
-using PS.FreeBookHub_Lite.OrderService.API.Authentication.Models;
-using PS.FreeBookHub_Lite.OrderService.API.Security;
+using PS.OrderService.API.Authentication.Enums;
+using PS.OrderService.API.Authentication.Models;
+using PS.OrderService.API.Security;
 using System.Text;
 
-namespace PS.FreeBookHub_Lite.OrderService.API
+namespace PS.OrderService.API
 {
     public static class DependencyInjection
     {

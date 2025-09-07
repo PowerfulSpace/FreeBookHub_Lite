@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
-using PS.FreeBookHub_Lite.OrderService.Application.Interfaces;
-using PS.FreeBookHub_Lite.OrderService.Common.Logging;
+using PS.OrderService.Application.Interfaces;
+using PS.OrderService.Common.Logging;
 
-namespace PS.FreeBookHub_Lite.OrderService.Application.CQRS.Commands.MarkOrderAsPaid
+namespace PS.OrderService.Application.CQRS.Commands.MarkOrderAsPaid
 {
     public class MarkOrderAsPaidCommandHandler : IRequestHandler<MarkOrderAsPaidCommand, Unit>
     {

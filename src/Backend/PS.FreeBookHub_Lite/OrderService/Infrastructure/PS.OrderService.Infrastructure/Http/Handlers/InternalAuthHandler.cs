@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Http.Handlers
+namespace PS.OrderService.Infrastructure.Http.Handlers
 {
     public class InternalAuthHandler : DelegatingHandler
     {

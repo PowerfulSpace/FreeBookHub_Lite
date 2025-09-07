@@ -1,23 +1,23 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PS.FreeBookHub_Lite.OrderService.Application.Clients;
-using PS.FreeBookHub_Lite.OrderService.Application.Interfaces;
-using PS.FreeBookHub_Lite.OrderService.Application.Interfaces.Redis;
-using PS.FreeBookHub_Lite.OrderService.Application.Security;
-using PS.FreeBookHub_Lite.OrderService.Common.Configuration;
-using PS.FreeBookHub_Lite.OrderService.Common.Events.Interfaces;
-using PS.FreeBookHub_Lite.OrderService.Infrastructure.Caching.Redis;
-using PS.FreeBookHub_Lite.OrderService.Infrastructure.Clients;
-using PS.FreeBookHub_Lite.OrderService.Infrastructure.Http.Handlers;
-using PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging;
-using PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers;
-using PS.FreeBookHub_Lite.OrderService.Infrastructure.Persistence;
-using PS.FreeBookHub_Lite.OrderService.Infrastructure.Persistence.Repositories;
-using PS.FreeBookHub_Lite.OrderService.Infrastructure.Security;
+using PS.OrderService.Application.Clients;
+using PS.OrderService.Application.Interfaces;
+using PS.OrderService.Application.Interfaces.Redis;
+using PS.OrderService.Application.Security;
+using PS.OrderService.Common.Configuration;
+using PS.OrderService.Common.Events.Interfaces;
+using PS.OrderService.Infrastructure.Caching.Redis;
+using PS.OrderService.Infrastructure.Clients;
+using PS.OrderService.Infrastructure.Http.Handlers;
+using PS.OrderService.Infrastructure.Messaging;
+using PS.OrderService.Infrastructure.Messaging.Consumers;
+using PS.OrderService.Infrastructure.Persistence;
+using PS.OrderService.Infrastructure.Persistence.Repositories;
+using PS.OrderService.Infrastructure.Security;
 using StackExchange.Redis;
 
-namespace PS.FreeBookHub_Lite.OrderService.Infrastructure
+namespace PS.OrderService.Infrastructure
 {
     public static class DependencyInjection
     {

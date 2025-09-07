@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
-using PS.FreeBookHub_Lite.OrderService.Application.Security;
+using PS.OrderService.Application.Security;
 
-namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Security
+namespace PS.OrderService.Infrastructure.Security
 {
     public class HttpContextAccessTokenProvider : IAccessTokenProvider
     {

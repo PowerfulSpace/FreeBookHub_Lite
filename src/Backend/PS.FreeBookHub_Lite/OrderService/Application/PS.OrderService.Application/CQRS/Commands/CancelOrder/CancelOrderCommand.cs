@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace PS.FreeBookHub_Lite.OrderService.Application.CQRS.Commands.CancelOrder
+namespace PS.OrderService.Application.CQRS.Commands.CancelOrder
 {
     public class CancelOrderCommand : IRequest<Unit>
     {

@@ -15,8 +15,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\Common\PS.OrderService.Common\PS.FreeBookHub_Lite.OrderService.Common.csproj" />
-	  <ProjectReference Include="..\..\Domain\PS.OrderService.Domain\PS.FreeBookHub_Lite.OrderService.Domain.csproj" />
+	  <ProjectReference Include="..\..\Common\PS.OrderService.Common\PS.OrderService.Common.csproj" />
+	  <ProjectReference Include="..\..\Domain\PS.OrderService.Domain\PS.OrderService.Domain.csproj" />
 	</ItemGroup>
 	
 </Project>

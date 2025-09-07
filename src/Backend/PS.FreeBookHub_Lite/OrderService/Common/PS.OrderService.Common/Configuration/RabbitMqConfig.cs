@@ -1,4 +1,4 @@
-﻿namespace PS.FreeBookHub_Lite.OrderService.Common.Configuration
+﻿namespace PS.OrderService.Common.Configuration
 {
     public class RabbitMqConfig
     {

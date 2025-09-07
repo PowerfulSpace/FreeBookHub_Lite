@@ -1,12 +1,12 @@
 ﻿using Mapster;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using PS.FreeBookHub_Lite.OrderService.Application.DTOs;
-using PS.FreeBookHub_Lite.OrderService.Application.Interfaces;
-using PS.FreeBookHub_Lite.OrderService.Common.Logging;
-using PS.FreeBookHub_Lite.OrderService.Domain.Exceptions.Order;
+using PS.OrderService.Application.DTOs;
+using PS.OrderService.Application.Interfaces;
+using PS.OrderService.Common.Logging;
+using PS.OrderService.Domain.Exceptions.Order;
 
-namespace PS.FreeBookHub_Lite.OrderService.Application.CQRS.Queries.GetOrderById
+namespace PS.OrderService.Application.CQRS.Queries.GetOrderById
 {
     public class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, OrderResponse>
     {

@@ -1,4 +1,4 @@
-﻿namespace PS.FreeBookHub_Lite.OrderService.Application.Security
+﻿namespace PS.OrderService.Application.Security
 {
     public interface IAccessTokenProvider
     {

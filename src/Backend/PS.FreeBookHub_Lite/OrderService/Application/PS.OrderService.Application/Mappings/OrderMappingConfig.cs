@@ -1,9 +1,9 @@
 ﻿using Mapster;
-using PS.FreeBookHub_Lite.OrderService.Application.CQRS.Commands.CreateOrder;
-using PS.FreeBookHub_Lite.OrderService.Application.DTOs;
-using PS.FreeBookHub_Lite.OrderService.Domain.Entities;
+using PS.OrderService.Application.CQRS.Commands.CreateOrder;
+using PS.OrderService.Application.DTOs;
+using PS.OrderService.Domain.Entities;
 
-namespace PS.FreeBookHub_Lite.OrderService.Application.Mappings
+namespace PS.OrderService.Application.Mappings
 {
     public class OrderMappingConfig : IRegister
     {

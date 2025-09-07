@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using PS.FreeBookHub_Lite.OrderService.Application.DTOs;
+using PS.OrderService.Application.DTOs;
 
-namespace PS.FreeBookHub_Lite.OrderService.Application.CQRS.Commands.CreateOrder
+namespace PS.OrderService.Application.CQRS.Commands.CreateOrder
 {
     public class CreateOrderCommand : IRequest<OrderResponse>
     {

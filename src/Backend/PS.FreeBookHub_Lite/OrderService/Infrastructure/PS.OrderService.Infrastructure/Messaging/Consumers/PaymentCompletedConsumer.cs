@@ -3,11 +3,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using PS.FreeBookHub_Lite.OrderService.Application.CQRS.Commands.MarkOrderAsPaid;
-using PS.FreeBookHub_Lite.OrderService.Application.Interfaces.Redis;
-using PS.FreeBookHub_Lite.OrderService.Common.Configuration;
-using PS.FreeBookHub_Lite.OrderService.Common.Events;
-using PS.FreeBookHub_Lite.OrderService.Common.Logging;
+using PS.OrderService.Application.CQRS.Commands.MarkOrderAsPaid;
+using PS.OrderService.Application.Interfaces.Redis;
+using PS.OrderService.Common.Configuration;
+using PS.OrderService.Common.Events;
+using PS.OrderService.Common.Logging;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Diagnostics.Metrics;
@@ -23,11 +23,11 @@ using System.Text.Json;
 // 6) Отправка команды MarkOrderAsPaidCommand через IMediator.
 // 7) Подтверждение обработки (BasicAck).
 
-namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
+namespace PS.OrderService.Infrastructure.Messaging.Consumers
 {
     public class PaymentCompletedConsumer : BackgroundService
     {
-        private static readonly Meter _meter = new("PS.FreeBookHub_Lite.OrderService");
+        private static readonly Meter _meter = new("PS.OrderService");
         private static readonly Counter<long> _duplicateCounter = _meter.CreateCounter<long>(
             "orderservice.event.duplicates",
             unit: "{events}",

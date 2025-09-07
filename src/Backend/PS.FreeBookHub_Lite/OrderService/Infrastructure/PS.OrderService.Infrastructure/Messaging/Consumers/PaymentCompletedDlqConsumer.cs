@@ -2,13 +2,13 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using PS.FreeBookHub_Lite.OrderService.Common.Configuration;
-using PS.FreeBookHub_Lite.OrderService.Common.Logging;
+using PS.OrderService.Common.Configuration;
+using PS.OrderService.Common.Logging;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
 
-namespace PS.FreeBookHub_Lite.OrderService.Infrastructure.Messaging.Consumers
+namespace PS.OrderService.Infrastructure.Messaging.Consumers
 {
     public class PaymentCompletedDlqConsumer : BackgroundService
     {

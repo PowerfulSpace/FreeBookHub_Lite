@@ -1,4 +1,4 @@
-﻿namespace PS.FreeBookHub_Lite.OrderService.API.Authentication.Models
+﻿namespace PS.OrderService.API.Authentication.Models
 {
     public class JwtSettings
     {

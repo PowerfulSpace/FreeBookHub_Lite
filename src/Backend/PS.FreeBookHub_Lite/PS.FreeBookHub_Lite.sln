@@ -125,15 +125,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.CartService.Infrastructu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub.Gateway.API", "Gateway\API\PS.Gateway.API\PS.FreeBookHub.Gateway.API.csproj", "{1DE71962-EA17-385D-87F0-91B3E87A839C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.OrderService.API", "OrderService\API\PS.OrderService.API\PS.FreeBookHub_Lite.OrderService.API.csproj", "{26D520D1-02D1-5C27-7475-E98CEFC355DA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.OrderService.API", "OrderService\API\PS.OrderService.API\PS.OrderService.API.csproj", "{26D520D1-02D1-5C27-7475-E98CEFC355DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.OrderService.Application", "OrderService\Application\PS.OrderService.Application\PS.FreeBookHub_Lite.OrderService.Application.csproj", "{75993CC7-7971-D05C-05DA-1FE2DFA2F96B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.OrderService.Application", "OrderService\Application\PS.OrderService.Application\PS.OrderService.Application.csproj", "{75993CC7-7971-D05C-05DA-1FE2DFA2F96B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.OrderService.Common", "OrderService\Common\PS.OrderService.Common\PS.FreeBookHub_Lite.OrderService.Common.csproj", "{CE3529D8-1A72-A85D-0A6F-15058A5061D0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.OrderService.Common", "OrderService\Common\PS.OrderService.Common\PS.OrderService.Common.csproj", "{CE3529D8-1A72-A85D-0A6F-15058A5061D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.OrderService.Domain", "OrderService\Domain\PS.OrderService.Domain\PS.FreeBookHub_Lite.OrderService.Domain.csproj", "{2C5B4F8A-BA16-31BF-3820-3A712D474094}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.OrderService.Domain", "OrderService\Domain\PS.OrderService.Domain\PS.OrderService.Domain.csproj", "{2C5B4F8A-BA16-31BF-3820-3A712D474094}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.OrderService.Infrastructure", "OrderService\Infrastructure\PS.OrderService.Infrastructure\PS.FreeBookHub_Lite.OrderService.Infrastructure.csproj", "{99ED32AB-4741-6760-CEE8-2C978A546A7E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.OrderService.Infrastructure", "OrderService\Infrastructure\PS.OrderService.Infrastructure\PS.OrderService.Infrastructure.csproj", "{99ED32AB-4741-6760-CEE8-2C978A546A7E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.FreeBookHub_Lite.PaymentService.API", "PaymentService\API\PS.PaymentService.API\PS.FreeBookHub_Lite.PaymentService.API.csproj", "{AB5E3D92-43E0-0FE3-8689-D7C9473FAC22}"
 EndProject

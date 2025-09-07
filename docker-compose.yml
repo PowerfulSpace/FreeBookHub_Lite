@@ -49,8 +49,8 @@ services:
   # AuthService
   authservice:
     build:
-      context: ./src/PS.FreeBookHub_Lite
-      dockerfile: PS.FreeBookHub_Lite.AuthService.API/Dockerfile
+      context: ./src/Backend/PS.FreeBookHub_Lite
+      dockerfile: AuthService/API/PS.AuthService.API/Dockerfile
     container_name: authservice
     ports:
       - "5000:80"
@@ -65,8 +65,8 @@ services:
   # CartService
   cartservice:
     build:
-      context: ./src/PS.FreeBookHub_Lite
-      dockerfile: PS.FreeBookHub_Lite.CartService.API/Dockerfile
+      context: ./src/Backend/PS.FreeBookHub_Lite
+      dockerfile: CartService/API/PS.CartService.API/Dockerfile
     container_name: cartservice
     ports:
       - "5001:80"
@@ -85,8 +85,8 @@ services:
   # CatalogService
   catalogservice:
     build:
-      context: ./src/PS.FreeBookHub_Lite
-      dockerfile: PS.FreeBookHub_Lite.CatalogService.API/Dockerfile
+      context: ./src/Backend/PS.FreeBookHub_Lite  
+      dockerfile: CatalogService/API/PS.CatalogService.API/Dockerfile
     container_name: catalogservice
     ports:
       - "5002:80"
@@ -101,8 +101,8 @@ services:
   # OrderService
   orderservice:
     build:
-      context: ./src/PS.FreeBookHub_Lite
-      dockerfile: PS.FreeBookHub_Lite.OrderService.API/Dockerfile
+      context: ./src/Backend/PS.FreeBookHub_Lite
+      dockerfile: OrderService/API/PS.OrderService.API/Dockerfile
     container_name: orderservice
     ports:
       - "5003:80"
@@ -123,8 +123,8 @@ services:
   # PaymentService
   paymentservice:
     build:
-      context: ./src/PS.FreeBookHub_Lite
-      dockerfile: PS.FreeBookHub_Lite.PaymentService.API/Dockerfile
+      context: ./src/Backend/PS.FreeBookHub_Lite
+      dockerfile: PaymentService/API/PS.PaymentService.API/Dockerfile
     container_name: paymentservice
     ports:
       - "5004:80"
@@ -143,8 +143,8 @@ services:
   # Gateway
   gateway:
     build:
-      context: ./src/PS.FreeBookHub_Lite
-      dockerfile: PS.FreeBookHub.Gateway.API/Dockerfile
+      context: ./src/Backend/PS.FreeBookHub_Lite
+      dockerfile: Gateway/API/PS.Gateway.API/Dockerfile
     container_name: gateway
     ports:
       - "5005:80"

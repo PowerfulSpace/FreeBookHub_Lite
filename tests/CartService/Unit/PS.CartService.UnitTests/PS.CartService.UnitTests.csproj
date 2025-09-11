@@ -20,7 +20,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\" />
+    <Folder Include="Application\CQRS\Commands\Addltem\" />
+    <Folder Include="Application\CQRS\Commands\Checkout\" />
+    <Folder Include="Application\CQRS\Commands\ClearCart\" />
+    <Folder Include="Application\CQRS\Commands\Removeltem\" />
+    <Folder Include="Application\CQRS\Commands\UpdateltemQuantity\" />
+    <Folder Include="Application\CQRS\Queries\GetCart\" />
     <Folder Include="Infrastructure\" />
   </ItemGroup>
 

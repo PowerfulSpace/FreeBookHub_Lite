@@ -26,6 +26,7 @@
     <Folder Include="Application\CQRS\Commands\Removeltem\" />
     <Folder Include="Application\CQRS\Commands\UpdateltemQuantity\" />
     <Folder Include="Application\CQRS\Queries\GetCart\" />
+    <Folder Include="Application\Validators\" />
     <Folder Include="Infrastructure\" />
   </ItemGroup>
 

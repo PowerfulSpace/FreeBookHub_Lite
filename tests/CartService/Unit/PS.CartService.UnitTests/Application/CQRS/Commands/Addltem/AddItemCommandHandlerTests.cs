@@ -5,6 +5,7 @@ using PS.CartService.Application.Clients;
 using PS.CartService.Application.CQRS.Commands.AddItem;
 using PS.CartService.Application.Interfaces;
 using PS.CartService.Domain.Entities;
+using PS.CartService.Domain.Exceptions.Cart;
 
 namespace PS.CartService.UnitTests.Application.CQRS.Commands.Addltem
 {
@@ -68,6 +69,29 @@ namespace PS.CartService.UnitTests.Application.CQRS.Commands.Addltem
             Assert.Equal(Unit.Value, result);
             _cartRepoMock.Verify(r => r.UpdateAsync(existingCart, It.IsAny<CancellationToken>()), Times.Once);
             _cartRepoMock.Verify(r => r.AddAsync(It.IsAny<Cart>(), It.IsAny<CancellationToken>()), Times.Never);
+        }
+
+        [Fact]
+        public async Task Handle_BookNotFound_ShouldThrow()
+        {
+            // Arrange
+            var userId = Guid.NewGuid();
+            var bookId = Guid.NewGuid();
+            var command = new AddItemCommand(userId, bookId, 1);
+
+            _cartRepoMock.Setup(r => r.GetCartAsync(userId, It.IsAny<CancellationToken>(), It.IsAny<bool>()))
+                         .ReturnsAsync((Cart?)null);
+
+            _bookCatalogClientMock.Setup(c => c.GetBookPriceAsync(bookId, It.IsAny<CancellationToken>()))
+                                  .ReturnsAsync((decimal?)null);
+
+            var handler = CreateHandler();
+
+            // Act + Assert
+            await Assert.ThrowsAsync<BookNotFoundException>(() => handler.Handle(command, default));
+
+            _cartRepoMock.Verify(r => r.AddAsync(It.IsAny<Cart>(), It.IsAny<CancellationToken>()), Times.Never);
+            _cartRepoMock.Verify(r => r.UpdateAsync(It.IsAny<Cart>(), It.IsAny<CancellationToken>()), Times.Never);
         }
     }
 }

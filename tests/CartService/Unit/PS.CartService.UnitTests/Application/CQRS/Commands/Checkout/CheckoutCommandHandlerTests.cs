@@ -33,5 +33,20 @@ namespace PS.CartService.UnitTests.Application.CQRS.Commands.Checkout
             await Assert.ThrowsAsync<CartNotFoundException>(() => handler.Handle(command, default));
         }
 
+        [Fact]
+        public async Task Handle_EmptyCart_ShouldThrow()
+        {
+
+            var userId = Guid.NewGuid();
+            var emptyCart = new Cart(userId); // корзина без товаров
+            var command = new CheckoutCommand(userId, "Some Address");
+
+            _cartRepoMock.Setup(r => r.GetCartAsync(userId, It.IsAny<CancellationToken>(), It.IsAny<bool>()))
+                         .ReturnsAsync(emptyCart);
+
+            var handler = CreateHandler();
+
+            await Assert.ThrowsAsync<EmptyCartException>(() => handler.Handle(command, default));
+        }
     }
 }

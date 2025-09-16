@@ -36,7 +36,7 @@ namespace PS.CartService.UnitTests.Application.CQRS.Commands.Checkout
         [Fact]
         public async Task Handle_EmptyCart_ShouldThrow()
         {
-
+            // Arrange
             var userId = Guid.NewGuid();
             var emptyCart = new Cart(userId); // корзина без товаров
             var command = new CheckoutCommand(userId, "Some Address");
@@ -46,6 +46,7 @@ namespace PS.CartService.UnitTests.Application.CQRS.Commands.Checkout
 
             var handler = CreateHandler();
 
+            // Act + Assert
             await Assert.ThrowsAsync<EmptyCartException>(() => handler.Handle(command, default));
         }
     }

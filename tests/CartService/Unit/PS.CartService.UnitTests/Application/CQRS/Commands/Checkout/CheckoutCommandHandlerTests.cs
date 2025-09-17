@@ -54,6 +54,7 @@ namespace PS.CartService.UnitTests.Application.CQRS.Commands.Checkout
         [Fact]
         public async Task Handle_ValidCart_ShouldCreateOrder_AndClearCart()
         {
+            // Arrange
             var userId = Guid.NewGuid();
             var cart = new Cart(userId);
             cart.AddItem(Guid.NewGuid(), 2, 15m);
@@ -76,8 +77,10 @@ namespace PS.CartService.UnitTests.Application.CQRS.Commands.Checkout
 
             var handler = CreateHandler();
 
+            // Act
             var result = await handler.Handle(command, default);
 
+            // Assert
             Assert.Equal(expectedOrder.Id, result.Id);
             Assert.Equal(expectedOrder.TotalPrice, result.TotalPrice);
             Assert.Equal(expectedOrder.UserId, result.UserId);

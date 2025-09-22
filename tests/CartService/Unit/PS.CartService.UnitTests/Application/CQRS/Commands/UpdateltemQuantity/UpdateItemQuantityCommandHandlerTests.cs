@@ -36,6 +36,7 @@ namespace PS.CartService.UnitTests.Application.CQRS.Commands.UpdateltemQuantity
         [Fact]
         public async Task Handle_ItemNotFound_ShouldThrow()
         {
+            // Arrange
             var userId = Guid.NewGuid();
             var bookId = Guid.NewGuid();
             var cart = new Cart(userId); // пустая корзина
@@ -47,6 +48,7 @@ namespace PS.CartService.UnitTests.Application.CQRS.Commands.UpdateltemQuantity
 
             var handler = CreateHandler();
 
+            // Act + Assert
             await Assert.ThrowsAsync<CartItemNotFoundException>(() => handler.Handle(command, default));
         }
     }

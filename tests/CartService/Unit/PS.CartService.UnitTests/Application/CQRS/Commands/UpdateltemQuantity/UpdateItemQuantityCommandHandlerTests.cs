@@ -19,6 +19,7 @@ namespace PS.CartService.UnitTests.Application.CQRS.Commands.UpdateltemQuantity
         [Fact]
         public async Task Handle_CartNotFound_ShouldThrow()
         {
+            // Arrange
             var userId = Guid.NewGuid();
             var bookId = Guid.NewGuid();
             var command = new UpdateItemQuantityCommand(userId, bookId, 5);
@@ -28,6 +29,7 @@ namespace PS.CartService.UnitTests.Application.CQRS.Commands.UpdateltemQuantity
 
             var handler = CreateHandler();
 
+            // Act + Assert
             await Assert.ThrowsAsync<CartNotFoundException>(() => handler.Handle(command, default));
         }
     }

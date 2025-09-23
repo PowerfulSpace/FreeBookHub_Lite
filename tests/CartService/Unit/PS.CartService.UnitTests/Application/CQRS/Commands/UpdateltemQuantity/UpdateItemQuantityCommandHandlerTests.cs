@@ -51,5 +51,25 @@ namespace PS.CartService.UnitTests.Application.CQRS.Commands.UpdateltemQuantity
             // Act + Assert
             await Assert.ThrowsAsync<CartItemNotFoundException>(() => handler.Handle(command, default));
         }
+
+        [Fact]
+        public async Task Handle_InvalidQuantity_ShouldThrow()
+        {
+            // Arrange
+            var userId = Guid.NewGuid();
+            var bookId = Guid.NewGuid();
+            var cart = new Cart(userId);
+            cart.AddItem(bookId, 2, 50m); // товар в корзине
+
+            var command = new UpdateItemQuantityCommand(userId, bookId, 0); // некорректное количество
+
+            _cartRepoMock.Setup(r => r.GetCartAsync(userId, It.IsAny<CancellationToken>(), It.IsAny<bool>()))
+                         .ReturnsAsync(cart);
+
+            var handler = CreateHandler();
+
+            // Act + Assert
+            await Assert.ThrowsAsync<InvalidCartItemQuantityException>(() => handler.Handle(command, default));
+        }
     }
 }

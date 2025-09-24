@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using MediatR;
+using Microsoft.Extensions.Logging;
 using Moq;
 using PS.CartService.Application.CQRS.Commands.UpdateItemQuantity;
 using PS.CartService.Application.Interfaces;
@@ -70,6 +71,28 @@ namespace PS.CartService.UnitTests.Application.CQRS.Commands.UpdateltemQuantity
 
             // Act + Assert
             await Assert.ThrowsAsync<InvalidCartItemQuantityException>(() => handler.Handle(command, default));
+        }
+
+        [Fact]
+        public async Task Handle_ValidUpdate_ShouldUpdateQuantityAndSave()
+        {
+            var userId = Guid.NewGuid();
+            var bookId = Guid.NewGuid();
+            var cart = new Cart(userId);
+            cart.AddItem(bookId, 2, 50m);
+
+            var command = new UpdateItemQuantityCommand(userId, bookId, 5);
+
+            _cartRepoMock.Setup(r => r.GetCartAsync(userId, It.IsAny<CancellationToken>(), It.IsAny<bool>()))
+                         .ReturnsAsync(cart);
+
+            var handler = CreateHandler();
+
+            var result = await handler.Handle(command, default);
+
+            Assert.Equal(Unit.Value, result);
+            Assert.Equal(5, cart.Items.First().Quantity);
+            _cartRepoMock.Verify(r => r.UpdateAsync(cart, It.IsAny<CancellationToken>()), Times.Once);
         }
     }
 }

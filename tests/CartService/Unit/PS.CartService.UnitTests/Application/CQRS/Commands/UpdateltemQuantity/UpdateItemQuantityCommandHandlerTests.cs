@@ -76,6 +76,7 @@ namespace PS.CartService.UnitTests.Application.CQRS.Commands.UpdateltemQuantity
         [Fact]
         public async Task Handle_ValidUpdate_ShouldUpdateQuantityAndSave()
         {
+            // Arrange
             var userId = Guid.NewGuid();
             var bookId = Guid.NewGuid();
             var cart = new Cart(userId);
@@ -88,8 +89,10 @@ namespace PS.CartService.UnitTests.Application.CQRS.Commands.UpdateltemQuantity
 
             var handler = CreateHandler();
 
+            // Act
             var result = await handler.Handle(command, default);
 
+            // Assert
             Assert.Equal(Unit.Value, result);
             Assert.Equal(5, cart.Items.First().Quantity);
             _cartRepoMock.Verify(r => r.UpdateAsync(cart, It.IsAny<CancellationToken>()), Times.Once);

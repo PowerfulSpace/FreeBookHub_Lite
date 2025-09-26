@@ -40,5 +40,26 @@ namespace PS.CartService.UnitTests.Application.CQRS.Queries.GetCart
             Assert.Equal(cart.Items.First().UnitPrice, result.Items.First().UnitPrice);
         }
 
+        [Fact]
+        public async Task Handle_CartDoesNotExist_ShouldReturnNewEmptyCart()
+        {
+            // Arrange
+            var userId = Guid.NewGuid();
+
+            _cartRepoMock.Setup(r => r.GetCartAsync(userId, It.IsAny<CancellationToken>(), true))
+                         .ReturnsAsync((Cart?)null);
+
+            var query = new GetCartQuery(userId);
+            var handler = CreateHandler();
+
+            // Act
+            var result = await handler.Handle(query, default);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(userId, result.UserId);
+            Assert.Empty(result.Items);
+            Assert.Equal(0, result.TotalPrice);
+        }
     }
 }

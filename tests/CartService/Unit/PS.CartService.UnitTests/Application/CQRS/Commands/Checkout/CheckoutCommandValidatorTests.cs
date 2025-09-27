@@ -32,5 +32,16 @@ namespace PS.CartService.UnitTests.Application.CQRS.Commands.Checkout
             // Assert
             result.ShouldHaveValidationErrorFor(x => x.ShippingAddress);
         }
+
+        [Fact]
+        public void Validator_ShouldHaveError_WhenShippingAddressIsTooLong()
+        {
+            var longAddress = new string('A', 501);
+            var command = new CheckoutCommand(Guid.NewGuid(), longAddress);
+
+            var result = _validator.TestValidate(command);
+
+            result.ShouldHaveValidationErrorFor(x => x.ShippingAddress);
+        }
     }
 }

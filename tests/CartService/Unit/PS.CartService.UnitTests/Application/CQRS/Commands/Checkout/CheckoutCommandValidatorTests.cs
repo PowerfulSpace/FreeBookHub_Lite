@@ -46,5 +46,18 @@ namespace PS.CartService.UnitTests.Application.CQRS.Commands.Checkout
             // Assert
             result.ShouldHaveValidationErrorFor(x => x.ShippingAddress);
         }
+
+        [Fact]
+        public void Validator_ShouldPass_ForValidCommand()
+        {
+            // Arrange
+            var command = new CheckoutCommand(Guid.NewGuid(), "123 Main Street");
+
+            // Act
+            var result = _validator.TestValidate(command);
+
+            // Assert
+            result.ShouldNotHaveAnyValidationErrors();
+        }
     }
 }

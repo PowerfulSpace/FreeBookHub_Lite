@@ -36,11 +36,14 @@ namespace PS.CartService.UnitTests.Application.CQRS.Commands.Checkout
         [Fact]
         public void Validator_ShouldHaveError_WhenShippingAddressIsTooLong()
         {
+            // Arrange
             var longAddress = new string('A', 501);
             var command = new CheckoutCommand(Guid.NewGuid(), longAddress);
 
+            // Act
             var result = _validator.TestValidate(command);
 
+            // Assert
             result.ShouldHaveValidationErrorFor(x => x.ShippingAddress);
         }
     }

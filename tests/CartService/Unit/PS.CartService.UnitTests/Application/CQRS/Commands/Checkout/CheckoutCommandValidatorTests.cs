@@ -23,10 +23,13 @@ namespace PS.CartService.UnitTests.Application.CQRS.Commands.Checkout
         [Fact]
         public void Validator_ShouldHaveError_WhenShippingAddressIsEmpty()
         {
+            // Arrange
             var command = new CheckoutCommand(Guid.NewGuid(), "");
 
+            // Act
             var result = _validator.TestValidate(command);
 
+            // Assert
             result.ShouldHaveValidationErrorFor(x => x.ShippingAddress);
         }
     }

@@ -27,5 +27,16 @@ namespace PS.CartService.UnitTests.Application.CQRS.Commands.Addltem
 
             result.ShouldHaveValidationErrorFor(x => x.BookId);
         }
+
+        [Fact]
+        public void Validator_ShouldHaveError_WhenQuantityIsZeroOrLess()
+        {
+            var command = new AddItemCommand(Guid.NewGuid(), Guid.NewGuid(), 0);
+
+            var result = _validator.TestValidate(command);
+
+            result.ShouldHaveValidationErrorFor(x => x.Quantity);
+        }
+
     }
 }

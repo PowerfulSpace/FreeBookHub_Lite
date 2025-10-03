@@ -24,10 +24,13 @@ namespace PS.CartService.UnitTests.Application.CQRS.Commands.Addltem
         [Fact]
         public void Validator_ShouldHaveError_WhenBookIdIsEmpty()
         {
+            // Arrange
             var command = new AddItemCommand(Guid.NewGuid(), Guid.Empty, 5);
 
+            // Act
             var result = _validator.TestValidate(command);
 
+            // Assert
             result.ShouldHaveValidationErrorFor(x => x.BookId);
         }
 

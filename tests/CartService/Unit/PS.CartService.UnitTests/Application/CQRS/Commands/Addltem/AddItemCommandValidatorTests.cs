@@ -50,10 +50,13 @@ namespace PS.CartService.UnitTests.Application.CQRS.Commands.Addltem
         [Fact]
         public void Validator_ShouldHaveError_WhenQuantityExceeds1000()
         {
+            // Arrange
             var command = new AddItemCommand(Guid.NewGuid(), Guid.NewGuid(), 1001);
 
+            // Act
             var result = _validator.TestValidate(command);
 
+            // Assert
             result.ShouldHaveValidationErrorFor(x => x.Quantity);
         }
 

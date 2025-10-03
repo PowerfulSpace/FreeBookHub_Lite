@@ -48,6 +48,14 @@ namespace PS.CartService.UnitTests.Application.CQRS.Commands.Addltem
             result.ShouldHaveValidationErrorFor(x => x.Quantity);
         }
 
+        [Fact]
+        public void Validator_ShouldPass_ForValidCommand()
+        {
+            var command = new AddItemCommand(Guid.NewGuid(), Guid.NewGuid(), 10);
 
+            var result = _validator.TestValidate(command);
+
+            result.ShouldNotHaveAnyValidationErrors();
+        }
     }
 }

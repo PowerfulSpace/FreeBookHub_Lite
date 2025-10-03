@@ -37,10 +37,13 @@ namespace PS.CartService.UnitTests.Application.CQRS.Commands.Addltem
         [Fact]
         public void Validator_ShouldHaveError_WhenQuantityIsZeroOrLess()
         {
+            // Arrange
             var command = new AddItemCommand(Guid.NewGuid(), Guid.NewGuid(), 0);
 
+            // Act
             var result = _validator.TestValidate(command);
 
+            // Assert
             result.ShouldHaveValidationErrorFor(x => x.Quantity);
         }
 

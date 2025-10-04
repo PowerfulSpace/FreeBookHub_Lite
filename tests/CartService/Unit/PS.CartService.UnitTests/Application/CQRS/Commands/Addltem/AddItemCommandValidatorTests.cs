@@ -63,10 +63,13 @@ namespace PS.CartService.UnitTests.Application.CQRS.Commands.Addltem
         [Fact]
         public void Validator_ShouldPass_ForValidCommand()
         {
+            // Arrange
             var command = new AddItemCommand(Guid.NewGuid(), Guid.NewGuid(), 10);
 
+            // Act
             var result = _validator.TestValidate(command);
 
+            // Assert
             result.ShouldNotHaveAnyValidationErrors();
         }
     }

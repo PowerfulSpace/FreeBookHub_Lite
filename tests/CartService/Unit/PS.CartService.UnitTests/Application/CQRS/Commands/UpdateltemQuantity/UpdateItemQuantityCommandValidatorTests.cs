@@ -10,10 +10,13 @@ namespace PS.CartService.UnitTests.Application.CQRS.Commands.UpdateltemQuantity
         [Fact]
         public void Validator_ShouldHaveError_WhenUserIdIsEmpty()
         {
+            // Arrange
             var command = new UpdateItemQuantityCommand(Guid.Empty, Guid.NewGuid(), 5);
 
+            // Act
             var result = _validator.TestValidate(command);
 
+            // Assert
             result.ShouldHaveValidationErrorFor(x => x.UserId)
                   .WithErrorMessage("UserId is required.");
         }

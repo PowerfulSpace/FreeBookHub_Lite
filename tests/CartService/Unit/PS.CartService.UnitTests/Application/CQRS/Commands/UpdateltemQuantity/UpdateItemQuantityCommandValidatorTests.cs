@@ -28,6 +28,7 @@ namespace PS.CartService.UnitTests.Application.CQRS.Commands.UpdateltemQuantity
             // Arrange
             var command = new UpdateItemQuantityCommand(Guid.NewGuid(), Guid.Empty, 5);
 
+            // Assert
             var result = _validator.TestValidate(command);
 
             result.ShouldHaveValidationErrorFor(x => x.BookId)

@@ -35,5 +35,16 @@ namespace PS.CartService.UnitTests.Application.CQRS.Commands.UpdateltemQuantity
             result.ShouldHaveValidationErrorFor(x => x.BookId)
                   .WithErrorMessage("BookId is required.");
         }
+
+        [Fact]
+        public void Validator_ShouldHaveError_WhenQuantityIsZeroOrLess()
+        {
+            var command = new UpdateItemQuantityCommand(Guid.NewGuid(), Guid.NewGuid(), 0);
+
+            var result = _validator.TestValidate(command);
+
+            result.ShouldHaveValidationErrorFor(x => x.Quantity)
+                  .WithErrorMessage("Quantity must be between 1 and 1000.");
+        }
     }
 }

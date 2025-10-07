@@ -31,6 +31,7 @@ namespace PS.CartService.UnitTests.Application.CQRS.Commands.UpdateltemQuantity
             // Assert
             var result = _validator.TestValidate(command);
 
+            // Assert
             result.ShouldHaveValidationErrorFor(x => x.BookId)
                   .WithErrorMessage("BookId is required.");
         }

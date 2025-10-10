@@ -53,10 +53,13 @@ namespace PS.CartService.UnitTests.Application.CQRS.Commands.UpdateltemQuantity
         [Fact]
         public void Validator_ShouldHaveError_WhenQuantityExceeds1000()
         {
+            // Arrange
             var command = new UpdateItemQuantityCommand(Guid.NewGuid(), Guid.NewGuid(), 1500);
 
+            // Act
             var result = _validator.TestValidate(command);
 
+            // Assert
             result.ShouldHaveValidationErrorFor(x => x.Quantity)
                   .WithErrorMessage("Quantity must be between 1 and 1000.");
         }

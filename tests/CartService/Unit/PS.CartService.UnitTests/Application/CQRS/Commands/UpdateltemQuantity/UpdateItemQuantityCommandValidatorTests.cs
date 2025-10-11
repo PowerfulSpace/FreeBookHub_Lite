@@ -28,7 +28,7 @@ namespace PS.CartService.UnitTests.Application.CQRS.Commands.UpdateltemQuantity
             // Arrange
             var command = new UpdateItemQuantityCommand(Guid.NewGuid(), Guid.Empty, 5);
 
-            // Assert
+            // Act
             var result = _validator.TestValidate(command);
 
             // Assert

@@ -45,14 +45,17 @@ namespace PS.CartService.UnitTests.Application.Validators
         [Fact]
         public void Validator_ShouldHaveError_WhenQuantityExceedsLimit()
         {
+            // Arrange
             var model = new AddItemRequest
             {
                 BookId = Guid.NewGuid(),
                 Quantity = 5000
             };
 
+            // Act
             var result = _validator.TestValidate(model);
 
+            // Assert
             result.ShouldHaveValidationErrorFor(x => x.Quantity)
                   .WithErrorMessage("Quantity must be between 1 and 1000.");
         }

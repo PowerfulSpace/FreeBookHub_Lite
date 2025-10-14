@@ -23,5 +23,20 @@ namespace PS.CartService.UnitTests.Application.Validators
             // Assert
             result.ShouldHaveValidationErrorFor(x => x.BookId);
         }
+
+        [Fact]
+        public void Validator_ShouldHaveError_WhenQuantityIsZero()
+        {
+            var model = new AddItemRequest
+            {
+                BookId = Guid.NewGuid(),
+                Quantity = 0
+            };
+
+            var result = _validator.TestValidate(model);
+
+            result.ShouldHaveValidationErrorFor(x => x.Quantity)
+                  .WithErrorMessage("Quantity must be between 1 and 1000.");
+        }
     }
 }

@@ -68,10 +68,13 @@ namespace PS.CartService.UnitTests.Application.CQRS.Commands.UpdateltemQuantity
         [Fact]
         public void Validator_ShouldPass_ForValidCommand()
         {
+            // Arrange
             var command = new UpdateItemQuantityCommand(Guid.NewGuid(), Guid.NewGuid(), 50);
 
+            // Act
             var result = _validator.TestValidate(command);
 
+            // Assert
             result.ShouldNotHaveAnyValidationErrors();
         }
     }

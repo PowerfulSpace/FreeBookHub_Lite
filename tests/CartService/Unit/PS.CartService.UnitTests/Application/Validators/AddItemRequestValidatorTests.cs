@@ -59,5 +59,19 @@ namespace PS.CartService.UnitTests.Application.Validators
             result.ShouldHaveValidationErrorFor(x => x.Quantity)
                   .WithErrorMessage("Quantity must be between 1 and 1000.");
         }
+
+        [Fact]
+        public void Validator_ShouldPass_ForValidRequest()
+        {
+            var model = new AddItemRequest
+            {
+                BookId = Guid.NewGuid(),
+                Quantity = 10
+            };
+
+            var result = _validator.TestValidate(model);
+
+            result.ShouldNotHaveAnyValidationErrors();
+        }
     }
 }

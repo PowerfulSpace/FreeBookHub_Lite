@@ -11,14 +11,17 @@ namespace PS.CartService.UnitTests.Application.Validators
         [Fact]
         public void Validator_ShouldHaveError_WhenBookIdIsEmpty()
         {
+            // Arrange
             var model = new UpdateItemQuantityRequest
             {
                 BookId = Guid.Empty,
                 Quantity = 5
             };
 
+            // Act
             var result = _validator.TestValidate(model);
 
+            // Assert
             result.ShouldHaveValidationErrorFor(x => x.BookId);
         }
 

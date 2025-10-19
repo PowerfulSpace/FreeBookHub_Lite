@@ -28,14 +28,17 @@ namespace PS.CartService.UnitTests.Application.Validators
         [Fact]
         public void Validator_ShouldHaveError_WhenQuantityIsNegative()
         {
+            // Arrange
             var model = new UpdateItemQuantityRequest
             {
                 BookId = Guid.NewGuid(),
                 Quantity = -1
             };
 
+            // Act
             var result = _validator.TestValidate(model);
 
+            // Assert
             result.ShouldHaveValidationErrorFor(x => x.Quantity);
         }
 

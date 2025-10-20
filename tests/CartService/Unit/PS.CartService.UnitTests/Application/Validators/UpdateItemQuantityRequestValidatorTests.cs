@@ -42,5 +42,19 @@ namespace PS.CartService.UnitTests.Application.Validators
             result.ShouldHaveValidationErrorFor(x => x.Quantity);
         }
 
+        [Fact]
+        public void Validator_ShouldHaveError_WhenQuantityExceeds1000()
+        {
+            var model = new UpdateItemQuantityRequest
+            {
+            };
+
+            var result = _validator.TestValidate(model);
+
+            result.ShouldHaveValidationErrorFor(x => x.Quantity);
+        }
+
+
+
     }
 }

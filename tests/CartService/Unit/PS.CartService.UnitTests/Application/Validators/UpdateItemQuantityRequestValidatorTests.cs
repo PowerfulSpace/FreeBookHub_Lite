@@ -45,6 +45,7 @@ namespace PS.CartService.UnitTests.Application.Validators
         [Fact]
         public void Validator_ShouldHaveError_WhenQuantityExceeds1000()
         {
+            // Arrange
             var model = new UpdateItemQuantityRequest
             {
                 BookId = Guid.NewGuid(),

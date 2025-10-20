@@ -52,6 +52,7 @@ namespace PS.CartService.UnitTests.Application.Validators
                 Quantity = 2000
             };
 
+            // Act
             var result = _validator.TestValidate(model);
 
             result.ShouldHaveValidationErrorFor(x => x.Quantity);

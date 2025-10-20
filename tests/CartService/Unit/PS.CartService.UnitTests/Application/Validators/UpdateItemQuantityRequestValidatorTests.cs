@@ -59,7 +59,19 @@ namespace PS.CartService.UnitTests.Application.Validators
             result.ShouldHaveValidationErrorFor(x => x.Quantity);
         }
 
+        [Fact]
+        public void Validator_ShouldPass_ForValidRequest()
+        {
+            var model = new UpdateItemQuantityRequest
+            {
+                BookId = Guid.NewGuid(),
+                Quantity = 10
+            };
 
+            var result = _validator.TestValidate(model);
+
+            result.ShouldNotHaveAnyValidationErrors();
+        }
 
     }
 }

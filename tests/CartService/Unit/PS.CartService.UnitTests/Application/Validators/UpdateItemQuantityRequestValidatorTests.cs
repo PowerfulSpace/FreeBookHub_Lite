@@ -47,6 +47,8 @@ namespace PS.CartService.UnitTests.Application.Validators
         {
             var model = new UpdateItemQuantityRequest
             {
+                BookId = Guid.NewGuid(),
+                Quantity = 2000
             };
 
             var result = _validator.TestValidate(model);

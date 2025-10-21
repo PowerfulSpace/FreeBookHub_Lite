@@ -1,6 +1,7 @@
 ﻿using FluentValidation.TestHelper;
 using PS.CartService.Application.DTOs.Cart;
 using PS.CartService.Application.Validators;
+using PS.CartService.Domain.Entities;
 
 namespace PS.CartService.UnitTests.Application.Validators
 {
@@ -62,14 +63,17 @@ namespace PS.CartService.UnitTests.Application.Validators
         [Fact]
         public void Validator_ShouldPass_ForValidRequest()
         {
+            // Arrange
             var model = new UpdateItemQuantityRequest
             {
                 BookId = Guid.NewGuid(),
                 Quantity = 10
             };
 
+            // Act
             var result = _validator.TestValidate(model);
 
+            // Assert
             result.ShouldNotHaveAnyValidationErrors();
         }
 

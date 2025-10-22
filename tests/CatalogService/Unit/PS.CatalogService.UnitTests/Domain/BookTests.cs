@@ -13,5 +13,42 @@ namespace PS.CatalogService.UnitTests.Domain
             // Assert
             Assert.NotEqual(Guid.Empty, book.Id);
         }
+
+        [Fact]
+        public void Should_SetAndGet_AllPropertiesCorrectly()
+        {
+
+            var id = Guid.NewGuid();
+            var title = "The Pragmatic Programmer";
+            var author = "Andrew Hunt";
+            var description = "A must-read book for software developers.";
+            var isbn = "978-0201616224";
+            var price = 49.99m;
+            var publishedAt = new DateTime(1999, 10, 30);
+            var imageUrl = "https://example.com/cover.jpg";
+
+
+            var book = new Book
+            {
+                Id = id,
+                Title = title,
+                Author = author,
+                Description = description,
+                ISBN = isbn,
+                Price = price,
+                PublishedAt = publishedAt,
+                CoverImageUrl = imageUrl
+            };
+
+
+            Assert.Equal(id, book.Id);
+            Assert.Equal(title, book.Title);
+            Assert.Equal(author, book.Author);
+            Assert.Equal(description, book.Description);
+            Assert.Equal(isbn, book.ISBN);
+            Assert.Equal(price, book.Price);
+            Assert.Equal(publishedAt, book.PublishedAt);
+            Assert.Equal(imageUrl, book.CoverImageUrl);
+        }
     }
 }

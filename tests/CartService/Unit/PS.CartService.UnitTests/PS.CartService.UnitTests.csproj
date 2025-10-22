@@ -20,13 +20,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Infrastructure\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\..\..\src\Backend\PS.FreeBookHub_Lite\CartService\Application\PS.CartService.Application\PS.CartService.Application.csproj" />
     <ProjectReference Include="..\..\..\..\src\Backend\PS.FreeBookHub_Lite\CartService\Domain\PS.CartService.Domain\PS.CartService.Domain.csproj" />
     <ProjectReference Include="..\..\..\..\src\Backend\PS.FreeBookHub_Lite\CartService\Infrastructure\PS.CartService.Infrastructure\PS.CartService.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Infrastructure\" />
   </ItemGroup>
 
 </Project>

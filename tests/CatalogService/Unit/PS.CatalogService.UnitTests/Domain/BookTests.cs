@@ -17,7 +17,7 @@ namespace PS.CatalogService.UnitTests.Domain
         [Fact]
         public void Should_SetAndGet_AllPropertiesCorrectly()
         {
-
+            // Act
             var id = Guid.NewGuid();
             var title = "The Pragmatic Programmer";
             var author = "Andrew Hunt";
@@ -40,7 +40,7 @@ namespace PS.CatalogService.UnitTests.Domain
                 CoverImageUrl = imageUrl
             };
 
-
+            // Assert
             Assert.Equal(id, book.Id);
             Assert.Equal(title, book.Title);
             Assert.Equal(author, book.Author);

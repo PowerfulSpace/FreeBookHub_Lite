@@ -17,7 +17,7 @@ namespace PS.CatalogService.UnitTests.Domain
         [Fact]
         public void Should_SetAndGet_AllPropertiesCorrectly()
         {
-            // Act
+            // Arrange
             var id = Guid.NewGuid();
             var title = "The Pragmatic Programmer";
             var author = "Andrew Hunt";
@@ -27,7 +27,7 @@ namespace PS.CatalogService.UnitTests.Domain
             var publishedAt = new DateTime(1999, 10, 30);
             var imageUrl = "https://example.com/cover.jpg";
 
-
+            // Act
             var book = new Book
             {
                 Id = id,

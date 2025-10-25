@@ -50,5 +50,21 @@ namespace PS.CatalogService.UnitTests.Domain
             Assert.Equal(publishedAt, book.PublishedAt);
             Assert.Equal(imageUrl, book.CoverImageUrl);
         }
+
+        [Fact]
+        public void Should_AllowChangingPropertyValues()
+        {
+            var book = new Book
+            {
+                Title = "Old Title",
+                Price = 10m
+            };
+
+            book.Title = "New Title";
+            book.Price = 15m;
+
+            Assert.Equal("New Title", book.Title);
+            Assert.Equal(15m, book.Price);
+        }
     }
 }

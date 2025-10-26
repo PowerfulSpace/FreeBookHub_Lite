@@ -54,15 +54,18 @@ namespace PS.CatalogService.UnitTests.Domain
         [Fact]
         public void Should_AllowChangingPropertyValues()
         {
+            // Arrange
             var book = new Book
             {
                 Title = "Old Title",
                 Price = 10m
             };
 
+            // Act
             book.Title = "New Title";
             book.Price = 15m;
 
+            // Assert
             Assert.Equal("New Title", book.Title);
             Assert.Equal(15m, book.Price);
         }

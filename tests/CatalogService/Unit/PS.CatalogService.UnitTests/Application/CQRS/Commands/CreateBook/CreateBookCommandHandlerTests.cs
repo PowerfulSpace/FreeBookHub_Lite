@@ -57,6 +57,39 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.CreateBook
             Assert.NotNull(addedBook);
             Assert.NotEqual(Guid.Empty, addedBook!.Id);
         }
+        [Fact]
+        public async Task Handle_ShouldLogInformation_OnStartAndSuccess()
+        {
+
+            var command = new CreateBookCommand
+            {
+                Title = "Domain-Driven Design",
+                Author = "Eric Evans",
+                Description = "Foundational DDD book.",
+                ISBN = "978-0321125217",
+                Price = 59.99m,
+                PublishedAt = new DateTime(2003, 8, 30),
+                CoverImageUrl = "https://example.com/ddd.jpg"
+            };
+
+            _bookRepoMock.Setup(r => r.AddAsync(It.IsAny<Book>(), It.IsAny<CancellationToken>()))
+                         .Returns(Task.CompletedTask);
+
+            var handler = CreateHandler();
+
+
+            await handler.Handle(command, default);
+
+
+            _loggerMock.Verify(
+                l => l.Log(
+                    LogLevel.Information,
+                    It.IsAny<EventId>(),
+                    It.IsAny<It.IsAnyType>(),
+                    It.IsAny<Exception?>(),
+                    (Func<It.IsAnyType, Exception?, string>)It.IsAny<object>()),
+                Times.AtLeast(2));
+        }
 
     }
 }

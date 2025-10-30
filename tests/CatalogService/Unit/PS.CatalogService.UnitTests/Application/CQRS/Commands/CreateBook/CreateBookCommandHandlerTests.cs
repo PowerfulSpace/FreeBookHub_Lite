@@ -60,7 +60,7 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.CreateBook
         [Fact]
         public async Task Handle_ShouldLogInformation_OnStartAndSuccess()
         {
-
+            // Arrange
             var command = new CreateBookCommand
             {
                 Title = "Domain-Driven Design",
@@ -77,10 +77,10 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.CreateBook
 
             var handler = CreateHandler();
 
-
+            // Act
             await handler.Handle(command, default);
 
-
+            // Assert: логирование вызвано хотя бы дважды (Start и Success)
             _loggerMock.Verify(
                 l => l.Log(
                     LogLevel.Information,

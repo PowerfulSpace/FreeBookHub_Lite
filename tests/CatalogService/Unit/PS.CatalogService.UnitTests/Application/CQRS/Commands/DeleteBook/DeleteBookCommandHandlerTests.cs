@@ -17,7 +17,7 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.DeleteBook
         [Fact]
         public async Task Handle_BookExists_ShouldDeleteAndReturnTrue()
         {
-
+            // Arrange
             var bookId = Guid.NewGuid();
             var command = new DeleteBookCommand { Id = bookId };
             var book = new Book { Id = bookId, Title = "Sample Book" };
@@ -30,10 +30,10 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.DeleteBook
 
             var handler = CreateHandler();
 
-
+            // Act
             var result = await handler.Handle(command, default);
 
-
+            // Assert
             Assert.True(result);
             _bookRepoMock.Verify(r => r.DeleteAsync(bookId, It.IsAny<CancellationToken>()), Times.Once);
             _loggerMock.VerifyLog(LogLevel.Information, Times.AtLeast(2)); // Started + Success

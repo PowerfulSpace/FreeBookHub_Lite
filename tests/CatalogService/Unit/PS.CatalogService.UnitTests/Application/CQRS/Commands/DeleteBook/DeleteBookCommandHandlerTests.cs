@@ -3,6 +3,7 @@ using Moq;
 using PS.CatalogService.Application.CQRS.Commands.DeleteBook;
 using PS.CatalogService.Application.Interfaces;
 using PS.CatalogService.Domain.Entities;
+using PS.CatalogService.Domain.Exceptions.Book;
 
 namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.DeleteBook
 {
@@ -39,6 +40,25 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.DeleteBook
             _loggerMock.VerifyLog(LogLevel.Information, Times.AtLeast(2)); // Started + Success
         }
     }
+
+    [Fact]
+        public async Task Handle_BookDoesNotExist_ShouldThrowBookNotFoundException()
+        {
+
+            var bookId = Guid.NewGuid();
+            var command = new DeleteBookCommand { Id = bookId };
+
+            _bookRepoMock.Setup(r => r.GetByIdAsync(bookId, It.IsAny<CancellationToken>()))
+                         .ReturnsAsync((Book?)null);
+
+            var handler = CreateHandler();
+
+
+            await Assert.ThrowsAsync<BookNotFoundException>(() => handler.Handle(command, default));
+
+            _bookRepoMock.Verify(r => r.DeleteAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()), Times.Never);
+        }
+
 
     // 🔧 Вспомогательное расширение для проверки логов (удобно переиспользовать)
     internal static class LoggerMockExtensions

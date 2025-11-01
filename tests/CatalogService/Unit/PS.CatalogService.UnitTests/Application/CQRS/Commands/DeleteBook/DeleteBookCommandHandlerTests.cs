@@ -52,7 +52,7 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.DeleteBook
 
             var handler = CreateHandler();
 
-
+            // Act + Assert
             await Assert.ThrowsAsync<BookNotFoundException>(() => handler.Handle(command, default));
 
             _bookRepoMock.Verify(r => r.DeleteAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()), Times.Never);

@@ -43,6 +43,7 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.DeleteBook
         [Fact]
         public async Task Handle_BookDoesNotExist_ShouldThrowBookNotFoundException()
         {
+            // Arrange
             var bookId = Guid.NewGuid();
             var command = new DeleteBookCommand { Id = bookId };
 

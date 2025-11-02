@@ -58,6 +58,28 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.DeleteBook
             _bookRepoMock.Verify(r => r.DeleteAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()), Times.Never);
         }
 
+        [Fact]
+        public async Task Handle_ShouldLog_StartedAndSuccessMessages()
+        {
+
+            var bookId = Guid.NewGuid();
+            var command = new DeleteBookCommand { Id = bookId };
+            var book = new Book { Id = bookId, Title = "Test" };
+
+            _bookRepoMock.Setup(r => r.GetByIdAsync(bookId, It.IsAny<CancellationToken>()))
+                         .ReturnsAsync(book);
+            _bookRepoMock.Setup(r => r.DeleteAsync(bookId, It.IsAny<CancellationToken>()))
+                         .Returns(Task.CompletedTask);
+
+            var handler = CreateHandler();
+
+
+            await handler.Handle(command, default);
+
+
+            _loggerMock.VerifyLog(LogLevel.Information, Times.AtLeast(2)); // Start + Success
+        }
+
     }
 
     // 🔧 Вспомогательное расширение для проверки логов (удобно переиспользовать)

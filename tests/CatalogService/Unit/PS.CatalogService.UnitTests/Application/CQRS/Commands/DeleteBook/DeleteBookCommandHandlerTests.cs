@@ -61,7 +61,7 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.DeleteBook
         [Fact]
         public async Task Handle_ShouldLog_StartedAndSuccessMessages()
         {
-
+            // Arrange
             var bookId = Guid.NewGuid();
             var command = new DeleteBookCommand { Id = bookId };
             var book = new Book { Id = bookId, Title = "Test" };
@@ -73,10 +73,10 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.DeleteBook
 
             var handler = CreateHandler();
 
-
+            // Act
             await handler.Handle(command, default);
 
-
+            // Assert
             _loggerMock.VerifyLog(LogLevel.Information, Times.AtLeast(2)); // Start + Success
         }
 

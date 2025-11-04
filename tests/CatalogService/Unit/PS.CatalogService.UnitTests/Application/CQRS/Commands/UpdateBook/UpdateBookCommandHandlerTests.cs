@@ -18,7 +18,7 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.UpdateBook
         [Fact]
         public async Task Handle_BookExists_ShouldUpdateAndReturnTrue()
         {
-            
+            // Arrange
             var bookId = Guid.NewGuid();
             var existingBook = new Book
             {
@@ -48,10 +48,10 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.UpdateBook
 
             var handler = CreateHandler();
 
-            
+            // Act
             var result = await handler.Handle(command, default);
 
-            
+            // Assert
             Assert.True(result);
             _bookRepoMock.Verify(r => r.UpdateAsync(It.Is<Book>(b =>
                 b.Id == bookId &&

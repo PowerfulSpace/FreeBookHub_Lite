@@ -3,6 +3,7 @@ using Moq;
 using PS.CatalogService.Application.CQRS.Commands.UpdateBook;
 using PS.CatalogService.Application.Interfaces;
 using PS.CatalogService.Domain.Entities;
+using PS.CatalogService.Domain.Exceptions.Book;
 using PS.CatalogService.UnitTests.Application.CQRS.Commands.DeleteBook;
 
 namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.UpdateBook
@@ -61,6 +62,27 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.UpdateBook
             ), It.IsAny<CancellationToken>()), Times.Once);
 
             _loggerMock.VerifyLog(LogLevel.Information, Times.AtLeast(2)); // Started + Success
+        }
+
+        [Fact]
+        public async Task Handle_BookNotFound_ShouldThrowBookNotFoundException()
+        {
+
+            var command = new UpdateBookCommand
+            {
+                Id = Guid.NewGuid(),
+                Title = "Doesn't Matter"
+            };
+
+            _bookRepoMock.Setup(r => r.GetByIdAsync(command.Id, It.IsAny<CancellationToken>()))
+                         .ReturnsAsync((Book?)null);
+
+            var handler = CreateHandler();
+
+
+            await Assert.ThrowsAsync<BookNotFoundException>(() => handler.Handle(command, default));
+
+            _bookRepoMock.Verify(r => r.UpdateAsync(It.IsAny<Book>(), It.IsAny<CancellationToken>()), Times.Never);
         }
 
     }

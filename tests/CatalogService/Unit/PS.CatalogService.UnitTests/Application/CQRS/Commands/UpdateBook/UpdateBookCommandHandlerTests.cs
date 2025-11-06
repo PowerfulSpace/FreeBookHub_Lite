@@ -67,7 +67,7 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.UpdateBook
         [Fact]
         public async Task Handle_BookNotFound_ShouldThrowBookNotFoundException()
         {
-
+            // Arrange
             var command = new UpdateBookCommand
             {
                 Id = Guid.NewGuid(),
@@ -79,7 +79,7 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.UpdateBook
 
             var handler = CreateHandler();
 
-
+            // Act + Assert
             await Assert.ThrowsAsync<BookNotFoundException>(() => handler.Handle(command, default));
 
             _bookRepoMock.Verify(r => r.UpdateAsync(It.IsAny<Book>(), It.IsAny<CancellationToken>()), Times.Never);

@@ -107,6 +107,7 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.UpdateBook
             // Act
             await handler.Handle(command, default);
 
+            // Assert
             _loggerMock.VerifyLog(LogLevel.Information, Times.AtLeast(2));
         }
     }

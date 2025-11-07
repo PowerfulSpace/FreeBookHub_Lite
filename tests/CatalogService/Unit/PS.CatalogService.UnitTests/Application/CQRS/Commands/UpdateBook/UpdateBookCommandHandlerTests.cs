@@ -85,5 +85,31 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.UpdateBook
             _bookRepoMock.Verify(r => r.UpdateAsync(It.IsAny<Book>(), It.IsAny<CancellationToken>()), Times.Never);
         }
 
+
+        [Fact]
+        public async Task Handle_ShouldLog_StartedAndSuccessMessages()
+        {
+
+            var bookId = Guid.NewGuid();
+            var existingBook = new Book { Id = bookId, Title = "Old Title" };
+
+            var command = new UpdateBookCommand
+            {
+                Id = bookId,
+                Title = "Updated Title"
+            };
+
+            _bookRepoMock.Setup(r => r.GetByIdAsync(bookId, It.IsAny<CancellationToken>()))
+                         .ReturnsAsync(existingBook);
+
+            var handler = CreateHandler();
+
+
+            await handler.Handle(command, default);
+
+
+            _loggerMock.VerifyLog(LogLevel.Information, Times.AtLeast(2));
+        }
     }
 }
+

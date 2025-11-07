@@ -89,7 +89,7 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.UpdateBook
         [Fact]
         public async Task Handle_ShouldLog_StartedAndSuccessMessages()
         {
-
+            // Arrange
             var bookId = Guid.NewGuid();
             var existingBook = new Book { Id = bookId, Title = "Old Title" };
 
@@ -106,7 +106,6 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.UpdateBook
 
 
             await handler.Handle(command, default);
-
 
             _loggerMock.VerifyLog(LogLevel.Information, Times.AtLeast(2));
         }

@@ -17,7 +17,7 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Queries.GetAllBooks
         [Fact]
         public async Task Handle_ShouldReturnMappedBooks()
         {
-
+            // Arrange
             var books = new List<Book>
             {
                 new Book
@@ -50,10 +50,10 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Queries.GetAllBooks
             var handler = CreateHandler();
             var query = new GetAllBooksQuery();
 
-
+            // Act
             var result = await handler.Handle(query, default);
 
-
+            // Assert
             Assert.NotNull(result);
             Assert.Equal(books.Count, result.Count());
 

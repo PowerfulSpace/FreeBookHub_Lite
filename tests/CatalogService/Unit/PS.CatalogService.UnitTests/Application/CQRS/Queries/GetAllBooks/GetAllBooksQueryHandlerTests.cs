@@ -65,4 +65,20 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Queries.GetAllBooks
             _loggerMock.VerifyLog(LogLevel.Information, Times.AtLeast(2));
         }
     }
+
+    // 🔧 Вспомогательное расширение для проверки логов
+    internal static class LoggerMockExtensions
+    {
+        public static void VerifyLog<T>(this Mock<ILogger<T>> loggerMock, LogLevel level, Times times)
+        {
+            loggerMock.Verify(
+                l => l.Log(
+                    level,
+                    It.IsAny<EventId>(),
+                    It.IsAny<It.IsAnyType>(),
+                    It.IsAny<Exception?>(),
+                    (Func<It.IsAnyType, Exception?, string>)It.IsAny<object>()),
+                times);
+        }
+    }
 }

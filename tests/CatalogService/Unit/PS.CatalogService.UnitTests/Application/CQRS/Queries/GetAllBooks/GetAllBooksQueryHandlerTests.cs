@@ -68,17 +68,17 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Queries.GetAllBooks
         [Fact]
         public async Task Handle_EmptyRepository_ShouldReturnEmptyList()
         {
-
+            // Arrange
             _repositoryMock.Setup(r => r.GetAllAsync(It.IsAny<CancellationToken>()))
                            .ReturnsAsync(new List<Book>());
 
             var handler = CreateHandler();
             var query = new GetAllBooksQuery();
 
-
+            // Act
             var result = await handler.Handle(query, default);
 
-
+            // Assert
             Assert.NotNull(result);
             Assert.Empty(result);
 

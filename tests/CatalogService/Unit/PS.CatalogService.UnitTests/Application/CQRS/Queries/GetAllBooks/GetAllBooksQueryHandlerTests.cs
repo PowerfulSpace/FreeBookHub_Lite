@@ -64,6 +64,27 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Queries.GetAllBooks
             _repositoryMock.Verify(r => r.GetAllAsync(It.IsAny<CancellationToken>()), Times.Once);
             _loggerMock.VerifyLog(LogLevel.Information, Times.AtLeast(2));
         }
+
+        [Fact]
+        public async Task Handle_EmptyRepository_ShouldReturnEmptyList()
+        {
+
+            _repositoryMock.Setup(r => r.GetAllAsync(It.IsAny<CancellationToken>()))
+                           .ReturnsAsync(new List<Book>());
+
+            var handler = CreateHandler();
+            var query = new GetAllBooksQuery();
+
+
+            var result = await handler.Handle(query, default);
+
+
+            Assert.NotNull(result);
+            Assert.Empty(result);
+
+            _repositoryMock.Verify(r => r.GetAllAsync(It.IsAny<CancellationToken>()), Times.Once);
+            _loggerMock.VerifyLog(LogLevel.Information, Times.AtLeast(2));
+        }
     }
 
     // 🔧 Вспомогательное расширение для проверки логов

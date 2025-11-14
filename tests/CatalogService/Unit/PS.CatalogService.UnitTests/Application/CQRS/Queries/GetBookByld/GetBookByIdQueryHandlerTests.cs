@@ -18,7 +18,7 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Queries.GetBookByld
         [Fact]
         public async Task Handle_ShouldReturnMappedBook()
         {
-
+            // Arrange
             var id = Guid.NewGuid();
 
             var book = new Book
@@ -40,10 +40,10 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Queries.GetBookByld
             var handler = CreateHandler();
             var query = new GetBookByIdQuery(id);
 
-
+            // Act
             var result = await handler.Handle(query, default);
 
-
+            // Assert
             Assert.NotNull(result);
             Assert.Equal(book.Title, result.Title);
             Assert.Equal(book.ISBN, result.ISBN);

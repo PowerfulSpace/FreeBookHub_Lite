@@ -3,6 +3,7 @@ using Moq;
 using PS.CatalogService.Application.CQRS.Queries.GetBookById;
 using PS.CatalogService.Application.Interfaces;
 using PS.CatalogService.Domain.Entities;
+using PS.CatalogService.Domain.Exceptions.Book;
 
 namespace PS.CatalogService.UnitTests.Application.CQRS.Queries.GetBookByld
 {
@@ -50,6 +51,26 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Queries.GetBookByld
 
             _repositoryMock.Verify(r => r.GetByIdAsync(id, It.IsAny<CancellationToken>()), Times.Once);
             _loggerMock.VerifyLog(LogLevel.Information, Times.AtLeast(2));
+        }
+
+        [Fact]
+        public async Task Handle_BookNotFound_ShouldThrowBookNotFoundException()
+        {
+
+            var id = Guid.NewGuid();
+
+            _repositoryMock
+                .Setup(r => r.GetByIdAsync(id, It.IsAny<CancellationToken>()))
+                .ReturnsAsync((Book?)null);
+
+            var handler = CreateHandler();
+            var query = new GetBookByIdQuery(id);
+
+
+            await Assert.ThrowsAsync<BookNotFoundException>(() => handler.Handle(query, default));
+
+            _repositoryMock.Verify(r => r.GetByIdAsync(id, It.IsAny<CancellationToken>()), Times.Once);
+            _loggerMock.VerifyLog(LogLevel.Information, Times.Once); // only "Started" logged before exception
         }
     }
 

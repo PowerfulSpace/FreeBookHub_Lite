@@ -56,7 +56,7 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Queries.GetBookByld
         [Fact]
         public async Task Handle_BookNotFound_ShouldThrowBookNotFoundException()
         {
-
+            // Arrange
             var id = Guid.NewGuid();
 
             _repositoryMock
@@ -66,7 +66,7 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Queries.GetBookByld
             var handler = CreateHandler();
             var query = new GetBookByIdQuery(id);
 
-
+            // Act & Assert
             await Assert.ThrowsAsync<BookNotFoundException>(() => handler.Handle(query, default));
 
             _repositoryMock.Verify(r => r.GetByIdAsync(id, It.IsAny<CancellationToken>()), Times.Once);

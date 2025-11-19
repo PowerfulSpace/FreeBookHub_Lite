@@ -70,7 +70,7 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Queries.GetBookByld
             await Assert.ThrowsAsync<BookNotFoundException>(() => handler.Handle(query, default));
 
             _repositoryMock.Verify(r => r.GetByIdAsync(id, It.IsAny<CancellationToken>()), Times.Once);
-            _loggerMock.VerifyLog(LogLevel.Information, Times.Once); // only "Started" logged before exception
+            _loggerMock.VerifyLog(LogLevel.Information, Times.Once()); // only "Started" logged before exception
         }
     }
 

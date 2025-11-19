@@ -4,7 +4,6 @@ using PS.CatalogService.Application.CQRS.Queries.GetBookById;
 using PS.CatalogService.Application.Interfaces;
 using PS.CatalogService.Domain.Entities;
 using PS.CatalogService.Domain.Exceptions.Book;
-using PS.CatalogService.UnitTests.Application.CQRS.Commands.DeleteBook;
 
 namespace PS.CatalogService.UnitTests.Application.CQRS.Queries.GetBookByld
 {

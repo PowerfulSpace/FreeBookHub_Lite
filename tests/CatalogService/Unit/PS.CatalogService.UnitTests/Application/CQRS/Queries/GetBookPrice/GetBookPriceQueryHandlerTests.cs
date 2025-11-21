@@ -17,7 +17,7 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Queries.GetBookPrice
         [Fact]
         public async Task Handle_BookExists_ShouldReturnPrice()
         {
-
+            // Arrange
             var id = Guid.NewGuid();
             var book = new Book { Id = id, Price = 49.99m };
 
@@ -28,10 +28,10 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Queries.GetBookPrice
             var handler = CreateHandler();
             var query = new GetBookPriceQuery(id);
 
-
+            // Act
             var result = await handler.Handle(query, default);
 
-
+            // Assert
             Assert.Equal(49.99m, result);
 
             _repositoryMock.Verify(r => r.GetByIdAsync(id, It.IsAny<CancellationToken>()), Times.Once);

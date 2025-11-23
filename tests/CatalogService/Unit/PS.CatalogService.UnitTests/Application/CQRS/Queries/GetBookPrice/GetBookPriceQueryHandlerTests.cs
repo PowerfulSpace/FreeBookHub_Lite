@@ -3,6 +3,7 @@ using Moq;
 using PS.CatalogService.Application.CQRS.Queries.GetBookPrice;
 using PS.CatalogService.Application.Interfaces;
 using PS.CatalogService.Domain.Entities;
+using PS.CatalogService.Domain.Exceptions.Book;
 
 namespace PS.CatalogService.UnitTests.Application.CQRS.Queries.GetBookPrice
 {
@@ -37,6 +38,27 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Queries.GetBookPrice
             _repositoryMock.Verify(r => r.GetByIdAsync(id, It.IsAny<CancellationToken>()), Times.Once);
 
             _loggerMock.VerifyLog(LogLevel.Information, Times.Exactly(2)); // Started + Success
+        }
+
+        [Fact]
+        public async Task Handle_BookNotFound_ShouldThrowBookNotFoundException()
+        {
+
+            var id = Guid.NewGuid();
+
+            _repositoryMock
+                .Setup(r => r.GetByIdAsync(id, It.IsAny<CancellationToken>()))
+                .ReturnsAsync((Book?)null);
+
+            var handler = CreateHandler();
+            var query = new GetBookPriceQuery(id);
+
+
+            await Assert.ThrowsAsync<BookNotFoundException>(() => handler.Handle(query, default));
+
+            _repositoryMock.Verify(r => r.GetByIdAsync(id, It.IsAny<CancellationToken>()), Times.Once);
+
+            _loggerMock.VerifyLog(LogLevel.Information, Times.Once()); // Только Started
         }
     }
 

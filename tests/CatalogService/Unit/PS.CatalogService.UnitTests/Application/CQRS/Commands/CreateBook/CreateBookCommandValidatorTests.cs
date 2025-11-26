@@ -10,7 +10,7 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.CreateBook
         [Fact]
         public void Validator_ShouldPass_WhenDataIsValid()
         {
-
+            // Arrange
             var command = new CreateBookCommand
             {
                 Title = "Test Book",
@@ -22,10 +22,10 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.CreateBook
                 Description = "Some description"
             };
 
-
+            // Act
             var result = _validator.TestValidate(command);
 
-
+            // Assert
             result.ShouldNotHaveAnyValidationErrors();
         }
 

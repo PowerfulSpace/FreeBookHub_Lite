@@ -37,5 +37,12 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.CreateBook
             result.ShouldHaveValidationErrorFor(x => x.Title);
         }
 
+        [Fact]
+        public void Validator_ShouldHaveError_WhenAuthorIsEmpty()
+        {
+            var command = new CreateBookCommand { Author = "" };
+            var result = _validator.TestValidate(command);
+            result.ShouldHaveValidationErrorFor(x => x.Author);
+        }
     }
 }

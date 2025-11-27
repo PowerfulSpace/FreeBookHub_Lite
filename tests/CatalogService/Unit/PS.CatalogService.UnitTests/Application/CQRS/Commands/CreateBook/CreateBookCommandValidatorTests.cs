@@ -44,5 +44,17 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.CreateBook
             var result = _validator.TestValidate(command);
             result.ShouldHaveValidationErrorFor(x => x.Author);
         }
+
+        [Fact]
+        public void Validator_ShouldHaveError_WhenPriceIsZeroOrNegative()
+        {
+            var command = new CreateBookCommand { Price = 0 };
+            var result = _validator.TestValidate(command);
+            result.ShouldHaveValidationErrorFor(x => x.Price);
+
+            command.Price = -10;
+            result = _validator.TestValidate(command);
+            result.ShouldHaveValidationErrorFor(x => x.Price);
+        }
     }
 }

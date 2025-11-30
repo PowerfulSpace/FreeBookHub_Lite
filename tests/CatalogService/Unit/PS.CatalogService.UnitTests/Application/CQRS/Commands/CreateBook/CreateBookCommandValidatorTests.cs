@@ -58,8 +58,13 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.CreateBook
         [Fact]
         public void Validator_ShouldHaveError_WhenPriceIsZeroOrNegative()
         {
+            // Arrange
             var command = new CreateBookCommand { Price = 0 };
+
+            // Act
             var result = _validator.TestValidate(command);
+
+            // Assert
             result.ShouldHaveValidationErrorFor(x => x.Price);
 
             command.Price = -10;

@@ -71,5 +71,13 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.CreateBook
             result = _validator.TestValidate(command);
             result.ShouldHaveValidationErrorFor(x => x.Price);
         }
+
+        [Fact]
+        public void Validator_ShouldHaveError_WhenISBNIsEmpty()
+        {
+            var command = new CreateBookCommand { ISBN = "" };
+            var result = _validator.TestValidate(command);
+            result.ShouldHaveValidationErrorFor(x => x.ISBN);
+        }
     }
 }

@@ -84,5 +84,14 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.CreateBook
             // Assert
             result.ShouldHaveValidationErrorFor(x => x.ISBN);
         }
+
+        [Fact]
+        public void Validator_ShouldHaveError_WhenCoverImageUrlIsInvalid()
+        {
+            var command = new CreateBookCommand { CoverImageUrl = "invalid-url" };
+            var result = _validator.TestValidate(command);
+            result.ShouldHaveValidationErrorFor(x => x.CoverImageUrl);
+        }
+
     }
 }

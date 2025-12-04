@@ -98,5 +98,13 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.CreateBook
             result.ShouldHaveValidationErrorFor(x => x.CoverImageUrl);
         }
 
+        [Fact]
+        public void Validator_ShouldHaveError_WhenCoverImageUrlIsEmpty()
+        {
+            var command = new CreateBookCommand { CoverImageUrl = "" };
+            var result = _validator.TestValidate(command);
+            result.ShouldHaveValidationErrorFor(x => x.CoverImageUrl);
+        }
+
     }
 }

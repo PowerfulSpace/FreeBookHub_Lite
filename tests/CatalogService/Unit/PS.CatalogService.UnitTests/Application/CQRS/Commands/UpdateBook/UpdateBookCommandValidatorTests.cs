@@ -11,6 +11,7 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.UpdateBook
         [Fact]
         public void Validator_ShouldPass_WhenDataIsValid()
         {
+            // Arrange
             var command = new UpdateBookCommand
             {
                 Id = Guid.NewGuid(),
@@ -23,8 +24,10 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.UpdateBook
                 PublishedAt = DateTime.UtcNow
             };
 
+            // Act
             var result = _validator.TestValidate(command);
 
+            // Assert
             result.ShouldNotHaveAnyValidationErrors();
         }
     }

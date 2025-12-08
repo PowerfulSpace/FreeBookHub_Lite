@@ -43,5 +43,13 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.UpdateBook
             // Assert
             result.ShouldHaveValidationErrorFor(x => x.Title);
         }
+
+        [Fact]
+        public void Validator_ShouldHaveError_WhenAuthorIsEmpty()
+        {
+            var cmd = new UpdateBookCommand { Author = "" };
+            var result = _validator.TestValidate(cmd);
+            result.ShouldHaveValidationErrorFor(x => x.Author);
+        }
     }
 }

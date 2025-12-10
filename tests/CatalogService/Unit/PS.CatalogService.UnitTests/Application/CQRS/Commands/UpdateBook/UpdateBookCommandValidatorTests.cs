@@ -56,5 +56,17 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.UpdateBook
             // Assert
             result.ShouldHaveValidationErrorFor(x => x.Author);
         }
+
+        [Fact]
+        public void Validator_ShouldHaveError_WhenPriceIsZeroOrNegative()
+        {
+            var cmd = new UpdateBookCommand { Price = 0 };
+            var result = _validator.TestValidate(cmd);
+            result.ShouldHaveValidationErrorFor(x => x.Price);
+
+            cmd.Price = -5;
+            result = _validator.TestValidate(cmd);
+            result.ShouldHaveValidationErrorFor(x => x.Price);
+        }
     }
 }

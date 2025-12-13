@@ -90,8 +90,13 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.UpdateBook
         [Fact]
         public void Validator_ShouldHaveError_WhenCoverImageUrlIsEmpty()
         {
+            // Arrange
             var cmd = new UpdateBookCommand { CoverImageUrl = "" };
+
+            // Act
             var result = _validator.TestValidate(cmd);
+
+            // Assert
             result.ShouldHaveValidationErrorFor(x => x.CoverImageUrl);
         }
 

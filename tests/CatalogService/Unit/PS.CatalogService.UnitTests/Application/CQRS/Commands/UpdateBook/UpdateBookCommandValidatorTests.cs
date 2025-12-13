@@ -79,6 +79,8 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.UpdateBook
         {
             // Arrange
             var cmd = new UpdateBookCommand { ISBN = "" };
+
+            // Act
             var result = _validator.TestValidate(cmd);
             result.ShouldHaveValidationErrorFor(x => x.ISBN);
         }

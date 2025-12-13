@@ -77,6 +77,7 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.UpdateBook
         [Fact]
         public void Validator_ShouldHaveError_WhenISBNIsEmpty()
         {
+            // Arrange
             var cmd = new UpdateBookCommand { ISBN = "" };
             var result = _validator.TestValidate(cmd);
             result.ShouldHaveValidationErrorFor(x => x.ISBN);

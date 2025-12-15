@@ -100,5 +100,13 @@ namespace PS.CatalogService.UnitTests.Application.CQRS.Commands.UpdateBook
             result.ShouldHaveValidationErrorFor(x => x.CoverImageUrl);
         }
 
+        [Fact]
+        public void Validator_ShouldHaveError_WhenCoverImageUrlIsInvalid()
+        {
+            var cmd = new UpdateBookCommand { CoverImageUrl = "not-a-url" };
+            var result = _validator.TestValidate(cmd);
+            result.ShouldHaveValidationErrorFor(x => x.CoverImageUrl);
+        }
+
     }
 }

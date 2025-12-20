@@ -59,9 +59,13 @@ namespace PS.CatalogService.UnitTests.Application.Validators
         [Fact]
         public void Validator_ShouldHaveError_WhenPriceIsZeroOrNegative()
         {
+            // Arrange
             var request = new CreateBookRequest { Price = 0 };
 
+            // Act
             var result = _validator.TestValidate(request);
+
+            // Assert
             result.ShouldHaveValidationErrorFor(x => x.Price);
 
             request.Price = -10;

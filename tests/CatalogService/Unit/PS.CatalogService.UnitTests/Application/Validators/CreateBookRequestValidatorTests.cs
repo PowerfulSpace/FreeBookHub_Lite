@@ -72,5 +72,15 @@ namespace PS.CatalogService.UnitTests.Application.Validators
             result = _validator.TestValidate(request);
             result.ShouldHaveValidationErrorFor(x => x.Price);
         }
+
+        [Fact]
+        public void Validator_ShouldHaveError_WhenISBNIsEmpty()
+        {
+            var request = new CreateBookRequest { ISBN = "" };
+
+            var result = _validator.TestValidate(request);
+
+            result.ShouldHaveValidationErrorFor(x => x.ISBN);
+        }
     }
 }

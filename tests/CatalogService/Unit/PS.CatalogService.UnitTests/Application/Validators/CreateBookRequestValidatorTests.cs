@@ -1,4 +1,5 @@
 ﻿using FluentValidation.TestHelper;
+using PS.CatalogService.Application.CQRS.Commands.CreateBook;
 using PS.CatalogService.Application.DTOs;
 using PS.CatalogService.Application.Validators;
 
@@ -84,6 +85,16 @@ namespace PS.CatalogService.UnitTests.Application.Validators
 
             // Assert
             result.ShouldHaveValidationErrorFor(x => x.ISBN);
+        }
+
+        [Fact]
+        public void Validator_ShouldHaveError_WhenCoverImageUrlIsEmpty()
+        {
+            var request = new CreateBookRequest { CoverImageUrl = "" };
+
+            var result = _validator.TestValidate(request);
+
+            result.ShouldHaveValidationErrorFor(x => x.CoverImageUrl);
         }
     }
 }

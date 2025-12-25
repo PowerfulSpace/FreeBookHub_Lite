@@ -99,5 +99,15 @@ namespace PS.CatalogService.UnitTests.Application.Validators
             // Assert
             result.ShouldHaveValidationErrorFor(x => x.CoverImageUrl);
         }
+
+        [Fact]
+        public void Validator_ShouldHaveError_WhenCoverImageUrlIsInvalid()
+        {
+            var request = new CreateBookRequest { CoverImageUrl = "invalid-url" };
+
+            var result = _validator.TestValidate(request);
+
+            result.ShouldHaveValidationErrorFor(x => x.CoverImageUrl);
+        }
     }
 }

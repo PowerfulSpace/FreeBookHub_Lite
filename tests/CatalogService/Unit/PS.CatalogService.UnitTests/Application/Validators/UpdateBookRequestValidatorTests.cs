@@ -30,5 +30,15 @@ namespace PS.CatalogService.UnitTests.Application.Validators
             // Assert
             result.ShouldNotHaveAnyValidationErrors();
         }
+
+        [Fact]
+        public void Validator_ShouldHaveError_WhenTitleIsEmpty()
+        {
+            var request = new UpdateBookRequest { Title = "" };
+
+            var result = _validator.TestValidate(request);
+
+            result.ShouldHaveValidationErrorFor(x => x.Title);
+        }
     }
 }

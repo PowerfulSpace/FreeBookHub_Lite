@@ -1,5 +1,4 @@
 ﻿using FluentValidation.TestHelper;
-using PS.CatalogService.Application.CQRS.Commands.CreateBook;
 using PS.CatalogService.Application.DTOs;
 using PS.CatalogService.Application.Validators;
 

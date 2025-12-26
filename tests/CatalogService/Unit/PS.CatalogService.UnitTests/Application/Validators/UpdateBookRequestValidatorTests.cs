@@ -12,6 +12,7 @@ namespace PS.CatalogService.UnitTests.Application.Validators
         [Fact]
         public void Validator_ShouldPass_WhenRequestIsValid()
         {
+            // Arrange
             var request = new UpdateBookRequest
             {
                 Title = "Domain-Driven Design",
@@ -23,8 +24,10 @@ namespace PS.CatalogService.UnitTests.Application.Validators
                 CoverImageUrl = "https://example.com/cover.jpg"
             };
 
+            // Act
             var result = _validator.TestValidate(request);
 
+            // Assert
             result.ShouldNotHaveAnyValidationErrors();
         }
     }

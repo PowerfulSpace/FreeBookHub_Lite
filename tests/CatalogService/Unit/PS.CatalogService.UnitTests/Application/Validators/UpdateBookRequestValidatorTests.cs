@@ -56,5 +56,18 @@ namespace PS.CatalogService.UnitTests.Application.Validators
             // Assert
             result.ShouldHaveValidationErrorFor(x => x.Author);
         }
+
+        [Fact]
+        public void Validator_ShouldHaveError_WhenPriceIsZeroOrNegative()
+        {
+            var request = new UpdateBookRequest { Price = 0 };
+
+            var result = _validator.TestValidate(request);
+            result.ShouldHaveValidationErrorFor(x => x.Price);
+
+            request.Price = -5;
+            result = _validator.TestValidate(request);
+            result.ShouldHaveValidationErrorFor(x => x.Price);
+        }
     }
 }

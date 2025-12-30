@@ -86,5 +86,15 @@ namespace PS.CatalogService.UnitTests.Application.Validators
             // Assert
             result.ShouldHaveValidationErrorFor(x => x.ISBN);
         }
+
+        [Fact]
+        public void Validator_ShouldHaveError_WhenCoverImageUrlIsEmpty()
+        {
+            var request = new UpdateBookRequest { CoverImageUrl = "" };
+
+            var result = _validator.TestValidate(request);
+
+            result.ShouldHaveValidationErrorFor(x => x.CoverImageUrl);
+        }
     }
 }

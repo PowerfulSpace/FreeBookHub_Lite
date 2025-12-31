@@ -90,10 +90,13 @@ namespace PS.CatalogService.UnitTests.Application.Validators
         [Fact]
         public void Validator_ShouldHaveError_WhenCoverImageUrlIsEmpty()
         {
+            // Arrange
             var request = new UpdateBookRequest { CoverImageUrl = "" };
 
+            // Act
             var result = _validator.TestValidate(request);
 
+            // Assert
             result.ShouldHaveValidationErrorFor(x => x.CoverImageUrl);
         }
     }

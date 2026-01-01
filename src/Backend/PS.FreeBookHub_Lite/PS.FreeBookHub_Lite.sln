@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113
+# Visual Studio Version 18
+VisualStudioVersion = 18.3.11312.210 d18.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend", "Backend", "{E49B08EE-2E2C-471E-BE62-0032D903A4CA}"
 EndProject
@@ -153,6 +153,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit", "Unit", "{2E0FD004-1
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.CatalogService.UnitTests", "..\..\..\tests\CatalogService\Unit\PS.CatalogService.UnitTests\PS.CatalogService.UnitTests.csproj", "{34202EC5-8648-4F4F-8322-70B052907329}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{9247A200-49DE-496E-A1CD-2F53187D0EDA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit", "Unit", "{808D5D73-45DE-4022-A4FF-C43ECD32DB5B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration", "{F39E76B8-369F-49B4-BFAE-9358F59EC595}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS.OrderService.UnitTests", "..\..\..\tests\OrderService\Unit\PS.OrderService.UnitTests\PS.OrderService.UnitTests.csproj", "{C7FD6AE2-348A-471A-ACF4-130170DD5CAE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -283,6 +291,10 @@ Global
 		{34202EC5-8648-4F4F-8322-70B052907329}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34202EC5-8648-4F4F-8322-70B052907329}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34202EC5-8648-4F4F-8322-70B052907329}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7FD6AE2-348A-471A-ACF4-130170DD5CAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7FD6AE2-348A-471A-ACF4-130170DD5CAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7FD6AE2-348A-471A-ACF4-130170DD5CAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7FD6AE2-348A-471A-ACF4-130170DD5CAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -361,6 +373,10 @@ Global
 		{6415C095-0C61-4A7E-B91B-917E1666F954} = {36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}
 		{2E0FD004-1F24-4909-8483-BF26CBC405A7} = {36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}
 		{34202EC5-8648-4F4F-8322-70B052907329} = {2E0FD004-1F24-4909-8483-BF26CBC405A7}
+		{9247A200-49DE-496E-A1CD-2F53187D0EDA} = {100E42A7-ED44-4362-87D3-BFE7364AA597}
+		{808D5D73-45DE-4022-A4FF-C43ECD32DB5B} = {9247A200-49DE-496E-A1CD-2F53187D0EDA}
+		{F39E76B8-369F-49B4-BFAE-9358F59EC595} = {9247A200-49DE-496E-A1CD-2F53187D0EDA}
+		{C7FD6AE2-348A-471A-ACF4-130170DD5CAE} = {808D5D73-45DE-4022-A4FF-C43ECD32DB5B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9DD91AFE-550D-48F3-9C0B-14FC12D42555}

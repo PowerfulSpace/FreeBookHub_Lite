@@ -20,8 +20,13 @@
 
   <ItemGroup>
     <Folder Include="Application\" />
-    <Folder Include="Domain\" />
     <Folder Include="Infrastructure\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\src\Backend\PS.FreeBookHub_Lite\OrderService\Application\PS.OrderService.Application\PS.OrderService.Application.csproj" />
+    <ProjectReference Include="..\..\..\..\src\Backend\PS.FreeBookHub_Lite\OrderService\Domain\PS.OrderService.Domain\PS.OrderService.Domain.csproj" />
+    <ProjectReference Include="..\..\..\..\src\Backend\PS.FreeBookHub_Lite\OrderService\Infrastructure\PS.OrderService.Infrastructure\PS.OrderService.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

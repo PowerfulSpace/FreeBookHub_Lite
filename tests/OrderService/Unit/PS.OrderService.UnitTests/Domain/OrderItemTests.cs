@@ -7,12 +7,15 @@ namespace PS.OrderService.UnitTests.Domain
         [Fact]
         public void CreateOrderItem_ShouldInitializeCorrectly()
         {
+            // Arrange
             var bookId = Guid.NewGuid();
             var price = 25m;
             var quantity = 2;
 
+            // Act
             var item = new OrderItem(bookId, price, quantity);
 
+            // Assert
             Assert.Equal(bookId, item.BookId);
             Assert.Equal(price, item.UnitPrice);
             Assert.Equal(quantity, item.Quantity);

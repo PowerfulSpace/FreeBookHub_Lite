@@ -1,4 +1,5 @@
 ﻿using PS.OrderService.Domain.Entities;
+using StackExchange.Redis;
 
 namespace PS.OrderService.UnitTests.Domain
 {
@@ -25,12 +26,16 @@ namespace PS.OrderService.UnitTests.Domain
         [Fact]
         public void TotalPrice_ShouldBeCalculatedCorrectly()
         {
+            // Arrange
             var item = new OrderItem(Guid.NewGuid(), 15m, 3);
 
+            // Act
             var total = item.TotalPrice;
 
+            // Assert
             Assert.Equal(45m, total);
         }
 
     }
 }
+

@@ -22,5 +22,15 @@ namespace PS.OrderService.UnitTests.Domain
             Assert.Equal(50m, item.TotalPrice);
         }
 
+        [Fact]
+        public void TotalPrice_ShouldBeCalculatedCorrectly()
+        {
+            var item = new OrderItem(Guid.NewGuid(), 15m, 3);
+
+            var total = item.TotalPrice;
+
+            Assert.Equal(45m, total);
+        }
+
     }
 }

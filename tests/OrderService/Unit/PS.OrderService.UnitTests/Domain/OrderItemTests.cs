@@ -36,6 +36,17 @@ namespace PS.OrderService.UnitTests.Domain
             Assert.Equal(45m, total);
         }
 
+        [Fact]
+        public void UpdateQuantity_ShouldUpdate_WhenQuantityIsValid()
+        {
+            var item = new OrderItem(Guid.NewGuid(), 10m, 1);
+
+            item.UpdateQuantity(5);
+
+            Assert.Equal(5, item.Quantity);
+            Assert.Equal(50m, item.TotalPrice);
+        }
+
     }
 }
 

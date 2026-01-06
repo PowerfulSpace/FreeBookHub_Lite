@@ -39,14 +39,16 @@ namespace PS.OrderService.UnitTests.Domain
         [Fact]
         public void UpdateQuantity_ShouldUpdate_WhenQuantityIsValid()
         {
+            // Arrange
             var item = new OrderItem(Guid.NewGuid(), 10m, 1);
 
+            // Act
             item.UpdateQuantity(5);
 
+            // Assert
             Assert.Equal(5, item.Quantity);
             Assert.Equal(50m, item.TotalPrice);
         }
 
     }
 }
-

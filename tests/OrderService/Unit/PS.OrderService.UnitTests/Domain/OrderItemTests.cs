@@ -1,4 +1,5 @@
 ﻿using PS.OrderService.Domain.Entities;
+using PS.OrderService.Domain.Exceptions.Order;
 using StackExchange.Redis;
 
 namespace PS.OrderService.UnitTests.Domain
@@ -50,5 +51,20 @@ namespace PS.OrderService.UnitTests.Domain
             Assert.Equal(50m, item.TotalPrice);
         }
 
+
+        [Fact]
+        public void UpdateQuantity_WhenZeroOrNegative_ShouldThrow()
+        {
+            var item = new OrderItem(Guid.NewGuid(), 10m, 1);
+
+            var exZero = Assert.Throws<InvalidOrderQuantityException>(() =>
+                item.UpdateQuantity(0));
+
+            var exNegative = Assert.Throws<InvalidOrderQuantityException>(() =>
+                item.UpdateQuantity(-3));
+
+            Assert.Equal(0, exZero.ProvidedQuantity);
+            Assert.Equal(-3, exNegative.ProvidedQuantity);
+        }
     }
 }

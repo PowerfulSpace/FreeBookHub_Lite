@@ -55,14 +55,17 @@ namespace PS.OrderService.UnitTests.Domain
         [Fact]
         public void UpdateQuantity_WhenZeroOrNegative_ShouldThrow()
         {
+            // Arrange
             var item = new OrderItem(Guid.NewGuid(), 10m, 1);
 
+            // Act
             var exZero = Assert.Throws<InvalidOrderQuantityException>(() =>
                 item.UpdateQuantity(0));
 
             var exNegative = Assert.Throws<InvalidOrderQuantityException>(() =>
                 item.UpdateQuantity(-3));
 
+            // Assert
             Assert.Equal(0, exZero.ProvidedQuantity);
             Assert.Equal(-3, exNegative.ProvidedQuantity);
         }

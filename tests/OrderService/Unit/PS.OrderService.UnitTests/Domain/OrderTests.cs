@@ -8,11 +8,14 @@ namespace PS.OrderService.UnitTests.Domain
         [Fact]
         public void CreateOrder_ShouldInitializeCorrectly()
         {
+            // Arrange
             var userId = Guid.NewGuid();
             var address = "Some address";
 
+            // Act
             var order = new Order(userId, address);
 
+            // Assert
             Assert.NotEqual(Guid.Empty, order.Id);
             Assert.Equal(userId, order.UserId);
             Assert.Equal(address, order.ShippingAddress);

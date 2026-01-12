@@ -23,5 +23,20 @@ namespace PS.OrderService.UnitTests.Domain
             Assert.True(order.CreatedAt <= DateTime.UtcNow);
             Assert.Empty(order.Items);
         }
+
+        [Fact]
+        public void AddItem_ShouldAddNewItem()
+        {
+            var order = new Order(Guid.NewGuid(), "address");
+            var bookId = Guid.NewGuid();
+
+            order.AddItem(bookId, 10m, 2);
+
+            Assert.Single(order.Items);
+            var item = order.Items.First();
+            Assert.Equal(bookId, item.BookId);
+            Assert.Equal(2, item.Quantity);
+            Assert.Equal(20m, item.TotalPrice);
+        }
     }
 }

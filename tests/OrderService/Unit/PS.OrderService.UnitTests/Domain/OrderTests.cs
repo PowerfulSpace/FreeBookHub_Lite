@@ -27,11 +27,14 @@ namespace PS.OrderService.UnitTests.Domain
         [Fact]
         public void AddItem_ShouldAddNewItem()
         {
+            // Arrange
             var order = new Order(Guid.NewGuid(), "address");
             var bookId = Guid.NewGuid();
 
+            // Act
             order.AddItem(bookId, 10m, 2);
 
+            // Assert
             Assert.Single(order.Items);
             var item = order.Items.First();
             Assert.Equal(bookId, item.BookId);

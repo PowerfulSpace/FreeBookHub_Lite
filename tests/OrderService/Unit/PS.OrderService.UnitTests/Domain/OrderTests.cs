@@ -41,5 +41,20 @@ namespace PS.OrderService.UnitTests.Domain
             Assert.Equal(2, item.Quantity);
             Assert.Equal(20m, item.TotalPrice);
         }
+
+        [Fact]
+        public void AddItem_WhenItemExists_ShouldIncreaseQuantity()
+        {
+            var order = new Order(Guid.NewGuid(), "address");
+            var bookId = Guid.NewGuid();
+
+            order.AddItem(bookId, 10m, 2);
+            order.AddItem(bookId, 10m, 3);
+
+            var item = order.Items.First();
+            Assert.Equal(5, item.Quantity);
+            Assert.Equal(50m, item.TotalPrice);
+        }
     }
 }
+

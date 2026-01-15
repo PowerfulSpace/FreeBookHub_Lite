@@ -45,12 +45,15 @@ namespace PS.OrderService.UnitTests.Domain
         [Fact]
         public void AddItem_WhenItemExists_ShouldIncreaseQuantity()
         {
+            // Arrange
             var order = new Order(Guid.NewGuid(), "address");
             var bookId = Guid.NewGuid();
 
+            // Act
             order.AddItem(bookId, 10m, 2);
             order.AddItem(bookId, 10m, 3);
 
+            // Assert
             var item = order.Items.First();
             Assert.Equal(5, item.Quantity);
             Assert.Equal(50m, item.TotalPrice);

@@ -1,5 +1,6 @@
 ﻿using PS.OrderService.Domain.Entities;
 using PS.OrderService.Domain.Enums;
+using PS.OrderService.Domain.Exceptions.Order;
 
 namespace PS.OrderService.UnitTests.Domain
 {
@@ -57,6 +58,17 @@ namespace PS.OrderService.UnitTests.Domain
             var item = order.Items.First();
             Assert.Equal(5, item.Quantity);
             Assert.Equal(50m, item.TotalPrice);
+        }
+
+        [Fact]
+        public void AddItem_WithInvalidQuantity_ShouldThrow()
+        {
+            var order = new Order(Guid.NewGuid(), "address");
+
+            var ex = Assert.Throws<InvalidOrderQuantityException>(() =>
+                order.AddItem(Guid.NewGuid(), 10m, 0));
+
+            Assert.Equal(0, ex.ProvidedQuantity);
         }
     }
 }

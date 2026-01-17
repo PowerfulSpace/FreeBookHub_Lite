@@ -63,11 +63,14 @@ namespace PS.OrderService.UnitTests.Domain
         [Fact]
         public void AddItem_WithInvalidQuantity_ShouldThrow()
         {
+            // Arrange
             var order = new Order(Guid.NewGuid(), "address");
 
+            // Act
             var ex = Assert.Throws<InvalidOrderQuantityException>(() =>
                 order.AddItem(Guid.NewGuid(), 10m, 0));
 
+            // Assert
             Assert.Equal(0, ex.ProvidedQuantity);
         }
     }

@@ -78,13 +78,16 @@ namespace PS.OrderService.UnitTests.Domain
         [Fact]
         public void RemoveItem_ShouldRemoveExistingItem()
         {
+            // Arrange
             var order = new Order(Guid.NewGuid(), "address");
             var bookId = Guid.NewGuid();
 
             order.AddItem(bookId, 10m, 1);
 
+            // Act
             order.RemoveItem(bookId);
 
+            // Assert
             Assert.Empty(order.Items);
         }
     }

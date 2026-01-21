@@ -94,10 +94,13 @@ namespace PS.OrderService.UnitTests.Domain
         [Fact]
         public void RemoveItem_WhenItemDoesNotExist_ShouldNotThrow()
         {
+            // Arrange
             var order = new Order(Guid.NewGuid(), "address");
 
+            // Act
             order.RemoveItem(Guid.NewGuid());
 
+            // Assert
             Assert.Empty(order.Items);
         }
     }

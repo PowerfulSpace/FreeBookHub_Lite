@@ -107,11 +107,14 @@ namespace PS.OrderService.UnitTests.Domain
         [Fact]
         public void TotalPrice_ShouldReturnSumOfItems()
         {
+            // Arrange
             var order = new Order(Guid.NewGuid(), "address");
 
+            // Act
             order.AddItem(Guid.NewGuid(), 10m, 2); // 20
             order.AddItem(Guid.NewGuid(), 5m, 3);  // 15
 
+            // Assert
             Assert.Equal(35m, order.TotalPrice);
         }
     }

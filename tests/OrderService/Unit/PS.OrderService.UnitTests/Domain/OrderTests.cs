@@ -103,6 +103,17 @@ namespace PS.OrderService.UnitTests.Domain
             // Assert
             Assert.Empty(order.Items);
         }
+
+        [Fact]
+        public void TotalPrice_ShouldReturnSumOfItems()
+        {
+            var order = new Order(Guid.NewGuid(), "address");
+
+            order.AddItem(Guid.NewGuid(), 10m, 2); // 20
+            order.AddItem(Guid.NewGuid(), 5m, 3);  // 15
+
+            Assert.Equal(35m, order.TotalPrice);
+        }
     }
 }
 

@@ -117,6 +117,16 @@ namespace PS.OrderService.UnitTests.Domain
             // Assert
             Assert.Equal(35m, order.TotalPrice);
         }
+
+        [Fact]
+        public void Cancel_WhenStatusIsNew_ShouldSetCancelled()
+        {
+            var order = new Order(Guid.NewGuid(), "address");
+
+            order.Cancel();
+
+            Assert.Equal(OrderStatus.Cancelled, order.Status);
+        }
     }
 }
 

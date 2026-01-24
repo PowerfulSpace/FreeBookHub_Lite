@@ -121,10 +121,13 @@ namespace PS.OrderService.UnitTests.Domain
         [Fact]
         public void Cancel_WhenStatusIsNew_ShouldSetCancelled()
         {
+            // Arrange
             var order = new Order(Guid.NewGuid(), "address");
 
+            // Act
             order.Cancel();
 
+            // Assert
             Assert.Equal(OrderStatus.Cancelled, order.Status);
         }
     }

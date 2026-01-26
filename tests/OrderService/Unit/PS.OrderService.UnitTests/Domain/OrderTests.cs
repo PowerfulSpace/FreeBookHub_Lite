@@ -137,14 +137,17 @@ namespace PS.OrderService.UnitTests.Domain
         [InlineData(OrderStatus.Cancelled)]
         public void Cancel_WhenStatusIsInvalid_ShouldThrow(OrderStatus status)
         {
+            // Arrange
             var order = new Order(Guid.NewGuid(), "address");
 
             typeof(Order)
                 .GetProperty(nameof(Order.Status))!
                 .SetValue(order, status);
 
+            // Act
             var ex = Assert.Throws<CannotCancelOrderException>(() => order.Cancel());
 
+            // Assert
             Assert.Equal(order.Id, ex.OrderId);
             Assert.Equal(status, ex.CurrentStatus);
         }

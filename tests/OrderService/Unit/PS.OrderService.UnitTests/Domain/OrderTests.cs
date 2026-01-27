@@ -151,5 +151,16 @@ namespace PS.OrderService.UnitTests.Domain
             Assert.Equal(order.Id, ex.OrderId);
             Assert.Equal(status, ex.CurrentStatus);
         }
+
+        [Fact]
+        public void MarkAsPaid_WhenStatusIsNew_ShouldSetPaid()
+        {
+            var order = new Order(Guid.NewGuid(), "address");
+
+            order.MarkAsPaid();
+
+            Assert.Equal(OrderStatus.Paid, order.Status);
+        }
+
     }
 }

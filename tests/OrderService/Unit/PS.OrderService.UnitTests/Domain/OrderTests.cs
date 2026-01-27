@@ -153,4 +153,3 @@ namespace PS.OrderService.UnitTests.Domain
         }
     }
 }
-

@@ -155,10 +155,13 @@ namespace PS.OrderService.UnitTests.Domain
         [Fact]
         public void MarkAsPaid_WhenStatusIsNew_ShouldSetPaid()
         {
+            // Arrange
             var order = new Order(Guid.NewGuid(), "address");
 
+            // Act
             order.MarkAsPaid();
 
+            // Assert
             Assert.Equal(OrderStatus.Paid, order.Status);
         }
 

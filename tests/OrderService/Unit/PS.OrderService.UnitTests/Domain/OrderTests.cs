@@ -165,5 +165,25 @@ namespace PS.OrderService.UnitTests.Domain
             Assert.Equal(OrderStatus.Paid, order.Status);
         }
 
+        [Theory]
+        [InlineData(OrderStatus.Paid)]
+        [InlineData(OrderStatus.Shipped)]
+        [InlineData(OrderStatus.Delivered)]
+        [InlineData(OrderStatus.Cancelled)]
+        public void MarkAsPaid_WhenStatusIsNotNew_ShouldThrow(OrderStatus status)
+        {
+            var order = new Order(Guid.NewGuid(), "address");
+
+            typeof(Order)
+                .GetProperty(nameof(Order.Status))!
+                .SetValue(order, status);
+
+            var ex = Assert.Throws<InvalidOrderPaymentStateException>(() =>
+                order.MarkAsPaid());
+
+            Assert.Equal(order.Id, ex.OrderId);
+            Assert.Equal(status, ex.CurrentStatus);
+        }
+
     }
 }

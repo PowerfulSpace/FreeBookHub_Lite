@@ -39,6 +39,7 @@ namespace PS.OrderService.UnitTests.Application.CQRS.Commands.CreateOrder
         [Fact]
         public async Task Handle_ShouldCreateOrder_SaveItAndPublishEvent()
         {
+            // Arrange
             var userId = Guid.NewGuid();
 
             var command = new CreateOrderCommand
@@ -78,8 +79,10 @@ namespace PS.OrderService.UnitTests.Application.CQRS.Commands.CreateOrder
 
             var handler = CreateHandler();
 
+            // Act
             var result = await handler.Handle(command, default);
 
+            // Assert
             Assert.NotNull(result);
             Assert.Equal(userId, result.UserId);
             Assert.Equal(2, result.Items.Count);

@@ -104,6 +104,48 @@ namespace PS.OrderService.UnitTests.Application.CQRS.Commands.CreateOrder
                 Times.Once);
         }
 
+        [Fact]
+        public async Task Handle_ShouldPublishCorrectOrderCreatedEvent()
+        {
+            var userId = Guid.NewGuid();
 
+            var command = new CreateOrderCommand
+            {
+                UserId = userId,
+                ShippingAddress = "Test address",
+                Items =
+                {
+                    new CreateOrderItemRequest
+                    {
+                        BookId = Guid.NewGuid(),
+                        Quantity = 3,
+                        UnitPrice = 15m
+                    }
+                }
+            };
+
+            OrderCreatedEvent? publishedEvent = null;
+
+            _orderRepositoryMock
+                .Setup(r => r.AddAsync(It.IsAny<Order>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
+
+            _eventPublisherMock
+                .Setup(p => p.PublishAsync(
+                    It.IsAny<OrderCreatedEvent>(),
+                    It.IsAny<string>(),
+                    It.IsAny<CancellationToken>()))
+                .Callback<OrderCreatedEvent, string, CancellationToken>((e, _, _) => publishedEvent = e)
+                .Returns(Task.CompletedTask);
+
+            var handler = CreateHandler();
+
+            await handler.Handle(command, default);
+
+            Assert.NotNull(publishedEvent);
+            Assert.Equal(userId, publishedEvent!.UserId);
+            Assert.Equal(45m, publishedEvent.Amount);
+            Assert.NotEqual(Guid.Empty, publishedEvent.OrderId);
+        }
     }
 }

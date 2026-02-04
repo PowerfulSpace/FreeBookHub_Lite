@@ -107,6 +107,7 @@ namespace PS.OrderService.UnitTests.Application.CQRS.Commands.CreateOrder
         [Fact]
         public async Task Handle_ShouldPublishCorrectOrderCreatedEvent()
         {
+            // Arrange
             var userId = Guid.NewGuid();
 
             var command = new CreateOrderCommand
@@ -140,8 +141,10 @@ namespace PS.OrderService.UnitTests.Application.CQRS.Commands.CreateOrder
 
             var handler = CreateHandler();
 
+            // Act
             await handler.Handle(command, default);
 
+            // Assert
             Assert.NotNull(publishedEvent);
             Assert.Equal(userId, publishedEvent!.UserId);
             Assert.Equal(45m, publishedEvent.Amount);
@@ -149,3 +152,4 @@ namespace PS.OrderService.UnitTests.Application.CQRS.Commands.CreateOrder
         }
     }
 }
+

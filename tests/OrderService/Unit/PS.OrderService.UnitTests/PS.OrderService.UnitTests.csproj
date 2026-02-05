@@ -20,7 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\CQRS\Commands\CancelOrder\" />
     <Folder Include="Application\CQRS\Commands\MarkOrderAsPaid\" />
     <Folder Include="Application\CQRS\Queries\GetAllOrdersByUserld\" />
     <Folder Include="Application\CQRS\Queries\GetOrderByld\" />

@@ -5,6 +5,7 @@ using PS.OrderService.Application.CQRS.Commands.CancelOrder;
 using PS.OrderService.Application.Interfaces;
 using PS.OrderService.Domain.Entities;
 
+
 namespace PS.OrderService.UnitTests.Application.CQRS.Commands.CancelOrder
 {
     public class CancelOrderCommandHandlerTests
@@ -21,6 +22,29 @@ namespace PS.OrderService.UnitTests.Application.CQRS.Commands.CancelOrder
             _handler = new CancelOrderCommandHandler(
                 _orderRepositoryMock.Object,
                 _loggerMock.Object);
+        }
+
+        [Fact]
+        public async Task Handle_ShouldCancelOrder_WhenOrderExists()
+        {
+            var orderId = Guid.NewGuid();
+            var order = new Mock<Order>();
+
+            _orderRepositoryMock
+                .Setup(r => r.GetByIdAsync(orderId, It.IsAny<CancellationToken>(), It.IsAny<bool>()))
+                .ReturnsAsync(order.Object);
+
+            var command = new CancelOrderCommand(orderId);
+
+            var result = await _handler.Handle(command, CancellationToken.None);
+
+            Assert.Equal(Unit.Value, result);
+
+            order.Verify(o => o.Cancel(), Times.Once);
+
+            _orderRepositoryMock.Verify(r =>
+                r.UpdateAsync(order.Object, It.IsAny<CancellationToken>()),
+                Times.Once);
         }
 
     }

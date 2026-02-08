@@ -4,6 +4,7 @@ using Moq;
 using PS.OrderService.Application.CQRS.Commands.CancelOrder;
 using PS.OrderService.Application.Interfaces;
 using PS.OrderService.Domain.Entities;
+using PS.OrderService.Domain.Exceptions.Order;
 
 namespace PS.OrderService.UnitTests.Application.CQRS.Commands.CancelOrder
 {
@@ -49,5 +50,22 @@ namespace PS.OrderService.UnitTests.Application.CQRS.Commands.CancelOrder
                 Times.Once);
         }
 
+        [Fact]
+        public async Task Handle_ShouldThrowOrderNotFoundException_WhenOrderNotFound()
+        {
+            var orderId = Guid.NewGuid();
+
+            _orderRepositoryMock
+                .Setup(r => r.GetByIdAsync(
+                    orderId,
+                    It.IsAny<CancellationToken>(),
+                    It.IsAny<bool>()))
+                .ReturnsAsync((Order?)null);
+
+            var command = new CancelOrderCommand(orderId);
+
+            await Assert.ThrowsAsync<OrderNotFoundException>(() =>
+                _handler.Handle(command, CancellationToken.None));
+        }
     }
 }

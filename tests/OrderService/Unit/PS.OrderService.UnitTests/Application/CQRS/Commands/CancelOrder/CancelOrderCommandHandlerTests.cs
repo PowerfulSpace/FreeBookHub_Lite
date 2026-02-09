@@ -53,6 +53,7 @@ namespace PS.OrderService.UnitTests.Application.CQRS.Commands.CancelOrder
         [Fact]
         public async Task Handle_ShouldThrowOrderNotFoundException_WhenOrderNotFound()
         {
+            // Arrange
             var orderId = Guid.NewGuid();
 
             _orderRepositoryMock
@@ -62,8 +63,10 @@ namespace PS.OrderService.UnitTests.Application.CQRS.Commands.CancelOrder
                     It.IsAny<bool>()))
                 .ReturnsAsync((Order?)null);
 
+            // Act
             var command = new CancelOrderCommand(orderId);
 
+            // Assert
             await Assert.ThrowsAsync<OrderNotFoundException>(() =>
                 _handler.Handle(command, CancellationToken.None));
         }

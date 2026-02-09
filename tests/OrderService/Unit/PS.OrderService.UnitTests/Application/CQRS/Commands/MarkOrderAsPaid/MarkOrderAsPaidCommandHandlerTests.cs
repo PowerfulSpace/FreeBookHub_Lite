@@ -12,5 +12,11 @@ namespace PS.OrderService.UnitTests.Application.CQRS.Commands.MarkOrderAsPaid
         private readonly MarkOrderAsPaidCommandHandler _handler;
 
 
+        public MarkOrderAsPaidCommandHandlerTests()
+        {
+            _handler = new MarkOrderAsPaidCommandHandler(
+                _orderRepositoryMock.Object,
+                _loggerMock.Object);
+        }
     }
 }

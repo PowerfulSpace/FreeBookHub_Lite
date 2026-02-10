@@ -24,6 +24,7 @@ namespace PS.OrderService.UnitTests.Application.CQRS.Commands.MarkOrderAsPaid
         [Fact]
         public async Task Handle_ShouldMarkOrderAsPaid_WhenOrderExists()
         {
+            // Arrange
             var orderId = Guid.NewGuid();
             var orderMock = new Mock<Order>();
 
@@ -36,8 +37,10 @@ namespace PS.OrderService.UnitTests.Application.CQRS.Commands.MarkOrderAsPaid
 
             var command = new MarkOrderAsPaidCommand(orderId);
 
+            // Act
             var result = await _handler.Handle(command, CancellationToken.None);
 
+            // Assert
             Assert.Equal(Unit.Value, result);
 
             orderMock.Verify(o => o.MarkAsPaid(), Times.Once);
@@ -49,3 +52,4 @@ namespace PS.OrderService.UnitTests.Application.CQRS.Commands.MarkOrderAsPaid
 
     }
 }
+

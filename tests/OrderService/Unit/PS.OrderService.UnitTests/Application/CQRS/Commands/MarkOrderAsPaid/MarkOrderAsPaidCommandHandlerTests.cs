@@ -53,6 +53,7 @@ namespace PS.OrderService.UnitTests.Application.CQRS.Commands.MarkOrderAsPaid
         [Fact]
         public async Task Handle_ShouldReturnUnit_WhenOrderNotFound()
         {
+            // Arrange
             var orderId = Guid.NewGuid();
 
             _orderRepositoryMock
@@ -64,8 +65,10 @@ namespace PS.OrderService.UnitTests.Application.CQRS.Commands.MarkOrderAsPaid
 
             var command = new MarkOrderAsPaidCommand(orderId);
 
+            // Act
             var result = await _handler.Handle(command, CancellationToken.None);
 
+            // Assert
             Assert.Equal(Unit.Value, result);
 
             _orderRepositoryMock.Verify(r =>

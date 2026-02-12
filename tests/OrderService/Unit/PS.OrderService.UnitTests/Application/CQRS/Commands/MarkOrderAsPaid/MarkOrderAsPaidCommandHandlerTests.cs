@@ -50,6 +50,28 @@ namespace PS.OrderService.UnitTests.Application.CQRS.Commands.MarkOrderAsPaid
                 Times.Once);
         }
 
+        [Fact]
+        public async Task Handle_ShouldReturnUnit_WhenOrderNotFound()
+        {
+            var orderId = Guid.NewGuid();
+
+            _orderRepositoryMock
+                .Setup(r => r.GetByIdAsync(
+                    orderId,
+                    It.IsAny<CancellationToken>(),
+                    It.IsAny<bool>()))
+                .ReturnsAsync((Order?)null);
+
+            var command = new MarkOrderAsPaidCommand(orderId);
+
+            var result = await _handler.Handle(command, CancellationToken.None);
+
+            Assert.Equal(Unit.Value, result);
+
+            _orderRepositoryMock.Verify(r =>
+                r.UpdateAsync(It.IsAny<Order>(), It.IsAny<CancellationToken>()),
+                Times.Never);
+        }
     }
 }
 

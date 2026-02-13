@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <Folder Include="Application\CQRS\Queries\GetAllOrdersByUserld\" />
-    <Folder Include="Application\CQRS\Queries\GetOrderByld\" />
     <Folder Include="Infrastructure\" />
   </ItemGroup>
 

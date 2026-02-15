@@ -18,6 +18,7 @@ namespace PS.OrderService.UnitTests.Application.CQRS.Queries.GetOrderByld
         [Fact]
         public async Task Handle_OrderExists_ShouldReturnOrderResponse()
         {
+            // Arrange
             var orderId = Guid.NewGuid();
             var order = new Order(Guid.NewGuid(), "Berlin, Test street");
 
@@ -31,8 +32,10 @@ namespace PS.OrderService.UnitTests.Application.CQRS.Queries.GetOrderByld
             var handler = CreateHandler();
             var query = new GetOrderByIdQuery(orderId);
 
+            // Act
             var result = await handler.Handle(query, default);
 
+            // Assert
             Assert.NotNull(result);
             Assert.IsType<OrderResponse>(result);
 
@@ -42,3 +45,4 @@ namespace PS.OrderService.UnitTests.Application.CQRS.Queries.GetOrderByld
         }
     }
 }
+

@@ -4,6 +4,7 @@ using PS.OrderService.Application.CQRS.Queries.GetOrderById;
 using PS.OrderService.Application.DTOs;
 using PS.OrderService.Application.Interfaces;
 using PS.OrderService.Domain.Entities;
+using PS.OrderService.Domain.Exceptions.Order;
 
 namespace PS.OrderService.UnitTests.Application.CQRS.Queries.GetOrderByld
 {
@@ -38,6 +39,29 @@ namespace PS.OrderService.UnitTests.Application.CQRS.Queries.GetOrderByld
             // Assert
             Assert.NotNull(result);
             Assert.IsType<OrderResponse>(result);
+
+            _orderRepositoryMock.Verify(r =>
+                r.GetByIdAsync(orderId, It.IsAny<CancellationToken>(), true),
+                Times.Once);
+        }
+
+        [Fact]
+        public async Task Handle_OrderNotFound_ShouldThrowOrderNotFoundException()
+        {
+            var orderId = Guid.NewGuid();
+
+            _orderRepositoryMock
+                .Setup(r => r.GetByIdAsync(
+                    orderId,
+                    It.IsAny<CancellationToken>(),
+                    true))
+                .ReturnsAsync((Order?)null);
+
+            var handler = CreateHandler();
+            var query = new GetOrderByIdQuery(orderId);
+
+            await Assert.ThrowsAsync<OrderNotFoundException>(() =>
+                handler.Handle(query, default));
 
             _orderRepositoryMock.Verify(r =>
                 r.GetByIdAsync(orderId, It.IsAny<CancellationToken>(), true),

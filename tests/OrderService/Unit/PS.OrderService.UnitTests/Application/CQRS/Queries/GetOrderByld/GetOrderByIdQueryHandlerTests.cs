@@ -48,6 +48,7 @@ namespace PS.OrderService.UnitTests.Application.CQRS.Queries.GetOrderByld
         [Fact]
         public async Task Handle_OrderNotFound_ShouldThrowOrderNotFoundException()
         {
+            // Arrange
             var orderId = Guid.NewGuid();
 
             _orderRepositoryMock
@@ -60,6 +61,7 @@ namespace PS.OrderService.UnitTests.Application.CQRS.Queries.GetOrderByld
             var handler = CreateHandler();
             var query = new GetOrderByIdQuery(orderId);
 
+            // Act + Assert
             await Assert.ThrowsAsync<OrderNotFoundException>(() =>
                 handler.Handle(query, default));
 

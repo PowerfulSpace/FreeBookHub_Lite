@@ -18,6 +18,7 @@ namespace PS.OrderService.UnitTests.Application.CQRS.Queries.GetAllOrdersByUserl
         [Fact]
         public async Task Handle_UserHasOrders_ShouldReturnOrderResponses()
         {
+            // Arrange
             var userId = Guid.NewGuid();
 
             var orders = new List<Order>
@@ -33,8 +34,10 @@ namespace PS.OrderService.UnitTests.Application.CQRS.Queries.GetAllOrdersByUserl
             var handler = CreateHandler();
             var query = new GetAllOrdersByUserIdQuery(userId);
 
+            // Act
             var result = await handler.Handle(query, default);
 
+            // Assert
             Assert.NotNull(result);
             Assert.Equal(2, result.Count());
 

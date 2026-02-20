@@ -45,5 +45,27 @@ namespace PS.OrderService.UnitTests.Application.CQRS.Queries.GetAllOrdersByUserl
                 r.GetAllByUserIdAsync(userId, It.IsAny<CancellationToken>()),
                 Times.Once);
         }
+
+        [Fact]
+        public async Task Handle_UserHasNoOrders_ShouldReturnEmptyCollection()
+        {
+            var userId = Guid.NewGuid();
+
+            _orderRepositoryMock
+                .Setup(r => r.GetAllByUserIdAsync(userId, It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new List<Order>());
+
+            var handler = CreateHandler();
+            var query = new GetAllOrdersByUserIdQuery(userId);
+
+            var result = await handler.Handle(query, default);
+
+            Assert.NotNull(result);
+            Assert.Empty(result);
+
+            _orderRepositoryMock.Verify(r =>
+                r.GetAllByUserIdAsync(userId, It.IsAny<CancellationToken>()),
+                Times.Once);
+        }
     }
 }

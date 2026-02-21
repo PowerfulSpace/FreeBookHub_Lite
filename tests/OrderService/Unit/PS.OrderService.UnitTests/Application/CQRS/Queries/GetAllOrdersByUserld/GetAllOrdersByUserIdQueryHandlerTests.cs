@@ -49,6 +49,7 @@ namespace PS.OrderService.UnitTests.Application.CQRS.Queries.GetAllOrdersByUserl
         [Fact]
         public async Task Handle_UserHasNoOrders_ShouldReturnEmptyCollection()
         {
+            // Arrange
             var userId = Guid.NewGuid();
 
             _orderRepositoryMock
@@ -58,8 +59,10 @@ namespace PS.OrderService.UnitTests.Application.CQRS.Queries.GetAllOrdersByUserl
             var handler = CreateHandler();
             var query = new GetAllOrdersByUserIdQuery(userId);
 
+            // Act
             var result = await handler.Handle(query, default);
 
+            // Assert
             Assert.NotNull(result);
             Assert.Empty(result);
 

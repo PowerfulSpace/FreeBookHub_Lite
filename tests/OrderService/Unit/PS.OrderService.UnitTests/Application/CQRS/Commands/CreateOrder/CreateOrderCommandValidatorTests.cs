@@ -1,4 +1,5 @@
-﻿using PS.OrderService.Application.CQRS.Commands.CreateOrder;
+﻿using FluentValidation.TestHelper;
+using PS.OrderService.Application.CQRS.Commands.CreateOrder;
 using PS.OrderService.Application.DTOs;
 
 namespace PS.OrderService.UnitTests.Application.CQRS.Commands.CreateOrder
@@ -21,5 +22,18 @@ namespace PS.OrderService.UnitTests.Application.CQRS.Commands.CreateOrder
                 }
             }
         };
+
+        [Fact]
+        public void Should_Have_Error_When_UserId_Is_Empty()
+        {
+            var command = ValidCommand();
+            command.UserId = Guid.Empty;
+
+            var result = _validator.TestValidate(command);
+
+            result.ShouldHaveValidationErrorFor(x => x.UserId);
+        }
+
     }
 }
+

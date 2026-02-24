@@ -37,6 +37,17 @@ namespace PS.OrderService.UnitTests.Application.CQRS.Commands.CreateOrder
             result.ShouldHaveValidationErrorFor(x => x.UserId);
         }
 
+        [Fact]
+        public void Should_Have_Error_When_ShippingAddress_Is_Empty()
+        {
+            var command = ValidCommand();
+            command.ShippingAddress = string.Empty;
+
+            var result = _validator.TestValidate(command);
+
+            result.ShouldHaveValidationErrorFor(x => x.ShippingAddress);
+        }
+
     }
 }
 

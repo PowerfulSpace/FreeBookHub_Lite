@@ -51,6 +51,17 @@ namespace PS.OrderService.UnitTests.Application.CQRS.Commands.CreateOrder
             result.ShouldHaveValidationErrorFor(x => x.ShippingAddress);
         }
 
+        [Fact]
+        public void Should_Have_Error_When_ShippingAddress_Too_Long()
+        {
+            var command = ValidCommand();
+            command.ShippingAddress = new string('A', 201);
+
+            var result = _validator.TestValidate(command);
+
+            result.ShouldHaveValidationErrorFor(x => x.ShippingAddress);
+        }
+
     }
 }
 

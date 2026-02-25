@@ -40,11 +40,14 @@ namespace PS.OrderService.UnitTests.Application.CQRS.Commands.CreateOrder
         [Fact]
         public void Should_Have_Error_When_ShippingAddress_Is_Empty()
         {
+            // Arrange
             var command = ValidCommand();
             command.ShippingAddress = string.Empty;
 
+            // Act
             var result = _validator.TestValidate(command);
 
+            // Assert
             result.ShouldHaveValidationErrorFor(x => x.ShippingAddress);
         }
 

@@ -68,11 +68,14 @@ namespace PS.OrderService.UnitTests.Application.CQRS.Commands.CreateOrder
         [Fact]
         public void Should_Have_Error_When_Items_Is_Empty()
         {
+            // Arrange
             var command = ValidCommand();
             command.Items.Clear();
 
+            // Act
             var result = _validator.TestValidate(command);
 
+            // Assert
             result.ShouldHaveValidationErrorFor(x => x.Items);
         }
 

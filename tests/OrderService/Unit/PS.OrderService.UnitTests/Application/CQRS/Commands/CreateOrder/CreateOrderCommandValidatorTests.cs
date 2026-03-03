@@ -82,11 +82,14 @@ namespace PS.OrderService.UnitTests.Application.CQRS.Commands.CreateOrder
         [Fact]
         public void Should_Have_Error_When_Item_Is_Invalid()
         {
+            // Arrange
             var command = ValidCommand();
             command.Items[0].Quantity = 0;
 
+            // Act
             var result = _validator.TestValidate(command);
 
+            // Assert
             result.ShouldHaveAnyValidationError();
         }
     }

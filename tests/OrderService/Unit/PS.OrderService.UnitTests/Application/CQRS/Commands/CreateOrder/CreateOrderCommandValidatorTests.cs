@@ -92,6 +92,16 @@ namespace PS.OrderService.UnitTests.Application.CQRS.Commands.CreateOrder
             // Assert
             result.ShouldHaveAnyValidationError();
         }
+
+        [Fact]
+        public void Should_Not_Have_Error_When_Command_Is_Valid()
+        {
+            var command = ValidCommand();
+
+            var result = _validator.TestValidate(command);
+
+            result.ShouldNotHaveAnyValidationErrors();
+        }
     }
 }
 

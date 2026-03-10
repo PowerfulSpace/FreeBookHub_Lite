@@ -107,4 +107,3 @@ namespace PS.OrderService.UnitTests.Application.CQRS.Commands.CreateOrder
         }
     }
 }
-

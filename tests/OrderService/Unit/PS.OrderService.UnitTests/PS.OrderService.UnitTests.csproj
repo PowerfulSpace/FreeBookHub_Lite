@@ -26,7 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Infrastructure\Http\Handlers\" />
     <Folder Include="Infrastructure\Security\" />
   </ItemGroup>
 

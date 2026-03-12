@@ -25,6 +25,7 @@ namespace PS.OrderService.UnitTests.Infrastructure.Caching.Redis
         [Fact]
         public async Task IsDuplicateAsync_ShouldReturnFalse_WhenKeyIsNew()
         {
+            // Arrange
             var service = CreateService();
 
             _databaseMock
@@ -36,8 +37,10 @@ namespace PS.OrderService.UnitTests.Infrastructure.Caching.Redis
                     CommandFlags.None))
                 .ReturnsAsync(true);
 
+            // Act
             var result = await service.IsDuplicateAsync("event-key", TimeSpan.FromMinutes(5), default);
 
+            // Assert
             Assert.False(result);
         }
     }

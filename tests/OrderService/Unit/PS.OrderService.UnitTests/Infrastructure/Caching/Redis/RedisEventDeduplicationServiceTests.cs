@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Moq;
+using PS.OrderService.Domain.Entities;
 using PS.OrderService.Infrastructure.Caching.Redis;
 using StackExchange.Redis;
 
@@ -43,5 +44,26 @@ namespace PS.OrderService.UnitTests.Infrastructure.Caching.Redis
             // Assert
             Assert.False(result);
         }
+
+        [Fact]
+        public async Task IsDuplicateAsync_ShouldReturnTrue_WhenKeyAlreadyExists()
+        {
+            var service = CreateService();
+
+            _databaseMock
+                .Setup(db => db.StringSetAsync(
+                    It.IsAny<RedisKey>(),
+                    It.IsAny<RedisValue>(),
+                    It.IsAny<TimeSpan?>(),
+                    When.NotExists,
+                    CommandFlags.None))
+                .ReturnsAsync(false);
+
+            var result = await service.IsDuplicateAsync("event-key", TimeSpan.FromMinutes(5), default);
+
+            Assert.True(result);
+        }
+
     }
 }
+

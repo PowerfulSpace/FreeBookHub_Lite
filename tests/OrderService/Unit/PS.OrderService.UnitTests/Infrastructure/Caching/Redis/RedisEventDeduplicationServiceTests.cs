@@ -67,6 +67,24 @@ namespace PS.OrderService.UnitTests.Infrastructure.Caching.Redis
             Assert.True(result);
         }
 
+        [Fact]
+        public async Task IsDuplicateAsync_ShouldThrowException_WhenRedisFails()
+        {
+            var service = CreateService();
+
+            _databaseMock
+                .Setup(db => db.StringSetAsync(
+                    It.IsAny<RedisKey>(),
+                    It.IsAny<RedisValue>(),
+                    It.IsAny<TimeSpan?>(),
+                    When.NotExists,
+                    CommandFlags.None))
+                .ThrowsAsync(new RedisConnectionException(ConnectionFailureType.SocketFailure, "Redis down"));
+
+            await Assert.ThrowsAsync<Exception>(() =>
+                service.IsDuplicateAsync("event-key", TimeSpan.FromMinutes(5), default));
+        }
+
     }
 }
 

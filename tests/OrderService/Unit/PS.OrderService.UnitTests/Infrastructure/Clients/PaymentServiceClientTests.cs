@@ -34,6 +34,7 @@ namespace PS.OrderService.UnitTests.Infrastructure.Clients
         [Fact]
         public async Task CreatePaymentAsync_ShouldSucceed_WhenResponseIsSuccess()
         {
+            // Arrange
             var response = new HttpResponseMessage(HttpStatusCode.OK);
 
             var client = CreateClient(response);
@@ -45,7 +46,11 @@ namespace PS.OrderService.UnitTests.Infrastructure.Clients
                 Amount = 100m
             };
 
+            // Act
             await client.CreatePaymentAsync(request, default);
+
+            // Assert
+            // если исключения нет — тест успешен
         }
     }
 }

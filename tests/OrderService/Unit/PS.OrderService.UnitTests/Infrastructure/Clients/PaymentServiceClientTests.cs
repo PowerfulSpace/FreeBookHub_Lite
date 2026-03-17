@@ -2,6 +2,7 @@
 using Moq;
 using Moq.Protected;
 using PS.OrderService.Application.DTOs;
+using PS.OrderService.Domain.Exceptions.Payment;
 using PS.OrderService.Infrastructure.Clients;
 using System.Net;
 
@@ -51,6 +52,30 @@ namespace PS.OrderService.UnitTests.Infrastructure.Clients
 
             // Assert
             // если исключения нет — тест успешен
+        }
+
+        [Fact]
+        public async Task CreatePaymentAsync_ShouldThrowPaymentFailedException_WhenResponseIsNotSuccess()
+        {
+            var response = new HttpResponseMessage(HttpStatusCode.BadRequest)
+            {
+                Content = new StringContent("Payment failed")
+            };
+
+            var client = CreateClient(response);
+
+            var request = new CreatePaymentRequest
+            {
+                OrderId = Guid.NewGuid(),
+                UserId = Guid.NewGuid(),
+                Amount = 50m
+            };
+
+            var exception = await Assert.ThrowsAsync<PaymentFailedException>(() =>
+                client.CreatePaymentAsync(request, default));
+
+            Assert.Equal((int)HttpStatusCode.BadRequest, exception.StatusCode);
+            Assert.Contains("Payment failed", exception.Message);
         }
     }
 }

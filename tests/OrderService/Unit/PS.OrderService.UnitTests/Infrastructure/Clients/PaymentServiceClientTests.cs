@@ -1,7 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
 using Moq;
 using Moq.Protected;
+using PS.OrderService.Application.DTOs;
 using PS.OrderService.Infrastructure.Clients;
+using System.Net;
 
 namespace PS.OrderService.UnitTests.Infrastructure.Clients
 {
@@ -27,6 +29,23 @@ namespace PS.OrderService.UnitTests.Infrastructure.Clients
             };
 
             return new PaymentServiceClient(httpClient, _loggerMock.Object);
+        }
+
+        [Fact]
+        public async Task CreatePaymentAsync_ShouldSucceed_WhenResponseIsSuccess()
+        {
+            var response = new HttpResponseMessage(HttpStatusCode.OK);
+
+            var client = CreateClient(response);
+
+            var request = new CreatePaymentRequest
+            {
+                OrderId = Guid.NewGuid(),
+                UserId = Guid.NewGuid(),
+                Amount = 100m
+            };
+
+            await client.CreatePaymentAsync(request, default);
         }
     }
 }

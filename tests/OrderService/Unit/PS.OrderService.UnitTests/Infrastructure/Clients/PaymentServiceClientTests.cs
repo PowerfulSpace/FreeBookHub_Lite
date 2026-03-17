@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PS.OrderService.UnitTests.Infrastructure.Clients
+﻿namespace PS.OrderService.UnitTests.Infrastructure.Clients
 {
-    internal class PaymentServiceClientTests
+    public class PaymentServiceClientTests
     {
     }
 }

@@ -57,6 +57,7 @@ namespace PS.OrderService.UnitTests.Infrastructure.Clients
         [Fact]
         public async Task CreatePaymentAsync_ShouldThrowPaymentFailedException_WhenResponseIsNotSuccess()
         {
+            // Arrange
             var response = new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
                 Content = new StringContent("Payment failed")
@@ -71,6 +72,7 @@ namespace PS.OrderService.UnitTests.Infrastructure.Clients
                 Amount = 50m
             };
 
+            // Act & Assert
             var exception = await Assert.ThrowsAsync<PaymentFailedException>(() =>
                 client.CreatePaymentAsync(request, default));
 
@@ -79,3 +81,4 @@ namespace PS.OrderService.UnitTests.Infrastructure.Clients
         }
     }
 }
+

@@ -79,6 +79,46 @@ namespace PS.OrderService.UnitTests.Infrastructure.Clients
             Assert.Equal((int)HttpStatusCode.BadRequest, exception.StatusCode);
             Assert.Contains("Payment failed", exception.Message);
         }
+
+        [Fact]
+        public async Task CreatePaymentAsync_ShouldSendPostRequest_ToCorrectEndpoint()
+        {
+            var handlerMock = new Mock<HttpMessageHandler>();
+
+            HttpRequestMessage? capturedRequest = null;
+
+            handlerMock
+                .Protected()
+                .Setup<Task<HttpResponseMessage>>(
+                    "SendAsync",
+                    It.IsAny<HttpRequestMessage>(),
+                    It.IsAny<CancellationToken>())
+                .Callback<HttpRequestMessage, CancellationToken>((req, _) =>
+                {
+                    capturedRequest = req;
+                })
+                .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK));
+
+            var httpClient = new HttpClient(handlerMock.Object)
+            {
+                BaseAddress = new Uri("http://localhost")
+            };
+
+            var client = new PaymentServiceClient(httpClient, _loggerMock.Object);
+
+            var request = new CreatePaymentRequest
+            {
+                OrderId = Guid.NewGuid(),
+                UserId = Guid.NewGuid(),
+                Amount = 10m
+            };
+
+            await client.CreatePaymentAsync(request, default);
+
+            Assert.NotNull(capturedRequest);
+            Assert.Equal(HttpMethod.Post, capturedRequest!.Method);
+            Assert.Equal("/api/payment", capturedRequest.RequestUri!.AbsolutePath);
+        }
     }
 }
 

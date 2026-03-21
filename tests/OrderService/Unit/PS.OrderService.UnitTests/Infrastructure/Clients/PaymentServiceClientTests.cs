@@ -83,6 +83,7 @@ namespace PS.OrderService.UnitTests.Infrastructure.Clients
         [Fact]
         public async Task CreatePaymentAsync_ShouldSendPostRequest_ToCorrectEndpoint()
         {
+            // Arrange
             var handlerMock = new Mock<HttpMessageHandler>();
 
             HttpRequestMessage? capturedRequest = null;
@@ -113,8 +114,10 @@ namespace PS.OrderService.UnitTests.Infrastructure.Clients
                 Amount = 10m
             };
 
+            // Act
             await client.CreatePaymentAsync(request, default);
 
+            // Assert
             Assert.NotNull(capturedRequest);
             Assert.Equal(HttpMethod.Post, capturedRequest!.Method);
             Assert.Equal("/api/payment", capturedRequest.RequestUri!.AbsolutePath);

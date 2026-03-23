@@ -43,5 +43,20 @@ namespace PS.OrderService.UnitTests.Infrastructure.Http.Handlers
             capturedRequest = localRequest;
             return client;
         }
+
+        [Fact]
+        public async Task SendAsync_ShouldAddHeader_WhenSecretKeyExists()
+        {
+            var client = CreateClient("my-secret", out var capturedRequest);
+
+            await client.GetAsync("/test");
+
+            Assert.NotNull(capturedRequest);
+            Assert.True(capturedRequest!.Headers.Contains("X-Internal-Key"));
+
+            var headerValue = capturedRequest.Headers.GetValues("X-Internal-Key").First();
+            Assert.Equal("my-secret", headerValue);
+        }
+
     }
 }

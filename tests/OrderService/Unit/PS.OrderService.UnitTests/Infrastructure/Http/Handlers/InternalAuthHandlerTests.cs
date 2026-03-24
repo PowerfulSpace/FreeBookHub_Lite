@@ -47,10 +47,13 @@ namespace PS.OrderService.UnitTests.Infrastructure.Http.Handlers
         [Fact]
         public async Task SendAsync_ShouldAddHeader_WhenSecretKeyExists()
         {
+            // Arrange
             var client = CreateClient("my-secret", out var capturedRequest);
 
+            // Act
             await client.GetAsync("/test");
 
+            // Assert
             Assert.NotNull(capturedRequest);
             Assert.True(capturedRequest!.Headers.Contains("X-Internal-Key"));
 
@@ -60,3 +63,4 @@ namespace PS.OrderService.UnitTests.Infrastructure.Http.Handlers
 
     }
 }
+

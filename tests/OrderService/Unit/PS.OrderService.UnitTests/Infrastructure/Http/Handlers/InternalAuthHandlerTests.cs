@@ -64,10 +64,13 @@ namespace PS.OrderService.UnitTests.Infrastructure.Http.Handlers
         [Fact]
         public async Task SendAsync_ShouldNotAddHeader_WhenSecretKeyIsNull()
         {
+            // Arrange
             var client = CreateClient(null, out var capturedRequest);
 
+            // Act
             await client.GetAsync("/test");
 
+            // Assert
             Assert.NotNull(capturedRequest);
             Assert.False(capturedRequest!.Headers.Contains("X-Internal-Key"));
         }

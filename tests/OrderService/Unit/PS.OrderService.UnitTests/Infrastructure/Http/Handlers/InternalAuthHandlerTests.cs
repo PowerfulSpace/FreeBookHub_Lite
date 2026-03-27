@@ -74,6 +74,42 @@ namespace PS.OrderService.UnitTests.Infrastructure.Http.Handlers
             Assert.NotNull(capturedRequest);
             Assert.False(capturedRequest!.Headers.Contains("X-Internal-Key"));
         }
+
+        [Fact]
+        public async Task SendAsync_ShouldCallInnerHandler()
+        {
+            var configMock = new Mock<IConfiguration>();
+            configMock.Setup(c => c["InternalApi:SecretKey"]).Returns("secret");
+
+            var innerHandlerMock = new Mock<HttpMessageHandler>();
+
+            innerHandlerMock
+                .Protected()
+                .Setup<Task<HttpResponseMessage>>(
+                    "SendAsync",
+                    It.IsAny<HttpRequestMessage>(),
+                    It.IsAny<CancellationToken>())
+                .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK))
+                .Verifiable();
+
+            var handler = new InternalAuthHandler(configMock.Object)
+            {
+                InnerHandler = innerHandlerMock.Object
+            };
+
+            var client = new HttpClient(handler)
+            {
+                BaseAddress = new Uri("http://localhost")
+            };
+
+            await client.GetAsync("/test");
+
+            innerHandlerMock.Protected().Verify(
+                "SendAsync",
+                Times.Once(),
+                ItExpr.IsAny<HttpRequestMessage>(),
+                ItExpr.IsAny<CancellationToken>());
+        }
     }
 }
 

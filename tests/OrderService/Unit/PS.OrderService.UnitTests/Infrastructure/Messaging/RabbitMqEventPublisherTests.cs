@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Moq;
 using PS.OrderService.Common.Configuration;
 using PS.OrderService.Infrastructure.Messaging;
 using RabbitMQ.Client;
@@ -9,8 +10,29 @@ namespace PS.OrderService.UnitTests.Infrastructure.Messaging
 {
     public class RabbitMqEventPublisherTests
     {
+        private readonly Mock<ILogger<RabbitMqEventPublisher>> _loggerMock = new();
+        private readonly Mock<IModel> _channelMock = new();
+        private readonly Mock<IConnection> _connectionMock = new();
 
-        
+        private RabbitMqEventPublisher CreatePublisher()
+        {
+            var config = Options.Create(new RabbitMqConfig
+            {
+                HostName = "localhost",
+                ExchangeName = "test.exchange"
+            });
+
+            _connectionMock
+                .Setup(c => c.CreateModel())
+                .Returns(_channelMock.Object);
+
+            return new TestableRabbitMqEventPublisher(
+                _loggerMock.Object,
+                config,
+                _connectionMock.Object,
+                _channelMock.Object);
+        }
+
     }
 
 

@@ -33,6 +33,37 @@ namespace PS.OrderService.UnitTests.Infrastructure.Messaging
                 _channelMock.Object);
         }
 
+        [Fact]
+        public async Task PublishAsync_ShouldPublishMessage()
+        {
+            var publisher = CreatePublisher();
+
+            var testEvent = new
+            {
+                OrderId = Guid.NewGuid(),
+                Amount = 100
+            };
+
+            await publisher.PublishAsync(testEvent, "order.created");
+
+            _channelMock.Verify(c => c.BasicPublish(
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<IBasicProperties>(),
+                It.IsAny<byte[]>()),
+                Times.Once);
+
+            _loggerMock.Verify(
+                l => l.Log(
+                    LogLevel.Information,
+                    It.IsAny<EventId>(),
+                    It.IsAny<It.IsAnyType>(),
+                    It.IsAny<Exception?>(),
+                    (Func<It.IsAnyType, Exception?, string>)It.IsAny<object>()),
+                Times.AtLeastOnce);
+        }
+
+
     }
 
 

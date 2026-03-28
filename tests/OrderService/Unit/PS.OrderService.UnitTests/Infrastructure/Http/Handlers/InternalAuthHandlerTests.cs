@@ -78,6 +78,7 @@ namespace PS.OrderService.UnitTests.Infrastructure.Http.Handlers
         [Fact]
         public async Task SendAsync_ShouldCallInnerHandler()
         {
+            // Arrange
             var configMock = new Mock<IConfiguration>();
             configMock.Setup(c => c["InternalApi:SecretKey"]).Returns("secret");
 
@@ -102,8 +103,10 @@ namespace PS.OrderService.UnitTests.Infrastructure.Http.Handlers
                 BaseAddress = new Uri("http://localhost")
             };
 
+            // Act
             await client.GetAsync("/test");
 
+            // Assert
             innerHandlerMock.Protected().Verify(
                 "SendAsync",
                 Times.Once(),

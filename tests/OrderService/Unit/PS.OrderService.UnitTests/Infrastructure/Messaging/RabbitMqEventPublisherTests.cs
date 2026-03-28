@@ -36,6 +36,7 @@ namespace PS.OrderService.UnitTests.Infrastructure.Messaging
         [Fact]
         public async Task PublishAsync_ShouldPublishMessage()
         {
+            // Arrange
             var publisher = CreatePublisher();
 
             var testEvent = new
@@ -44,8 +45,10 @@ namespace PS.OrderService.UnitTests.Infrastructure.Messaging
                 Amount = 100
             };
 
+            // Act
             await publisher.PublishAsync(testEvent, "order.created");
 
+            // Assert
             _channelMock.Verify(c => c.BasicPublish(
                 It.IsAny<string>(),
                 It.IsAny<string>(),

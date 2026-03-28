@@ -1,15 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Moq;
 using PS.OrderService.Common.Configuration;
 using PS.OrderService.Infrastructure.Messaging;
 using RabbitMQ.Client;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PS.OrderService.UnitTests.Infrastructure.Messaging
 {

@@ -66,6 +66,31 @@ namespace PS.OrderService.UnitTests.Infrastructure.Messaging
                 Times.AtLeastOnce);
         }
 
+        [Fact]
+        public async Task PublishAsync_WhenException_ShouldLogError_AndThrow()
+        {
+            var publisher = CreatePublisher();
+
+            _channelMock
+                .Setup(c => c.BasicPublish(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<IBasicProperties>(),
+                    It.IsAny<byte[]>()))
+                .Throws(new Exception("Rabbit error"));
+
+            await Assert.ThrowsAsync<Exception>(() =>
+                publisher.PublishAsync(new { }, "order.created"));
+
+            _loggerMock.Verify(
+                l => l.Log(
+                    LogLevel.Error,
+                    It.IsAny<EventId>(),
+                    It.IsAny<It.IsAnyType>(),
+                    It.IsAny<Exception>(),
+                    (Func<It.IsAnyType, Exception?, string>)It.IsAny<object>()),
+                Times.Once);
+        }
 
     }
 

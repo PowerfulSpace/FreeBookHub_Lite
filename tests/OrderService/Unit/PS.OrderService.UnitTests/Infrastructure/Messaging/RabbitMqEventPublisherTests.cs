@@ -69,6 +69,7 @@ namespace PS.OrderService.UnitTests.Infrastructure.Messaging
         [Fact]
         public async Task PublishAsync_WhenException_ShouldLogError_AndThrow()
         {
+            // Arrange
             var publisher = CreatePublisher();
 
             _channelMock
@@ -79,6 +80,7 @@ namespace PS.OrderService.UnitTests.Infrastructure.Messaging
                     It.IsAny<byte[]>()))
                 .Throws(new Exception("Rabbit error"));
 
+            // Act & Assert
             await Assert.ThrowsAsync<Exception>(() =>
                 publisher.PublishAsync(new { }, "order.created"));
 
@@ -114,3 +116,4 @@ namespace PS.OrderService.UnitTests.Infrastructure.Messaging
         }
     }
 }
+

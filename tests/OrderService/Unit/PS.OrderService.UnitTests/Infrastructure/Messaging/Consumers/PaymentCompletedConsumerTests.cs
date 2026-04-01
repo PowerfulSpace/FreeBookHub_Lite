@@ -54,6 +54,7 @@ namespace PS.OrderService.UnitTests.Infrastructure.Messaging.Consumers
         [Fact]
         public async Task Consumer_ShouldAck_WhenDuplicateDetected()
         {
+            // Arrange
             var consumer = CreateConsumer();
 
             _dedupMock
@@ -76,18 +77,22 @@ namespace PS.OrderService.UnitTests.Infrastructure.Messaging.Consumers
 
             var eventingConsumer = new EventingBasicConsumer(_channelMock.Object);
 
+            // перехватываем обработчик
             Func<object, BasicDeliverEventArgs, Task>? handler = null;
             eventingConsumer.Received += (s, e) =>
             {
                 handler?.Invoke(s, e);
             };
 
+            // Act
             await InvokeConsumer(consumer, ea);
 
+            // Assert
             _channelMock.Verify(c => c.BasicAck(1, false), Times.Once);
             _mediatorMock.Verify(m => m.Send(It.IsAny<IRequest<Unit>>(), It.IsAny<CancellationToken>()), Times.Never);
         }
 
+        // helper для вызова private логики через ExecuteAsync
         private async Task InvokeConsumer(PaymentCompletedConsumer consumer, BasicDeliverEventArgs ea)
         {
             var executeMethod = typeof(PaymentCompletedConsumer)
@@ -131,6 +136,4 @@ namespace PS.OrderService.UnitTests.Infrastructure.Messaging.Consumers
         }
     }
 }
-
-
 

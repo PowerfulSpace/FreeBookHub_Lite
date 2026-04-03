@@ -18,6 +18,7 @@ namespace PS.OrderService.UnitTests.Infrastructure.Security
         [Fact]
         public void GetAccessToken_ShouldReturnToken_WhenAuthorizationHeaderExists()
         {
+            // Arrange
             var context = new DefaultHttpContext();
             context.Request.Headers["Authorization"] = "Bearer test-token";
 
@@ -25,8 +26,10 @@ namespace PS.OrderService.UnitTests.Infrastructure.Security
                 .Setup(x => x.HttpContext)
                 .Returns(context);
 
+            // Act
             var result = _provider.GetAccessToken();
 
+            // Assert
             Assert.Equal("Bearer test-token", result);
         }
 

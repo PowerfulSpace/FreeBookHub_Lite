@@ -33,5 +33,17 @@ namespace PS.OrderService.UnitTests.Infrastructure.Security
             Assert.Equal("Bearer test-token", result);
         }
 
+        [Fact]
+        public void GetAccessToken_ShouldReturnNull_WhenHttpContextIsNull()
+        {
+            _httpContextAccessorMock
+                .Setup(x => x.HttpContext)
+                .Returns((HttpContext?)null);
+
+            var result = _provider.GetAccessToken();
+
+            Assert.Null(result);
+        }
+
     }
 }

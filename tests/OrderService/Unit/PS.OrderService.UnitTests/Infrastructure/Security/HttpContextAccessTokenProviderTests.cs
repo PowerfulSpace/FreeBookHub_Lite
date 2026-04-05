@@ -36,12 +36,15 @@ namespace PS.OrderService.UnitTests.Infrastructure.Security
         [Fact]
         public void GetAccessToken_ShouldReturnNull_WhenHttpContextIsNull()
         {
+            // Arrange
             _httpContextAccessorMock
                 .Setup(x => x.HttpContext)
                 .Returns((HttpContext?)null);
 
+            // Act
             var result = _provider.GetAccessToken();
 
+            // Assert
             Assert.Null(result);
         }
 

@@ -48,5 +48,18 @@ namespace PS.OrderService.UnitTests.Infrastructure.Security
             Assert.Null(result);
         }
 
+        [Fact]
+        public void GetAccessToken_ShouldReturnEmptyString_WhenAuthorizationHeaderMissing()
+        {
+            var context = new DefaultHttpContext();
+
+            _httpContextAccessorMock
+                .Setup(x => x.HttpContext)
+                .Returns(context);
+
+            var result = _provider.GetAccessToken();
+
+            Assert.Equal(string.Empty, result);
+        }
     }
 }

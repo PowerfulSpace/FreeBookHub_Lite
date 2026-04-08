@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.DependencyInjection;
+using PS.OrderService.Infrastructure.Persistence;
 
 namespace PS.OrderService.UnitTests.Infrastructure.StartupTasks
 {
-    internal class DatabaseMigrationStartupTaskTests
+    public class DatabaseMigrationStartupTaskTests
     {
+       
     }
 }

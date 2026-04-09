@@ -9,4 +9,14 @@ namespace PS.OrderService.UnitTests.Infrastructure.StartupTasks
     {
         
     }
+
+    public class TestableDatabaseMigrationStartupTask : DatabaseMigrationStartupTask
+    {
+        public TestableDatabaseMigrationStartupTask(IServiceProvider serviceProvider)
+            : base(serviceProvider)
+        {
+        }
+
+        public Task ExecutePublicAsync() => ExecuteAsync();
+    }
 }

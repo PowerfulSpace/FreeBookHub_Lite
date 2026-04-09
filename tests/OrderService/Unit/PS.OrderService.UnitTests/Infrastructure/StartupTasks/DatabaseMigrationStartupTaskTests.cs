@@ -13,7 +13,7 @@ namespace PS.OrderService.UnitTests.Infrastructure.StartupTasks
             var services = new ServiceCollection();
 
             services.AddDbContext<OrderDbContext>(options =>
-                options.UseInMemoryDatabase("T"));
+                options.UseInMemoryDatabase("TestDb1"));
 
             var provider = services.BuildServiceProvider();
 

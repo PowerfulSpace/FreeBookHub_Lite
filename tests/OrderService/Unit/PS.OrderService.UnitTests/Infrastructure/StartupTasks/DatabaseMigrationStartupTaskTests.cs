@@ -10,6 +10,7 @@ namespace PS.OrderService.UnitTests.Infrastructure.StartupTasks
         [Fact]
         public async Task ExecuteAsync_ShouldCompleteSuccessfully()
         {
+            // Arrange
             var services = new ServiceCollection();
 
             services.AddDbContext<OrderDbContext>(options =>
@@ -19,8 +20,10 @@ namespace PS.OrderService.UnitTests.Infrastructure.StartupTasks
 
             var task = new TestableDatabaseMigrationStartupTask(provider);
 
+            // Act
             var exception = await Record.ExceptionAsync(() => task.ExecutePublicAsync());
 
+            // Assert
             Assert.Null(exception);
         }
     }
@@ -35,3 +38,4 @@ namespace PS.OrderService.UnitTests.Infrastructure.StartupTasks
         public Task ExecutePublicAsync() => ExecuteAsync();
     }
 }
+

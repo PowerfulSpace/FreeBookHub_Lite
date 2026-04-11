@@ -38,4 +38,3 @@ namespace PS.OrderService.UnitTests.Infrastructure.StartupTasks
         public Task ExecutePublicAsync() => ExecuteAsync();
     }
 }
-

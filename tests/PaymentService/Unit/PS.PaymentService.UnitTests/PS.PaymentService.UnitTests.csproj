@@ -20,4 +20,15 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Application\" />
+    <Folder Include="Infrastructure\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\src\Backend\PS.FreeBookHub_Lite\PaymentService\Application\PS.PaymentService.Application\PS.PaymentService.Application.csproj" />
+    <ProjectReference Include="..\..\..\..\src\Backend\PS.FreeBookHub_Lite\PaymentService\Domain\PS.PaymentService.Domain\PS.PaymentService.Domain.csproj" />
+    <ProjectReference Include="..\..\..\..\src\Backend\PS.FreeBookHub_Lite\PaymentService\Infrastructure\PS.PaymentService.Infrastructure\PS.PaymentService.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -25,6 +25,18 @@ namespace PS.PaymentService.UnitTests.Domain
             Assert.True(payment.CreatedAt <= DateTime.UtcNow);
         }
 
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-10)]
+        public void Constructor_ShouldThrowArgumentException_WhenAmountIsInvalid(decimal amount)
+        {
+            var orderId = Guid.NewGuid();
+            var userId = Guid.NewGuid();
+
+            Assert.Throws<ArgumentException>(() =>
+                new Payment(orderId, userId, amount));
+        }
+
     }
 }
 

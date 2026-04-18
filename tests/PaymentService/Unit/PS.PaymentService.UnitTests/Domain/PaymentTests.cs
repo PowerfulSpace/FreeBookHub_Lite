@@ -8,12 +8,15 @@ namespace PS.PaymentService.UnitTests.Domain
         [Fact]
         public void Constructor_ShouldCreatePayment_WhenDataIsValid()
         {
+            // Arrange
             var orderId = Guid.NewGuid();
             var userId = Guid.NewGuid();
             var amount = 100m;
 
+            // Act
             var payment = new Payment(orderId, userId, amount);
 
+            // Assert
             Assert.Equal(orderId, payment.OrderId);
             Assert.Equal(userId, payment.UserId);
             Assert.Equal(amount, payment.Amount);
@@ -24,3 +27,4 @@ namespace PS.PaymentService.UnitTests.Domain
 
     }
 }
+

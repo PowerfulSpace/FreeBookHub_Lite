@@ -30,9 +30,11 @@ namespace PS.PaymentService.UnitTests.Domain
         [InlineData(-10)]
         public void Constructor_ShouldThrowArgumentException_WhenAmountIsInvalid(decimal amount)
         {
+            // Arrange
             var orderId = Guid.NewGuid();
             var userId = Guid.NewGuid();
 
+            // Act & Assert
             Assert.Throws<ArgumentException>(() =>
                 new Payment(orderId, userId, amount));
         }

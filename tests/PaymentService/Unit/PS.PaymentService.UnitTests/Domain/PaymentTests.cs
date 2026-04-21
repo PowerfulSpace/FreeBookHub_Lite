@@ -39,6 +39,16 @@ namespace PS.PaymentService.UnitTests.Domain
                 new Payment(orderId, userId, amount));
         }
 
+        [Fact]
+        public void MarkAsCompleted_ShouldSetStatusToCompleted_WhenPending()
+        {
+            var payment = new Payment(Guid.NewGuid(), Guid.NewGuid(), 100);
+
+            payment.MarkAsCompleted();
+
+            Assert.Equal(PaymentStatus.Completed, payment.Status);
+        }
+
     }
 }
 

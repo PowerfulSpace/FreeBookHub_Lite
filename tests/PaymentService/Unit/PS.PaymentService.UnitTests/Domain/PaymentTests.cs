@@ -1,5 +1,6 @@
 ﻿using PS.PaymentService.Domain.Entities;
 using PS.PaymentService.Domain.Enums;
+using PS.PaymentService.Domain.Exceptions.Payment;
 
 namespace PS.PaymentService.UnitTests.Domain
 {
@@ -63,6 +64,16 @@ namespace PS.PaymentService.UnitTests.Domain
 
             // Assert
             Assert.Equal(PaymentStatus.Failed, payment.Status);
+        }
+
+        [Fact]
+        public void MarkAsCompleted_ShouldThrow_WhenStatusIsNotPending()
+        {
+            var payment = new Payment(Guid.NewGuid(), Guid.NewGuid(), 0);
+            payment.MarkAsCompleted();
+
+            Assert.Throws<InvalidPaymentStatusException>(() =>
+                payment.MarkAsCompleted());
         }
 
     }

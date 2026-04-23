@@ -52,6 +52,19 @@ namespace PS.PaymentService.UnitTests.Domain
             Assert.Equal(PaymentStatus.Completed, payment.Status);
         }
 
+        [Fact]
+        public void MarkAsFailed_ShouldSetStatusToFailed_WhenPending()
+        {
+            // Arrange
+            var payment = new Payment(Guid.NewGuid(), Guid.NewGuid(), 100);
+
+            // Act
+            payment.MarkAsFailed();
+
+            // Assert
+            Assert.Equal(PaymentStatus.Failed, payment.Status);
+        }
+
     }
 }
 

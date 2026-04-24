@@ -69,14 +69,15 @@ namespace PS.PaymentService.UnitTests.Domain
         [Fact]
         public void MarkAsCompleted_ShouldThrow_WhenStatusIsNotPending()
         {
+            // Arrange
             var payment = new Payment(Guid.NewGuid(), Guid.NewGuid(), 100);
             payment.MarkAsCompleted(); // статус теперь Completed
 
+            // Act & Assert
             Assert.Throws<InvalidPaymentStatusException>(() =>
                 payment.MarkAsCompleted());
         }
 
     }
 }
-
 

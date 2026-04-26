@@ -83,7 +83,7 @@ namespace PS.PaymentService.UnitTests.Domain
         {
             // Arrange
             var payment = new Payment(Guid.NewGuid(), Guid.NewGuid(), 100);
-            payment.MarkAsFailed(); // статус теперь Failed
+            payment.MarkAsFailed();
 
             // Act & Assert
             Assert.Throws<InvalidPaymentStatusException>(() =>
@@ -92,4 +92,3 @@ namespace PS.PaymentService.UnitTests.Domain
 
     }
 }
-

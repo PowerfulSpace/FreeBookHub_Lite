@@ -71,7 +71,7 @@ namespace PS.PaymentService.UnitTests.Domain
         {
             // Arrange
             var payment = new Payment(Guid.NewGuid(), Guid.NewGuid(), 100);
-            payment.MarkAsCompleted(); // статус теперь Completed
+            payment.MarkAsCompleted();
 
             // Act & Assert
             Assert.Throws<InvalidPaymentStatusException>(() =>

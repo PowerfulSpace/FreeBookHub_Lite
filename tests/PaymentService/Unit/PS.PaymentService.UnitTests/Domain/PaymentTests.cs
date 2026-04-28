@@ -89,6 +89,5 @@ namespace PS.PaymentService.UnitTests.Domain
             Assert.Throws<InvalidPaymentStatusException>(() =>
                 payment.MarkAsFailed());
         }
-
     }
 }

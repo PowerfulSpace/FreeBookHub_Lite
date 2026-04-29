@@ -23,7 +23,10 @@ namespace PS.PaymentService.UnitTests.Domain
             Assert.Equal(amount, payment.Amount);
             Assert.Equal(PaymentStatus.Pending, payment.Status);
             Assert.NotEqual(Guid.Empty, payment.Id);
+
             Assert.True(payment.CreatedAt <= DateTime.UtcNow);
+            //Оставлю проверку 
+            //Assert.True((DateTime.UtcNow - payment.CreatedAt).TotalSeconds < 5);
         }
 
         [Theory]

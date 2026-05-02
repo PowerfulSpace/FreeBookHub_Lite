@@ -2,6 +2,7 @@
 using Moq;
 using PS.PaymentService.Application.CQRS.Queries.GetPaymentById;
 using PS.PaymentService.Application.Interfaces;
+using PS.PaymentService.Domain.Entities;
 
 namespace PS.PaymentService.UnitTests.Application.CQRS.Queries.GetPaymentById
 {
@@ -19,6 +20,27 @@ namespace PS.PaymentService.UnitTests.Application.CQRS.Queries.GetPaymentById
             _handler = new GetPaymentByIdQueryHandler(
                 _repoMock.Object,
                 _loggerMock.Object);
+        }
+
+        [Fact]
+        public async Task Handle_ShouldReturnPaymentResponse_WhenPaymentExistsAndUserIsOwner()
+        {
+            var paymentId = Guid.NewGuid();
+            var userId = Guid.NewGuid();
+
+            var payment = new Payment(paymentId, userId, 100);
+
+            _repoMock
+                .Setup(x => x.GetByIdAsync(paymentId, It.IsAny<CancellationToken>(), true))
+                .ReturnsAsync(payment);
+
+            var query = new GetPaymentByIdQuery(paymentId, userId);
+
+            var result = await _handler.Handle(query, CancellationToken.None);
+
+            Assert.NotNull(result);
+            Assert.Equal(payment.Id, result.Id);
+            Assert.Equal(payment.Amount, result.Amount);
         }
 
     }

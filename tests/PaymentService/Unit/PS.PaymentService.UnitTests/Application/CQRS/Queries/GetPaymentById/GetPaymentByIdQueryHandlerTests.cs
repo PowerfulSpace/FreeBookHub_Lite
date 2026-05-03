@@ -25,6 +25,7 @@ namespace PS.PaymentService.UnitTests.Application.CQRS.Queries.GetPaymentById
         [Fact]
         public async Task Handle_ShouldReturnPaymentResponse_WhenPaymentExistsAndUserIsOwner()
         {
+            // Arrange
             var paymentId = Guid.NewGuid();
             var userId = Guid.NewGuid();
 
@@ -36,8 +37,10 @@ namespace PS.PaymentService.UnitTests.Application.CQRS.Queries.GetPaymentById
 
             var query = new GetPaymentByIdQuery(paymentId, userId);
 
+            // Act
             var result = await _handler.Handle(query, CancellationToken.None);
 
+            // Assert
             Assert.NotNull(result);
             Assert.Equal(payment.Id, result.Id);
             Assert.Equal(payment.Amount, result.Amount);
@@ -45,3 +48,4 @@ namespace PS.PaymentService.UnitTests.Application.CQRS.Queries.GetPaymentById
 
     }
 }
+

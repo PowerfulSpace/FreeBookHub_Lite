@@ -3,6 +3,7 @@ using Moq;
 using PS.PaymentService.Application.CQRS.Queries.GetPaymentById;
 using PS.PaymentService.Application.Interfaces;
 using PS.PaymentService.Domain.Entities;
+using PS.PaymentService.Domain.Exceptions.Payment;
 
 namespace PS.PaymentService.UnitTests.Application.CQRS.Queries.GetPaymentById
 {
@@ -44,6 +45,22 @@ namespace PS.PaymentService.UnitTests.Application.CQRS.Queries.GetPaymentById
             Assert.NotNull(result);
             Assert.Equal(payment.Id, result.Id);
             Assert.Equal(payment.Amount, result.Amount);
+        }
+
+        [Fact]
+        public async Task Handle_ShouldThrowPaymentNotFoundException_WhenPaymentDoesNotExist()
+        {
+            var paymentId = Guid.NewGuid();
+            var userId = Guid.NewGuid();
+
+            _repoMock
+                .Setup(x => x.GetByIdAsync(paymentId, It.IsAny<CancellationToken>(), true))
+                .ReturnsAsync((Payment?)null);
+
+            var query = new GetPaymentByIdQuery(paymentId, userId);
+
+            await Assert.ThrowsAsync<PaymentNotFoundException>(() =>
+                _handler.Handle(query, CancellationToken.None));
         }
 
     }

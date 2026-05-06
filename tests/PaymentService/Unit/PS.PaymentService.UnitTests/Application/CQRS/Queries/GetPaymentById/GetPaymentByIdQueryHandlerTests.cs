@@ -65,6 +65,27 @@ namespace PS.PaymentService.UnitTests.Application.CQRS.Queries.GetPaymentById
                 _handler.Handle(query, CancellationToken.None));
         }
 
+        [Fact]
+        public async Task Handle_ShouldThrowUnauthorizedPaymentAccessException_WhenUserIsNotOwner()
+        {
+            // Arrange
+            var paymentId = Guid.NewGuid();
+            var ownerId = Guid.NewGuid();
+            var anotherUserId = Guid.NewGuid();
+
+            var payment = new Payment(paymentId, ownerId, 100);
+
+            _repoMock
+                .Setup(x => x.GetByIdAsync(paymentId, It.IsAny<CancellationToken>(), true))
+                .ReturnsAsync(payment);
+
+            var query = new GetPaymentByIdQuery(paymentId, anotherUserId);
+
+            // Act & Assert
+            await Assert.ThrowsAsync<UnauthorizedPaymentAccessException>(() =>
+                _handler.Handle(query, CancellationToken.None));
+        }
+
     }
 }
 

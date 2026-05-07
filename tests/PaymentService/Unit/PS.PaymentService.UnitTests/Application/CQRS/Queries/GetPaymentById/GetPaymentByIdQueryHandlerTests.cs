@@ -86,6 +86,27 @@ namespace PS.PaymentService.UnitTests.Application.CQRS.Queries.GetPaymentById
                 _handler.Handle(query, CancellationToken.None));
         }
 
+        [Fact]
+        public async Task Handle_ShouldCallRepositoryWithCorrectParameters()
+        {
+            var paymentId = Guid.NewGuid();
+            var userId = Guid.NewGuid();
+
+            var payment = new Payment(paymentId, userId, 100);
+
+            _repoMock
+                .Setup(x => x.GetByIdAsync(paymentId, It.IsAny<CancellationToken>(), true))
+                .ReturnsAsync(payment);
+
+            var query = new GetPaymentByIdQuery(paymentId, userId);
+
+            await _handler.Handle(query, CancellationToken.None);
+
+            _repoMock.Verify(x =>
+                x.GetByIdAsync(paymentId, It.IsAny<CancellationToken>(), true),
+                Times.Once);
+        }
+
     }
 }
 

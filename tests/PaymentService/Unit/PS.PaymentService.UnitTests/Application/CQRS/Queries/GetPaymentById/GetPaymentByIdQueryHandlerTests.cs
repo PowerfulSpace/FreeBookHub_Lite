@@ -4,6 +4,7 @@ using PS.PaymentService.Application.CQRS.Queries.GetPaymentById;
 using PS.PaymentService.Application.Interfaces;
 using PS.PaymentService.Domain.Entities;
 using PS.PaymentService.Domain.Exceptions.Payment;
+using StackExchange.Redis;
 
 namespace PS.PaymentService.UnitTests.Application.CQRS.Queries.GetPaymentById
 {
@@ -89,6 +90,7 @@ namespace PS.PaymentService.UnitTests.Application.CQRS.Queries.GetPaymentById
         [Fact]
         public async Task Handle_ShouldCallRepositoryWithCorrectParameters()
         {
+            // Arrange
             var paymentId = Guid.NewGuid();
             var userId = Guid.NewGuid();
 
@@ -100,8 +102,10 @@ namespace PS.PaymentService.UnitTests.Application.CQRS.Queries.GetPaymentById
 
             var query = new GetPaymentByIdQuery(paymentId, userId);
 
+            // Act
             await _handler.Handle(query, CancellationToken.None);
 
+            // Assert
             _repoMock.Verify(x =>
                 x.GetByIdAsync(paymentId, It.IsAny<CancellationToken>(), true),
                 Times.Once);

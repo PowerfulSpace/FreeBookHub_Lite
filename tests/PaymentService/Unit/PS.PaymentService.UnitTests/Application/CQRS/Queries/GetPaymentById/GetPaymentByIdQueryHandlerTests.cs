@@ -4,7 +4,6 @@ using PS.PaymentService.Application.CQRS.Queries.GetPaymentById;
 using PS.PaymentService.Application.Interfaces;
 using PS.PaymentService.Domain.Entities;
 using PS.PaymentService.Domain.Exceptions.Payment;
-using StackExchange.Redis;
 
 namespace PS.PaymentService.UnitTests.Application.CQRS.Queries.GetPaymentById
 {
@@ -113,4 +112,3 @@ namespace PS.PaymentService.UnitTests.Application.CQRS.Queries.GetPaymentById
 
     }
 }
-

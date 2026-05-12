@@ -22,7 +22,6 @@
 
   <ItemGroup>
     <Folder Include="Application\CQRS\Commands\ProcessPayment\" />
-    <Folder Include="Application\CQRS\Queries\GetPaymentsByOrderId\" />
     <Folder Include="Infrastructure\" />
   </ItemGroup>
 

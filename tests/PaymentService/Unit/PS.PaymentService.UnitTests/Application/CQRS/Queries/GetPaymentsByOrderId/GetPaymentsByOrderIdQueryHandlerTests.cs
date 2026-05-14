@@ -25,6 +25,7 @@ namespace PS.PaymentService.UnitTests.Application.CQRS.Queries.GetPaymentsByOrde
         [Fact]
         public async Task Handle_ShouldReturnPayments_WhenPaymentsExistAndUserIsOwner()
         {
+            // Arrange
             var orderId = Guid.NewGuid();
             var userId = Guid.NewGuid();
 
@@ -40,8 +41,10 @@ namespace PS.PaymentService.UnitTests.Application.CQRS.Queries.GetPaymentsByOrde
 
             var query = new GetPaymentsByOrderIdQuery(orderId, userId);
 
+            // Act
             var result = await _handler.Handle(query, CancellationToken.None);
 
+            // Assert
             Assert.NotNull(result);
             Assert.Equal(2, result.Count());
 
@@ -52,3 +55,4 @@ namespace PS.PaymentService.UnitTests.Application.CQRS.Queries.GetPaymentsByOrde
         }
     }
 }
+

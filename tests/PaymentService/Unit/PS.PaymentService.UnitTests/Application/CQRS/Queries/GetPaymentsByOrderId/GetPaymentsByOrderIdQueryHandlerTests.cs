@@ -3,6 +3,7 @@ using Moq;
 using PS.PaymentService.Application.CQRS.Queries.GetPaymentsByOrderId;
 using PS.PaymentService.Application.Interfaces;
 using PS.PaymentService.Domain.Entities;
+using PS.PaymentService.Domain.Exceptions.Payment;
 
 namespace PS.PaymentService.UnitTests.Application.CQRS.Queries.GetPaymentsByOrderId
 {
@@ -52,6 +53,22 @@ namespace PS.PaymentService.UnitTests.Application.CQRS.Queries.GetPaymentsByOrde
             {
                 Assert.Equal(userId, payment.Id);
             });
+        }
+
+        [Fact]
+        public async Task Handle_ShouldThrowPaymentNotFoundException_WhenPaymentsDoNotExist()
+        {
+            var orderId = Guid.NewGuid();
+            var userId = Guid.NewGuid();
+
+            _paymentRepositoryMock
+                .Setup(x => x.GetByOrderIdAsync(orderId, It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new List<Payment>());
+
+            var query = new GetPaymentsByOrderIdQuery(orderId, userId);
+
+            await Assert.ThrowsAsync<PaymentNotFoundException>(() =>
+                _handler.Handle(query, CancellationToken.None));
         }
     }
 }

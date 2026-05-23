@@ -58,6 +58,7 @@ namespace PS.PaymentService.UnitTests.Application.CQRS.Queries.GetPaymentsByOrde
         [Fact]
         public async Task Handle_ShouldThrowPaymentNotFoundException_WhenPaymentsDoNotExist()
         {
+            // Arrange
             var orderId = Guid.NewGuid();
             var userId = Guid.NewGuid();
 
@@ -67,6 +68,7 @@ namespace PS.PaymentService.UnitTests.Application.CQRS.Queries.GetPaymentsByOrde
 
             var query = new GetPaymentsByOrderIdQuery(orderId, userId);
 
+            // Act & Assert
             await Assert.ThrowsAsync<PaymentNotFoundException>(() =>
                 _handler.Handle(query, CancellationToken.None));
         }

@@ -72,6 +72,30 @@ namespace PS.PaymentService.UnitTests.Application.CQRS.Queries.GetPaymentsByOrde
             await Assert.ThrowsAsync<PaymentNotFoundException>(() =>
                 _handler.Handle(query, CancellationToken.None));
         }
+
+        [Fact]
+        public async Task Handle_ShouldThrowUnauthorizedPaymentAccessException_WhenUserIsNotOwner()
+        {
+            var orderId = Guid.NewGuid();
+
+            var ownerId = Guid.NewGuid();
+            var anotherUserId = Guid.NewGuid();
+
+            var payments = new List<Payment>
+            {
+                new Payment(orderId, ownerId, 100)
+            };
+
+            _paymentRepositoryMock
+                .Setup(x => x.GetByOrderIdAsync(orderId, It.IsAny<CancellationToken>()))
+                .ReturnsAsync(payments);
+
+            var query = new GetPaymentsByOrderIdQuery(orderId, anotherUserId);
+
+            await Assert.ThrowsAsync<UnauthorizedPaymentAccessException>(() =>
+                _handler.Handle(query, CancellationToken.None));
+        }
+
     }
 }
 

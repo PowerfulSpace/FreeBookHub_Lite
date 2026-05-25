@@ -76,6 +76,7 @@ namespace PS.PaymentService.UnitTests.Application.CQRS.Queries.GetPaymentsByOrde
         [Fact]
         public async Task Handle_ShouldThrowUnauthorizedPaymentAccessException_WhenUserIsNotOwner()
         {
+            // Arrange
             var orderId = Guid.NewGuid();
 
             var ownerId = Guid.NewGuid();
@@ -92,6 +93,7 @@ namespace PS.PaymentService.UnitTests.Application.CQRS.Queries.GetPaymentsByOrde
 
             var query = new GetPaymentsByOrderIdQuery(orderId, anotherUserId);
 
+            // Act & Assert
             await Assert.ThrowsAsync<UnauthorizedPaymentAccessException>(() =>
                 _handler.Handle(query, CancellationToken.None));
         }

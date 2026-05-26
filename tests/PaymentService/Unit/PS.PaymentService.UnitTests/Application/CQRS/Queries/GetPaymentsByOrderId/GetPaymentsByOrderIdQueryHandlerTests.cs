@@ -98,6 +98,30 @@ namespace PS.PaymentService.UnitTests.Application.CQRS.Queries.GetPaymentsByOrde
                 _handler.Handle(query, CancellationToken.None));
         }
 
+          [Fact]
+        public async Task Handle_ShouldCallRepositoryWithCorrectParameters()
+        {
+            var orderId = Guid.NewGuid();
+            var userId = Guid.NewGuid();
+
+            var payments = new List<Payment>
+            {
+                new Payment(orderId, userId, 100)
+            };
+
+            _paymentRepositoryMock
+                .Setup(x => x.GetByOrderIdAsync(orderId, It.IsAny<CancellationToken>()))
+                .ReturnsAsync(payments);
+
+            var query = new GetPaymentsByOrderIdQuery(orderId, userId);
+
+            await _handler.Handle(query, CancellationToken.None);
+
+            _paymentRepositoryMock.Verify(
+                x => x.GetByOrderIdAsync(orderId, It.IsAny<CancellationToken>()),
+                Times.Once);
+        }
+
     }
 }
 

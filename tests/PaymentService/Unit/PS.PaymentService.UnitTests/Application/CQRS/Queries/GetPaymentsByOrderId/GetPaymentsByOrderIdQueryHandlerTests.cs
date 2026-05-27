@@ -101,6 +101,7 @@ namespace PS.PaymentService.UnitTests.Application.CQRS.Queries.GetPaymentsByOrde
           [Fact]
         public async Task Handle_ShouldCallRepositoryWithCorrectParameters()
         {
+            // Arrange
             var orderId = Guid.NewGuid();
             var userId = Guid.NewGuid();
 
@@ -115,8 +116,10 @@ namespace PS.PaymentService.UnitTests.Application.CQRS.Queries.GetPaymentsByOrde
 
             var query = new GetPaymentsByOrderIdQuery(orderId, userId);
 
+            // Act
             await _handler.Handle(query, CancellationToken.None);
 
+            // Assert
             _paymentRepositoryMock.Verify(
                 x => x.GetByOrderIdAsync(orderId, It.IsAny<CancellationToken>()),
                 Times.Once);

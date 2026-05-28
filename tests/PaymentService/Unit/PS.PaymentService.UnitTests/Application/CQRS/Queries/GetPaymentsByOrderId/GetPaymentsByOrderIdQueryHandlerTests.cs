@@ -124,7 +124,5 @@ namespace PS.PaymentService.UnitTests.Application.CQRS.Queries.GetPaymentsByOrde
                 x => x.GetByOrderIdAsync(orderId, It.IsAny<CancellationToken>()),
                 Times.Once);
         }
-
     }
 }
-
